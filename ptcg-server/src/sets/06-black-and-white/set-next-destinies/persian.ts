@@ -55,9 +55,6 @@ export class Persian extends PokemonCard {
         if (cards.length > 0) {
           player.deck.moveCardsTo(cards, player.hand);
 
-          cards.forEach(card => {
-            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-          });
 
           store.prompt(state, new ShowCardsPrompt(
             opponent.id,

@@ -1,4 +1,4 @@
-import { Card, ChooseCardsPrompt, GameError, GameLog, GameMessage, Player, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, State, StateUtils, StoreLike } from '../../../game';
+import { Card, ChooseCardsPrompt, GameError, GameMessage, Player, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, State, StateUtils, StoreLike } from '../../../game';
 import { Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -70,9 +70,6 @@ export class Clavell extends TrainerCard {
       ), selectedCards => {
         cards = selectedCards || [];
 
-        cards.forEach((card, index) => {
-          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-        });
 
         player.deck.moveCardsTo(cards, player.hand);
         player.supporter.moveCardTo(this, player.discard);

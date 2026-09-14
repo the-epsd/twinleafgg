@@ -4,7 +4,6 @@ import {
   Card,
   ChooseCardsPrompt,
   GameError,
-  GameLog,
   GameMessage,
   Player,
   PokemonCardList,
@@ -79,13 +78,6 @@ export class PreciousTrolley extends TrainerCard {
         ),
         (selectedCards) => {
           cards = selectedCards || [];
-
-          cards.forEach((card, index) => {
-            store.log(state, GameLog.LOG_PLAYER_PLAYS_BASIC_POKEMON, {
-              name: player.name,
-              card: card.name,
-            });
-          });
 
           // Use the new PlayPokemonFromDeckEffect for each selected card
           cards.forEach((card, index) => {

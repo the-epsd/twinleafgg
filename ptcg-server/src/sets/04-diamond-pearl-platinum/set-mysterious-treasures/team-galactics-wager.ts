@@ -1,4 +1,4 @@
-import { StoreLike, State, GameError, GameMessage, StateUtils, SelectPrompt, GameLog } from '../../../game';
+import { StoreLike, State, GameError, GameMessage, StateUtils, SelectPrompt } from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -76,9 +76,6 @@ export class TeamGalacticsWager extends TrainerCard {
         // variable time
         const playerChosenValue = results[0];
         const opponentChosenValue = results[1];
-        // outputting what both players chose
-        store.log(state, GameLog.LOG_PLAYER_CHOOSES, { name: player.name, string: options[playerChosenValue].message });
-        store.log(state, GameLog.LOG_PLAYER_CHOOSES, { name: opponent.name, string: options[opponentChosenValue].message });
         // if they tie, restart it
         if (playerChosenValue === opponentChosenValue) { return this.reduceEffect(store, state, effect); }
 

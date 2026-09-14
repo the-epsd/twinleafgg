@@ -1,6 +1,6 @@
 import { Card } from '../../../game/store/card/card';
 import { GameError } from '../../../game/game-error';
-import { GameLog, GameMessage } from '../../../game/game-message';
+import { GameMessage } from '../../../game/game-message';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
@@ -60,9 +60,6 @@ export class BrocksGrit extends TrainerCard {
         { min: 1, max: 6, allowCancel: false, blocked }
       ), selected => {
         cards = selected || [];
-        cards.forEach((card) => {
-          store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
-        });
         MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: this });
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

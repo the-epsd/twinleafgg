@@ -11,7 +11,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { GameError } from '../../../game/game-error';
-import { GameMessage, GameLog } from '../../../game/game-message';
+import { GameMessage } from '../../../game/game-message';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(
@@ -61,9 +61,6 @@ function* playCard(
 
   MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
 
-  cards.forEach((card) => {
-    store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-  });
 
   if (cards.length > 0) {
     yield store.prompt(

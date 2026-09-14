@@ -2,7 +2,7 @@ import { pokemonHasCardType } from '../../../game';
 import { Player } from '../../../game/store/state/player';
 import { Card } from '../../../game/store/card/card';
 import { GameError } from '../../../game/game-error';
-import { GameLog, GameMessage } from '../../../game/game-message';
+import { GameMessage } from '../../../game/game-message';
 import { StateUtils } from '../../../game/store/state-utils';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, EnergyType } from '../../../game/store/card/card-types';
@@ -55,12 +55,6 @@ function* playCard(
     },
   );
   if (cards.length > 0) {
-    cards.forEach((card) => {
-      store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, {
-        name: player.name,
-        card: card.name,
-      });
-    });
     player.discard.moveCardsTo(cards, player.deck);
   }
   const cardList = StateUtils.findCardList(state, effect.trainerCard);

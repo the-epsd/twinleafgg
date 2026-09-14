@@ -2,7 +2,6 @@ import {
   Card,
   CardType,
   ChooseCardsPrompt,
-  GameLog,
   GameMessage,
   PokemonCard,
   Stage,
@@ -68,9 +67,6 @@ export class Spiritomb extends PokemonCard {
       ), selected => {
         cards = selected || [];
 
-        cards.forEach(card => {
-          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-        });
 
         if (cards.length > 0) {
           SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);

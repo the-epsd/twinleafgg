@@ -9,7 +9,6 @@ import {
   GameMessage,
   CardList,
   ChooseCardsPrompt,
-  GameLog,
   ShowCardsPrompt,
   ShuffleDeckPrompt,
 } from '../../../game';
@@ -95,9 +94,6 @@ function* playCard(
     },
   );
 
-  cards.forEach((card, index) => {
-    store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-  });
 
   if (cards.length > 0) {
     yield store.prompt(

@@ -93,7 +93,6 @@ export class Sableye extends PokemonCard {
 
           cards.forEach((card, index) => {
             player.deck.moveCardTo(card, player.hand);
-            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
           });
         });
     }

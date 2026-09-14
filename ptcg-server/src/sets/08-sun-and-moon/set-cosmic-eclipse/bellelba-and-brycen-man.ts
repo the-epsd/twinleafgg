@@ -108,14 +108,6 @@ When you play this card, you may discard 3 other cards from your hand. If you do
 
                 MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this });
 
-                cards.forEach((card, index) => {
-                  store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, {
-                    name: player.name,
-                    card: card.name,
-                    effectName: this.name,
-                  });
-                });
-
                 const oppoonentBenchDifference = opponentsBenchedPokemon - 3;
                 const benchDifference = benchedPokemon - 3;
 

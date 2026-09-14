@@ -19,7 +19,6 @@ import {
   ChoosePokemonPrompt,
   ChooseEnergyPrompt,
   Card,
-  GameLog,
   PokemonCardList,
   StateUtils,
 } from '../../../game';
@@ -166,10 +165,6 @@ export class HolonsMagneton extends PokemonCard implements EnergyCard {
             ),
             (energy) => {
               const cards: Card[] = (energy || []).map((e) => e.card);
-              store.log(state, GameLog.LOG_PLAYER_CHOOSES, {
-                name: player.name,
-                string: '' + cards[0].name,
-              });
               targets[0].moveCardsTo(cards, player.hand);
 
               // Moving it onto the pokemon - first to main cards array, then to energies

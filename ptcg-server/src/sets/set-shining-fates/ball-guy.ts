@@ -1,5 +1,6 @@
+import { Player } from '../../game';
 import { GameError } from '../../game/game-error';
-import { GameLog, GameMessage } from '../../game/game-message';
+import { GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
 import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
@@ -51,9 +52,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
     next();
   });
 
-  cards.forEach((card, index) => {
-    store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-  });
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
@@ -64,8 +62,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   }
 
   player.deck.moveCardsTo(cards, player.hand);
-
-
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
@@ -89,6 +85,17 @@ export class BallGuy extends TrainerCard {
   public text: string =
     'Search your deck for up to 3 different Item cards that have the word "Ball" in their name, reveal them, and put them into your hand. Then, shuffle your deck.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const supporterTurn = player.supporterTurn;
+    if (supporterTurn > 0) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+  
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, this, effect);

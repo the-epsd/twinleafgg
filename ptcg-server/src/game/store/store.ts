@@ -7,7 +7,7 @@ import { SuperType, TrainerType } from './card/card-types';
 import { TrainerCard } from './card/trainer-card';
 import { ChangeAvatarAction } from './actions/change-avatar-action';
 import { Effect } from './effects/effect';
-import { PlayPokemonEffect, TrainerEffect, TrainerTargetEffect } from './effects/play-card-effects';
+import { PlayPokemonEffect, TrainerEffect } from './effects/play-card-effects';
 import { CheckAttackCostEffect, CheckPokemonPowersEffect, CheckRetreatCostEffect } from './effects/check-effects';
 import { MovedFromActiveToBenchEffect, MovedToActiveEffect, PowerEffect } from './effects/game-effects';
 import {
@@ -16,7 +16,8 @@ import {
   APPLY_ATTACK_EFFECT_ABILITY_LOCKS,
 } from './prefabs/ability-lock';
 import { resolveCopyAttackSessions } from './prefabs/copy-attack-delegation';
-import { filterTrainerPromptResult, ResolvingTrainerSource, WAS_TRAINER_TARGET_BLOCKED } from './prefabs/trainer-target';
+import { effectWasBlocked, logAppliedEffect, logPreventedEffect, logResolvedPrompt, stampEffectBlocker } from './prefabs/auto-log';
+import { filterTrainerPromptResult, ResolvingTrainerSource } from './prefabs/trainer-target';
 import { GameError } from '../game-error';
 import { GameMessage, GameLog } from '../game-message';
 import { Prompt } from './prompts/prompt';
@@ -147,6 +148,9 @@ export class Store implements StoreLike {
     APPLY_ATTACK_EFFECT_ABILITY_LOCKS(state, effect);
 
     state = this.propagateEffect(state, effect);
+    if (!this.calculatingPlayability) {
+      logPreventedEffect(this, state, effect);
+    }
     state = resolveCopyAttackSessions(this, state, effect);
 
     const gs = state.gameSettings;
@@ -173,6 +177,9 @@ export class Store implements StoreLike {
     state = gameReducer(this, state, effect);
     state = attackReducer(this, state, effect);
     state = checkStateReducer(this, state, effect);
+    if (!this.calculatingPlayability) {
+      logAppliedEffect(this, state, effect);
+    }
 
     // Calculate playability after all effects are processed
     // The calculatingPlayability flag prevents nested calls during playability checks
@@ -274,6 +281,14 @@ export class Store implements StoreLike {
 
       if (pending.every(result => result !== undefined)) {
         this.applyTrainerTargetFilters(state, promptItem.ids);
+        if (!this.calculatingPlayability) {
+          for (const id of promptItem.ids) {
+            const resolved = state.prompts.find(item => item.id === id);
+            if (resolved) {
+              logResolvedPrompt(this, state, resolved);
+            }
+          }
+        }
         const results = promptItem.ids.map(id => {
           const p = state.prompts.find(item => item.id === id);
           return p === undefined ? undefined : p.result;
@@ -517,8 +532,7 @@ export class Store implements StoreLike {
       this.resolvingTrainer = { player: effect.player, trainerCard: effect.trainerCard };
     }
 
-    const trainerTarget = effect instanceof TrainerTargetEffect ? effect : undefined;
-    const alreadyBlocked = trainerTarget !== undefined && WAS_TRAINER_TARGET_BLOCKED(trainerTarget);
+    const alreadyBlocked = effectWasBlocked(effect);
 
     try {
       // Only try override for TrainerCard (for now)
@@ -533,14 +547,7 @@ export class Store implements StoreLike {
       }
       return card.reduceEffect(store, state, effect);
     } finally {
-      if (
-        trainerTarget !== undefined
-        && !alreadyBlocked
-        && trainerTarget.blockedBy === undefined
-        && WAS_TRAINER_TARGET_BLOCKED(trainerTarget)
-      ) {
-        trainerTarget.blockedBy = card;
-      }
+      stampEffectBlocker(effect, card, alreadyBlocked);
       if (resolvingThisTrainer) {
         this.resolvingTrainer = previous;
       }

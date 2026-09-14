@@ -1,4 +1,4 @@
-import { ChooseCardsPrompt, GameLog, GameMessage, TrainerCard } from '../../../game';
+import { ChooseCardsPrompt, GameMessage, TrainerCard } from '../../../game';
 import { CardType, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -72,7 +72,6 @@ export class Morpeko extends PokemonCard {
 
           cards.forEach((card, index) => {
             player.deck.moveCardTo(card, player.hand);
-            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
           });
         });
     }

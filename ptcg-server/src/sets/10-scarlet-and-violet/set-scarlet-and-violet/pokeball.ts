@@ -1,7 +1,7 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { GameLog, GameMessage } from '../../../game/game-message';
+import { GameMessage } from '../../../game/game-message';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 
@@ -44,9 +44,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
     if (cards.length > 0) {
       player.discard.moveCardsTo(cards, player.deck);
-      cards.forEach((card, index) => {
-        store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-      });
       if (cards.length > 0) {
         state = store.prompt(state, new ShowCardsPrompt(
           opponent.id,

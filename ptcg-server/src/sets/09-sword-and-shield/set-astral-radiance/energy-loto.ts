@@ -4,7 +4,7 @@ import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { CardList, GameMessage, ShuffleDeckPrompt, ChooseCardsPrompt, ShowCardsPrompt, GameLog, StateUtils } from '../../../game';
+import { CardList, GameMessage, ShuffleDeckPrompt, ChooseCardsPrompt, ShowCardsPrompt, StateUtils } from '../../../game';
 export class EnergyLoto extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -50,7 +50,6 @@ export class EnergyLoto extends TrainerCard {
           const energyCard = chosenCards[0];
           temp.moveCardTo(energyCard, player.hand);
 
-          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: energyCard.name });
 
           state = store.prompt(state, new ShowCardsPrompt(
             opponent.id,

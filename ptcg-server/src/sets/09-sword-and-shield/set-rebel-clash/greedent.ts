@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { ChooseCardsPrompt, GameError, GameMessage, GameLog, PowerType, ShuffleDeckPrompt, StoreLike, State } from '../../../game';
+import { ChooseCardsPrompt, GameError, GameMessage, PowerType, ShuffleDeckPrompt, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, SHOW_CARDS_TO_PLAYER } from '../../../game/store/prefabs/prefabs';
 
@@ -74,7 +74,6 @@ export class Greedent extends PokemonCard {
 
         cards.forEach(card => {
           player.deck.moveCardTo(card, player.hand);
-          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
         });
 
         SHOW_CARDS_TO_PLAYER(store, state, state.players.find(p => p !== player)!, cards);

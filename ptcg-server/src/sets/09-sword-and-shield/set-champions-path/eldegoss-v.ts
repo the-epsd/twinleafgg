@@ -130,12 +130,6 @@ export class EldegossV extends PokemonCard {
                         }
                       });
 
-                      cards.forEach((card, index) => {
-                        store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
-                          name: player.name,
-                          card: card.name,
-                        });
-                      });
                       MOVE_CARDS(store, state, player.discard, player.hand, {
                         cards,
                         sourceCard: this,

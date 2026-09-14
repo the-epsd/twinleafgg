@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, ShowCardsPrompt, StateUtils, Card, GameLog } from '../../../game';
+import { StoreLike, State, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, ShowCardsPrompt, StateUtils, Card } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
@@ -53,7 +53,6 @@ export class Zweilous extends PokemonCard {
         cards.forEach((card, index) => {
           player.deck.moveCardTo(card, player.hand);
 
-          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
         });
 
         state = store.prompt(state, new ShowCardsPrompt(

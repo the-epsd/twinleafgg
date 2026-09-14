@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, TrainerType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, Card, GameLog } from '../../../game';
+import { StoreLike, State, StateUtils, GameMessage, Card } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
@@ -64,9 +64,6 @@ export class Mienshao extends PokemonCard {
         if (cards.length > 0) {
           player.deck.moveCardsTo(cards, player.hand);
 
-          cards.forEach(card => {
-            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-          });
 
           store.prompt(state, new ShowCardsPrompt(
             opponent.id,

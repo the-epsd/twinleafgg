@@ -1,4 +1,4 @@
-import { Card, ChooseCardsPrompt, GameError, GameLog, GameMessage, SelectPrompt, ShuffleDeckPrompt } from '../../../game';
+import { Card, ChooseCardsPrompt, GameError, GameMessage, SelectPrompt, ShuffleDeckPrompt } from '../../../game';
 import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -67,16 +67,12 @@ export class JudgeWhistle extends TrainerCard {
 
               store.prompt(state, new ChooseCardsPrompt(
                 player,
-                GameMessage.CHOOSE_CARD_TO_DECK,
+                GameMessage.CHOOSE_CARD_TO_HAND,
                 player.discard,
                 { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
                 { min: 1, max: 1, allowCancel: false, blocked }
               ), selected => {
                 cards = selected || [];
-                cards.forEach((card, index) => {
-                  store.log(state, GameLog.LOG_PLAYER_RETURNS_CARD_TO_HAND, { name: player.name, card: card.name });
-                });
-
                 player.discard.moveCardsTo(cards, player.hand);
 
 

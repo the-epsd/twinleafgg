@@ -1,6 +1,6 @@
 import { Card, ChooseCardsPrompt, ShowCardsPrompt } from '../../../game';
 import { GameError } from '../../../game/game-error';
-import { GameLog, GameMessage } from '../../../game/game-message';
+import { GameMessage } from '../../../game/game-message';
 import { EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -85,9 +85,6 @@ export class PowerTree extends TrainerCard {
               MOVE_CARDS(store, state, player.discard, player.hand, { cards: [card], sourceCard: this });
             });
 
-            cards.forEach((card, index) => {
-              store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-            });
           });
         }
       });

@@ -1,4 +1,4 @@
-import { CardList, ChooseCardsPrompt, ConfirmPrompt, GameLog, GameMessage, ShowCardsPrompt, TrainerCard } from '../../../game';
+import { CardList, ChooseCardsPrompt, ConfirmPrompt, GameMessage, ShowCardsPrompt, TrainerCard } from '../../../game';
 import { CardType, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { PowerType } from '../../../game/store/card/pokemon-types';
@@ -93,9 +93,6 @@ export class Mewtwo extends PokemonCard {
             { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
             { min: 1, max: 1, allowCancel: false }
           ), selected => {
-            selected.forEach((card, index) => {
-              store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
-            });
 
             player.discard.moveCardTo(selected[0], deckTop);
             deckTop.moveToTopOfDestination(player.deck);

@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, Card, CardType, ChooseCardsPrompt, ConfirmPrompt, EnergyCard, EnergyType, GameLog, GameMessage, PlayerType, PokemonCard, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../../game';
+import { AttachEnergyPrompt, Card, CardType, ChooseCardsPrompt, ConfirmPrompt, EnergyCard, EnergyType, GameMessage, PlayerType, PokemonCard, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
@@ -57,9 +57,6 @@ export class Shuckle extends PokemonCard {
             { min: 0, max: 3, allowCancel: false }
           ), selected => {
             cards = selected || [];
-            cards.forEach((card, index) => {
-              store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-            });
 
             if (cards.length > 0) {
               store.prompt(state, new ShowCardsPrompt(

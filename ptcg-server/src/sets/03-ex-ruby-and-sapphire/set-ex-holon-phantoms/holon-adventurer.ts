@@ -1,4 +1,4 @@
-import { ChooseCardsPrompt, GameError, GameLog, GameMessage, PokemonCard } from '../../../game';
+import { ChooseCardsPrompt, GameError, GameMessage, PokemonCard } from '../../../game';
 import { CardTag, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -60,12 +60,6 @@ export class HolonAdventurer extends TrainerCard {
           }
 
           MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
-          cards.forEach((card, index) => {
-            store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, {
-              name: player.name,
-              card: card.name,
-            });
-          });
 
           DRAW_CARDS(store, state, player, cardsToDraw);
         },

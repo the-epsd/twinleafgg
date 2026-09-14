@@ -1,5 +1,5 @@
 import { GameError, PokemonCard, SelectPrompt } from '../../../game';
-import { GameLog, GameMessage } from '../../../game/game-message';
+import { GameMessage } from '../../../game/game-message';
 import { Card } from '../../../game/store/card/card';
 import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
@@ -73,9 +73,6 @@ export class RescueStretcher extends TrainerCard {
               { min: Math.min(pokemonInDiscard, 3), max: 3, allowCancel: false, blocked }
             ), selected => {
               cards = selected || [];
-              cards.forEach((card, index) => {
-                store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
-              });
 
               player.discard.moveCardsTo(cards, player.deck);
 
@@ -100,9 +97,6 @@ export class RescueStretcher extends TrainerCard {
             ), selected => {
               cards = selected || [];
 
-              cards.forEach((card, index) => {
-                store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-              });
 
               player.discard.moveCardsTo(cards, player.hand);
 

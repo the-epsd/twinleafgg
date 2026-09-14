@@ -1,5 +1,5 @@
 import { GameError, PokemonCard, SelectOptionPrompt } from '../../../game';
-import { GameLog, GameMessage } from '../../../game/game-message';
+import { GameMessage } from '../../../game/game-message';
 import { Card } from '../../../game/store/card/card';
 import { CardTag, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
@@ -55,12 +55,6 @@ export class PremierBall extends TrainerCard {
               ),
               (selected) => {
                 cards = selected || [];
-                cards.forEach((card) => {
-                  store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
-                    name: player.name,
-                    card: card.name,
-                  });
-                });
                 SHOW_CARDS_TO_PLAYER(store, state, player, cards);
 
                 player.deck.moveCardsTo(cards, player.hand);
@@ -90,12 +84,6 @@ export class PremierBall extends TrainerCard {
               (selected) => {
                 cards = selected || [];
 
-                cards.forEach((card) => {
-                  store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
-                    name: player.name,
-                    card: card.name,
-                  });
-                });
 
                 player.discard.moveCardsTo(cards, player.hand);
 

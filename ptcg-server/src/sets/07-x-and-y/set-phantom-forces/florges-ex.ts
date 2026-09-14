@@ -12,7 +12,6 @@ import {
 } from '../../../game/store/card/card-types';
 import {
   Card,
-  GameLog,
   GameMessage,
   PlayerType,
   StoreLike,
@@ -80,12 +79,6 @@ export class FlorgesEx extends PokemonCard {
           const cards = selected || [];
 
           if (cards.length > 0) {
-            cards.forEach((card) => {
-              store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
-                name: player.name,
-                card: card.name,
-              });
-            });
 
             store.prompt(
               state,

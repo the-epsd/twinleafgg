@@ -136,12 +136,6 @@ export class TapuLeleGX extends PokemonCard {
                         }
                       });
 
-                      cards.forEach((card, index) => {
-                        store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
-                          name: player.name,
-                          card: card.name,
-                        });
-                      });
                       player.deck.moveCardsTo(cards, player.hand);
                     },
                   );

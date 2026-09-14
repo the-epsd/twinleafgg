@@ -97,12 +97,6 @@ When you play this card, you may discard 2 other cards from your hand. If you do
                       sourceCard: this,
                     });
 
-                    cards.forEach((card, index) => {
-                      store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, {
-                        name: player.name,
-                        card: card.name,
-                      });
-                    });
 
                     const healEffect = new HealEffect(player, previousActiveCardList, 120);
                     state = store.reduceEffect(state, healEffect);

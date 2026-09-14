@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike, State, Card, ChooseCardsPrompt, GameError, GameLog, GameMessage, ShowCardsPrompt, StateUtils, TrainerCard } from '../../../game';
+import { StoreLike, State, Card, ChooseCardsPrompt, GameError, GameMessage, ShowCardsPrompt, StateUtils, TrainerCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
@@ -32,9 +32,6 @@ function* useBeckon(next: Function, store: StoreLike, state: State, effect: Atta
     next();
   });
 
-  cards.forEach((card, index) => {
-    store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-  });
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(

@@ -4,7 +4,7 @@ import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { CardList, ChooseCardsPrompt, GameLog, GameMessage, Player, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../../game';
+import { CardList, ChooseCardsPrompt, GameMessage, Player, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../../game';
 
 export class DuskBall extends TrainerCard {
 
@@ -64,9 +64,6 @@ export class DuskBall extends TrainerCard {
           temp.moveTo(player.deck);
           player.supporter.moveCardTo(this, player.discard);
 
-          chosenCards.forEach((card, index) => {
-            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-          });
 
           if (chosenCards.length > 0) {
             state = store.prompt(state, new ShowCardsPrompt(

@@ -1,5 +1,5 @@
 import { GameError, PokemonCardList } from '../../../game';
-import { GameLog, GameMessage } from '../../../game/game-message';
+import { GameMessage } from '../../../game/game-message';
 import { PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
 import { Stage, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
@@ -51,7 +51,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
       opponent.switchPokemon(targets[0]);
 
-      store.log(state, GameLog.LOG_PLAYER_SWITCHES_POKEMON_TO_ACTIVE, { name: player.name, card: targets[0].getPokemonCard()!.name });
 
       next();
 
@@ -94,7 +93,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
         player.active.clearEffects();
         player.switchPokemon(target[0]);
 
-        store.log(state, GameLog.LOG_PLAYER_SWITCHES_POKEMON_TO_ACTIVE, { name: player.name, card: target[0].getPokemonCard()!.name });
         return state;
       });
     });

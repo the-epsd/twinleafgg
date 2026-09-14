@@ -2,7 +2,6 @@ import {
   CardList,
   ChooseCardsPrompt,
   GameError,
-  GameLog,
   GameMessage,
   State,
   StateUtils,
@@ -70,10 +69,6 @@ export class HolonLass extends TrainerCard {
             // Move chosen Energy to hand
             chosenCards.forEach((card) => {
               temp.moveCardTo(card, player.hand);
-              store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
-                name: player.name,
-                card: card.name,
-              });
             });
 
             if (chosenCards.length > 0) {

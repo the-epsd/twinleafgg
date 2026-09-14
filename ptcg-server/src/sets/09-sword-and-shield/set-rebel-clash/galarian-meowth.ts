@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, BoardEffect } from '../../../game/store/card/card-types';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { StoreLike, State, StateUtils, Card, GameError, GameMessage, ChooseCardsPrompt, GameLog, ShuffleDeckPrompt, ShowCardsPrompt, PlayerType } from '../../../game';
+import { StoreLike, State, StateUtils, Card, GameError, GameMessage, ChooseCardsPrompt, ShuffleDeckPrompt, ShowCardsPrompt, PlayerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
@@ -80,9 +80,6 @@ export class GalarianMeowth extends PokemonCard {
       ), selected => {
         cards = selected || [];
 
-        cards.forEach((card, index) => {
-          store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
-        });
 
         player.hand.moveCardsTo(cards, player.discard);
 

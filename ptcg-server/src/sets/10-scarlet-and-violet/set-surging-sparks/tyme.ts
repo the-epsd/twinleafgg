@@ -66,8 +66,6 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Tyme, e
     ), choice => {
       const option = options[choice];
 
-      store.log(state, GameLog.LOG_PLAYER_CHOOSES, { name: opponent.name, string: '' + option.value });
-
       store.prompt(state, new ShowCardsPrompt(
         opponent.id,
         GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,

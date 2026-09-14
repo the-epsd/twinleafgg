@@ -21,7 +21,7 @@ import {
 } from '../../../game';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { GameLog, GameMessage } from '../../../game/game-message';
+import { GameMessage } from '../../../game/game-message';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { DISCARD_UP_TO_X_TYPE_ENERGY_FROM_YOUR_POKEMON } from '../../../game/store/prefabs/costs';
@@ -107,12 +107,6 @@ export class ChienPaoex extends PokemonCard {
             return state;
           }
 
-          cards.forEach((card, index) => {
-            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
-              name: player.name,
-              card: card.name,
-            });
-          });
 
           if (cards.length > 0) {
             state = store.prompt(

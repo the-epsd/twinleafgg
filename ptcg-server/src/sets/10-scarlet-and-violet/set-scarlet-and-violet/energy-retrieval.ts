@@ -1,5 +1,5 @@
 import { GameError } from '../../../game/game-error';
-import { GameLog, GameMessage } from '../../../game/game-message';
+import { GameMessage } from '../../../game/game-message';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, SuperType, EnergyType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
@@ -39,9 +39,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
     if (cards.length > 0) {
       player.discard.moveCardsTo(cards, player.hand);
-      cards.forEach((card, index) => {
-        store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-      });
       if (cards.length > 0) {
         state = store.prompt(state, new ShowCardsPrompt(
           opponent.id,

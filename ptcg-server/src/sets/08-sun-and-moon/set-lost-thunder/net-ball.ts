@@ -1,6 +1,6 @@
 import { EnergyCard, PokemonCard, ShowCardsPrompt, StateUtils, pokemonHasCardType } from '../../../game';
 import { GameError } from '../../../game/game-error';
-import { GameLog, GameMessage } from '../../../game/game-message';
+import { GameMessage } from '../../../game/game-message';
 import { Card } from '../../../game/store/card/card';
 import { CardType, EnergyType, Stage, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
@@ -51,9 +51,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.deck.moveCardTo(card, player.hand);
   });
 
-  cards.forEach((card, index) => {
-    store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-  });
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(

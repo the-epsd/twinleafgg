@@ -3,7 +3,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
-import { CardList, GameMessage, ShuffleDeckPrompt, ChooseCardsPrompt, ShowCardsPrompt, GameLog, StateUtils, GameError, EnergyCard } from '../../../game';
+import { CardList, GameMessage, ShuffleDeckPrompt, ChooseCardsPrompt, ShowCardsPrompt, StateUtils, GameError, EnergyCard } from '../../../game';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class InterviewersQuestions extends TrainerCard {
@@ -54,7 +54,6 @@ export class InterviewersQuestions extends TrainerCard {
           // Move chosen Energy to hand
           chosenCards.forEach(card => {
             temp.moveCardTo(card, player.hand);
-            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
           });
 
           if (chosenCards.length > 0) {

@@ -1,6 +1,6 @@
 import { Effect } from '../../game/store/effects/effect';
 import { GameError } from '../../game/game-error';
-import { GameLog, GameMessage } from '../../game/game-message';
+import { GameMessage } from '../../game/game-message';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
@@ -42,9 +42,6 @@ export class ChampionshipArena extends TrainerCard {
             return;
           }
           MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
-          cards.forEach((card, index) => {
-            store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
-          });
         });
       }
     }

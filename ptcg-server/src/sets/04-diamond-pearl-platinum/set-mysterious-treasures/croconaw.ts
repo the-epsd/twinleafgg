@@ -1,4 +1,4 @@
-import { CardType, PokemonCard, Stage, PowerType, CardList, EnergyCard, GameMessage, State, StoreLike, SuperType, ShuffleDeckPrompt, StateUtils, ChooseCardsPrompt, GameLog, ShowCardsPrompt } from '../../../game';
+import { CardType, PokemonCard, Stage, PowerType, CardList, EnergyCard, GameMessage, State, StoreLike, SuperType, ShuffleDeckPrompt, StateUtils, ChooseCardsPrompt, ShowCardsPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { EvolveEffect } from '../../../game/store/effects/game-effects';
 import { IS_POKEPOWER_BLOCKED, JUST_EVOLVED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
@@ -69,9 +69,6 @@ export class Croconaw extends PokemonCard {
           player.supporter.moveCardTo(this, player.discard);
           temp.moveTo(player.deck);
 
-          chosenCards.forEach((card, index) => {
-            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-          });
 
           if (chosenCards.length > 0) {
             state = store.prompt(state, new ShowCardsPrompt(

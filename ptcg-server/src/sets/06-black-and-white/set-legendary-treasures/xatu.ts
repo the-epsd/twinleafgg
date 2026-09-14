@@ -8,7 +8,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { GameMessage } from '../../../game/game-message';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { GameLog, SelectPrompt, State, StoreLike } from '../../../game';
+import { SelectPrompt, State, StoreLike } from '../../../game';
 export class Xatu extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Natu';
@@ -62,9 +62,6 @@ export class Xatu extends PokemonCard {
       ], results => {
         const playerChoice = results[0];
         const opponentChoice = results[1];
-
-        store.log(state, GameLog.LOG_PLAYER_CHOOSES, { name: player.name, string: options[playerChoice].message });
-        store.log(state, GameLog.LOG_PLAYER_CHOOSES, { name: opponent.name, string: options[opponentChoice].message });
 
         if (playerChoice === opponentChoice) {
           return this.reduceEffect(store, state, effect);

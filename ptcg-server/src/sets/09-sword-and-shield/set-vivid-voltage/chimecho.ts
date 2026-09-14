@@ -1,4 +1,4 @@
-import { Card, CardType, ChooseCardsPrompt, GameLog, GameMessage, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, SpecialCondition, Stage, State, StateUtils, StoreLike, TrainerCard, TrainerType } from '../../../game';
+import { Card, CardType, ChooseCardsPrompt, GameMessage, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, SpecialCondition, Stage, State, StateUtils, StoreLike, TrainerCard, TrainerType } from '../../../game';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
@@ -79,7 +79,6 @@ export class Chimecho extends PokemonCard {
 
         cards.forEach((card, index) => {
           player.deck.moveCardTo(card, player.hand);
-          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
         });
 
         state = store.prompt(state, new ShowCardsPrompt(

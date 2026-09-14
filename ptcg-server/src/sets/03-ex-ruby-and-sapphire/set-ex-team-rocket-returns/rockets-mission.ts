@@ -2,7 +2,6 @@ import {
   Card,
   ChooseCardsPrompt,
   GameError,
-  GameLog,
   GameMessage,
   PokemonCard,
 } from '../../../game';
@@ -86,12 +85,6 @@ export class RocketsMission extends TrainerCard {
             }
 
             player.hand.moveCardsTo(cards, player.discard);
-            cards.forEach((card, index) => {
-              store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, {
-                name: player.name,
-                card: card.name,
-              });
-            });
 
             DRAW_CARDS(store, state, player, cardsToDraw);
           },

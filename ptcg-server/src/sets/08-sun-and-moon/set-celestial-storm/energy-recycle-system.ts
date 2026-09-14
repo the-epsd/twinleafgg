@@ -1,6 +1,6 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, GameLog } from '../../../game';
+import { StoreLike, State, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
@@ -50,7 +50,6 @@ export class EnergyRecycleSystem extends TrainerCard {
             { min: 1, max: 1, allowCancel: false }
           ), selected => {
             if (selected && selected.length > 0) {
-              store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: selected[0].name });
               MOVE_CARDS(store, state, player.discard, player.hand, { cards: selected, sourceCard: this, sourceEffect: this.attacks[0] });
             }
           });
@@ -68,7 +67,6 @@ export class EnergyRecycleSystem extends TrainerCard {
             { min: 1, max: 3, allowCancel: false }
           ), selected => {
             if (selected && selected.length === 3) {
-              store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_ON_BOTTOM_OF_DECK, { name: player.name, card: selected.map(c => c.name).join(', ') });
               MOVE_CARDS(store, state, player.discard, player.deck, { cards: selected, sourceCard: this, sourceEffect: this.attacks[1] });
               SHUFFLE_DECK(store, state, player);
             }

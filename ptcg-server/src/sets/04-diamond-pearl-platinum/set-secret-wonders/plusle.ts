@@ -1,5 +1,4 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { GameLog } from '../../../game/game-message';
 import { Stage, CardType, SuperType, EnergyType } from '../../../game/store/card/card-types';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { StoreLike } from '../../../game/store/store-like';
@@ -107,12 +106,6 @@ export class Plusle extends PokemonCard {
 
           if (cards.length > 0) {
             player.discard.moveCardsTo(cards, player.hand);
-            cards.forEach((card, index) => {
-              store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
-                name: player.name,
-                card: card.name,
-              });
-            });
             if (cards.length > 0) {
               state = store.prompt(
                 state,

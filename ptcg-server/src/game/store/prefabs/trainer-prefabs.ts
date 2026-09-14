@@ -1,5 +1,5 @@
 import { GameError } from '../../game-error';
-import { GameLog, GameMessage } from '../../game-message';
+import { GameMessage } from '../../game-message';
 import { Card } from '../card/card';
 import { TrainerCard } from '../card/trainer-card';
 import { Format, TrainerType, CardTag } from '../card/card-types';
@@ -94,9 +94,6 @@ export function DISCARD_X_CARDS_FROM_YOUR_HAND(effect: TrainerEffect, store: Sto
         return;
       }
       MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: effect.trainerCard });
-      cards.forEach((card, index) => {
-        store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
-      });
     });
   }
 }

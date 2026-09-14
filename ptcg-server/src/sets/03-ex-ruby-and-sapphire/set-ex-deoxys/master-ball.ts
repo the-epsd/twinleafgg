@@ -3,7 +3,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
-import { CardList, GameMessage, ShuffleDeckPrompt, ChooseCardsPrompt, ShowCardsPrompt, GameLog, StateUtils, GameError } from '../../../game';
+import { CardList, GameMessage, ShuffleDeckPrompt, ChooseCardsPrompt, ShowCardsPrompt, StateUtils, GameError } from '../../../game';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 export class MasterBall extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -55,9 +55,6 @@ export class MasterBall extends TrainerCard {
           temp.moveTo(player.deck);
           player.supporter.moveCardTo(this, player.discard);
 
-          chosenCards.forEach((card, index) => {
-            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-          });
 
           if (chosenCards.length > 0) {
             state = store.prompt(state, new ShowCardsPrompt(

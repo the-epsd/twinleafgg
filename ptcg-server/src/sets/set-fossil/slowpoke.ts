@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, TrainerType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, Card, ChooseEnergyPrompt, GameMessage, StateUtils, TrainerCard, ChooseCardsPrompt, GameLog, ShowCardsPrompt, GameError } from '../../game';
+import { StoreLike, State, Card, ChooseEnergyPrompt, GameMessage, StateUtils, TrainerCard, ChooseCardsPrompt, ShowCardsPrompt, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -87,9 +87,6 @@ export class Slowpoke extends PokemonCard {
       ), selected => {
         cards = selected || [];
 
-        cards.forEach((card, index) => {
-          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-        });
 
         if (cards.length > 0) {
           return store.prompt(state, new ShowCardsPrompt(

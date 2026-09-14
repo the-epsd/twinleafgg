@@ -1776,12 +1776,6 @@ export function SEARCH_DECK_FOR_CARDS_TO_HAND(
     (selected) => {
       const cards = selected || [];
       if (Object.keys(filter).length > 0) {
-        cards.forEach((card) => {
-          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
-            name: player.name,
-            card: card.name,
-          });
-        });
         SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
       }
       MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard, sourceEffect });
@@ -1824,14 +1818,7 @@ export function SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND(
       });
       state = store.reduceEffect(state, moveEffect);
 
-      // Only log and show cards if the move wasn't prevented
       if (!moveEffect.preventDefault) {
-        cards.forEach((card) => {
-          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
-            name: player.name,
-            card: card.name,
-          });
-        });
         SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
       }
 

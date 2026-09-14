@@ -3,7 +3,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
-import { CardList, GameMessage, ChooseCardsPrompt, GameLog, StateUtils, GameError, PokemonCard, EnergyCard, OrderCardsPrompt } from '../../../game';
+import { CardList, GameMessage, ChooseCardsPrompt, StateUtils, GameError, PokemonCard, EnergyCard, OrderCardsPrompt } from '../../../game';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 import { SHOW_CARDS_TO_PLAYER } from '../../../game/store/prefabs/prefabs';
 
@@ -56,9 +56,6 @@ export class PokeNav extends TrainerCard {
           const chosen = chosenCards[0];
           temp.moveCardTo(chosen, player.hand);
           SHOW_CARDS_TO_PLAYER(store, state, opponent, chosenCards);
-          chosenCards.forEach((card, index) => {
-            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-          });
         }
 
         // Create a CardList of the remaining cards (excluding the chosen card)

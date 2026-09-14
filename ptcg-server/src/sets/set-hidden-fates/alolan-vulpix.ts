@@ -1,4 +1,4 @@
-import { Card, CardType, ChooseCardsPrompt, GameLog, GameMessage, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { Card, CardType, ChooseCardsPrompt, GameMessage, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -57,7 +57,6 @@ export class AlolanVulpix extends PokemonCard {
         cards.forEach((card, index) => {
           player.deck.moveCardTo(card, player.hand);
 
-          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
 
         });
 

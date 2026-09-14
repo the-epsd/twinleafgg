@@ -1,4 +1,4 @@
-import { ChooseCardsPrompt, GameError, GameLog, GameMessage, PokemonCard, StateUtils } from '../../../game';
+import { ChooseCardsPrompt, GameError, GameMessage, PokemonCard, StateUtils } from '../../../game';
 import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -84,11 +84,6 @@ export class BuddyBuddyRescue extends TrainerCard {
           { min: 1, max: 1, allowCancel: false, blocked: blockedOpponent }
         ), selected => {
           if (selected && selected.length > 0) {
-            const card = selected[0];
-            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
-              name: opponent.name,
-              card: card.name
-            });
             store.prompt(state, new ChooseCardsPrompt(
               opponent,
               GameMessage.CHOOSE_CARD_TO_HAND,
@@ -114,11 +109,6 @@ export class BuddyBuddyRescue extends TrainerCard {
           { min: 1, max: 1, allowCancel: false, blocked }
         ), selected => {
           if (selected && selected.length > 0) {
-            const card = selected[0];
-            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
-              name: player.name,
-              card: card.name
-            });
             store.prompt(state, new ChooseCardsPrompt(
               player,
               GameMessage.CHOOSE_CARD_TO_HAND,

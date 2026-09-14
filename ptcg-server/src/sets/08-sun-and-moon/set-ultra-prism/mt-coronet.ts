@@ -1,6 +1,6 @@
 import { Card, ChooseCardsPrompt, EnergyCard, ShowCardsPrompt, ShuffleDeckPrompt } from '../../../game';
 import { GameError } from '../../../game/game-error';
-import { GameLog, GameMessage } from '../../../game/game-message';
+import { GameMessage } from '../../../game/game-message';
 import { EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -56,9 +56,6 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
       player.discard.moveCardTo(card, player.hand);
     });
 
-    cards.forEach((card, index) => {
-      store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-    });
 
     return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
       player.deck.applyOrder(order);

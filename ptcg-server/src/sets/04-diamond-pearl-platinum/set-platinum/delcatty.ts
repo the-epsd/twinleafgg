@@ -1,4 +1,4 @@
-import { CardList, ChooseCardsPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, PlayerType, ShowCardsPrompt, State, StateUtils, StoreLike, OrderCardsPrompt } from '../../../game';
+import { CardList, ChooseCardsPrompt, ConfirmPrompt, EnergyCard, GameError, GameMessage, PlayerType, ShowCardsPrompt, State, StateUtils, StoreLike, OrderCardsPrompt } from '../../../game';
 import { BoardEffect, CardType, EnergyType, Stage, SuperType } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { PowerType } from '../../../game/store/card/pokemon-types';
@@ -85,7 +85,6 @@ export class Delcatty extends PokemonCard {
             if (selected.length === 0) return;
 
             selected.forEach(card => {
-              store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
               player.discard.moveCardTo(card, deckTop);
             });
 
