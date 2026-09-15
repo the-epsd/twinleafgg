@@ -3,6 +3,7 @@ import { TrainerType, SpecialCondition } from '../../../game/store/card/card-typ
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+import { TRAINER_TARGET_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class KogasTrap extends TrainerCard {
@@ -16,12 +17,16 @@ export class KogasTrap extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_TRAINER_USED(effect, this)) {
-      const opponent = StateUtils.getOpponent(state, effect.player);
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-      effect.player.playedKogasTrap = true;
+      // "Played this card" synergy still applies even if the Active blocks the status.
+      player.playedKogasTrap = true;
 
-      opponent.active.addSpecialCondition(SpecialCondition.CONFUSED);
-      opponent.active.addSpecialCondition(SpecialCondition.POISONED);
+      if (!TRAINER_TARGET_BLOCKED(store, state, player, this, opponent.active)) {
+        opponent.active.addSpecialCondition(SpecialCondition.CONFUSED);
+        opponent.active.addSpecialCondition(SpecialCondition.POISONED);
+      }
     }
 
     if (effect instanceof EndTurnEffect) {

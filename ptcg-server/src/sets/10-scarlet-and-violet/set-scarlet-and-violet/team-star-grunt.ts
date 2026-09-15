@@ -7,25 +7,17 @@ import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { StateUtils, CardList, ChooseCardsPrompt, Player } from '../../../game';
+import { TRAINER_TARGET_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class TeamStarGrunt extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public regulationMark = 'G';
-
   public set: string = 'SVI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '195';
-
   public name: string = 'Team Star Grunt';
-
   public fullName: string = 'Team Star Grunt SVI';
-
-  public text: string =
-    'Put an Energy attached to your opponent\'s Active Pokémon on top of their deck.';
+  public text: string = 'Put an Energy attached to your opponent\'s Active Pokémon on top of their deck.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     const opponent = StateUtils.getOpponent(state, player);
@@ -64,6 +56,11 @@ export class TeamStarGrunt extends TrainerCard {
       const deckTop = new CardList();
 
       const target = opponent.active;
+
+      if (TRAINER_TARGET_BLOCKED(store, state, player, this, target)) {
+        return state;
+      }
+
       state = store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,

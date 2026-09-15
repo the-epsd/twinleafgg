@@ -8,8 +8,9 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
+import { TRAINER_TARGET_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect, trainerCard: GiovannisCharisma): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
@@ -25,6 +26,10 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // Defending Pokemon has no energy cards attached
   if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
+    return state;
+  }
+
+  if (TRAINER_TARGET_BLOCKED(store, state, player, trainerCard, opponent.active)) {
     return state;
   }
 
@@ -61,30 +66,19 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       }
     });
 
-
-
     return state;
   });
 }
 
 export class GiovannisCharisma extends TrainerCard {
-
-  public regulationMark = 'G';
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
+  public regulationMark = 'G';
   public set: string = 'MEW';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '161';
-
   public name: string = 'Giovanni\'s Charisma';
-
   public fullName: string = 'Giovanni\'s Charisma MEW';
-
-  public text: string =
-    'Put an Energy attached to your opponent\'s Active Pokémon into their hand. If you do, attach an Energy card from your hand to your Active Pokémon.';
+  public text: string = 'Put an Energy attached to your opponent\'s Active Pokémon into their hand. If you do, attach an Energy card from your hand to your Active Pokémon.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     if (player.supporterTurn > 0) {
@@ -93,15 +87,12 @@ export class GiovannisCharisma extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, effect);
+      const generator = playCard(() => generator.next(), store, state, effect, this);
       return generator.next().value;
     }
 
     return state;
   }
-
 }

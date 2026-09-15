@@ -81,7 +81,12 @@ export function WAS_TRAINER_TARGET_BLOCKED(effect: TrainerTargetEffect): boolean
 
 /**
  * Probe whether `trainerCard`'s effect is prevented on `slot`. For trainers
- * that affect a Pokemon without a targeting prompt.
+ * that affect a Pokemon without a targeting prompt (e.g. Hypnotoxic Laser,
+ * Koga's Trap). Call immediately before mutating that slot; if this returns
+ * true, skip only that slot's effect — still play/discard the trainer and keep
+ * unrelated effects (own Active, stadium discard, "played this card" markers).
+ * Do not rely on ChoosePokemonPrompt existing; prompt results are already
+ * filtered by filterTrainerPromptResult.
  */
 export function TRAINER_TARGET_BLOCKED(
   store: StoreLike,

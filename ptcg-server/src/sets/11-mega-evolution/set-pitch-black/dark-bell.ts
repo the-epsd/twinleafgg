@@ -3,7 +3,7 @@ import { TrainerType, CardType, SpecialCondition } from '../../../game/store/car
 import { StoreLike, State, StateUtils, Player } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE } from '../../../game/store/prefabs/prefabs';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, TRAINER_TARGET_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class DarkBell extends TrainerCard {
@@ -59,7 +59,9 @@ export class DarkBell extends TrainerCard {
       };
 
       confuseTarget(player, player.active);
-      confuseTarget(opponent, opponent.active);
+      if (!TRAINER_TARGET_BLOCKED(store, state, player, this, opponent.active)) {
+        confuseTarget(opponent, opponent.active);
+      }
     }
 
     return state;
