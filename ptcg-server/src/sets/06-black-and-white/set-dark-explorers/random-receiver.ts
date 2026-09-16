@@ -64,7 +64,6 @@ export class RandomReceiver extends TrainerCard {
     'Reveal cards from the top of your deck until you reveal a Supporter ' +
     'card. Put it into your hand. Shuffle the other cards back into your deck.';
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

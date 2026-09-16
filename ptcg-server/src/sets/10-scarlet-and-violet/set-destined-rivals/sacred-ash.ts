@@ -76,7 +76,6 @@ export class SacredAsh extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, this, effect);

@@ -12,7 +12,6 @@ import { CardList } from '../../game/store/state/card-list';
 import { ShuffleDeckPrompt } from '../../game';
 import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
-
 function* playCard(next: Function, store: StoreLike, state: State,
   self: ComputerSearch, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -50,7 +49,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     return state;
   }
 
-  player.hand.moveCardTo(self, player.discard);
+  MOVE_CARDS(store, state, player.hand, player.discard, { cards: [self], sourceCard: self });
   MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: self });
 
   yield store.prompt(state, new ChooseCardsPrompt(

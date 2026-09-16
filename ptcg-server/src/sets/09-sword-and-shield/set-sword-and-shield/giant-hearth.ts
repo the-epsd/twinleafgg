@@ -11,6 +11,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { Card } from '../../../game/store/card/card';
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* useStadium(next: Function, store: StoreLike, state: State, effect: UseStadiumEffect): IterableIterator<State> {
   const player = effect.player;
@@ -38,7 +39,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
     return state;
   }
 
-  player.hand.moveCardsTo(cards, player.discard);
+  MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: effect.stadium });
 
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
@@ -51,7 +52,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
     next();
   });
 
-  player.deck.moveCardsTo(cards, player.hand);
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: effect.stadium });
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(

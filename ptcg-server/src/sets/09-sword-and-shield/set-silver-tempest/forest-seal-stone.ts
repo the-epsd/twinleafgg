@@ -8,6 +8,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { ToolEffect } from '../../../game/store/effects/play-card-effects';
 import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 import { PowerEffect } from '../../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class ForestSealStone extends TrainerCard {
 
@@ -80,7 +81,7 @@ export class ForestSealStone extends TrainerCard {
         {},
         { min: 0, max: 1, allowCancel: false }
       ), cards => {
-        player.deck.moveCardsTo(cards, player.hand);
+        MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

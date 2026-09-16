@@ -5,7 +5,7 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt, GameError, GameMessage, Player, StateUtils } from '../../../game';
-
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Eri extends TrainerCard {
 
@@ -33,7 +33,6 @@ export class Eri extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
@@ -45,7 +44,7 @@ export class Eri extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -57,12 +56,12 @@ export class Eri extends TrainerCard {
         { allowCancel: false, min: 0, max: 2 }
       ), cards => {
         if (cards === null || cards.length === 0) {
-          player.supporter.moveCardTo(this, player.discard);
+          MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
           return;
         }
-        player.supporter.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
         cards.forEach(card => {
-          opponent.hand.moveCardTo(card, opponent.discard);
+          MOVE_CARDS(store, state, opponent.hand, opponent.discard, { cards: [card], sourceCard: this });
 
         });
       });

@@ -2,7 +2,7 @@ import { Card, CardType, GameError, GameMessage, PlayerType, PokemonCard, State,
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* useStadium(next: Function, store: StoreLike, state: State, effect: UseStadiumEffect): IterableIterator<State> {
   const player = effect.player;
@@ -27,7 +27,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
     return state;
   }
 
-  player.hand.moveCardsTo(cards, player.discard);
+  MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: effect.stadium });
 
   let psychicPokemon = 0;
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
@@ -38,7 +38,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
 
   const cardsToDraw = psychicPokemon - player.hand.cards.length;
   if (cardsToDraw > 0) {
-    player.deck.moveTo(player.hand, cardsToDraw);
+    MOVE_CARDS(store, state, player.deck, player.hand, { count: cardsToDraw, sourceCard: effect.stadium });
   }
 
   return state;

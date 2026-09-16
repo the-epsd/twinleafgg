@@ -82,7 +82,6 @@ export class TeamRocketsGreatBall extends TrainerCard {
                   });
                 }
 
-
             if (cards.length > 0) {
               state = store.prompt(state, new ShowCardsPrompt(
                 opponent.id,
@@ -96,7 +95,6 @@ export class TeamRocketsGreatBall extends TrainerCard {
                     player.deck.applyOrder(order);
                   });
                 }
-
 
                 if (cards.length > 0) {
                   state = store.prompt(

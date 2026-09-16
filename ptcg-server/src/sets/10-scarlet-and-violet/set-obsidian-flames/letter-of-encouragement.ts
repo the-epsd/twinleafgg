@@ -11,7 +11,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { ChooseCardsPrompt, Player } from '../../../game';
-import { REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: LetterOfEncouragement, effect: TrainerEffect): IterableIterator<State> {
@@ -40,9 +40,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     cards = selected || [];
     next();
 
-    player.deck.moveCardsTo(cards, player.hand);
-
-
+    MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
 
     return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
       player.deck.applyOrder(order);
@@ -71,7 +69,6 @@ Search your deck for up to 3 Basic Energy cards, reveal them, and put them into 
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

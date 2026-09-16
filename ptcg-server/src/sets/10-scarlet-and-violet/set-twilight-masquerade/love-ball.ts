@@ -7,6 +7,7 @@ import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { GameMessage } from '../../../game/game-message';
 import { Card, GameError, Player, PokemonCard, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -39,7 +40,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     next();
   });
 
-  player.deck.moveCardsTo(cards, player.hand);
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: effect.trainerCard });
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
@@ -53,7 +54,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.deck.applyOrder(order);
   });
 }
-
 
 export class LoveBall extends TrainerCard {
 
@@ -74,7 +74,6 @@ export class LoveBall extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

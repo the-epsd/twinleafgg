@@ -16,6 +16,7 @@ import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -43,7 +44,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
 
   const max = Math.min(2, slots.length);
 
@@ -66,8 +67,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   cards.forEach((card, index) => {
     store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]));
   });
-
-
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

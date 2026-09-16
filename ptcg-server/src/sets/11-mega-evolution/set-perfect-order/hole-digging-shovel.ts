@@ -3,6 +3,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class HoleDiggingShovel extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -15,7 +16,7 @@ export class HoleDiggingShovel extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      effect.player.deck.moveTo(effect.player.discard, 2);
+      MOVE_CARDS(store, state, effect.player.deck, effect.player.discard, { count: 2, sourceCard: this });
     }
 
     return state;

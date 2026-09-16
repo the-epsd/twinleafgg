@@ -8,6 +8,7 @@ import { Card, CardList, StoreLike, State, GameError, GameMessage, ShuffleDeckPr
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class MistysDetermination extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -46,7 +47,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const player = effect.player;
 
   // Move supporter to supporter zone, prevent default discard
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   effect.preventDefault = true;
 
   // Step 1: Discard a card from your hand
@@ -58,7 +59,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     { min: 1, max: 1, allowCancel: false }
   ), (selected: Card[]) => {
     if (selected && selected.length > 0) {
-      player.hand.moveCardsTo(selected, player.discard);
+      MOVE_CARDS(store, state, player.hand, player.discard, { cards: selected, sourceCard: self });
     }
     next();
   });
@@ -67,7 +68,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const topCount = Math.min(8, player.deck.cards.length);
   if (topCount > 0) {
     const deckTop = new CardList();
-    player.deck.moveTo(deckTop, topCount);
+    MOVE_CARDS(store, state, player.deck, deckTop, { count: topCount, sourceCard: self });
 
     yield store.prompt(state, new ChooseCardsPrompt(
       player,
@@ -77,16 +78,15 @@ function* playCard(next: Function, store: StoreLike, state: State,
       { min: 1, max: 1, allowCancel: false }
     ), (selected: Card[]) => {
       if (selected && selected.length > 0) {
-        deckTop.moveCardsTo(selected, player.hand);
+        MOVE_CARDS(store, state, deckTop, player.hand, { cards: selected, sourceCard: self });
       }
       // Put remaining cards back on top of deck
-      deckTop.moveTo(player.deck);
+      MOVE_CARDS(store, state, deckTop, player.deck, { sourceCard: self });
       next();
     });
   }
 
   // Move supporter to discard
-
 
   // Shuffle deck
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

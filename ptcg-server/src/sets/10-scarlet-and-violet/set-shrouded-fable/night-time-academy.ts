@@ -8,6 +8,7 @@ import { CardList, ChooseCardsPrompt } from '../../../game';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class NightTimeAcademy extends TrainerCard {
 
@@ -47,7 +48,7 @@ export class NightTimeAcademy extends TrainerCard {
       ), selected => {
         const cards = selected || [];
         if (cards.length > 0) {
-          player.hand.moveCardsTo(cards, deckTop);
+          MOVE_CARDS(store, state, player.hand, deckTop, { cards: cards, sourceCard: this });
         }
         deckTop.moveToTopOfDestination(player.deck);
       });

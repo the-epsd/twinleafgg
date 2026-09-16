@@ -8,6 +8,7 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Defender extends TrainerCard {
 
@@ -61,7 +62,7 @@ export class Defender extends TrainerCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList.marker.hasMarker(this.DEFENDER_MARKER, this)) {
           cardList.marker.removeMarker(this.DEFENDER_MARKER, this);
-          cardList.moveCardTo(this, player.discard);
+          MOVE_CARDS(store, state, cardList, player.discard, { cards: [this], sourceCard: this });
         }
       });
     }

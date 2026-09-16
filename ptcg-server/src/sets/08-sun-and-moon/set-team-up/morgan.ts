@@ -7,7 +7,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { GameError, GameMessage, StoreLike, State, SlotType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY } from '../../../game/store/prefabs/prefabs';
+import {LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Morgan extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -42,9 +42,9 @@ export class Morgan extends TrainerCard {
       const evelynCard = player.hand.cards.find(c => c.name === 'Evelyn');
       const nitaCard = player.hand.cards.find(c => c.name === 'Nita');
 
-      if (danaCard) { player.hand.moveCardTo(danaCard, player.discard); }
-      if (evelynCard) { player.hand.moveCardTo(evelynCard, player.discard); }
-      if (nitaCard) { player.hand.moveCardTo(nitaCard, player.discard); }
+      if (danaCard) { MOVE_CARDS(store, state, player.hand, player.discard, { cards: [danaCard], sourceCard: this }); }
+      if (evelynCard) { MOVE_CARDS(store, state, player.hand, player.discard, { cards: [evelynCard], sourceCard: this }); }
+      if (nitaCard) { MOVE_CARDS(store, state, player.hand, player.discard, { cards: [nitaCard], sourceCard: this }); }
 
       if (player.deck.cards.length === 0) {
         return state;

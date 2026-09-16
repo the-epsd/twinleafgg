@@ -5,6 +5,8 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+
 export class Pokedex extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
 
@@ -29,7 +31,7 @@ export class Pokedex extends TrainerCard {
       }
 
       const deckTop = new CardList();
-      player.deck.moveTo(deckTop, 5);
+      MOVE_CARDS(store, state, player.deck, deckTop, { count: 5, sourceCard: this });
 
       return store.prompt(state, new OrderCardsPrompt(
         player.id,

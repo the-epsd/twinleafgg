@@ -8,6 +8,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { CardList } from '../../../game/store/state/card-list';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class AcroBike extends TrainerCard {
 
@@ -35,10 +36,10 @@ export class AcroBike extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       const deckTop = new CardList();
-      player.deck.moveTo(deckTop, 2);
+      MOVE_CARDS(store, state, player.deck, deckTop, { count: 2, sourceCard: this });
 
       return store.prompt(state, new ChooseCardsPrompt(
         player,
@@ -47,8 +48,8 @@ export class AcroBike extends TrainerCard {
         {},
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
-        deckTop.moveCardsTo(selected, player.hand);
-        deckTop.moveTo(player.discard);
+        MOVE_CARDS(store, state, deckTop, player.hand, { cards: selected, sourceCard: this });
+        MOVE_CARDS(store, state, deckTop, player.discard, { sourceCard: this });
 
       });
     }

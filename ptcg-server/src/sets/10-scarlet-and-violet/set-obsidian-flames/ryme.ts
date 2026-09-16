@@ -5,7 +5,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { SupporterEffect, TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
-
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Ryme extends TrainerCard {
 
@@ -26,14 +26,12 @@ export class Ryme extends TrainerCard {
   public text: string =
     'Draw 3 cards. Switch out your opponent\'s Active Pokémon to the Bench. (Your opponent chooses the new Active Pokémon.)';
 
-
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     if (player.supporterTurn > 0) {
       return false;
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -45,18 +43,17 @@ export class Ryme extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
       // Draw 3 cards
-      player.deck.moveTo(player.hand, 3);
+      MOVE_CARDS(store, state, player.deck, player.hand, { count: 3, sourceCard: this });
 
       // Get opponent
       const opponent = StateUtils.getOpponent(state, player);
 
       if (!opponent.bench.some(c => c.cards.length > 0)) {
-
 
         return state;
       }
@@ -88,8 +85,6 @@ export class Ryme extends TrainerCard {
           opponent.active.clearEffects();
           opponent.switchPokemon(results[0]);
         }
-
-
 
         return state;
       });

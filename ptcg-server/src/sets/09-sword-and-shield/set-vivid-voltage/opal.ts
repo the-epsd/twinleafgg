@@ -7,7 +7,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { MULTIPLE_COIN_FLIPS_PROMPT, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../../game/store/prefabs/prefabs';
+import {MULTIPLE_COIN_FLIPS_PROMPT, SEARCH_DECK_FOR_CARDS_TO_HAND, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Opal extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -28,7 +28,7 @@ export class Opal extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       effect.preventDefault = true;
 
       MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {

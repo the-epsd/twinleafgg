@@ -4,7 +4,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Stage, TrainerType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
-import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH } from '../../../game/store/prefabs/prefabs';
+import {SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class GreatBall extends TrainerCard {
@@ -21,7 +21,7 @@ export class GreatBall extends TrainerCard {
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       effect.preventDefault = true;
 
       const blocked: number[] = [];

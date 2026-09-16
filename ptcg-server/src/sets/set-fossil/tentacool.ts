@@ -63,7 +63,7 @@ export class Tentacool extends PokemonCard {
       // Move tools to discard first
       if (tools.length > 0) {
         for (const tool of tools) {
-          pokemonCardList.moveCardTo(tool, player.discard);
+          MOVE_CARDS(store, state, pokemonCardList, player.discard, { cards: [tool], sourceCard: this });
         }
       }
 

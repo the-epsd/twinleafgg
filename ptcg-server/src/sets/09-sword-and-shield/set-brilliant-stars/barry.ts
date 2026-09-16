@@ -7,7 +7,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State, GameError, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Barry extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -32,10 +32,9 @@ export class Barry extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       DRAW_CARDS(store, state, player, 3);
-
 
     }
 

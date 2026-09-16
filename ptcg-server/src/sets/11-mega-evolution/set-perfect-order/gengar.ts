@@ -67,7 +67,7 @@ export class Gengar extends PokemonCard {
 
           // Discard non-Pokemon cards before KO
           if (otherCards.length > 0) {
-            target.moveCardsTo(otherCards, player.discard);
+            MOVE_CARDS(store, state, target, player.discard, { cards: otherCards, sourceCard: this });
           }
 
           // Add marker to track that this Gengar should be returned to hand

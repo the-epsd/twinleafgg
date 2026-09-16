@@ -47,7 +47,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     { min: 0, max: 1, allowCancel: false }
   ), selected => {
     if (selected && selected.length > 0) {
-      player.deck.moveCardsTo(selected, player.hand);
+      MOVE_CARDS(store, state, player.deck, player.hand, { cards: selected, sourceCard: self });
 
       store.prompt(state, new ShowCardsPrompt(
         opponent.id,

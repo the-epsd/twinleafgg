@@ -8,6 +8,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { DamageMap, GameError, MoveDamagePrompt, StateUtils } from '../../../game';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Grimsley extends TrainerCard {
 
@@ -46,7 +47,7 @@ export class Grimsley extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_MOVE_DAMAGE);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -66,7 +67,7 @@ export class Grimsley extends TrainerCard {
         { min: 1, max: 3, allowCancel: false, singleSourceTarget: true, singleDestinationTarget: true }
       ), transfers => {
         if (transfers === null) {
-          player.supporter.moveCardTo(this, player.discard);
+          MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
           return state;
         }
 
@@ -77,7 +78,7 @@ export class Grimsley extends TrainerCard {
           target.damage += 10;
         }
 
-        player.supporter.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
         return state;
       });
     }

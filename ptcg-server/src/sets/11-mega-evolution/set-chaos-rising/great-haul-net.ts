@@ -15,6 +15,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { CardType } from '../../../game/store/card/card-types';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(
   next: Function,
@@ -55,10 +56,10 @@ function* playCard(
     },
   );
   if (cards.length > 0) {
-    player.discard.moveCardsTo(cards, player.deck);
+    MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: effect.trainerCard });
   }
   const cardList = StateUtils.findCardList(state, effect.trainerCard);
-  if (cardList) cardList.moveCardTo(effect.trainerCard, player.discard);
+  if (cardList) MOVE_CARDS(store, state, cardList, player.discard, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
   return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
@@ -94,7 +95,6 @@ export class GreatHaulNet extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

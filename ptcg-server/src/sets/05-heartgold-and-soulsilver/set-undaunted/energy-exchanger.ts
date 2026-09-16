@@ -11,6 +11,7 @@ import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -41,7 +42,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   // Put Energy from hand into the deck
-  player.hand.moveCardsTo(cards, player.deck);
+  MOVE_CARDS(store, state, player.hand, player.deck, { cards: cards, sourceCard: effect.trainerCard });
 
   yield store.prompt(state, new ShowCardsPrompt(
     opponent.id,
@@ -60,7 +61,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     next();
   });
 
-  player.deck.moveCardsTo(cards, player.hand);
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: effect.trainerCard });
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
@@ -69,8 +70,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       cards
     ), () => next());
   }
-
-
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
@@ -87,7 +86,6 @@ export class EnergyExchanger extends TrainerCard {
 
   public text: string =
     'Choose an Energy card from your hand, show it to your opponent, and put it on top of your deck. Search your deck for an Energy card, show it to your opponent, and put it into your hand. Shuffle your deck afterward.';
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -7,6 +7,7 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { CardList } from '../../../game/store/state/card-list';
 import { GameLog, GameMessage, ShowCardsPrompt } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Pokestop extends TrainerCard {
 
@@ -30,7 +31,7 @@ export class Pokestop extends TrainerCard {
     const player = effect.player;
 
     const deckTop = new CardList();
-    player.deck.moveTo(deckTop, 3);
+    MOVE_CARDS(store, state, player.deck, deckTop, { count: 3, sourceCard: this });
 
     // Filter for item cards
     const itemCards = deckTop.cards.filter(c =>
@@ -41,7 +42,7 @@ export class Pokestop extends TrainerCard {
     const discards = deckTop.cards.filter(c => !itemCards.includes(c));
 
     // Move all cards to discard
-    deckTop.moveTo(player.discard, deckTop.cards.length);
+    MOVE_CARDS(store, state, deckTop, player.discard, { count: deckTop.cards.length, sourceCard: this });
 
     itemCards.forEach((card, index) => {
       store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
@@ -52,7 +53,7 @@ export class Pokestop extends TrainerCard {
     });
 
     // Move item cards to hand
-    player.discard.moveCardsTo(itemCards, player.hand);
+    MOVE_CARDS(store, state, player.discard, player.hand, { cards: itemCards, sourceCard: this });
 
     if (itemCards.length > 0) {
       const opponent = StateUtils.getOpponent(state, player);

@@ -149,7 +149,7 @@ export class EldegossV extends PokemonCard {
       CONFIRMATION_PROMPT(store, state, effect.player, () => {
         const player = effect.player;
         player.active.clearEffects();
-        player.active.moveTo(player.deck);
+        MOVE_CARDS(store, state, player.active, player.deck, { sourceCard: this });
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
           player.deck.applyOrder(order);

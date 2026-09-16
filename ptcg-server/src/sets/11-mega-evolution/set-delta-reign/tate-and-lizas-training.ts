@@ -3,7 +3,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
+import {DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class TateAndLizasTraining extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -23,16 +23,16 @@ export class TateAndLizasTraining extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       effect.preventDefault = true;
 
       DRAW_CARDS(store, state, player, 2);
 
       const stadium = StateUtils.getStadiumCard(state);
       if (stadium && stadium.name.includes('Legendary')) {
-        player.supporter.moveCardTo(effect.trainerCard, player.hand);
+        MOVE_CARDS(store, state, player.supporter, player.hand, { cards: [effect.trainerCard], sourceCard: this });
       } else {
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [effect.trainerCard], sourceCard: this });
       }
     }
 

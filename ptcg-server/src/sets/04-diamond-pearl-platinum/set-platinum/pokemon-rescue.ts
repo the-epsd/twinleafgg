@@ -7,6 +7,7 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -30,7 +31,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       // Discard trainer only when user selected a Pokemon
 
       // Recover discarded Pokemon
-      player.discard.moveCardsTo(selected, player.hand);
+      MOVE_CARDS(store, state, player.discard, player.hand, { cards: selected, sourceCard: effect.trainerCard });
     }
 
   });

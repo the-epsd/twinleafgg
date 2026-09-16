@@ -10,6 +10,7 @@ import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { ToolEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class GiantBomb extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
@@ -53,7 +54,7 @@ export class GiantBomb extends TrainerCard {
       // Check if this tool is attached to one of the opponent's Pokemon
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         if (cardList.tools.includes(this)) {
-          cardList.moveCardTo(this, opponent.discard);
+          MOVE_CARDS(store, state, cardList, opponent.discard, { cards: [this], sourceCard: this });
         }
       });
     }

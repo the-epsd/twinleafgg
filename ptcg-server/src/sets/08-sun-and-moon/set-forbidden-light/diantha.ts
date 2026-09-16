@@ -6,7 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Diantha extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -42,7 +42,7 @@ export class Diantha extends TrainerCard {
       }
 
       // We will discard this card after prompt confirmation
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       // This will prevent unblocked supporter to appear in the discard pile
       effect.preventDefault = true;
@@ -54,8 +54,7 @@ export class Diantha extends TrainerCard {
         {},
         { min: 2, max: 2, allowCancel: false }
       ), cards => {
-        player.discard.moveCardsTo(cards, player.hand);
-
+        MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
 
         return state;
       });

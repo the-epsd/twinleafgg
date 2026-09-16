@@ -5,6 +5,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { CardList, GameMessage, ShuffleDeckPrompt, ChooseCardsPrompt, ShowCardsPrompt, StateUtils, GameError, Player } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class GreatBall extends TrainerCard {
 
@@ -44,7 +45,7 @@ export class GreatBall extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      player.deck.moveTo(temp, 7);
+      MOVE_CARDS(store, state, player.deck, temp, { count: 7, sourceCard: this });
 
       return store.prompt(state, new ChooseCardsPrompt(
         player,
@@ -57,18 +58,17 @@ export class GreatBall extends TrainerCard {
         if (chosenCards.length <= 0) {
           // No Pokemon chosen, shuffle all back
           temp.cards.forEach(card => {
-            temp.moveTo(player.deck);
-            player.supporter.moveCardTo(this, player.discard);
+            MOVE_CARDS(store, state, temp, player.deck, { sourceCard: this });
+            MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
           });
         }
 
         if (chosenCards.length > 0) {
           // Move chosen Pokemon to hand
           const pokemon = chosenCards[0];
-          temp.moveCardTo(pokemon, player.hand);
-          temp.moveTo(player.deck);
-          player.supporter.moveCardTo(this, player.discard);
-
+          MOVE_CARDS(store, state, temp, player.hand, { cards: [pokemon], sourceCard: this });
+          MOVE_CARDS(store, state, temp, player.deck, { sourceCard: this });
+          MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
 
           if (chosenCards.length > 0) {
             state = store.prompt(state, new ShowCardsPrompt(
@@ -77,7 +77,7 @@ export class GreatBall extends TrainerCard {
               chosenCards), () => state);
           }
         }
-        player.supporter.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

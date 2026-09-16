@@ -6,6 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class NinjaBoy extends TrainerCard {
 
@@ -34,7 +35,7 @@ export class NinjaBoy extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -73,16 +74,11 @@ export class NinjaBoy extends TrainerCard {
           }
 
           cards.forEach((card, index) => {
-            target[0].moveCardTo(card, player.deck);
-            player.deck.moveCardTo(card, target[0]);
+            MOVE_CARDS(store, state, target[0], player.deck, { cards: [card], sourceCard: this });
+            MOVE_CARDS(store, state, player.deck, target[0], { cards: [card], sourceCard: this });
           });
 
-
-
-
           store.log(state, GameLog.LOG_PLAYER_SWITCHES_POKEMON_WITH_POKEMON_FROM_DECK, { name: player.name, card: target[0].getPokemonCard()!.name, secondCard: cards[0].name });
-
-
 
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);

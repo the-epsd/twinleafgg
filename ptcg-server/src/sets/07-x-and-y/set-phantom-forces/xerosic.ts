@@ -5,6 +5,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { SupporterEffect, TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Xerosic extends TrainerCard {
 
@@ -67,7 +68,7 @@ export class Xerosic extends TrainerCard {
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       const toolOption = {
         message: GameMessage.CHOICE_TOOL,
@@ -110,20 +111,20 @@ export class Xerosic extends TrainerCard {
                     { min: 1, max: 1, allowCancel: false }
                   ), selected => {
                     if (selected && selected.length > 0) {
-                      target.moveCardTo(selected[0], owner.discard);
+                      MOVE_CARDS(store, state, target, owner.discard, { cards: [selected[0]], sourceCard: this });
                     }
-                    player.supporter.moveCardTo(this, player.discard);
+                    MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
                     return state;
                   });
                 } else {
-                  target.moveCardTo(target.tools[0], owner.discard);
+                  MOVE_CARDS(store, state, target, owner.discard, { cards: [target.tools[0]], sourceCard: this });
                 }
               }
-              player.supporter.moveCardTo(this, player.discard);
+              MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
               return state;
             });
 
-            player.supporter.moveCardTo(this, player.discard);
+            MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
             return state;
           });
         }
@@ -173,7 +174,7 @@ export class Xerosic extends TrainerCard {
               cards = selected || [];
               if (cards.length > 0) {
 
-                target.moveCardsTo(cards, opponent.discard);
+                MOVE_CARDS(store, state, target, opponent.discard, { cards: cards, sourceCard: this });
               }
 
               return state;
@@ -204,7 +205,7 @@ export class Xerosic extends TrainerCard {
           option.action();
         }
 
-        player.supporter.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
         return state;
       });
 

@@ -9,6 +9,7 @@ import { GameMessage } from '../../../game/game-message';
 import { Card } from '../../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { Player, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, self: PalPad, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -23,7 +24,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: PalPad,
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
 
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
@@ -38,7 +39,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: PalPad,
   });
 
   if (cards.length > 0) {
-    player.discard.moveCardsTo(cards, player.deck);
+    MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: self });
     if (cards.length > 0) {
       state = store.prompt(state, new ShowCardsPrompt(
         opponent.id,

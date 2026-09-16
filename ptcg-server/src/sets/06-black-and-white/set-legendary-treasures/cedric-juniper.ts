@@ -7,7 +7,7 @@ import { TrainerType, SuperType } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, GameError, SelectPrompt, CardList, ChooseCardsPrompt, ShowCardsPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 
 export class CedricJuniper extends TrainerCard {
@@ -37,7 +37,7 @@ export class CedricJuniper extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       const selectedPokemon = new CardList();
       store.prompt(state, new ChooseCardsPrompt(
@@ -53,7 +53,7 @@ export class CedricJuniper extends TrainerCard {
           return;
         }
 
-        player.hand.moveCardsTo(cards, selectedPokemon);
+        MOVE_CARDS(store, state, player.hand, selectedPokemon, { cards: cards, sourceCard: this });
 
         // Height data is not stored on PokemonCard in the engine; opponent self-adjudicates
         // whether their pre-reveal guess was correct.
@@ -76,7 +76,7 @@ export class CedricJuniper extends TrainerCard {
               DRAW_CARDS(store, state, player, 3);
             }
 
-            selectedPokemon.moveTo(player.hand);
+            MOVE_CARDS(store, state, selectedPokemon, player.hand, { sourceCard: this });
 
           });
         });

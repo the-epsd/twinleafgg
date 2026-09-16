@@ -7,6 +7,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 import { Player } from '../../../game/store/state/player';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class JumboIce extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -56,7 +57,7 @@ export class JumboIce extends TrainerCard {
           store.reduceEffect(state, healEffect);
         }
       }
-      player.supporter.moveCardTo(this, player.discard);
+      MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
     }
 
     return state;

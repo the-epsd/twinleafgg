@@ -7,7 +7,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State, GamePhase } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
-import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import {IS_TOOL_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { StateUtils } from '../../../game/store/state-utils';
 
 export class SpiritMask extends TrainerCard {
@@ -48,7 +48,7 @@ export class SpiritMask extends TrainerCard {
       if (player.hand.cards.length > 0) {
         const randomIndex = Math.floor(Math.random() * player.hand.cards.length);
         const randomCard = player.hand.cards[randomIndex];
-        player.hand.moveCardTo(randomCard, player.discard);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards: [randomCard], sourceCard: this });
       }
     }
 

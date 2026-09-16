@@ -8,7 +8,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { AttachEnergyPrompt, GameError, StateUtils } from '../../../game';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { IS_ABILITY_BLOCKED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {IS_ABILITY_BLOCKED, SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class CafeMaster extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -32,7 +32,7 @@ export class CafeMaster extends TrainerCard {
       }
 
       // Move card to supporter area and prevent default discard
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       effect.preventDefault = true;
 
       // Prompt player to attach energy cards
@@ -61,7 +61,7 @@ export class CafeMaster extends TrainerCard {
         // Attach energy cards to targets
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.deck.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.deck, target, { cards: [transfer.card], sourceCard: this });
         }
 
         // Always shuffle deck after energy attachment (or no attachment)
@@ -69,7 +69,6 @@ export class CafeMaster extends TrainerCard {
       });
 
       // Move supporter card to discard pile
-
 
       // Check if we should end turn based on active Pokemon
       const playerActive = player.active.getPokemonCard();

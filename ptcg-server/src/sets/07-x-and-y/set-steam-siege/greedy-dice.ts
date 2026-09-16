@@ -5,7 +5,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { DrawPrizesEffect } from '../../../game/store/effects/game-effects';
 import { CoinFlipEffect, TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { CONFIRMATION_PROMPT, TAKE_SPECIFIC_PRIZES, TAKE_X_PRIZES } from '../../../game/store/prefabs/prefabs';
+import {CONFIRMATION_PROMPT, TAKE_SPECIFIC_PRIZES, TAKE_X_PRIZES, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
@@ -89,7 +89,7 @@ export class GreedyDice extends TrainerCard {
     // If the player agrees, discard Greedy Dice
     for (const [index, prize] of player.prizes.entries()) {
       if (prize.cards.includes(this)) {
-        player.prizes[index].moveTo(player.discard);
+        MOVE_CARDS(store, state, player.prizes[index], player.discard, { sourceCard: this });
         break;
       }
     }
@@ -101,7 +101,7 @@ export class GreedyDice extends TrainerCard {
       return state;
     }
 
-    player.supporter.moveCardTo(this, player.discard);
+    MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
 
     // Handle extra prize (excluding the group this card is in)
     yield TAKE_X_PRIZES(store, state, player, 1, {

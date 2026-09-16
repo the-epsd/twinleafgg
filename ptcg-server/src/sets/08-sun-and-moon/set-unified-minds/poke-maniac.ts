@@ -4,7 +4,7 @@ import { StoreLike, State, GameMessage, ChooseCardsPrompt } from '../../../game'
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class PokeManiac extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -37,7 +37,7 @@ export class PokeManiac extends TrainerCard {
       ), cards => {
         cards = cards || [];
         cards.forEach(card => {
-          player.deck.moveCardTo(card, player.hand);
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this });
         });
 
         return SHUFFLE_DECK(store, state, player);

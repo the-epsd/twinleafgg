@@ -4,7 +4,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { GamePhase, State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
-import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import {IS_TOOL_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { PlayerType } from '../../../game';
 
 export class BalloonBerry extends TrainerCard {
@@ -32,7 +32,7 @@ export class BalloonBerry extends TrainerCard {
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
         if (cardList.tools && cardList.tools.includes(this)) {
-          cardList.moveCardTo(this, player.discard);
+          MOVE_CARDS(store, state, cardList, player.discard, { cards: [this], sourceCard: this });
         }
       });
     }

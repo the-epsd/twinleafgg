@@ -139,12 +139,12 @@ function* playCard(
                 ),
                 (selected) => {
                   if (selected && selected.length > 0) {
-                    player.discard.moveCardsTo(selected, player.hand);
+                    MOVE_CARDS(store, state, player.discard, player.hand, { cards: selected, sourceCard: self });
                     // Now move the discarded card to discard
-                    player.hand.moveCardsTo(discarded, player.discard);
+                    MOVE_CARDS(store, state, player.hand, player.discard, { cards: discarded, sourceCard: self });
                     // Draw 3 cards
                     const drawnCards = player.deck.cards.slice(0, 3);
-                    player.deck.moveCardsTo(drawnCards, player.hand);
+                    MOVE_CARDS(store, state, player.deck, player.hand, { cards: drawnCards, sourceCard: self });
                   }
                 },
               );

@@ -10,7 +10,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { EnergyCard, Player, StateUtils } from '../../../game';
-import { SHOW_CARDS_TO_PLAYER } from '../../../game/store/prefabs/prefabs';
+import {SHOW_CARDS_TO_PLAYER, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(
   next: Function,
@@ -51,7 +51,7 @@ function* playCard(
 
       SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
 
-      player.deck.moveCardsTo(cards, player.hand);
+      MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: effect.trainerCard });
     },
   );
 

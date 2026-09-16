@@ -1,6 +1,8 @@
 import { CardList, ChooseCardsPrompt, GameError, GameMessage, ShowCardsPrompt, Stage, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+
 export class HisuianHeavyBall extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -41,7 +43,7 @@ export class HisuianHeavyBall extends TrainerCard {
 
       // Prevent default effect and move the trainer card to the supporter area
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       // Gather all prize cards for the prompt
       const allPrizeCards = new CardList();
@@ -83,8 +85,8 @@ export class HisuianHeavyBall extends TrainerCard {
 
         // Move the chosen Pokémon to the player's hand & move the Hisuian Heavy Ball to the prize cards
         if (chosenPrizeList) {
-          chosenPrizeList.moveCardTo(prizePokemon, player.hand);
-          player.supporter.moveCardTo(effect.trainerCard, chosenPrizeList);
+          MOVE_CARDS(store, state, chosenPrizeList, player.hand, { cards: [prizePokemon], sourceCard: this });
+          MOVE_CARDS(store, state, player.supporter, chosenPrizeList, { cards: [effect.trainerCard], sourceCard: this });
         }
 
         // Reset the face-down prizes

@@ -12,6 +12,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { ShowCardsPrompt, StateUtils, SuperType } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(
   next: Function,
@@ -67,7 +68,7 @@ function* playCard(
     );
   }
 
-  player.discard.moveCardsTo(cards, player.hand);
+  MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: self });
 }
 
 export class MaxRod extends TrainerCard {

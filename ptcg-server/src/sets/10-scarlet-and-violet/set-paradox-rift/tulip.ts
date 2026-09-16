@@ -10,6 +10,7 @@ import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Tulip, effect: TrainerEffect): IterableIterator<State> {
@@ -23,7 +24,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
@@ -55,9 +56,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     next();
   });
 
-  player.discard.moveCardsTo(cards, player.hand);
-
-
+  MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: self });
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
@@ -87,14 +86,12 @@ export class Tulip extends TrainerCard {
   public text: string =
     'Put up to 4 in any combination of [P] Pokémon and Basic [P] Energy cards from your discard pile into your hand.';
 
-
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     if (player.supporterTurn > 0) {
       return false;
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

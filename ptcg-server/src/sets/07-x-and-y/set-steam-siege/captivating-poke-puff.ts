@@ -14,6 +14,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class CaptivatingPokePuff extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -61,10 +62,9 @@ export class CaptivatingPokePuff extends TrainerCard {
         }
 
         cards.forEach((card, index) => {
-          opponent.hand.moveCardTo(card, slots[index]);
+          MOVE_CARDS(store, state, opponent.hand, slots[index], { cards: [card], sourceCard: this });
           slots[index].pokemonPlayedTurn = state.turn;
         });
-
 
       });
     }

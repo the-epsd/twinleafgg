@@ -27,7 +27,6 @@ export class TateAndLiza extends TrainerCard {
     '• Shuffle your hand into your deck. Then, draw 5 cards.' +
     '• Switch your Active Pokémon with 1 of your Benched Pokémon.';
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
 
@@ -39,7 +38,7 @@ export class TateAndLiza extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -98,7 +97,5 @@ export class TateAndLiza extends TrainerCard {
     }
     return state;
   }
-
-
 
 }

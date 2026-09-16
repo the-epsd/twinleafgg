@@ -5,6 +5,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class LostBlender extends TrainerCard {
 
@@ -41,7 +42,7 @@ export class LostBlender extends TrainerCard {
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       store.prompt(state, new ChooseCardsPrompt(
         player,
@@ -57,9 +58,9 @@ export class LostBlender extends TrainerCard {
           return state;
         }
 
-        player.hand.moveCardsTo(cards, player.lostzone);
-        player.deck.moveTo(player.hand, 1);
-        player.supporter.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.hand, player.lostzone, { cards: cards, sourceCard: this });
+        MOVE_CARDS(store, state, player.deck, player.hand, { count: 1, sourceCard: this });
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
 
         store.log(state, GameLog.LOG_PLAYER_DRAWS_CARD, { name: player.name });
       });

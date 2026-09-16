@@ -9,6 +9,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { EnergyCard } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Levincia extends TrainerCard {
 
@@ -51,7 +52,7 @@ export class Levincia extends TrainerCard {
         { allowCancel: false, min: 0, max: 2 }
       ), selected => {
         selected = selected || [];
-        player.discard.moveCardsTo(selected, player.hand);
+        MOVE_CARDS(store, state, player.discard, player.hand, { cards: selected, sourceCard: this });
       });
     }
 

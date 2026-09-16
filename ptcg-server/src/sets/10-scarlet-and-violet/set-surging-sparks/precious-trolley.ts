@@ -12,6 +12,8 @@ import {
   StoreLike,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+
 import {
   PlayPokemonFromDeckEffect,
   TrainerEffect,
@@ -45,7 +47,7 @@ export class PreciousTrolley extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       // Allow player to search deck and choose up to 2 Basic Pokemon
       const slots: PokemonCardList[] = player.bench.filter((b) => b.cards.length === 0);
@@ -89,7 +91,7 @@ export class PreciousTrolley extends TrainerCard {
             store.reduceEffect(state, playPokemonFromDeckEffect);
           });
 
-          player.supporter.moveCardTo(this, player.discard);
+          MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
 
           return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
             player.deck.applyOrder(order);

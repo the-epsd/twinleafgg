@@ -7,7 +7,7 @@ import { TrainerType, SuperType } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, ConfirmPrompt, Card, ChooseCardsPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
+import {DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 // Ref: set-legends-awakened/uxie.ts (generator pattern with yield for sequential prompts)
 // Ref: set-chilling-reign/agatha.ts (generator TrainerEffect)
@@ -50,7 +50,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   if (opponentAllows) {
     // Opponent says yes: put the trainer card into player's hand
-    player.discard.moveCardTo(selectedCard, player.hand);
+    MOVE_CARDS(store, state, player.discard, player.hand, { cards: [selectedCard], sourceCard: self });
   } else {
     // Opponent says no: draw 3 cards instead
     DRAW_CARDS(store, state, player, 3);
@@ -71,7 +71,7 @@ export class SordwardAndShielbert extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       effect.preventDefault = true;
       const generator = playCard(() => generator.next(), store, state, effect, this);
       return generator.next().value;

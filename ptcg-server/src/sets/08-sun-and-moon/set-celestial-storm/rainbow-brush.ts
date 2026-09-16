@@ -11,6 +11,7 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class RainbowBrush extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -95,9 +96,9 @@ export class RainbowBrush extends TrainerCard {
               const newEnergy = selectedFromDeck[0];
 
               // Move new energy from deck to the Pokemon
-              player.deck.moveCardTo(newEnergy, targetPokemon);
+              MOVE_CARDS(store, state, player.deck, targetPokemon, { cards: [newEnergy], sourceCard: this });
               // Move old energy from Pokemon to deck
-              targetPokemon.moveCardTo(energyToReturn, player.deck);
+              MOVE_CARDS(store, state, targetPokemon, player.deck, { cards: [energyToReturn], sourceCard: this });
             }
 
             // Shuffle deck

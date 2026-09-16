@@ -46,7 +46,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     next();
   });
 
-  player.hand.moveCardTo(self, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [self], sourceCard: self });
   MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
 
   if (cards.length > 0) {

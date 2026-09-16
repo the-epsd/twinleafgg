@@ -72,7 +72,6 @@ export class RescueCarrier extends TrainerCard {
   public text: string =
     'Put up to 2 Pokémon, each with 90 HP or less, from your discard pile into your hand.';
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

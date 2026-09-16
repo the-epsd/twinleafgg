@@ -4,6 +4,8 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+
 import {
   StateUtils,
   GameError,
@@ -53,7 +55,7 @@ function* playCard(
       next();
     },
   );
-  player.deck.moveCardsTo(cards, player.hand);
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: effect.trainerCard });
 
   // Show opponent our cards
   if (cards.length > 0) {

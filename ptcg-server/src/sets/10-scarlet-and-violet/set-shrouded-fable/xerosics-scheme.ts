@@ -6,7 +6,7 @@ import { Player } from '../../../game/store/state/player';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { ChooseCardsPrompt, GameError, GameMessage, StateUtils } from '../../..';
-
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class XerosicsScheme extends TrainerCard {
 
@@ -38,7 +38,6 @@ export class XerosicsScheme extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
@@ -60,7 +59,7 @@ export class XerosicsScheme extends TrainerCard {
       // Set discard amount to reach hand size of 3
       const discardAmount = opponentHandLength - 3;
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
@@ -74,7 +73,7 @@ export class XerosicsScheme extends TrainerCard {
         { min: discardAmount, max: discardAmount, allowCancel: false }
       ), selected => {
         const cards = selected || [];
-        opponent.hand.moveCardsTo(cards, opponent.discard);
+        MOVE_CARDS(store, state, opponent.hand, opponent.discard, { cards: cards, sourceCard: this });
 
       });
     }

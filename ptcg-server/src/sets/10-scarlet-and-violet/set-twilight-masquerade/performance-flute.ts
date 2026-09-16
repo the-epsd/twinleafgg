@@ -8,6 +8,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class PerformanceFlute extends TrainerCard {
 
@@ -28,7 +29,6 @@ export class PerformanceFlute extends TrainerCard {
   public text: string =
     'Reveal the top 5 cards of your opponent\'s deck, and put any number of Basic Pokémon you find there onto your opponent\'s Bench. Then, they shuffle the remaining cards back into their deck.';
 
-
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     const opponent = StateUtils.getOpponent(state, player);
     const openSlots = opponent.bench.filter(b => b.cards.length === 0);
@@ -37,7 +37,6 @@ export class PerformanceFlute extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -62,7 +61,7 @@ export class PerformanceFlute extends TrainerCard {
       }
 
       const deckTop = new CardList();
-      opponent.deck.moveTo(deckTop, 5);
+      MOVE_CARDS(store, state, opponent.deck, deckTop, { count: 5, sourceCard: this });
 
       return store.prompt(state, new ChooseCardsPrompt(
         player,
@@ -82,7 +81,7 @@ export class PerformanceFlute extends TrainerCard {
             deckTop.cards
           ), () => {
 
-            deckTop.moveTo(opponent.deck);
+            MOVE_CARDS(store, state, deckTop, opponent.deck, { sourceCard: this });
 
             return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
               player.deck.applyOrder(order);
@@ -92,13 +91,11 @@ export class PerformanceFlute extends TrainerCard {
         }
 
         cards.forEach((card, index) => {
-          deckTop.moveCardTo(card, slots[index]);
+          MOVE_CARDS(store, state, deckTop, slots[index], { cards: [card], sourceCard: this });
           slots[index].pokemonPlayedTurn = state.turn;
         });
 
-        deckTop.moveTo(opponent.deck);
-
-
+        MOVE_CARDS(store, state, deckTop, opponent.deck, { sourceCard: this });
 
         return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
           opponent.deck.applyOrder(order);

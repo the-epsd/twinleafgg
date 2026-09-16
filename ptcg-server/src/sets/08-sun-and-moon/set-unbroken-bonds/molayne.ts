@@ -10,7 +10,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { Card } from '../../../game/store/card/card';
-import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, self: Molayne, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -33,7 +33,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Molayne
   }
 
   // Move to supporter zone, prevent default discard
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   effect.preventDefault = true;
 
   // Step 1: Discard 2 Metal Energy cards from hand
@@ -57,7 +57,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Molayne
   });
 
   discardedCards.forEach(c => {
-    player.hand.moveCardTo(c, player.discard);
+    MOVE_CARDS(store, state, player.hand, player.discard, { cards: [c], sourceCard: self });
   });
 
   // Step 2: Choose a Trainer card from discard pile to shuffle into deck
@@ -89,10 +89,9 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Molayne
     ), () => next());
 
     chosenCards.forEach(c => {
-      player.discard.moveCardTo(c, player.deck);
+      MOVE_CARDS(store, state, player.discard, player.deck, { cards: [c], sourceCard: self });
     });
   }
-
 
   return SHUFFLE_DECK(store, state, player);
 }

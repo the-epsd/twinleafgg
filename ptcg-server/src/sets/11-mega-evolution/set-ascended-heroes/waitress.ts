@@ -1,6 +1,6 @@
 import { TrainerCard, TrainerType, StoreLike, State, GameError, GameMessage, CardList, ChooseCardsPrompt, SuperType, EnergyType, AttachEnergyPrompt, PlayerType, SlotType, StateUtils, Player } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Waitress extends TrainerCard {
@@ -23,7 +23,6 @@ export class Waitress extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
@@ -33,7 +32,7 @@ export class Waitress extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       effect.preventDefault = true;
 
       if (player.deck.cards.length === 0) {
@@ -42,7 +41,7 @@ export class Waitress extends TrainerCard {
 
       const deckTop = new CardList();
       const cardsToLook = Math.min(6, player.deck.cards.length);
-      player.deck.moveTo(deckTop, cardsToLook);
+      MOVE_CARDS(store, state, player.deck, deckTop, { count: cardsToLook, sourceCard: this });
 
       return store.prompt(state, new ChooseCardsPrompt(
         player,
@@ -67,17 +66,17 @@ export class Waitress extends TrainerCard {
             if (transfers.length > 0) {
               for (const transfer of transfers) {
                 const target = StateUtils.getTarget(state, player, transfer.to);
-                deckTop.moveCardTo(transfer.card, target);
+                MOVE_CARDS(store, state, deckTop, target, { cards: [transfer.card], sourceCard: this });
               }
             }
             // Put remaining cards back into deck
-            deckTop.moveTo(player.deck);
+            MOVE_CARDS(store, state, deckTop, player.deck, { sourceCard: this });
             SHUFFLE_DECK(store, state, player);
 
           });
         } else {
           // No energy selected, put all cards back
-          deckTop.moveTo(player.deck);
+          MOVE_CARDS(store, state, deckTop, player.deck, { sourceCard: this });
           SHUFFLE_DECK(store, state, player);
 
         }

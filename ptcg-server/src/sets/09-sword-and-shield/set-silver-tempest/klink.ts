@@ -3,7 +3,7 @@ import { Stage, CardType, SuperType } from '../../../game/store/card/card-types'
 import { StoreLike, State, StateUtils, Card, GameError, GameMessage, ChooseCardsPrompt, ShowCardsPrompt, ShuffleDeckPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* useCallSign(next: Function, store: StoreLike, state: State,
   self: Klink, effect: AttackEffect): IterableIterator<State> {
@@ -26,7 +26,6 @@ function* useCallSign(next: Function, store: StoreLike, state: State,
     next();
   });
 
-
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
       opponent.id,
@@ -35,7 +34,7 @@ function* useCallSign(next: Function, store: StoreLike, state: State,
     ), () => next());
   }
 
-  player.deck.moveCardsTo(cards, player.hand);
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

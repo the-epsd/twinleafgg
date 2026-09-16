@@ -11,6 +11,7 @@ import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { PokemonCard } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -38,7 +39,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   ], () => next());
 
   if (pokemon !== undefined) {
-    player.deck.moveCardTo(pokemon, player.hand);
+    MOVE_CARDS(store, state, player.deck, player.hand, { cards: [pokemon], sourceCard: effect.trainerCard });
   }
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
@@ -62,7 +63,6 @@ export class QuickBall extends TrainerCard {
 
   public text: string =
     'Reveal cards from the top of your deck until you reveal a Pokémon. Show that Pokémon to your opponent and put it into your hand. Shuffle the other revealed cards back into your deck. (If you don\'t reveal a Pokémon, shuffle all revealed cards back into your deck.)';
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

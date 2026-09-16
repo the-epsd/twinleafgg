@@ -6,7 +6,7 @@ import { State } from '../../game/store/state/state';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
-import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH } from '../../game/store/prefabs/prefabs';
+import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class PokemonFanClub extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -25,7 +25,7 @@ export class PokemonFanClub extends TrainerCard {
       const player = effect.player;
 
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -43,7 +43,7 @@ export class PokemonFanClub extends TrainerCard {
         { min: 0, max: 2 }
       );
 
-      player.supporter.moveCardTo(this, player.discard);
+      MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
     }
 
     return state;

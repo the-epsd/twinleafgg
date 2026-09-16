@@ -23,11 +23,9 @@ import {
   StateUtils,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG,
+import {DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG,
   WAS_ATTACK_USED,
-  WAS_POWER_USED,
-} from '../../../game/store/prefabs/prefabs';
+  WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
 export class HolonsMagneton extends PokemonCard implements EnergyCard {
@@ -165,11 +163,11 @@ export class HolonsMagneton extends PokemonCard implements EnergyCard {
             ),
             (energy) => {
               const cards: Card[] = (energy || []).map((e) => e.card);
-              targets[0].moveCardsTo(cards, player.hand);
+              MOVE_CARDS(store, state, targets[0], player.hand, { cards: cards, sourceCard: this });
 
               // Moving it onto the pokemon - first to main cards array, then to energies
               effect.preventDefault = true;
-              player.hand.moveCardTo(this, targets[0]);
+              MOVE_CARDS(store, state, player.hand, targets[0], { cards: [this], sourceCard: this });
               if (!targets[0].energies.cards.includes(this)) {
                 targets[0].energies.cards.push(this);
               }

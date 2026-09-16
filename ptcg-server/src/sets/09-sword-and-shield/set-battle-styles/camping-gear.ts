@@ -3,7 +3,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../../game/store/prefabs/prefabs';
+import {SEARCH_DECK_FOR_CARDS_TO_HAND, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class CampingGear extends TrainerCard {
@@ -22,11 +22,9 @@ export class CampingGear extends TrainerCard {
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, effect.trainerCard, {}, { min: 0, max: 1 });
-
-
 
       if (effect.player === StateUtils.findOwner(state, StateUtils.findCardList(state, this))) {
         const endTurnEffect = new EndTurnEffect(player);

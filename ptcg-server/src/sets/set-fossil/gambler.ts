@@ -2,7 +2,7 @@ import { ShuffleDeckPrompt, State, StoreLike, TrainerCard, TrainerType } from '.
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
-import { COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
+import {COIN_FLIP_PROMPT, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Gambler extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -27,19 +27,19 @@ export class Gambler extends TrainerCard {
 
       const cards = player.hand.cards.filter(c => c !== this);
 
-      player.hand.moveCardsTo(cards, player.deck);
+      MOVE_CARDS(store, state, player.hand, player.deck, { cards: cards, sourceCard: this });
       store.prompt(state, [
         new ShuffleDeckPrompt(player.id),
       ], deckOrder => {
         player.deck.applyOrder(deckOrder);
 
-        player.deck.moveTo(player.hand, 4);
+        MOVE_CARDS(store, state, player.deck, player.hand, { count: 4, sourceCard: this });
       });
       state = COIN_FLIP_PROMPT(store, state, player, results => {
         if (results) {
-          player.deck.moveTo(player.hand, 8);
+          MOVE_CARDS(store, state, player.deck, player.hand, { count: 8, sourceCard: this });
         } else {
-          player.deck.moveTo(player.hand, 1);
+          MOVE_CARDS(store, state, player.deck, player.hand, { count: 1, sourceCard: this });
         }
       });
       return state;

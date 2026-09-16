@@ -6,6 +6,7 @@ import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
 import { ToolEffect } from '../../../game/store/effects/play-card-effects';
 import { StateUtils } from '../../../game/store/state-utils';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class AdversityPolicy extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
@@ -45,7 +46,7 @@ export class AdversityPolicy extends TrainerCard {
       if (!hasWeaknessToOpponentActiveType) {
         return state;
       }
-      targetPlayer.deck.moveTo(targetPlayer.hand, 3);
+      MOVE_CARDS(store, state, targetPlayer.deck, targetPlayer.hand, { count: 3, sourceCard: this });
     }
 
     return state;

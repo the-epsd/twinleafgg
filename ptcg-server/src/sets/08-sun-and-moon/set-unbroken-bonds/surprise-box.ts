@@ -8,6 +8,7 @@ import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../../g
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class SurpriseBox extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -37,7 +38,7 @@ export class SurpriseBox extends TrainerCard {
       ), selected => {
         const cards = selected || [];
         if (cards.length > 0) {
-          opponent.discard.moveCardTo(cards[0], opponent.hand);
+          MOVE_CARDS(store, state, opponent.discard, opponent.hand, { cards: [cards[0]], sourceCard: this });
         }
       });
     }

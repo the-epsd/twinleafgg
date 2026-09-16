@@ -6,7 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { BetweenTurnsEffect } from '../../../game/store/effects/game-phase-effects';
 import { Card } from '../../../game/store/card/card';
-
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class RescueScarf extends TrainerCard {
 
@@ -47,7 +47,7 @@ export class RescueScarf extends TrainerCard {
         const rescued: Card[] = player.marker.markers
           .filter(m => m.name === this.RESCUE_SCARF_MAREKER && m.source !== undefined)
           .map(m => m.source!);
-        player.discard.moveCardsTo(rescued, player.hand);
+        MOVE_CARDS(store, state, player.discard, player.hand, { cards: rescued, sourceCard: this });
         player.marker.removeMarker(this.RESCUE_SCARF_MAREKER);
       });
     }

@@ -5,7 +5,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER } from '../../../game/store/prefabs/prefabs';
+import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { GameError, GameMessage, StateUtils } from '../../../game';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 
@@ -32,7 +32,7 @@ export class Leon extends TrainerCard {
 
       supporterTurn == 1;
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       ADD_MARKER(this.LEON_MARKER, player, this);
 
     }

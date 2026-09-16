@@ -12,6 +12,7 @@ import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -30,7 +31,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
 
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
@@ -43,8 +44,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     next();
   });
 
-  player.deck.moveCardsTo(cards, player.hand);
-
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: effect.trainerCard });
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
@@ -53,8 +53,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       cards
     ), () => next());
   }
-
-
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
@@ -78,7 +76,6 @@ export class HeavyBall extends TrainerCard {
   public text: string =
     'Search your deck for a Pokemon with a Retreat Cost of 3 or more, ' +
     'reveal it, and put it into your hand. Shuffle your deck afterward.';
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

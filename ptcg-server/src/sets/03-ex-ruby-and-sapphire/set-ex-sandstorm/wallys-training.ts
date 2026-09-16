@@ -11,6 +11,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -25,7 +26,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
@@ -87,7 +88,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   // Evolve Pokemon
-  player.deck.moveCardTo(evolution, targetList);
+  MOVE_CARDS(store, state, player.deck, targetList, { cards: [evolution], sourceCard: effect.trainerCard });
   targetList.clearEffects();
   targetList.pokemonPlayedTurn = state.turn;
 

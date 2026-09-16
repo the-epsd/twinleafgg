@@ -3,7 +3,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import {IS_TOOL_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
@@ -37,7 +37,7 @@ export class StrengthCharm extends TrainerCard {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
           if (cardList.tools && cardList.tools.includes(this)) {
-            cardList.moveCardTo(this, player.discard);
+            MOVE_CARDS(store, state, cardList, player.discard, { cards: [this], sourceCard: this });
           }
         });
       }

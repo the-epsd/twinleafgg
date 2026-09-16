@@ -22,7 +22,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
 
   // Prepare card list without Canari for discard prompt
   const handTemp = new CardList();
@@ -73,7 +73,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     next();
   });
 
-  player.deck.moveCardsTo(cards, player.hand);
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(

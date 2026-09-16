@@ -3,7 +3,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameError, GameMessage, Player } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class MeddlingMemo extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -24,7 +24,6 @@ export class MeddlingMemo extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
@@ -35,14 +34,14 @@ export class MeddlingMemo extends TrainerCard {
       }
 
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       const newCards = opponent.hand.cards.length;
       this.shufflePlayerHand(opponent);
-      opponent.hand.moveTo(opponent.deck);
-      opponent.deck.moveTo(opponent.hand, newCards);
+      MOVE_CARDS(store, state, opponent.hand, opponent.deck, { sourceCard: this });
+      MOVE_CARDS(store, state, opponent.deck, opponent.hand, { count: newCards, sourceCard: this });
 
-      player.supporter.moveCardTo(this, player.discard);
+      MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
     }
     return state;
   }

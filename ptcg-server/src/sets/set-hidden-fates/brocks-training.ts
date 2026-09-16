@@ -7,6 +7,7 @@ import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class BrocksTraining extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -70,7 +71,7 @@ export class BrocksTraining extends TrainerCard {
         transfers = transfers || [];
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.hand.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.hand, target, { cards: [transfer.card], sourceCard: this });
         }
       });
     }

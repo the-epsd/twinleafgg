@@ -26,7 +26,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
@@ -68,8 +68,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: self });
 
-
-
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
       opponent.id,
@@ -96,7 +94,6 @@ export class Irida extends TrainerCard {
     'Search your deck for a [W] Pokémon and an Item ' +
     'card, reveal them, and put them into your hand. ' +
     'Then, shuffle your deck.';
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

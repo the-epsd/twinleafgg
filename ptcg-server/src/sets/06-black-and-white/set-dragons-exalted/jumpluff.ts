@@ -57,7 +57,7 @@ export class Jumpluff extends PokemonCard {
       // Move tools to discard first
       if (tools.length > 0) {
         for (const tool of tools) {
-          pokemonCardList.moveCardTo(tool, player.hand);
+          MOVE_CARDS(store, state, pokemonCardList, player.hand, { cards: [tool], sourceCard: this });
         }
       }
 

@@ -1,6 +1,8 @@
 import { Card, CardList, ChoosePrizePrompt, GameError, GameMessage, State, StoreLike, TrainerCard, TrainerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+
 export class Gladion extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -33,7 +35,7 @@ export class Gladion extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       const cards: Card[] = [];
       prizes.forEach(p => { p.cards.forEach(c => cards.push(c)); });
@@ -60,10 +62,10 @@ export class Gladion extends TrainerCard {
         const selectedPrize = chosenPrize[0];
         const hand = player.hand;
         const gladion = effect.trainerCard;
-        selectedPrize.moveTo(hand);
+        MOVE_CARDS(store, state, selectedPrize, hand, { sourceCard: this });
 
         const chosenPrizeIndex = player.prizes.indexOf(chosenPrize[0]);
-        player.supporter.moveCardTo(gladion, player.prizes[chosenPrizeIndex]);
+        MOVE_CARDS(store, state, player.supporter, player.prizes[chosenPrizeIndex], { cards: [gladion], sourceCard: this });
 
         prizes.forEach(p => { p.isSecret = true; });
         player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);

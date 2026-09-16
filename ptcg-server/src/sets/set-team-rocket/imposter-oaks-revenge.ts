@@ -35,7 +35,6 @@ export class ImposterOaksRevenge extends TrainerCard {
       SHUFFLE_DECK(store, state, opponent);
       DRAW_CARDS(store, state, opponent, 4);
 
-
       return state;
     }
 

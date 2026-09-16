@@ -122,7 +122,7 @@ export class LumineonV extends PokemonCard {
 
       // Move tools to deck explicitly
       for (const tool of tools) {
-        player.active.moveCardTo(tool, player.deck);
+        MOVE_CARDS(store, state, player.active, player.deck, { cards: [tool], sourceCard: this });
       }
 
       // Move Pokémon to deck

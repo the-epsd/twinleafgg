@@ -8,7 +8,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
-import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {COIN_FLIP_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Mesagoza extends TrainerCard {
 
@@ -55,7 +55,7 @@ export class Mesagoza extends TrainerCard {
           });
 
           if (cards.length > 0) {
-            player.deck.moveCardsTo(cards, player.hand);
+            MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
 
             return store.prompt(state, new ShowCardsPrompt(
               opponent.id,

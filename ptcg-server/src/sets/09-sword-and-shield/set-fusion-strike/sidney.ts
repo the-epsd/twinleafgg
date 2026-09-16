@@ -8,6 +8,7 @@ import { EnergyCard } from '../../../game/store/card/energy-card';
 import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Sidney extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -59,7 +60,7 @@ export class Sidney extends TrainerCard {
         ),
         (selected) => {
           const cards = selected || [];
-          opponent.hand.moveCardsTo(cards, opponent.discard);
+          MOVE_CARDS(store, state, opponent.hand, opponent.discard, { cards: cards, sourceCard: this });
         },
       );
     }

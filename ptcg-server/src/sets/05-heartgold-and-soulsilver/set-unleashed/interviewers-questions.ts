@@ -5,6 +5,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { CardList, GameMessage, ShuffleDeckPrompt, ChooseCardsPrompt, ShowCardsPrompt, StateUtils, GameError, EnergyCard } from '../../../game';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class InterviewersQuestions extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -31,7 +32,7 @@ export class InterviewersQuestions extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      player.deck.moveTo(temp, 8);
+      MOVE_CARDS(store, state, player.deck, temp, { count: 8, sourceCard: this });
 
       const maxEnergyCards = Math.min(8, temp.cards.filter(c => c instanceof EnergyCard).length);
 
@@ -46,14 +47,14 @@ export class InterviewersQuestions extends TrainerCard {
         if (chosenCards.length == 0) {
           // No Energy chosen, shuffle all back
           temp.cards.forEach(card => {
-            temp.moveCardTo(card, player.deck);
+            MOVE_CARDS(store, state, temp, player.deck, { cards: [card], sourceCard: this });
           });
         }
 
         if (chosenCards.length > 0) {
           // Move chosen Energy to hand
           chosenCards.forEach(card => {
-            temp.moveCardTo(card, player.hand);
+            MOVE_CARDS(store, state, temp, player.hand, { cards: [card], sourceCard: this });
           });
 
           if (chosenCards.length > 0) {
@@ -62,7 +63,7 @@ export class InterviewersQuestions extends TrainerCard {
               GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
               chosenCards), () => state);
           }
-          temp.moveTo(player.deck);
+          MOVE_CARDS(store, state, temp, player.deck, { sourceCard: this });
 
           if (chosenCards.length > 0) {
             state = store.prompt(state, new ShowCardsPrompt(

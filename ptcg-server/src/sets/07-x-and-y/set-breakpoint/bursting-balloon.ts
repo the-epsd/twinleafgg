@@ -8,6 +8,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { ToolEffect } from '../../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayerType } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class BurstingBalloon extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
@@ -47,7 +48,7 @@ export class BurstingBalloon extends TrainerCard {
       state.players.forEach(player => {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
           if (cardList.tools.includes(this) && StateUtils.findOwner(state, cardList) !== effect.player) {
-            cardList.moveCardTo(this, player.discard);
+            MOVE_CARDS(store, state, cardList, player.discard, { cards: [this], sourceCard: this });
           }
         });
       });

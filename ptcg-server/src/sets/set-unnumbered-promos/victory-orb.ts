@@ -5,6 +5,8 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+
 export class VictoryOrb extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'UP'; // Replace with the appropriate set abbreviation
@@ -23,7 +25,7 @@ export class VictoryOrb extends TrainerCard {
       }
 
       const deckTop = new CardList();
-      player.deck.moveTo(deckTop, 7);
+      MOVE_CARDS(store, state, player.deck, deckTop, { count: 7, sourceCard: this });
 
       return store.prompt(state, new OrderCardsPrompt(
         player.id,

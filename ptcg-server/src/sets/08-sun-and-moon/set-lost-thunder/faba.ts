@@ -58,7 +58,7 @@ export class Faba extends TrainerCard {
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       const toolOption = {
         message: GameMessage.CHOICE_TOOL,
@@ -89,16 +89,16 @@ export class Faba extends TrainerCard {
                   { min: 1, max: 1, allowCancel: false }
                 ), selected => {
                   if (selected && selected.length > 0) {
-                    cardList.moveCardTo(selected[0], owner.lostzone);
+                    MOVE_CARDS(store, state, cardList, owner.lostzone, { cards: [selected[0]], sourceCard: this });
                   }
-                  player.supporter.moveCardTo(this, player.discard);
+                  MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
                   return state;
                 });
               } else {
-                cardList.moveCardTo(cardList.tools[0], owner.lostzone);
+                MOVE_CARDS(store, state, cardList, owner.lostzone, { cards: [cardList.tools[0]], sourceCard: this });
               }
             }
-            player.supporter.moveCardTo(this, player.discard);
+            MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
             return state;
           });
         }
@@ -117,7 +117,7 @@ export class Faba extends TrainerCard {
           const owner = StateUtils.findOwner(state, cardList);
           MOVE_CARDS(store, state, cardList, owner.lostzone, { sourceCard: this });
 
-          player.supporter.moveCardTo(this, player.discard);
+          MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
           return state;
         }
       };
@@ -159,7 +159,7 @@ export class Faba extends TrainerCard {
               cards = selected || [];
               if (cards.length > 0) {
 
-                target.moveCardsTo(cards, opponent.lostzone);
+                MOVE_CARDS(store, state, target, opponent.lostzone, { cards: cards, sourceCard: this });
               }
 
               return state;
@@ -194,7 +194,7 @@ export class Faba extends TrainerCard {
           option.action();
         }
 
-        player.supporter.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
         return state;
       });
 

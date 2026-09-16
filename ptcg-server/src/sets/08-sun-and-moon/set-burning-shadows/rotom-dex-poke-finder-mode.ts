@@ -7,6 +7,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { CardList, ConfirmPrompt, GameMessage, OrderCardsPrompt, ShuffleDeckPrompt, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class RotomDexPokeFinderMode extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -27,7 +28,7 @@ export class RotomDexPokeFinderMode extends TrainerCard {
       }
 
       const deckTop = new CardList();
-      player.deck.moveTo(deckTop, Math.min(4, player.deck.cards.length));
+      MOVE_CARDS(store, state, player.deck, deckTop, { count: Math.min(4, player.deck.cards.length), sourceCard: this });
 
       // Ask: put back in order or shuffle into deck?
       return store.prompt(state, new ConfirmPrompt(
@@ -48,7 +49,7 @@ export class RotomDexPokeFinderMode extends TrainerCard {
           });
         } else {
           // Shuffle into deck
-          deckTop.moveTo(player.deck);
+          MOVE_CARDS(store, state, deckTop, player.deck, { sourceCard: this });
           store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
           });

@@ -7,6 +7,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class ProfessorKukui extends TrainerCard {
 
@@ -40,10 +41,10 @@ export class ProfessorKukui extends TrainerCard {
         throw new GameError(GameMessage.NO_CARDS_IN_DECK);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-      player.deck.moveTo(player.hand, 2);
+      MOVE_CARDS(store, state, player.deck, player.hand, { count: 2, sourceCard: this });
       player.marker.addMarker(this.PROFESSOR_KUKUI_MARKER, this);
 
       return state;

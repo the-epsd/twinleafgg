@@ -2,6 +2,7 @@ import { GameError, GameMessage, GamePhase, Player, State, StateUtils, StoreLike
 import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Briar extends TrainerCard {
 
@@ -31,7 +32,6 @@ During this turn, if your opponent's Active Pokémon is Knocked Out by damage fr
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -43,7 +43,7 @@ During this turn, if your opponent's Active Pokémon is Knocked Out by damage fr
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -74,7 +74,7 @@ During this turn, if your opponent's Active Pokémon is Knocked Out by damage fr
         }
         this.extraPrizes = false;
       }
-      player.supporter.moveCardTo(this, player.discard);
+      MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
       return state;
     }
     return state;

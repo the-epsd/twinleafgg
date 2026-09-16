@@ -2,6 +2,7 @@ import { AttachEnergyPrompt, CardList, EnergyCard, GameError, GameMessage, Playe
 import { EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Ether extends TrainerCard {
 
@@ -29,13 +30,13 @@ export class Ether extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
       const temp = new CardList();
 
-      player.deck.moveTo(temp, 1);
+      MOVE_CARDS(store, state, player.deck, temp, { count: 1, sourceCard: this });
 
       store.prompt(state, new ShowCardsPrompt(
         opponent.id,
@@ -63,11 +64,9 @@ export class Ether extends TrainerCard {
           if (transfers) {
             for (const transfer of transfers) {
               const target = StateUtils.getTarget(state, player, transfer.to);
-              temp.moveCardTo(transfer.card, target); // Move card to target
+              MOVE_CARDS(store, state, temp, target, { cards: [transfer.card], sourceCard: this }); // Move card to target
             }
           }
-
-
 
           return state;
         });

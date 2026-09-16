@@ -6,6 +6,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Bicycle extends TrainerCard {
 
@@ -30,13 +31,13 @@ export class Bicycle extends TrainerCard {
       const cards = player.hand.cards.filter(c => c !== this);
       const cardsToDraw = Math.max(0, 4 - cards.length);
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       if (cardsToDraw === 0 || player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.deck.moveTo(player.hand, cardsToDraw);
+      MOVE_CARDS(store, state, player.deck, player.hand, { count: cardsToDraw, sourceCard: this });
 
     }
 

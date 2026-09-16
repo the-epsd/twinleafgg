@@ -8,7 +8,7 @@ import { StoreLike, State, StateUtils, GameError, GameMessage, Card, CardList } 
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class ChipChipIceAxe extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -30,7 +30,7 @@ export class ChipChipIceAxe extends TrainerCard {
       }
 
       const topCards = new CardList();
-      opponent.deck.moveTo(topCards, Math.min(3, opponent.deck.cards.length));
+      MOVE_CARDS(store, state, opponent.deck, topCards, { count: Math.min(3, opponent.deck.cards.length), sourceCard: this });
 
       return store.prompt(state, new ChooseCardsPrompt(
         player,
@@ -44,12 +44,12 @@ export class ChipChipIceAxe extends TrainerCard {
         // Shuffle the other cards back into opponent's deck
         const otherCards = topCards.cards.filter(c => c !== chosenCard);
         otherCards.forEach(c => {
-          topCards.moveCardTo(c, opponent.deck);
+          MOVE_CARDS(store, state, topCards, opponent.deck, { cards: [c], sourceCard: this });
         });
         SHUFFLE_DECK(store, state, opponent);
 
         // Put the chosen card on top of opponent's deck
-        topCards.moveCardTo(chosenCard, opponent.deck);
+        MOVE_CARDS(store, state, topCards, opponent.deck, { cards: [chosenCard], sourceCard: this });
         // moveCardTo puts it at bottom; move it to top
         const idx = opponent.deck.cards.indexOf(chosenCard);
         if (idx !== -1) {

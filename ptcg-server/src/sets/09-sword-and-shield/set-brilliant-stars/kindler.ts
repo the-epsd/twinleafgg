@@ -32,7 +32,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
@@ -51,9 +51,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
     MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: self });
   });
 
-
   const deckTop = new CardList();
-  player.deck.moveTo(deckTop, 7);
+  MOVE_CARDS(store, state, player.deck, deckTop, { count: 7, sourceCard: self });
 
   return store.prompt(state, new ChooseCardsPrompt(
     player,
@@ -62,9 +61,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
     {},
     { min: 0, max: 2, allowCancel: false }
   ), selected => {
-    deckTop.moveCardsTo(selected, player.hand);
-    deckTop.moveTo(player.deck);
-
+    MOVE_CARDS(store, state, deckTop, player.hand, { cards: selected, sourceCard: self });
+    MOVE_CARDS(store, state, deckTop, player.deck, { sourceCard: self });
 
     return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
       player.deck.applyOrder(order);

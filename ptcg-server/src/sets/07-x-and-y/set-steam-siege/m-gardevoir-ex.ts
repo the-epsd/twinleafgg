@@ -87,7 +87,7 @@ export class MGardevoirEx extends PokemonCard {
               // Move tools to discard
               if (tools.length > 0) {
                 for (const tool of tools) {
-                  cardList.moveCardTo(tool, player.discard);
+                  MOVE_CARDS(store, state, cardList, player.discard, { cards: [tool], sourceCard: this });
                 }
               }
 

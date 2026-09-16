@@ -7,7 +7,7 @@ import { TrainerType, SuperType } from '../../../game/store/card/card-types';
 import { Card, CardList, ChooseCardsPrompt, GameMessage, ShowCardsPrompt, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 // Ref: set-silver-tempest/candice.ts (Look at top 7, reveal matching cards to hand, show to opponent, shuffle rest)
 function* playCard(next: Function, store: StoreLike, state: State,
@@ -15,7 +15,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   effect.preventDefault = true;
 
   if (player.deck.cards.length === 0) {
@@ -26,7 +26,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // Take top 7 cards into a temp list
   const topCards = new CardList();
   const count = Math.min(7, player.deck.cards.length);
-  player.deck.moveTo(topCards, count);
+  MOVE_CARDS(store, state, player.deck, topCards, { count: count, sourceCard: self });
 
   // Block non-Energy cards so player can only select Energy
   const blocked: number[] = [];
@@ -49,9 +49,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   // Move selected energy cards to hand, shuffle rest back into deck
-  topCards.moveCardsTo(cards, player.hand);
-  topCards.moveTo(player.deck);
-
+  MOVE_CARDS(store, state, topCards, player.hand, { cards: cards, sourceCard: self });
+  MOVE_CARDS(store, state, topCards, player.deck, { sourceCard: self });
 
   // Reveal selected energy cards to opponent (card text says "reveal")
   if (cards.length > 0) {

@@ -7,6 +7,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt, EnergyCard, GameError } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class CyclingRoad extends TrainerCard {
 
@@ -55,9 +56,8 @@ export class CyclingRoad extends TrainerCard {
         return;
       }
 
-      player.hand.moveCardsTo(cards, player.discard);
-      player.deck.moveTo(player.hand, 1);
-
+      MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
+      MOVE_CARDS(store, state, player.deck, player.hand, { count: 1, sourceCard: this });
 
     });
 

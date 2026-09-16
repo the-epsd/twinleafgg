@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
-import { DRAW_CARDS } from '../../game/store/prefabs/prefabs';
+import {DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt, ShuffleDeckPrompt } from '../../game';
 
 export class Mary extends TrainerCard {
@@ -24,7 +24,7 @@ export class Mary extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -39,7 +39,7 @@ export class Mary extends TrainerCard {
         { allowCancel: false, min: 2, max: 2 }
       ), selected => {
         selected.forEach(card => {
-          player.hand.moveCardTo(card, player.deck);
+          MOVE_CARDS(store, state, player.hand, player.deck, { cards: [card], sourceCard: this });
         });
         state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

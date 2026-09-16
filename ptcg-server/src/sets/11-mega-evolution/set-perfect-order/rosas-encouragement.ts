@@ -4,6 +4,7 @@ import { StoreLike, State, GameMessage, StateUtils, AttachEnergyPrompt, PlayerTy
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { GameError } from '../../../game/game-error';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class RosasEncouragement extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -83,7 +84,7 @@ Attach up to 2 Basic Energy cards from your discard pile to 1 of your Stage 2 Po
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       effect.preventDefault = true;
 
       const maxToAttach = Math.min(2, basicEnergyInDiscard.length);
@@ -100,7 +101,7 @@ Attach up to 2 Basic Energy cards from your discard pile to 1 of your Stage 2 Po
         transfers = transfers || [];
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
         }
 
       });

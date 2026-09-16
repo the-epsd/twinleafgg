@@ -10,7 +10,7 @@ import { Card } from '../../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { CardList } from '../../../game/store/state/card-list';
 import { EnergyCard } from '../../../game/store/card/energy-card';
-
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: SuperiorEnergyRetrieval, effect: TrainerEffect): IterableIterator<State> {
@@ -56,7 +56,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
     return state;
   }
 
-
   let recovered: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
@@ -74,9 +73,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
     return state;
   }
 
-  player.hand.moveCardsTo(cards, player.discard);
-  player.discard.moveCardsTo(recovered, player.hand);
-
+  MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: self });
+  MOVE_CARDS(store, state, player.discard, player.hand, { cards: recovered, sourceCard: self });
 
   return state;
 }

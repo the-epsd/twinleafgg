@@ -8,7 +8,7 @@ import { StoreLike, State, StateUtils, GameMessage, GameError, Card } from '../.
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 
 export class Steven extends TrainerCard {
@@ -42,7 +42,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Steven,
   const opponent = StateUtils.getOpponent(state, player);
 
   // Move to supporter zone, prevent default discard
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   effect.preventDefault = true;
 
   const allFound: Card[] = [];
@@ -90,11 +90,10 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Steven,
   // Reveal and move to hand
   if (allFound.length > 0) {
     SHOW_CARDS_TO_PLAYER(store, state, opponent, allFound);
-    player.deck.moveCardsTo(allFound, player.hand);
+    MOVE_CARDS(store, state, player.deck, player.hand, { cards: allFound, sourceCard: self });
   }
 
   // Move supporter to discard
-
 
   return SHUFFLE_DECK(store, state, player);
 }

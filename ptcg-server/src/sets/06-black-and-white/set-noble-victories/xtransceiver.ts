@@ -10,7 +10,7 @@ import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
-import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {COIN_FLIP_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -21,7 +21,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
 
   let coin1Result = false;
   yield COIN_FLIP_PROMPT(store, state, player, result => {
@@ -41,7 +41,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
         next();
       });
 
-    player.deck.moveCardsTo(cards, player.hand);
+    MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: effect.trainerCard });
   } else {
 
     return state;

@@ -40,9 +40,9 @@ export class IngoAndEmmet extends TrainerCard {
       }
 
       const deckTop = new CardList();
-      player.deck.moveTo(deckTop, 1);
+      MOVE_CARDS(store, state, player.deck, deckTop, { count: 1, sourceCard: this });
       SHOW_CARDS_TO_PLAYER(store, state, player, deckTop.cards);
-      deckTop.moveTo(player.deck, 0);
+      MOVE_CARDS(store, state, deckTop, player.deck, { count: 0, sourceCard: this });
       player.deck.cards = deckTop.cards.concat(player.deck.cards);
 
       state = store.prompt(state, new SelectOptionPrompt(

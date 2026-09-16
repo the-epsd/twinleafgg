@@ -7,7 +7,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, ShuffleDeckPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { COIN_FLIP_PROMPT, DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
+import {COIN_FLIP_PROMPT, DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Ilima extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -28,7 +28,7 @@ export class Ilima extends TrainerCard {
 
       // Shuffle player's hand into deck (excluding this card which is in supporter zone)
       const playerCards = player.hand.cards.filter(c => c !== this);
-      player.hand.moveCardsTo(playerCards, player.deck);
+      MOVE_CARDS(store, state, player.hand, player.deck, { cards: playerCards, sourceCard: this });
 
       store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
@@ -42,7 +42,7 @@ export class Ilima extends TrainerCard {
 
       // Shuffle opponent's hand into deck
       const opponentCards = opponent.hand.cards.slice();
-      opponent.hand.moveCardsTo(opponentCards, opponent.deck);
+      MOVE_CARDS(store, state, opponent.hand, opponent.deck, { cards: opponentCards, sourceCard: this });
 
       store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
         opponent.deck.applyOrder(order);

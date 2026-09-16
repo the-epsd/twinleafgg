@@ -10,7 +10,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
-import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Morty extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -51,7 +51,7 @@ export class Morty extends TrainerCard {
         ), (selected: Card[]) => {
           const cards = selected || [];
           cards.forEach(c => {
-            opponent.hand.moveCardTo(c, opponent.deck);
+            MOVE_CARDS(store, state, opponent.hand, opponent.deck, { cards: [c], sourceCard: this });
           });
           if (cards.length > 0) {
             SHUFFLE_DECK(store, state, opponent);

@@ -7,6 +7,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Peonia extends TrainerCard {
 
@@ -38,7 +39,7 @@ export class Peonia extends TrainerCard {
       // we'll discard peonia later
       effect.preventDefault = true;
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       return store.prompt(state, new ChoosePrizePrompt(
         player.id,
@@ -48,7 +49,7 @@ export class Peonia extends TrainerCard {
         chosenPrizes = chosenPrizes || [];
         const hand = player.hand;
 
-        chosenPrizes.forEach(prize => prize.moveTo(hand, 1));
+        chosenPrizes.forEach(prize => MOVE_CARDS(store, state, prize, hand, { count: 1, sourceCard: this }));
 
         store.prompt(state, new ChooseCardsPrompt(
           player,
@@ -60,7 +61,7 @@ export class Peonia extends TrainerCard {
           cards = cards || [];
 
           const newPrizeCards = new CardList();
-          player.hand.moveCardsTo(cards, newPrizeCards);
+          MOVE_CARDS(store, state, player.hand, newPrizeCards, { cards: cards, sourceCard: this });
 
           return store.prompt(state, new OrderCardsPrompt(
             player.id,

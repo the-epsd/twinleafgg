@@ -5,7 +5,7 @@ import { CardTag, Stage, SuperType, TrainerType } from '../../../game/store/card
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
@@ -32,7 +32,7 @@ export class PremierBall extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -57,7 +57,7 @@ export class PremierBall extends TrainerCard {
                 cards = selected || [];
                 SHOW_CARDS_TO_PLAYER(store, state, player, cards);
 
-                player.deck.moveCardsTo(cards, player.hand);
+                MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
 
                 SHUFFLE_DECK(store, state, player);
               },
@@ -84,8 +84,7 @@ export class PremierBall extends TrainerCard {
               (selected) => {
                 cards = selected || [];
 
-
-                player.discard.moveCardsTo(cards, player.hand);
+                MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
 
                 return state;
               },

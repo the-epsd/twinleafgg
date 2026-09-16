@@ -3,7 +3,7 @@ import { Stage, SuperType, TrainerType } from '../../game/store/card/card-types'
 import { StoreLike, State, ChooseCardsPrompt, GameMessage, GameError, StateUtils, SelectOptionPrompt, PokemonCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonFromDeckEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { DRAW_CARDS } from '../../game/store/prefabs/prefabs';
+import {DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Challenge extends TrainerCard {
@@ -24,7 +24,7 @@ export class Challenge extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       const playerOpenSlots = player.bench.filter(b => b.cards.length === 0);
       const opponentOpenSlots = opponent.bench.filter(b => b.cards.length === 0);

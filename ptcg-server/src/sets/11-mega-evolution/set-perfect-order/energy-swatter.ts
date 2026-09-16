@@ -4,6 +4,7 @@ import { StoreLike, State, GameMessage, StateUtils, ChooseCardsPrompt, ShowCards
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { GameError } from '../../../game/game-error';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class EnergySwatter extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -32,7 +33,7 @@ export class EnergySwatter extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.discard);
+      MOVE_CARDS(store, state, player.hand, player.discard, { cards: [effect.trainerCard], sourceCard: this });
 
       // Reveal opponent's hand
       store.prompt(state, new ShowCardsPrompt(
@@ -57,7 +58,7 @@ export class EnergySwatter extends TrainerCard {
         const cards = selected || [];
         if (cards.length > 0) {
           // Put on bottom of deck
-          opponent.hand.moveCardTo(cards[0], opponent.deck);
+          MOVE_CARDS(store, state, opponent.hand, opponent.deck, { cards: [cards[0]], sourceCard: this });
         }
       });
     }

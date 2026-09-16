@@ -48,7 +48,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Plumeri
   }
 
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
 
   const handTemp = new CardList();
   handTemp.cards = player.hand.cards.filter(c => c !== self);
@@ -69,7 +69,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Plumeri
     return state;
   }
 
-  player.hand.moveCardsTo(cardsInHand, player.discard);
+  MOVE_CARDS(store, state, player.hand, player.discard, { cards: cardsInHand, sourceCard: self });
 
   let targets: PokemonCardList[] = [];
   yield store.prompt(state, new ChoosePokemonPrompt(

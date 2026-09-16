@@ -7,7 +7,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { Card, ChooseCardsPrompt, GameMessage, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { DRAW_CARDS, SHOW_CARDS_TO_PLAYER } from '../../../game/store/prefabs/prefabs';
+import {DRAW_CARDS, SHOW_CARDS_TO_PLAYER, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class PsychicsThirdEye extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -40,7 +40,7 @@ export class PsychicsThirdEye extends TrainerCard {
           if (cards.length === 0) {
             return;
           }
-          player.hand.moveCardsTo(cards, player.discard);
+          MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
           DRAW_CARDS(store, state, player, cards.length);
         });
       }

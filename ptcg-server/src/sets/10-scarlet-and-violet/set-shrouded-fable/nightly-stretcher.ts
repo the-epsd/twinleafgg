@@ -10,6 +10,7 @@ import { DiscardToHandEffect, TrainerEffect } from '../../../game/store/effects/
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { EnergyCard, GameError, Player, PokemonCard, SuperType } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: NightlyStretcher, effect: TrainerEffect): IterableIterator<State> {
@@ -40,7 +41,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
 
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
@@ -53,7 +54,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     next();
   });
 
-  player.discard.moveCardsTo(cards, player.hand);
+  MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: self });
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
@@ -62,7 +63,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
       cards
     ), () => next());
   }
-
 
 }
 
@@ -88,7 +88,6 @@ export class NightlyStretcher extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

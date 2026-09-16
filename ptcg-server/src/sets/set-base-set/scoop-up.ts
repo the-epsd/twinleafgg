@@ -58,7 +58,7 @@ export class ScoopUp extends TrainerCard {
           // Move tools to discard first
           if (tools.length > 0) {
             for (const tool of tools) {
-              cardList.moveCardTo(tool, player.discard);
+              MOVE_CARDS(store, state, cardList, player.discard, { cards: [tool], sourceCard: this });
             }
           }
 

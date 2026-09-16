@@ -21,6 +21,7 @@ import {
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Eneporter extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -76,7 +77,7 @@ export class Eneporter extends TrainerCard {
           for (const transfer of transfers) {
             const source = StateUtils.getTarget(state, opponent, transfer.from);
             const target = StateUtils.getTarget(state, opponent, transfer.to);
-            source.moveCardTo(transfer.card, target);
+            MOVE_CARDS(store, state, source, target, { cards: [transfer.card], sourceCard: this });
           }
         },
       );

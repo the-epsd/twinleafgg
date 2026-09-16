@@ -4,7 +4,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { PokemonCard, StoreLike, State, StateUtils, PlayerType } from '../../../game';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { EnergyCard } from '../../../game/store/card/energy-card';
-import { WAS_POWER_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {WAS_POWER_USED, WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
@@ -56,7 +56,7 @@ export class Delphox extends PokemonCard {
       if (!basicRInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      player.hand.moveCardTo(basicRInHand, player.discard);
+      MOVE_CARDS(store, state, player.hand, player.discard, { cards: [basicRInHand], sourceCard: this });
       const toDraw = Math.max(0, 7 - player.hand.cards.length);
       if (toDraw > 0) {
         DRAW_CARDS(store, state, player, toDraw);

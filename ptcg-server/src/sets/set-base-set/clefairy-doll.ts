@@ -6,7 +6,7 @@ import { KnockOutEffect, RetreatEffect } from '../../game/store/effects/game-eff
 import { PlayItemEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import {WAS_POWER_USED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class ClefairyDoll extends TrainerCard {
   public name = 'Clefairy Doll';
@@ -65,15 +65,14 @@ export class ClefairyDoll extends TrainerCard {
 
       if (player.bench.every(b => b.cards.length === 0)) {
         // technical implementation does not matter exactly because this ends the game
-        effect.player.active.moveCardsTo(effect.player.active.cards, player.deck);
+        MOVE_CARDS(store, state, effect.player.active, player.deck, { cards: effect.player.active.cards, sourceCard: this });
       } else {
         player.switchPokemon(cardList);
         const mysteriousFossilCardList = StateUtils.findCardList(state, this);
-        mysteriousFossilCardList.moveCardsTo(mysteriousFossilCardList.cards.filter(c => c === this), effect.player.discard);
-        mysteriousFossilCardList.moveCardsTo(mysteriousFossilCardList.cards.filter(c => c !== this), effect.player.discard);
+        MOVE_CARDS(store, state, mysteriousFossilCardList, effect.player.discard, { cards: mysteriousFossilCardList.cards.filter(c => c === this), sourceCard: this });
+        MOVE_CARDS(store, state, mysteriousFossilCardList, effect.player.discard, { cards: mysteriousFossilCardList.cards.filter(c => c !== this), sourceCard: this });
       }
     }
-
 
     if (effect instanceof PlayItemEffect && effect.trainerCard === this) {
       const player = effect.player;

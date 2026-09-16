@@ -3,7 +3,7 @@ import { Stage, CardType, SuperType, TrainerType } from '../../../game/store/car
 import { StoreLike, State, Card, ChooseCardsPrompt, GameError, GameMessage, ShowCardsPrompt, StateUtils, TrainerCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* useBeckon(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
@@ -32,7 +32,6 @@ function* useBeckon(next: Function, store: StoreLike, state: State, effect: Atta
     next();
   });
 
-
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
       opponent.id,
@@ -42,13 +41,11 @@ function* useBeckon(next: Function, store: StoreLike, state: State, effect: Atta
   }
 
   if (cards.length > 0) {
-    player.discard.moveCardsTo(cards, player.hand);
+    MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: effect.source.getPokemonCard()! });
   }
-
 
   return state;
 }
-
 
 export class Ralts extends PokemonCard {
   public stage: Stage = Stage.BASIC;

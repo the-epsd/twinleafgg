@@ -1,6 +1,8 @@
 import { AttachEnergyPrompt, CardList, EnergyType, GameMessage, PlayerType, ShowCardsPrompt, SlotType, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+
 export class GutsyPickaxe extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -29,13 +31,12 @@ export class GutsyPickaxe extends TrainerCard {
       // // We will discard this card after prompt confirmation
       // effect.preventDefault = true;
 
-      player.deck.moveTo(temp, 1);
+      MOVE_CARDS(store, state, player.deck, temp, { count: 1, sourceCard: this });
 
       // Check if any cards drawn are basic energy
       const energyCardsDrawn = temp.cards.filter(card => {
         return card.superType === SuperType.ENERGY && card.energyType === EnergyType.BASIC && card.name === 'Fighting Energy';
       });
-
 
       // If no energy cards were drawn, move all cards to hand
       if (temp.cards.length > 0) {
@@ -51,11 +52,10 @@ export class GutsyPickaxe extends TrainerCard {
               temp.cards
             ), () => {
               temp.cards.slice(0, 1).forEach(card => {
-                temp.moveCardTo(card, player.hand);
+                MOVE_CARDS(store, state, temp, player.hand, { cards: [card], sourceCard: this });
               });
             });
           } else {
-
 
             // Prompt to attach energy if any were drawn
             return store.prompt(state, new AttachEnergyPrompt(
@@ -72,10 +72,10 @@ export class GutsyPickaxe extends TrainerCard {
               if (transfers) {
                 for (const transfer of transfers) {
                   const target = StateUtils.getTarget(state, player, transfer.to);
-                  temp.moveCardTo(transfer.card, target); // Move card to target
+                  MOVE_CARDS(store, state, temp, target, { cards: [transfer.card], sourceCard: this }); // Move card to target
                 }
                 temp.cards.forEach(card => {
-                  temp.moveCardTo(card, player.hand); // Move card to hand
+                  MOVE_CARDS(store, state, temp, player.hand, { cards: [card], sourceCard: this }); // Move card to hand
                 });
                 return state;
               }

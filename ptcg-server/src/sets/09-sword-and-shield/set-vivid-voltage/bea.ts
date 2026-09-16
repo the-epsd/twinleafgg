@@ -12,6 +12,7 @@ import { EnergyCard } from '../../../game/store/card/energy-card';
 import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-prompt';
 import { CardList } from '../../../game/store/state/card-list';
 import { StateUtils } from '../../../game/store/state-utils';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Bea extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -29,7 +30,7 @@ export class Bea extends TrainerCard {
       const player = effect.player;
 
       effect.preventDefault = true;
-      player.hand.moveCardTo(this, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [this], sourceCard: this });
 
       // Discard top 5 cards from deck into a temp list to find energy cards
       const discarded = new CardList();
@@ -37,7 +38,7 @@ export class Bea extends TrainerCard {
 
       for (let i = 0; i < count; i++) {
         if (player.deck.cards.length > 0) {
-          player.deck.moveCardTo(player.deck.cards[0], discarded);
+          MOVE_CARDS(store, state, player.deck, discarded, { cards: [player.deck.cards[0]], sourceCard: this });
         }
       }
 
@@ -46,11 +47,11 @@ export class Bea extends TrainerCard {
       const nonEnergyCards = discarded.cards.filter(c => !(c instanceof EnergyCard));
 
       // Discard non-energy cards
-      nonEnergyCards.forEach(c => discarded.moveCardTo(c, player.discard));
+      nonEnergyCards.forEach(c => MOVE_CARDS(store, state, discarded, player.discard, { cards: [c], sourceCard: this }));
 
       if (energyCards.length === 0) {
         // No energy found, just discard trainer
-        player.supporter.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
         return state;
       }
 
@@ -78,8 +79,8 @@ export class Bea extends TrainerCard {
 
       if (!hasFightingBenched) {
         // No valid targets - discard the energy cards too
-        energyCards.forEach(c => discarded.moveCardTo(c, player.discard));
-        player.supporter.moveCardTo(this, player.discard);
+        energyCards.forEach(c => MOVE_CARDS(store, state, discarded, player.discard, { cards: [c], sourceCard: this }));
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
         return state;
       }
 
@@ -102,9 +103,9 @@ export class Bea extends TrainerCard {
         }
 
         // Discard remaining energy cards that weren't attached
-        discarded.cards.slice().forEach(c => discarded.moveCardTo(c, player.discard));
+        discarded.cards.slice().forEach(c => MOVE_CARDS(store, state, discarded, player.discard, { cards: [c], sourceCard: this }));
 
-        player.supporter.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
       });
     }
 

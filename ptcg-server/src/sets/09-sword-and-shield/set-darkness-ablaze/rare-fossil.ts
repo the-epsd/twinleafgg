@@ -3,7 +3,7 @@ import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-e
 import { Effect } from '../../../game/store/effects/effect';
 import { RetreatEffect } from '../../../game/store/effects/game-effects';
 import { PlayItemEffect, PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class RareFossil extends TrainerCard {
 
@@ -68,9 +68,8 @@ This card can't be affected by any Special Conditions, and it can't retreat.`,
       store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: this.name, effect: 'Rare Fossil' });
 
       const cardList = StateUtils.findCardList(state, this);
-      cardList.moveCardTo(this, player.discard);
+      MOVE_CARDS(store, state, cardList, player.discard, { cards: [this], sourceCard: this });
     }
-
 
     if (effect instanceof PlayItemEffect && effect.trainerCard === this) {
       const player = effect.player;

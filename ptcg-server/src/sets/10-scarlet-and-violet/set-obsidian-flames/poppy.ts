@@ -6,6 +6,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { EnergyCard, GameError, MoveEnergyPrompt, Player, PlayerType, SlotType, StateUtils } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Poppy extends TrainerCard {
 
@@ -44,7 +45,6 @@ export class Poppy extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
@@ -70,7 +70,7 @@ export class Poppy extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -89,8 +89,7 @@ export class Poppy extends TrainerCard {
         for (const transfer of transfers) {
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);
-          source.moveCardTo(transfer.card, target);
-
+          MOVE_CARDS(store, state, source, target, { cards: [transfer.card], sourceCard: this });
 
         }
       });

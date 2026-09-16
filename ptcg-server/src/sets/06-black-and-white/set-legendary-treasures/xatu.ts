@@ -2,7 +2,7 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, DRAW_CARDS, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, DRAW_CARDS, WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { GameMessage } from '../../../game/game-message';
@@ -74,11 +74,11 @@ export class Xatu extends PokemonCard {
         if (playerWins) {
           DRAW_CARDS(store, state, player, 3);
           const millCount = Math.min(3, opponent.deck.cards.length);
-          opponent.deck.moveTo(opponent.discard, millCount);
+          MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: millCount, sourceCard: this });
         } else {
           DRAW_CARDS(store, state, opponent, 3);
           const millCount = Math.min(3, player.deck.cards.length);
-          player.deck.moveTo(player.discard, millCount);
+          MOVE_CARDS(store, state, player.deck, player.discard, { count: millCount, sourceCard: this });
         }
       });
     }

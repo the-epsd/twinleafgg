@@ -9,6 +9,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { SupporterEffect, TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -21,7 +22,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
@@ -36,7 +37,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
@@ -48,8 +48,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     cards = selected || [];
     next();
   });
-
-
 
   // Operation canceled by the user
   if (cards.length === 0) {
@@ -65,11 +63,10 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   cards.forEach((card, index) => {
-    opponent.hand.moveCardTo(card, slots[index]);
+    MOVE_CARDS(store, state, opponent.hand, slots[index], { cards: [card], sourceCard: effect.trainerCard });
     slots[index].pokemonPlayedTurn = state.turn;
     opponent.switchPokemon(slots[index]);
   });
-
 
 }
 export class EreikasInvitation extends TrainerCard {
@@ -105,7 +102,6 @@ export class EreikasInvitation extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

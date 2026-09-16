@@ -10,6 +10,7 @@ import { PlayerType, SlotType } from '../../../game/store/actions/play-card-acti
 import { MoveEnergyPrompt, CardTransfer } from '../../../game/store/prompts/move-energy-prompt';
 import { StateUtils } from '../../../game/store/state-utils';
 import { Player } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -45,11 +46,10 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     next();
   });
 
-
   transfers.forEach(transfer => {
     const source = StateUtils.getTarget(state, player, transfer.from);
     const target = StateUtils.getTarget(state, player, transfer.to);
-    source.moveCardTo(transfer.card, target);
+    MOVE_CARDS(store, state, source, target, { cards: [transfer.card], sourceCard: effect.trainerCard });
   });
   return state;
 }

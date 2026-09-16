@@ -8,7 +8,7 @@ import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { HealEffect } from '../../../game/store/effects/game-effects';
-import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {COIN_FLIP_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class LuckyIcePop extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -45,7 +45,7 @@ export class LuckyIcePop extends TrainerCard {
         COIN_FLIP_PROMPT(store, state, player, result => {
           if (result) {
             // Heads: return to hand instead of discard
-            player.supporter.moveCardTo(effect.trainerCard, player.hand);
+            MOVE_CARDS(store, state, player.supporter, player.hand, { cards: [effect.trainerCard], sourceCard: this });
           } else {
             // Tails: discard normally
 

@@ -7,6 +7,7 @@ import { TrainerType, SuperType, CardTag } from '../../../game/store/card/card-t
 import { StoreLike, State, GameError, GameMessage, ChooseCardsPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(
   next: Function,
@@ -41,7 +42,7 @@ function* playCard(
   }
 
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
 
   // Block all cards that aren't Pokemon or Supporter
   const blocked: number[] = [];
@@ -70,12 +71,12 @@ function* playCard(
   );
 
   selected.forEach((card) => {
-    player.discard.moveCardTo(card, player.hand);
+    MOVE_CARDS(store, state, player.discard, player.hand, { cards: [card], sourceCard: effect.trainerCard });
   });
 
   // Discard both Crossceivers
   if (second !== undefined) {
-    player.hand.moveCardTo(second, player.discard);
+    MOVE_CARDS(store, state, player.hand, player.discard, { cards: [second], sourceCard: effect.trainerCard });
   }
 }
 

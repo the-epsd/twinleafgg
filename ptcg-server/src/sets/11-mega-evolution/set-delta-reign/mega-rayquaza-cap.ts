@@ -18,7 +18,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import {IS_TOOL_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function buildCapHolderBlockedTo(player: State['players'][number], capName: string): CardTarget[] {
   const blocked: CardTarget[] = [];
@@ -113,7 +113,7 @@ export class MegaRayquazaCap extends TrainerCard {
         transfers = transfers || [];
         for (const transfer of transfers) {
           const attachTarget = StateUtils.getTarget(state, player, transfer.to);
-          player.deck.moveCardTo(transfer.card, attachTarget);
+          MOVE_CARDS(store, state, player.deck, attachTarget, { cards: [transfer.card], sourceCard: this });
         }
         store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

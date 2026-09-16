@@ -9,6 +9,7 @@ import { DiscardToHandEffect } from '../../../game/store/effects/play-card-effec
 import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* useStadium(next: Function, store: StoreLike, state: State, effect: UseStadiumEffect): IterableIterator<State> {
   const player = effect.player;
@@ -53,9 +54,8 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
     }
 
     cards.forEach((card, index) => {
-      player.discard.moveCardTo(card, player.hand);
+      MOVE_CARDS(store, state, player.discard, player.hand, { cards: [card], sourceCard: effect.stadium });
     });
-
 
     return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
       player.deck.applyOrder(order);
@@ -91,7 +91,7 @@ export class MtCoronet extends TrainerCard {
 
       if (discardEffect.preventDefault) {
         // If prevented, just discard the card and return
-        player.supporter.moveCardTo(effect.stadium, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [effect.stadium], sourceCard: this });
         return state;
       }
 

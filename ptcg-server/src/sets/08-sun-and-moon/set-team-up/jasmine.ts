@@ -6,7 +6,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardType, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { ChooseCardsPrompt, PokemonCard, StateUtils, pokemonHasCardType } from '../../../game';
-import { MOVE_CARDS_TO_HAND, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {MOVE_CARDS_TO_HAND, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Jasmine extends TrainerCard {
 
@@ -34,7 +34,7 @@ export class Jasmine extends TrainerCard {
       });
 
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,

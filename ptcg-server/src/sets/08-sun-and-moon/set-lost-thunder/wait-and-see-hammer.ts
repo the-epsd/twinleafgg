@@ -9,6 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class WaitAndSeeHammer extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -71,7 +72,7 @@ export class WaitAndSeeHammer extends TrainerCard {
         ), (selected: Card[]) => {
           const cards = selected || [];
           cards.forEach(card => {
-            target.moveCardTo(card, opponent.discard);
+            MOVE_CARDS(store, state, target, opponent.discard, { cards: [card], sourceCard: this });
           });
         });
       });

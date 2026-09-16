@@ -5,6 +5,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { AttachEnergyPrompt, CardList, ChooseCardsPrompt, GameError, GameMessage, Player, PlayerType, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, StateUtils } from '../../../game';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Crispin extends TrainerCard {
 
@@ -32,7 +33,6 @@ export class Crispin extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -45,7 +45,7 @@ export class Crispin extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -70,7 +70,7 @@ export class Crispin extends TrainerCard {
           selected
         ), () => state);
 
-        player.deck.moveCardsTo(cards, cardList);
+        MOVE_CARDS(store, state, player.deck, cardList, { cards: cards, sourceCard: this });
 
         if (cardList.cards.length === 2) {
           state = store.prompt(state, new AttachEnergyPrompt(
@@ -86,21 +86,19 @@ export class Crispin extends TrainerCard {
 
             for (const transfer of transfers) {
               const target = StateUtils.getTarget(state, player, transfer.to);
-              cardList.moveCardTo(transfer.card, target);
+              MOVE_CARDS(store, state, cardList, target, { cards: [transfer.card], sourceCard: this });
             }
 
             // Move the remaining card to the player's hand
             const remainingCard = cardList.cards[0];
-            cardList.moveCardTo(remainingCard, player.hand);
+            MOVE_CARDS(store, state, cardList, player.hand, { cards: [remainingCard], sourceCard: this });
           });
         }
 
         if (cardList.cards.length === 1) {
           const remainingCard = cardList.cards[0];
-          cardList.moveCardTo(remainingCard, player.hand);
+          MOVE_CARDS(store, state, cardList, player.hand, { cards: [remainingCard], sourceCard: this });
         }
-
-
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

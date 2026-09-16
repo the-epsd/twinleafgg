@@ -86,7 +86,7 @@ export class GreninjaGX extends PokemonCard {
       }
 
       PLAY_POKEMON_FROM_HAND_TO_BENCH(state, player, this, effect.target);
-      player.deck.moveTo(player.hand, 3);
+      MOVE_CARDS(store, state, player.deck, player.hand, { count: 3, sourceCard: this });
     }
 
     // Mist Slash
@@ -145,7 +145,7 @@ export class GreninjaGX extends PokemonCard {
             // Move tools to hand
             if (tools.length > 0) {
               for (const tool of tools) {
-                cardList.moveCardTo(tool, opponent.hand);
+                MOVE_CARDS(store, state, cardList, opponent.hand, { cards: [tool], sourceCard: this });
               }
             }
 

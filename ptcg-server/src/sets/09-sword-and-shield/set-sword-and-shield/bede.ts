@@ -9,6 +9,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Bede extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -34,7 +35,7 @@ export class Bede extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will hand this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -50,10 +51,8 @@ export class Bede extends TrainerCard {
         transfers = transfers || [];
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.hand.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.hand, target, { cards: [transfer.card], sourceCard: this });
         }
-
-
 
         return state;
       });

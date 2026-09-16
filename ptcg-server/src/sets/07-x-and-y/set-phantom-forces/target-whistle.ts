@@ -13,6 +13,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(
   next: Function,
@@ -62,7 +63,7 @@ function* playCard(
   }
 
   cards.forEach((card, index) => {
-    opponent.discard.moveCardTo(card, slots[index]);
+    MOVE_CARDS(store, state, opponent.discard, slots[index], { cards: [card], sourceCard: effect.trainerCard });
     slots[index].pokemonPlayedTurn = state.turn;
   });
 }

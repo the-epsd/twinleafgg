@@ -7,6 +7,7 @@ import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { GameError, GameMessage, MoveEnergyPrompt, PlayerType, SlotType, StateUtils, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class MultiSwitch extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -61,7 +62,7 @@ export class MultiSwitch extends TrainerCard {
         if (transfers && transfers.length > 0) {
           for (const transfer of transfers) {
             const source = StateUtils.getTarget(state, player, transfer.from);
-            source.moveCardTo(transfer.card, player.active);
+            MOVE_CARDS(store, state, source, player.active, { cards: [transfer.card], sourceCard: this });
           }
         }
       });

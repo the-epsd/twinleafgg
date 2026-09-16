@@ -8,7 +8,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { Card, ChooseCardsPrompt, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../../game';
 
-import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {COIN_FLIP_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class CapturingAroma extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -58,15 +58,14 @@ export class CapturingAroma extends TrainerCard {
 
             // Operation canceled by the user
             if (cards.length === 0) {
-              player.supporter.moveCardTo(this, player.discard);
+              MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
               return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
                 player.deck.applyOrder(order);
               });
             }
 
-
             if (cards.length > 0) {
-              player.supporter.moveCardTo(this, player.discard);
+              MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
               state = store.prompt(state, new ShowCardsPrompt(
                 opponent.id,
                 GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
@@ -74,7 +73,7 @@ export class CapturingAroma extends TrainerCard {
             }
 
             cards.forEach(card => {
-              player.deck.moveCardTo(card, player.hand);
+              MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this });
             });
             return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
               player.deck.applyOrder(order);
@@ -94,22 +93,21 @@ export class CapturingAroma extends TrainerCard {
 
             // Operation canceled by the user
             if (cards.length === 0) {
-              player.supporter.moveCardTo(this, player.discard);
+              MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
               return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
                 player.deck.applyOrder(order);
               });
             }
 
-
             if (cards.length > 0) {
-              player.supporter.moveCardTo(this, player.discard);
+              MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
               state = store.prompt(state, new ShowCardsPrompt(
                 opponent.id,
                 GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
                 cards), () => state);
             }
             cards.forEach(card => {
-              player.deck.moveCardTo(card, player.hand);
+              MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this });
             });
             return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
               player.deck.applyOrder(order);

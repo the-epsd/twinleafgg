@@ -62,7 +62,6 @@ export class Duskull extends PokemonCard {
 
         MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this, sourceEffect: this.powers[0] });
 
-
         // Blocking pokemon cards, that cannot be valid evolutions
         const blocked: number[] = [];
         player.deck.cards.forEach((card, index) => {

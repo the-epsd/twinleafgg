@@ -4,6 +4,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { CardTarget, GameError, GameMessage, ChooseCardsPrompt, ChoosePokemonPrompt, PlayerType, SlotType, StoreLike, State, Player } from '../../../game';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class TransformationTome extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -35,7 +36,6 @@ export class TransformationTome extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -92,10 +92,10 @@ export class TransformationTome extends TrainerCard {
               if (fromDiscard.length === 0) return state;
               const inPlayCard = inPlayList.getPokemonCard();
               if (inPlayCard && inPlayList.cards.length > 0) {
-                inPlayList.moveCardTo(inPlayList.cards[0], player.discard);
+                MOVE_CARDS(store, state, inPlayList, player.discard, { cards: [inPlayList.cards[0]], sourceCard: this });
               }
-              player.discard.moveCardTo(fromDiscard[0], inPlayList);
-              player.hand.moveCardTo(second, player.discard);
+              MOVE_CARDS(store, state, player.discard, inPlayList, { cards: [fromDiscard[0]], sourceCard: this });
+              MOVE_CARDS(store, state, player.hand, player.discard, { cards: [second], sourceCard: this });
             },
           );
         },

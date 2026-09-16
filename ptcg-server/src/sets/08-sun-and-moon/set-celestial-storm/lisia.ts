@@ -15,7 +15,7 @@ import {
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Lisia extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -69,7 +69,7 @@ export class Lisia extends TrainerCard {
 
             // Move chosen cards to hand
             cards.forEach((card) => {
-              player.deck.moveCardTo(card, player.hand);
+              MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this });
             });
           }
 

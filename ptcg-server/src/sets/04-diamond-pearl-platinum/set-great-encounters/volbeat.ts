@@ -4,7 +4,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../../game/store/prefabs/attack-effects';
-import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_POWER_USED, WAS_ATTACK_USED, COIN_FLIP_PROMPT, ABILITY_USED } from '../../../game/store/prefabs/prefabs';
+import {ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_POWER_USED, WAS_ATTACK_USED, COIN_FLIP_PROMPT, ABILITY_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Volbeat extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -86,7 +86,7 @@ export class Volbeat extends PokemonCard {
             { min: 1, max: 1, allowCancel: false }
           ), selected => {
 
-            player.discard.moveCardTo(selected[0], deckTop);
+            MOVE_CARDS(store, state, player.discard, deckTop, { cards: [selected[0]], sourceCard: this });
             deckTop.moveToTopOfDestination(player.deck);
 
             store.prompt(state, new ShowCardsPrompt(

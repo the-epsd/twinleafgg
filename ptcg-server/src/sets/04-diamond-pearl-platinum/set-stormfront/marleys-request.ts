@@ -1,7 +1,7 @@
 import { TrainerCard, TrainerType, StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, GameError, CardList } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { SHOW_CARDS_TO_PLAYER, MOVE_CARD_TO } from '../../../game/store/prefabs/prefabs';
+import {SHOW_CARDS_TO_PLAYER, MOVE_CARD_TO, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class MarleysRequest extends TrainerCard {
   public trainerType = TrainerType.SUPPORTER;
@@ -24,7 +24,7 @@ export class MarleysRequest extends TrainerCard {
       }
 
       effect.preventDefault = true;
-      player.hand.moveCardTo(this, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [this], sourceCard: this });
 
       const blocked: number[] = [];
       const notBlocked: CardList = new CardList();
@@ -55,7 +55,7 @@ export class MarleysRequest extends TrainerCard {
         ), cards => {
           SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
           cards.forEach(card => MOVE_CARD_TO(state, card, player.hand));
-          player.supporter.moveCardTo(this, player.discard);
+          MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
         });
       } else {
         state = store.prompt(state, new ChooseCardsPrompt(
@@ -79,7 +79,7 @@ export class MarleysRequest extends TrainerCard {
             { min: 1, max: 1, allowCancel: false }
           ), card => {
             MOVE_CARD_TO(state, card[0], player.hand);
-            player.supporter.moveCardTo(this, player.discard);
+            MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
           });
         });
       }

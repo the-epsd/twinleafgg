@@ -8,7 +8,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { TRAINER_TARGET_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import {TRAINER_TARGET_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect, trainerCard: GiovannisCharisma): IterableIterator<State> {
   const player = effect.player;
@@ -20,7 +20,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
@@ -43,7 +43,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   ), selected => {
     card = selected[0];
 
-    opponent.active.moveCardTo(card, opponent.hand);
+    MOVE_CARDS(store, state, opponent.active, opponent.hand, { cards: [card], sourceCard: effect.trainerCard });
 
     state = store.prompt(state, new AttachEnergyPrompt(
       player.id,
@@ -62,7 +62,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
       for (const transfer of transfers) {
         const target = StateUtils.getTarget(state, player, transfer.to);
-        player.hand.moveCardTo(transfer.card, target);
+        MOVE_CARDS(store, state, player.hand, target, { cards: [transfer.card], sourceCard: effect.trainerCard });
       }
     });
 

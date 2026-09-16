@@ -15,7 +15,7 @@ import { SpecialCondition } from '../../../game/store/card/card-types';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
 import { StateUtils } from '../../../game/store/state-utils';
 
-import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class MimikyuGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
@@ -100,7 +100,7 @@ export class MimikyuGX extends PokemonCard {
         ),
         (selection) => {
           selection.forEach((r) => {
-            r.moveTo(opponent.deck);
+            MOVE_CARDS(store, state, r, opponent.deck, { sourceCard: this });
             r.clearEffects();
           });
         },

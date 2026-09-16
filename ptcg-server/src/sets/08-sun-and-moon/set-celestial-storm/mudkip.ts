@@ -52,7 +52,6 @@ export class Mudkip extends PokemonCard {
         if (cards.length > 0) {
           MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this, sourceEffect: this.attacks[0] });
 
-
           if (cards.length > 0) {
             state = store.prompt(state, new ShowCardsPrompt(
               opponent.id,

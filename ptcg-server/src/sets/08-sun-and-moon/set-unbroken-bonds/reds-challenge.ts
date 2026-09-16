@@ -7,7 +7,7 @@ import { State } from '../../../game/store/state/state';
 import { GameError } from '../../../game';
 import { Player } from '../../../game/store/state/player';
 import { DISCARD_X_CARDS_FROM_YOUR_HAND, WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import { SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../../game/store/prefabs/prefabs';
+import { SEARCH_DECK_FOR_CARDS_TO_HAND, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class RedsChallenge extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -52,7 +52,7 @@ export class RedsChallenge extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       effect.preventDefault = true;
 
       DISCARD_X_CARDS_FROM_YOUR_HAND(effect, store, state, 2, 2);

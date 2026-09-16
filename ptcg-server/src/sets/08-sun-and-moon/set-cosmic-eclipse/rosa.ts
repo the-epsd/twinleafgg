@@ -42,7 +42,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // We will discard this card after prompt confirmation
   // This will prevent unblocked supporter to appear in the discard pile
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
 
   const maxPokemons = 1;
   const maxEnergies = 1;

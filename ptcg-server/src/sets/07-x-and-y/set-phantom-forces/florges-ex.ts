@@ -22,7 +22,7 @@ import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effect
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
-import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {WAS_ATTACK_USED, SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class FlorgesEx extends PokemonCard {
   protected _tags = [CardTag.POKEMON_EX];
@@ -85,7 +85,7 @@ export class FlorgesEx extends PokemonCard {
               new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
               () => {
                 cards.forEach((card) => {
-                  player.deck.moveCardTo(card, player.hand);
+                  MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this });
                 });
               },
             );

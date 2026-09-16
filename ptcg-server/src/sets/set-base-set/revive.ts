@@ -35,7 +35,7 @@ export class Revive extends TrainerCard {
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       let cards: Card[] = [];
       return store.prompt(state, new ChooseCardsPrompt(

@@ -3,7 +3,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { MoveCardsEffect } from '../../../game/store/effects/game-effects';
-import { DRAW_UP_TO_X_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {DRAW_UP_TO_X_CARDS, SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class TeamGalacticsWager extends TrainerCard {
@@ -28,7 +28,7 @@ export class TeamGalacticsWager extends TrainerCard {
       }
 
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       const cards = player.hand.cards.filter(c => c !== this);
       const opponentCards = opponent.hand.cards.filter(c => c !== this);
@@ -94,8 +94,6 @@ export class TeamGalacticsWager extends TrainerCard {
           DRAW_UP_TO_X_CARDS(store, state, opponent, maxOpponentDraw);
         }
       });
-
-
 
     }
 

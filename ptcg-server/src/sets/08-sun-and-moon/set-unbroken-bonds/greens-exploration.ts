@@ -8,6 +8,7 @@ import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class GreensExploration extends TrainerCard {
 
@@ -88,7 +89,7 @@ Search your deck for up to 2 Trainer cards, reveal them, and put them into your 
       ), cards => {
         cards = cards || [];
         if (cards.length > 0) {
-          player.deck.moveCardsTo(cards, player.hand);
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
 
           state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
@@ -99,8 +100,6 @@ Search your deck for up to 2 Trainer cards, reveal them, and put them into your 
             GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
             cards), () => state);
         }
-
-
 
         return state;
       });

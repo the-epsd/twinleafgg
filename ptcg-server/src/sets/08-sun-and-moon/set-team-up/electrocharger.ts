@@ -7,7 +7,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { Card, ChooseCardsPrompt, GameMessage, StoreLike, State, GameError } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { MULTIPLE_COIN_FLIPS_PROMPT, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {MULTIPLE_COIN_FLIPS_PROMPT, SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Electrocharger extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -56,7 +56,7 @@ export class Electrocharger extends TrainerCard {
         ), (selected: Card[] | null) => {
           const cards = selected || [];
           cards.forEach(c => {
-            player.discard.moveCardTo(c, player.deck);
+            MOVE_CARDS(store, state, player.discard, player.deck, { cards: [c], sourceCard: this });
           });
           if (cards.length > 0) {
             SHUFFLE_DECK(store, state, player);

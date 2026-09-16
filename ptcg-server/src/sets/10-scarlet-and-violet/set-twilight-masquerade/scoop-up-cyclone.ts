@@ -60,7 +60,7 @@ export class ScoopUpCyclone extends TrainerCard {
             // Move tools to hand
             if (tools.length > 0) {
               for (const tool of tools) {
-                cardList.moveCardTo(tool, player.hand);
+                MOVE_CARDS(store, state, cardList, player.hand, { cards: [tool], sourceCard: this });
               }
             }
 

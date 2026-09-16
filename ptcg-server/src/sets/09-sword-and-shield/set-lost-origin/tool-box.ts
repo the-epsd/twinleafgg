@@ -7,7 +7,7 @@ import { TrainerType, SuperType } from '../../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, CardList, ChooseCardsPrompt, ShowCardsPrompt, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class ToolBox extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -30,7 +30,7 @@ export class ToolBox extends TrainerCard {
 
       const deckTop = new CardList();
       const count = Math.min(7, player.deck.cards.length);
-      player.deck.moveTo(deckTop, count);
+      MOVE_CARDS(store, state, player.deck, deckTop, { count: count, sourceCard: this });
 
       // Find Tool cards in top 7 and build blocked array for non-Tool cards
       const blocked: number[] = [];
@@ -47,7 +47,7 @@ export class ToolBox extends TrainerCard {
 
       if (toolCards.length === 0) {
         // No Tool cards found, shuffle all cards back into deck
-        deckTop.moveTo(player.deck);
+        MOVE_CARDS(store, state, deckTop, player.deck, { sourceCard: this });
         return SHUFFLE_DECK(store, state, player);
       }
 
@@ -69,11 +69,11 @@ export class ToolBox extends TrainerCard {
           ), () => { });
 
           // Move chosen Tool cards to hand
-          deckTop.moveCardsTo(cards, player.hand);
+          MOVE_CARDS(store, state, deckTop, player.hand, { cards: cards, sourceCard: this });
         }
 
         // Shuffle remaining cards back into deck
-        deckTop.moveTo(player.deck);
+        MOVE_CARDS(store, state, deckTop, player.deck, { sourceCard: this });
         SHUFFLE_DECK(store, state, player);
       });
     }

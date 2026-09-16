@@ -7,6 +7,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Looker extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -26,7 +27,7 @@ export class Looker extends TrainerCard {
       const cardsToDraw = Math.min(3, player.deck.cards.length);
       if (cardsToDraw > 0) {
         const bottomCards = player.deck.cards.slice(-cardsToDraw);
-        player.deck.moveCardsTo(bottomCards, player.hand);
+        MOVE_CARDS(store, state, player.deck, player.hand, { cards: bottomCards, sourceCard: this });
       }
     }
 

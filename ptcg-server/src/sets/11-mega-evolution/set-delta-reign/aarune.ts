@@ -44,7 +44,7 @@ export class Aarune extends TrainerCard {
 
       BLOCK_IF_DECK_EMPTY(player);
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       effect.preventDefault = true;
 
       const blocked: number[] = [];
@@ -70,7 +70,7 @@ export class Aarune extends TrainerCard {
           MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this });
         }
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [effect.trainerCard], sourceCard: this });
         return SHUFFLE_DECK(store, state, player);
       });
     }

@@ -25,7 +25,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
 
   const blocked: number[] = [];
   player.deck.cards.forEach((c, index) => {
@@ -45,7 +45,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
     cards = selected || [];
     next();
   });
-
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(

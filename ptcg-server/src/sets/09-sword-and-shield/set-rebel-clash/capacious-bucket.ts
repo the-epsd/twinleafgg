@@ -11,6 +11,7 @@ import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class CapaciousBucket extends TrainerCard {
 
@@ -43,7 +44,7 @@ export class CapaciousBucket extends TrainerCard {
       }
 
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       let cards: Card[] = [];
       store.prompt(state, new ChooseCardsPrompt(
@@ -63,8 +64,8 @@ export class CapaciousBucket extends TrainerCard {
           ), () => { });
         }
 
-        player.deck.moveCardsTo(cards, player.hand);
-        player.supporter.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
 
         store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

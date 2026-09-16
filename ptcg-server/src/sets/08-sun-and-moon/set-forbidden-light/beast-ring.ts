@@ -13,6 +13,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class BeastRing extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -71,7 +72,7 @@ export class BeastRing extends TrainerCard {
           transfers = transfers || [];
           for (const transfer of transfers) {
             const target = StateUtils.getTarget(state, player, transfer.to);
-            player.deck.moveCardTo(transfer.card, target);
+            MOVE_CARDS(store, state, player.deck, target, { cards: [transfer.card], sourceCard: this });
           }
 
           return state;

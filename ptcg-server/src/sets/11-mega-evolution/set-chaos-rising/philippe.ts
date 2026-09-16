@@ -11,6 +11,7 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
 import { CardTarget, PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Philippe extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -48,7 +49,6 @@ export class Philippe extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_TRAINER_USED(effect, this)) {
@@ -128,7 +128,7 @@ export class Philippe extends TrainerCard {
             (selected: Card[]) => {
               const cards = selected || [];
               cards.forEach((card) => {
-                player.discard.moveCardTo(card, target);
+                MOVE_CARDS(store, state, player.discard, target, { cards: [card], sourceCard: this });
               });
               return state;
             },

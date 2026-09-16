@@ -7,7 +7,6 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { Card, CardList, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, SelectOptionPrompt, SlotType, StateUtils } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
-
 export class LostVacuum extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -63,7 +62,7 @@ Choose a Pokémon Tool attached to any Pokémon, or any Stadium in play, and put
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       // prepare card list without Junk Arm
       const handTemp = new CardList();
@@ -81,7 +80,7 @@ Choose a Pokémon Tool attached to any Pokémon, or any Stadium in play, and put
         if (cards.length === 0) {
           return state;
         }
-        player.hand.moveCardsTo(cards, player.lostzone);
+        MOVE_CARDS(store, state, player.hand, player.lostzone, { cards: cards, sourceCard: this });
       });
 
       if (pokemonsWithTool >= 1 && stadiumCard !== undefined) {
@@ -113,7 +112,7 @@ Choose a Pokémon Tool attached to any Pokémon, or any Stadium in play, and put
                   const owner = StateUtils.findOwner(state, target);
                   if (target.tools.length === 1) {
                     // Only one tool, move it directly
-                    target.moveCardTo(target.tools[0], owner.lostzone);
+                    MOVE_CARDS(store, state, target, owner.lostzone, { cards: [target.tools[0]], sourceCard: this });
                   } else if (target.tools.length > 1) {
                     // Multiple tools, prompt to choose one
                     const toolList = new CardList();
@@ -127,17 +126,17 @@ Choose a Pokémon Tool attached to any Pokémon, or any Stadium in play, and put
                     ), selectedTools => {
                       if (selectedTools && selectedTools.length === 1) {
                         const tool = selectedTools[0];
-                        target.moveCardTo(tool, owner.lostzone);
+                        MOVE_CARDS(store, state, target, owner.lostzone, { cards: [tool], sourceCard: this });
                       }
-                      player.supporter.moveCardTo(this, player.discard);
+                      MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
                       return state;
                     });
                   }
-                  player.supporter.moveCardTo(this, player.discard);
+                  MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
                   return state;
                 });
 
-                player.supporter.moveCardTo(this, player.discard);
+                MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
                 return state;
               });
             }
@@ -155,7 +154,7 @@ Choose a Pokémon Tool attached to any Pokémon, or any Stadium in play, and put
               const owner = StateUtils.findOwner(state, cardList);
               MOVE_CARDS(store, state, cardList, owner.lostzone, { sourceCard: this });
 
-              player.supporter.moveCardTo(this, player.discard);
+              MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
               return state;
             }
 
@@ -173,7 +172,7 @@ Choose a Pokémon Tool attached to any Pokémon, or any Stadium in play, and put
             option.action();
 
           }
-          player.supporter.moveCardTo(this, player.discard);
+          MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
           return state;
         });
       }
@@ -188,7 +187,7 @@ Choose a Pokémon Tool attached to any Pokémon, or any Stadium in play, and put
         const owner = StateUtils.findOwner(state, cardList);
         MOVE_CARDS(store, state, cardList, owner.discard, { sourceCard: this });
 
-        player.supporter.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
         return state;
       }
 
@@ -216,7 +215,7 @@ Choose a Pokémon Tool attached to any Pokémon, or any Stadium in play, and put
             const owner = StateUtils.findOwner(state, target);
             if (target.tools.length === 1) {
               // Only one tool, move it directly
-              target.moveCardTo(target.tools[0], owner.lostzone);
+              MOVE_CARDS(store, state, target, owner.lostzone, { cards: [target.tools[0]], sourceCard: this });
             } else if (target.tools.length > 1) {
               // Multiple tools, prompt to choose one
               const toolList = new CardList();
@@ -230,13 +229,13 @@ Choose a Pokémon Tool attached to any Pokémon, or any Stadium in play, and put
               ), selectedTools => {
                 if (selectedTools && selectedTools.length === 1) {
                   const tool = selectedTools[0];
-                  target.moveCardTo(tool, owner.lostzone);
+                  MOVE_CARDS(store, state, target, owner.lostzone, { cards: [tool], sourceCard: this });
                 }
-                player.supporter.moveCardTo(this, player.discard);
+                MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
                 return state;
               });
             }
-            player.supporter.moveCardTo(this, player.discard);
+            MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
             return state;
           });
         });

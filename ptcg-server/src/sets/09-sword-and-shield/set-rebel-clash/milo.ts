@@ -7,7 +7,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { ChooseCardsPrompt, GameError, GameMessage, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
+import {DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Milo extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -28,12 +28,12 @@ export class Milo extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(this, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [this], sourceCard: this });
       effect.preventDefault = true;
 
       const otherCards = player.hand.cards.slice();
       if (otherCards.length === 0) {
-        player.supporter.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
         return state;
       }
 
@@ -46,10 +46,10 @@ export class Milo extends TrainerCard {
       ), cards => {
         cards = cards || [];
         if (cards.length > 0) {
-          player.hand.moveCardsTo(cards, player.discard);
+          MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
           DRAW_CARDS(store, state, player, cards.length * 2);
         }
-        player.supporter.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
       });
     }
 

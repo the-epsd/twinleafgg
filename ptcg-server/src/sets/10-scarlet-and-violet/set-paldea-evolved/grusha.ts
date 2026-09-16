@@ -6,6 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { GameError, GameMessage, Player } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Grusha extends TrainerCard {
 
@@ -44,7 +45,7 @@ export class Grusha extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -58,8 +59,7 @@ export class Grusha extends TrainerCard {
           if (player.deck.cards.length === 0) {
             break;
           }
-          player.deck.moveTo(player.hand, 1);
-
+          MOVE_CARDS(store, state, player.deck, player.hand, { count: 1, sourceCard: this });
 
         }
       }
@@ -69,8 +69,7 @@ export class Grusha extends TrainerCard {
           if (player.deck.cards.length === 0) {
             break;
           }
-          player.deck.moveTo(player.hand, 1);
-
+          MOVE_CARDS(store, state, player.deck, player.hand, { count: 1, sourceCard: this });
 
         }
         return state;

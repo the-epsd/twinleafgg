@@ -8,6 +8,7 @@ import { StoreLike, State, SelectOptionPrompt, GameMessage, PlayerType } from '.
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { HealEffect } from '../../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class QuadStone extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -54,7 +55,7 @@ export class QuadStone extends TrainerCard {
           // Use 4 cards: discard 3 more Quad Stone from hand, heal all damage from each Pokemon
           const extraQuadStones = player.hand.cards.filter(c => c.name === 'Quad Stone').slice(0, 3);
           extraQuadStones.forEach(card => {
-            player.hand.moveCardTo(card, player.discard);
+            MOVE_CARDS(store, state, player.hand, player.discard, { cards: [card], sourceCard: this });
           });
 
           // Heal all damage from each of player's Pokemon
@@ -65,7 +66,6 @@ export class QuadStone extends TrainerCard {
             }
           });
         }
-
 
       });
     }

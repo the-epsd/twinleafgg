@@ -3,7 +3,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { BeginTurnEffect, BetweenTurnsEffect } from '../../../game/store/effects/game-phase-effects';
-import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import {IS_TOOL_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
@@ -33,14 +33,14 @@ export class OranBerry extends TrainerCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         if (cardList.damage >= 20 && cardList.tools.includes(this)) {
           cardList.damage -= 20;
-          cardList.moveCardTo(this, player.discard);
+          MOVE_CARDS(store, state, cardList, player.discard, { cards: [this], sourceCard: this });
         }
       });
 
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
         if (cardList.damage >= 20 && cardList.tools.includes(this)) {
           cardList.damage -= 20;
-          cardList.moveCardTo(this, opponent.discard);
+          MOVE_CARDS(store, state, cardList, opponent.discard, { cards: [this], sourceCard: this });
         }
       });
     }

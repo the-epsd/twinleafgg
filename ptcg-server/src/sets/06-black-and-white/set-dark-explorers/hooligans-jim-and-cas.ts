@@ -5,7 +5,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
-import { COIN_FLIP_PROMPT, SHUFFLE_CARDS_INTO_DECK } from '../../../game/store/prefabs/prefabs';
+import {COIN_FLIP_PROMPT, SHUFFLE_CARDS_INTO_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 
 export class HooligansJimAndCas extends TrainerCard {
@@ -33,7 +33,7 @@ export class HooligansJimAndCas extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       effect.preventDefault = true;
 
       return COIN_FLIP_PROMPT(store, state, player, result => {
@@ -59,7 +59,6 @@ export class HooligansJimAndCas extends TrainerCard {
 
           });
         }
-
 
       });
     }

@@ -3,7 +3,7 @@ import { Stage, CardType, SuperType } from '../../../game/store/card/card-types'
 import { StoreLike, State, StateUtils, Card, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, ShowCardsPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Ivysaur extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -51,7 +51,7 @@ export class Ivysaur extends PokemonCard {
         cards = selected || [];
 
         cards.forEach((card, index) => {
-          player.deck.moveCardTo(card, player.hand);
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this });
         });
 
         state = store.prompt(state, new ShowCardsPrompt(

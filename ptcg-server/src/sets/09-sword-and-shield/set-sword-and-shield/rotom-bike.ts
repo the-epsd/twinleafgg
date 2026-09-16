@@ -8,7 +8,7 @@ import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import { DRAW_CARDS_UNTIL_CARDS_IN_HAND } from '../../../game/store/prefabs/prefabs';
+import { DRAW_CARDS_UNTIL_CARDS_IN_HAND, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class RotomBike extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -25,7 +25,7 @@ export class RotomBike extends TrainerCard {
     // Ref: AGENTS-patterns.md (DRAW_CARDS_UNTIL_CARDS_IN_HAND)
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
-      player.hand.moveCardTo(this, player.discard);
+      MOVE_CARDS(store, state, player.hand, player.discard, { cards: [this], sourceCard: this });
       effect.preventDefault = true;
 
       DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 6);

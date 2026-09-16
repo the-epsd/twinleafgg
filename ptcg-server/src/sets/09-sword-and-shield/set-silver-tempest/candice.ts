@@ -6,6 +6,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardType, EnergyType, TrainerType } from '../../../game/store/card/card-types';
 import { Card, CardList, ChooseCardsPrompt, EnergyCard, GameError, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils, pokemonHasCardType } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Candice, effect: TrainerEffect): IterableIterator<State> {
@@ -19,12 +20,12 @@ function* playCard(next: Function, store: StoreLike, state: State,
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
   const deckTop = new CardList();
-  player.deck.moveTo(deckTop, 7);
+  MOVE_CARDS(store, state, player.deck, deckTop, { count: 7, sourceCard: self });
 
   let pokemons = 0;
   let energies = 0;
@@ -54,10 +55,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
     next();
   });
 
-  deckTop.moveCardsTo(cards, player.hand);
-  deckTop.moveTo(player.deck);
-
-
+  MOVE_CARDS(store, state, deckTop, player.hand, { cards: cards, sourceCard: self });
+  MOVE_CARDS(store, state, deckTop, player.deck, { sourceCard: self });
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(

@@ -10,12 +10,11 @@ import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Copycat, effect: TrainerEffect): IterableIterator<State> {
-
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   const cards = player.hand.cards.filter(c => c !== self);
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 

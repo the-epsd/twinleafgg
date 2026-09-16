@@ -11,6 +11,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { CardList, GameError, Player } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(
   next: Function,
@@ -28,7 +29,7 @@ function* playCard(
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
@@ -80,7 +81,7 @@ function* playCard(
     },
   );
 
-  player.hand.moveCardsTo(cards, player.discard);
+  MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: self });
 
   // Pass max counts to prompt options
   yield store.prompt(
@@ -111,8 +112,7 @@ function* playCard(
     return state;
   }
 
-  player.deck.moveCardsTo(cards, player.hand);
-
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
 
   if (cards.length > 0) {
     yield store.prompt(

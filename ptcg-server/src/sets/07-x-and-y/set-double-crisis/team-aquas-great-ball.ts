@@ -50,7 +50,7 @@ function* playCard(
   });
 
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
 
   let cards: Card[] = [];
   yield store.prompt(
@@ -76,7 +76,6 @@ function* playCard(
   cards.forEach((card, index) => {
     MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: self });
   });
-
 
   if (cards.length > 0) {
     yield store.prompt(

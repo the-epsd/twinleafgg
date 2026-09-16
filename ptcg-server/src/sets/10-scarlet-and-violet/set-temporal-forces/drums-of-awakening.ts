@@ -5,6 +5,7 @@ import { Player } from '../../../game/store/state/player';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class DrumsOfAwakening extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -44,7 +45,7 @@ export class DrumsOfAwakening extends TrainerCard {
           ancientPokemonCount++;
         }
       });
-      player.deck.moveTo(player.hand, ancientPokemonCount);
+      MOVE_CARDS(store, state, player.deck, player.hand, { count: ancientPokemonCount, sourceCard: this });
     }
     return state;
   }

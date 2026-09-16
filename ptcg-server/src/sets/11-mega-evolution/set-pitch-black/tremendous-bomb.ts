@@ -7,7 +7,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { StateUtils } from '../../../game/store/state-utils';
-import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import {IS_TOOL_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class TremendousBomb extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
@@ -71,7 +71,7 @@ export class TremendousBomb extends TrainerCard {
     const put = new PlaceDamageCountersEffect(defenderOwner, effect.player.active, 120);
     store.reduceEffect(state, put);
 
-    effect.target.moveCardTo(heroicOnDefender, defenderOwner.discard);
+    MOVE_CARDS(store, state, effect.target, defenderOwner.discard, { cards: [heroicOnDefender], sourceCard: this });
 
     return state;
   }

@@ -119,9 +119,8 @@ export class UTurnBoard extends TrainerCard {
 //           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 //           .map(m => m.source!); // Add non-null assertion operator
 
-//         player.discard.moveCardsTo(rescued, player.hand);
+//         MOVE_CARDS(store, state, player.discard, player.hand, { cards: rescued, sourceCard: this });
 //         player.marker.removeMarker(this.U_TURN_BOARD_MARKER, this);
-
 
 //       });
 //     }

@@ -12,7 +12,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
-import { MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {MULTIPLE_COIN_FLIPS_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class StadiumNav extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -37,7 +37,7 @@ export class StadiumNav extends TrainerCard {
 
       const opponent = StateUtils.getOpponent(state, player);
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       effect.preventDefault = true;
 
@@ -73,7 +73,7 @@ export class StadiumNav extends TrainerCard {
 
           if (cards.length > 0) {
 
-            player.deck.moveCardsTo(cards, player.hand);
+            MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
 
             return store.prompt(state, new ShowCardsPrompt(
               opponent.id,

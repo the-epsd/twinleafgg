@@ -4,7 +4,7 @@ import { StoreLike, State, PowerType, ChooseCardsPrompt, ConfirmPrompt, GameMess
 import { Effect } from '../../../game/store/effects/effect';
 import { DiscardToHandEffect, PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
-import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import {IS_ABILITY_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Milotic extends PokemonCard {
 
@@ -61,7 +61,7 @@ export class Milotic extends PokemonCard {
 
       if (discardEffect.preventDefault) {
         // If prevented, just discard the card and return
-        player.supporter.moveCardTo(effect.pokemonCard, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [effect.pokemonCard], sourceCard: this });
         return state;
       }
 
@@ -89,7 +89,7 @@ export class Milotic extends PokemonCard {
               GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
               cards
             )], () => {
-              player.discard.moveCardsTo(cards, player.hand);
+              MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
 
             });
           });

@@ -28,7 +28,7 @@ export class LookersInvestigation extends TrainerCard {
       }
 
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       SHOW_CARDS_TO_PLAYER(store, state, player, opponent.hand.cards);
 

@@ -6,7 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { EnergyCard, GameMessage, PlayerType, SlotType, AttachEnergyPrompt, StateUtils } from '../../../game';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { ToolEffect } from '../../../game/store/effects/play-card-effects';
-
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class PowerHourglass extends TrainerCard {
 
@@ -49,8 +49,6 @@ export class PowerHourglass extends TrainerCard {
         return state;
       }
 
-
-
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_ACTIVE,
@@ -68,7 +66,7 @@ export class PowerHourglass extends TrainerCard {
 
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
         }
       });
     }

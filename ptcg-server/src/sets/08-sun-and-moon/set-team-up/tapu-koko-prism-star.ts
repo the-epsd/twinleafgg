@@ -113,7 +113,7 @@ export class TapuKokoPrismStar extends PokemonCard {
 
           for (const transfer of transfers) {
             const target = StateUtils.getTarget(state, player, transfer.to);
-            player.discard.moveCardTo(transfer.card, target);
+            MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
           }
 
           player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
@@ -140,7 +140,7 @@ export class TapuKokoPrismStar extends PokemonCard {
               // Move tools to the discard
               if (tools.length > 0) {
                 for (const tool of tools) {
-                  cardList.moveCardTo(tool, player.discard);
+                  MOVE_CARDS(store, state, cardList, player.discard, { cards: [tool], sourceCard: this });
                 }
               }
             }

@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Pokedex extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -28,14 +29,13 @@ export class Pokedex extends TrainerCard {
 
       const deckTop = new CardList();
 
-
       // Get up to 5 cards from the top of the deck
       const cards = deck.cards.slice(0, 5);
-      player.deck.moveCardsTo(cards, deckTop);
+      MOVE_CARDS(store, state, player.deck, deckTop, { cards: cards, sourceCard: this });
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       return store.prompt(state, new OrderCardsPrompt(
         player.id,
@@ -48,7 +48,7 @@ export class Pokedex extends TrainerCard {
         }
 
         deckTop.applyOrder(rearrangedCards);
-        deckTop.moveTo(player.deck);
+        MOVE_CARDS(store, state, deckTop, player.deck, { sourceCard: this });
       });
     }
 

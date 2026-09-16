@@ -7,7 +7,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State, GameError, GameMessage, GamePhase } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import { DRAW_CARDS_UNTIL_CARDS_IN_HAND } from '../../../game/store/prefabs/prefabs';
+import { DRAW_CARDS_UNTIL_CARDS_IN_HAND, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class ProfessorOaksHint extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -27,11 +27,9 @@ export class ProfessorOaksHint extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 7);
-
-
 
       // Your turn ends
       state.phase = GamePhase.BETWEEN_TURNS;

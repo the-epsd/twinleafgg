@@ -11,7 +11,7 @@ import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-promp
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { GamePhase } from '../../game/store/state/state';
-import { REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
+import {REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Zinnia, effect: TrainerEffect): IterableIterator<State> {
@@ -42,7 +42,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   }
 
   // Move to supporter zone
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   effect.preventDefault = true;
 
   // Filter slots that don't have Dragon Pokemon
@@ -67,11 +67,10 @@ function* playCard(next: Function, store: StoreLike, state: State,
     transfers = transfers || [];
     for (const transfer of transfers) {
       const target = StateUtils.getTarget(state, player, transfer.to);
-      player.hand.moveCardTo(transfer.card, target);
+      MOVE_CARDS(store, state, player.hand, target, { cards: [transfer.card], sourceCard: self });
     }
     next();
   });
-
 
   return state;
 }

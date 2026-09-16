@@ -13,7 +13,6 @@ import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { StateUtils } from '../../game/store/state-utils';
 import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
-
 function* playCard(next: Function, store: StoreLike, state: State,
   self: ItemFinder, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;

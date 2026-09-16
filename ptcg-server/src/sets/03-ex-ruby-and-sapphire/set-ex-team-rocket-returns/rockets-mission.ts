@@ -9,7 +9,7 @@ import { CardTag, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
+import {DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
@@ -43,11 +43,11 @@ export class RocketsMission extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       effect.preventDefault = true;
 
       if (cards.length == 1) {
-        player.hand.moveCardsTo(player.hand.cards, player.discard);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards: player.hand.cards, sourceCard: this });
         let cardsToDraw = 3;
 
         if (
@@ -84,7 +84,7 @@ export class RocketsMission extends TrainerCard {
               cardsToDraw = 4;
             }
 
-            player.hand.moveCardsTo(cards, player.discard);
+            MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
 
             DRAW_CARDS(store, state, player, cardsToDraw);
           },

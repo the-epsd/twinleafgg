@@ -7,7 +7,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { GameError, GameMessage, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { DRAW_CARDS, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {DRAW_CARDS, COIN_FLIP_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Kahili extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -29,14 +29,14 @@ export class Kahili extends TrainerCard {
 
       // Prevent default discard so we can control where the card goes
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       DRAW_CARDS(store, state, player, 2);
 
       COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
           // Heads: return Kahili to hand
-          player.supporter.moveCardTo(effect.trainerCard, player.hand);
+          MOVE_CARDS(store, state, player.supporter, player.hand, { cards: [effect.trainerCard], sourceCard: this });
         } else {
           // Tails: normal discard
 

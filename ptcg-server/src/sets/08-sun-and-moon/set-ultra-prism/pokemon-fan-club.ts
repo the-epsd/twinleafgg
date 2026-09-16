@@ -11,6 +11,7 @@ import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -32,7 +33,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     next();
   });
 
-  player.deck.moveCardsTo(cards, player.hand);
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: effect.trainerCard });
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
@@ -64,7 +65,6 @@ export class PokemonFanClub extends TrainerCard {
   public text: string =
     'Search your deck for up to 2 Basic Pokémon, reveal them, ' +
     'and put them into your hand. Then, shuffle your deck.';
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -7,6 +7,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../..';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Schoolgirl extends TrainerCard {
 
@@ -36,11 +37,11 @@ export class Schoolgirl extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.deck.moveTo(player.hand, 2);
+      MOVE_CARDS(store, state, player.deck, player.hand, { count: 2, sourceCard: this });
 
       if (opponent.getPrizeLeft() === 2 || opponent.getPrizeLeft() === 4 || opponent.getPrizeLeft() === 6) {
 
-        player.deck.moveTo(player.hand, 2);
+        MOVE_CARDS(store, state, player.deck, player.hand, { count: 2, sourceCard: this });
 
       }
 

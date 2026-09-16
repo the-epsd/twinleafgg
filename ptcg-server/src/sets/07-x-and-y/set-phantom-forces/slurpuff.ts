@@ -4,7 +4,7 @@ import { GameError, GameMessage, PlayerType, PowerType, State, StoreLike } from 
 import { Effect } from '../../../game/store/effects/effect';
 import { PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Slurpuff extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -50,7 +50,6 @@ export class Slurpuff extends PokemonCard {
         return state;
       }
 
-
       if (player.marker.hasMarker(this.TASTING_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
@@ -58,9 +57,9 @@ export class Slurpuff extends PokemonCard {
       const isActive = player.active.getPokemonCard() === this;
 
       if (isActive) {
-        player.deck.moveTo(player.hand, 2);
+        MOVE_CARDS(store, state, player.deck, player.hand, { count: 2, sourceCard: this });
       } else {
-        player.deck.moveTo(player.hand, 1);
+        MOVE_CARDS(store, state, player.deck, player.hand, { count: 1, sourceCard: this });
       }
 
       player.marker.addMarker(this.TASTING_MARKER, this);

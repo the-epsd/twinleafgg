@@ -9,6 +9,7 @@ import { GameMessage } from '../../../game/game-message';
 import { StateUtils } from '../../..';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { ConfirmCardsPrompt } from '../../../game/store/prompts/confirm-cards-prompt';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class PrimordialAltar extends TrainerCard {
 
@@ -43,7 +44,7 @@ export class PrimordialAltar extends TrainerCard {
     }
 
     const deckTop = new CardList();
-    player.deck.moveTo(deckTop, 1);
+    MOVE_CARDS(store, state, player.deck, deckTop, { count: 1, sourceCard: this });
 
     return store.prompt(state, new ConfirmCardsPrompt(
       player.id,
@@ -56,7 +57,7 @@ export class PrimordialAltar extends TrainerCard {
 
         if (yes) {
           // Add card to hand
-          deckTop.moveTo(player.discard);
+          MOVE_CARDS(store, state, deckTop, player.discard, { sourceCard: this });
         } else {
           // Discard card
           deckTop.moveToTopOfDestination(player.deck);

@@ -5,6 +5,8 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+
 import {
   PlayerType, SlotType, StateUtils, CardTarget,
   GameMessage, PokemonCardList, ChooseCardsPrompt, Card, GameError, CardList
@@ -77,7 +79,7 @@ export class FanOfWaves extends TrainerCard {
 
         const opponentDeckBottom = new CardList();
         cards.forEach(card => {
-          opponentDeckBottom.moveCardTo(card, opponent.deck);
+          MOVE_CARDS(store, state, opponentDeckBottom, opponent.deck, { cards: [card], sourceCard: this });
         });
 
         return state;

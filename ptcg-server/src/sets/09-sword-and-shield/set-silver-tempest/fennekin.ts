@@ -3,7 +3,7 @@ import { Stage, CardType, SuperType, TrainerType } from '../../../game/store/car
 import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, ShowCardsPrompt, ShuffleDeckPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Fennekin extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -57,8 +57,7 @@ export class Fennekin extends PokemonCard {
             cards
           )], () => {
 
-
-            player.deck.moveCardsTo(cards, player.hand);
+            MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
           });
         }
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

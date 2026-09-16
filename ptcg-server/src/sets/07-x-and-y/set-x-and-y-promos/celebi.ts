@@ -73,7 +73,7 @@ export class Celebi extends PokemonCard {
       // Move tools to deck
       if (tools.length > 0) {
         for (const tool of tools) {
-          cardList.moveCardTo(tool, player.deck);
+          MOVE_CARDS(store, state, cardList, player.deck, { cards: [tool], sourceCard: this });
         }
       }
 

@@ -6,6 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { Card, ChooseCardsPrompt, GameMessage, Player, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../../game';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class DeliveryBox extends TrainerCard {
 
@@ -29,7 +30,6 @@ export class DeliveryBox extends TrainerCard {
   public canPlay(store: StoreLike, state: State, player: Player): boolean {    return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -46,9 +46,7 @@ export class DeliveryBox extends TrainerCard {
       ), selected => {
         cards = selected || [];
 
-        player.deck.moveCardsTo(cards, player.hand);
-
-
+        MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
 
         if (cards.length > 0) {
           return store.prompt(state, new ShowCardsPrompt(

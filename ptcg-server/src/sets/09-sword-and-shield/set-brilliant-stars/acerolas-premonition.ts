@@ -8,7 +8,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { GameError } from '../../../game';
-import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
+import {DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class AcerolasPremonition extends TrainerCard {
 
@@ -41,7 +41,7 @@ export class AcerolasPremonition extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 

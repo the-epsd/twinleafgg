@@ -10,7 +10,6 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
-
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Fisherman, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -41,7 +40,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     max = 4;
   }
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 

@@ -6,6 +6,7 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class LtSurgesStrategy extends TrainerCard {
 
@@ -45,7 +46,7 @@ export class LtSurgesStrategy extends TrainerCard {
       } else {
         // going to be increased by one in the play-trainer file
         player.supporterTurn = -2;
-        player.hand.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards: [this], sourceCard: this });
 
         this.playedSurgeThisTurn = true;
       }

@@ -60,7 +60,7 @@ export class FieldBlower extends TrainerCard {
 
       // Prevent default effect and move card to supporter pile temporarily
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       // Handle the case where only stadium is in play
       if (pokemonsWithTool === 0 && stadiumCard !== undefined) {
@@ -72,7 +72,7 @@ export class FieldBlower extends TrainerCard {
           card: stadiumCard.name,
           effectName: this.name
         });
-        player.supporter.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
         return state;
       }
 
@@ -126,13 +126,13 @@ export class FieldBlower extends TrainerCard {
 
       if (targets.length === 0) {
         // No Pokémon selected, just discard the Field Blower
-        player.supporter.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
         return state;
       }
 
       // Process tool discards sequentially
       this.processToolDiscards(store, state, player, targets, 0, () => {
-        player.supporter.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
       });
 
       return state;
@@ -151,7 +151,7 @@ export class FieldBlower extends TrainerCard {
     if (target.tools.length === 1) {
       // Single tool, discard it directly
       const tool = target.tools[0];
-      target.moveCardTo(tool, owner.discard);
+      MOVE_CARDS(store, state, target, owner.discard, { cards: [tool], sourceCard: this });
       store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, {
         name: player.name,
         card: tool.name,
@@ -172,7 +172,7 @@ export class FieldBlower extends TrainerCard {
       ), selectedTools => {
         if (selectedTools && selectedTools.length > 0) {
           const tool = selectedTools[0];
-          target.moveCardTo(tool, owner.discard);
+          MOVE_CARDS(store, state, target, owner.discard, { cards: [tool], sourceCard: this });
           store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, {
             name: player.name,
             card: tool.name,

@@ -4,7 +4,7 @@ import { PowerType, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
-import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { FLIP_COIN_TO_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Shuckle extends PokemonCard {
@@ -50,7 +50,7 @@ export class Shuckle extends PokemonCard {
         return state;
       }
 
-      player.deck.moveTo(player.hand, 1);
+      MOVE_CARDS(store, state, player.deck, player.hand, { count: 1, sourceCard: this });
       return state;
     }
 

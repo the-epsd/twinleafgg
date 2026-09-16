@@ -5,6 +5,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Hapu extends TrainerCard {
 
@@ -33,7 +34,7 @@ export class Hapu extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -42,7 +43,7 @@ export class Hapu extends TrainerCard {
       }
 
       const deckTop = new CardList();
-      player.deck.moveTo(deckTop, 6);
+      MOVE_CARDS(store, state, player.deck, deckTop, { count: 6, sourceCard: this });
 
       const min = Math.min(2, deckTop.cards.length);
 
@@ -53,9 +54,8 @@ export class Hapu extends TrainerCard {
         {},
         { min, max: 2, allowCancel: false }
       ), selected => {
-        deckTop.moveCardsTo(selected, player.hand);
-        deckTop.moveTo(player.discard);
-
+        MOVE_CARDS(store, state, deckTop, player.hand, { cards: selected, sourceCard: this });
+        MOVE_CARDS(store, state, deckTop, player.discard, { sourceCard: this });
 
       });
     }

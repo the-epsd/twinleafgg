@@ -7,6 +7,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, CardList, ChooseCardsPrompt, ShowCardsPrompt, GameError } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Riley extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -37,12 +38,12 @@ export class Riley extends TrainerCard {
       }
 
       effect.preventDefault = true;
-      player.hand.moveCardTo(this, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [this], sourceCard: this });
 
       // Draw top 5 cards
       const deckTop = new CardList();
       const count = Math.min(5, player.deck.cards.length);
-      player.deck.moveTo(deckTop, count);
+      MOVE_CARDS(store, state, player.deck, deckTop, { count: count, sourceCard: this });
 
       // Show the top 5 cards to opponent
       state = store.prompt(state, new ShowCardsPrompt(
@@ -54,8 +55,8 @@ export class Riley extends TrainerCard {
         const chooseCount = Math.min(2, deckTop.cards.length);
         if (chooseCount === 0) {
           // All cards go to hand
-          deckTop.moveTo(player.hand);
-          player.supporter.moveCardTo(this, player.discard);
+          MOVE_CARDS(store, state, deckTop, player.hand, { sourceCard: this });
+          MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
           return;
         }
 
@@ -68,10 +69,10 @@ export class Riley extends TrainerCard {
         ), selected => {
           const discarded = selected || [];
           // Discard chosen cards
-          deckTop.moveCardsTo(discarded, player.discard);
+          MOVE_CARDS(store, state, deckTop, player.discard, { cards: discarded, sourceCard: this });
           // Rest go to hand
-          deckTop.moveTo(player.hand);
-          player.supporter.moveCardTo(this, player.discard);
+          MOVE_CARDS(store, state, deckTop, player.hand, { sourceCard: this });
+          MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
         });
       });
     }

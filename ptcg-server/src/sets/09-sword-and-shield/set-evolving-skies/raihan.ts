@@ -47,7 +47,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     }
   });
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   // We will discard this card after prompt confirmation
   // This will prevent unblocked supporter to appear in the discard pile
   effect.preventDefault = true;
@@ -64,9 +64,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
     if (transfers && transfers.length > 0) {
       for (const transfer of transfers) {
         const target = StateUtils.getTarget(state, player, transfer.to);
-        player.discard.moveCardTo(transfer.card, target);
+        MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: self });
       }
-
 
       let cards: Card[] = [];
       return store.prompt(state, new ChooseCardsPrompt(
@@ -79,7 +78,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
         cards = selected || [];
         next();
 
-        player.hand.moveCardTo(self, player.supporter);
+        MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [self], sourceCard: self });
         MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

@@ -3,6 +3,8 @@ import { Stage, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+
 export class MarysRequest extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'UF';
@@ -27,7 +29,7 @@ export class MarysRequest extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.deck.moveTo(player.hand, 1);
+      MOVE_CARDS(store, state, player.deck, player.hand, { count: 1, sourceCard: this });
 
       let hasStage2: boolean = false;
 
@@ -39,7 +41,7 @@ export class MarysRequest extends TrainerCard {
       });
 
       if (!hasStage2) {
-        player.deck.moveTo(player.hand, Math.min(2, player.deck.cards.length));
+        MOVE_CARDS(store, state, player.deck, player.hand, { count: Math.min(2, player.deck.cards.length), sourceCard: this });
       }
 
     }

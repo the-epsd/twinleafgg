@@ -14,7 +14,6 @@ import { StateUtils } from '../../game/store/state-utils';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
-
 function* playCard(next: Function, store: StoreLike, state: State,
   self: FieryFlint, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -32,7 +31,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
 
   // prepare card list without Junk Arm
   const handTemp = new CardList();
@@ -68,7 +67,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
-
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(

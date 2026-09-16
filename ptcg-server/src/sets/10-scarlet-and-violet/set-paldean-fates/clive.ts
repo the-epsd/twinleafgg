@@ -5,6 +5,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { GameError, GameMessage, Player, ShowCardsPrompt, StateUtils } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Clive extends TrainerCard {
 
@@ -32,7 +33,6 @@ export class Clive extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -45,7 +45,7 @@ export class Clive extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -58,9 +58,7 @@ export class Clive extends TrainerCard {
       ), () => {
 
         const cardsToMove = cardsInOpponentHand.length * 2;
-        player.deck.moveTo(player.hand, cardsToMove);
-
-
+        MOVE_CARDS(store, state, player.deck, player.hand, { count: cardsToMove, sourceCard: this });
 
       });
     }

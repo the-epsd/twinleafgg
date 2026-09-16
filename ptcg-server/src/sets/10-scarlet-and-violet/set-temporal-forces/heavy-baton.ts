@@ -5,7 +5,6 @@ import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { IS_TOOL_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
-
 export class HeavyBaton extends TrainerCard {
 
   public regulationMark = 'H';

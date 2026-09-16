@@ -7,6 +7,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { GameError, GameMessage, StoreLike, State, StateUtils, ChooseCardsPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class ReturnLabel extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -37,7 +38,7 @@ export class ReturnLabel extends TrainerCard {
         const cards = selected || [];
         if (cards.length > 0) {
           // Move to deck (moveCardTo puts at top by default, we need bottom)
-          opponent.discard.moveCardTo(cards[0], opponent.deck);
+          MOVE_CARDS(store, state, opponent.discard, opponent.deck, { cards: [cards[0]], sourceCard: this });
           // Move from top to bottom: card was placed at beginning, move to end
           const card = opponent.deck.cards.shift();
           if (card) {

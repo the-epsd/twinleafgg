@@ -8,7 +8,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { SHOW_CARDS_TO_PLAYER } from '../../../game/store/prefabs/prefabs';
+import {SHOW_CARDS_TO_PLAYER, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class ArcPhone extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -33,7 +33,7 @@ export class ArcPhone extends TrainerCard {
 
       // Move top card to temp area to look at it
       const deckTop = new CardList();
-      player.deck.moveTo(deckTop, 1);
+      MOVE_CARDS(store, state, player.deck, deckTop, { count: 1, sourceCard: this });
 
       const faceDownPrizes = player.prizes.filter(p => p.isSecret && p.cards.length > 0);
 
@@ -78,10 +78,10 @@ export class ArcPhone extends TrainerCard {
 
         // Move prize card to deck top via temp list
         const prizeTemp = new CardList();
-        prizeSlot.moveTo(prizeTemp);
+        MOVE_CARDS(store, state, prizeSlot, prizeTemp, { sourceCard: this });
         prizeTemp.moveToTopOfDestination(player.deck);
         // Move deck card to prize slot
-        deckTop.moveCardTo(deckCard, prizeSlot);
+        MOVE_CARDS(store, state, deckTop, prizeSlot, { cards: [deckCard], sourceCard: this });
       });
     }
 

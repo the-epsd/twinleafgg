@@ -7,14 +7,14 @@ import { TrainerType, SuperType } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, ChooseCardsPrompt, Card } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { SHOW_CARDS_TO_PLAYER } from '../../../game/store/prefabs/prefabs';
+import {SHOW_CARDS_TO_PLAYER, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, self: Oleana, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
   // Move to supporter zone first (manual because we use generator)
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   effect.preventDefault = true;
 
   // Discard 2 other cards from hand
@@ -28,7 +28,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Oleana,
       { min: 2, max: 2, allowCancel: false }
     ), (selected: Card[] | null) => {
       const cards = selected || [];
-      player.hand.moveCardsTo(cards, player.discard);
+      MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: self });
       next();
     });
   }
@@ -51,14 +51,13 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Oleana,
       const cards = selected || [];
       cards.forEach(card => {
         // Put on bottom of deck
-        opponent.hand.moveCardTo(card, opponent.deck);
+        MOVE_CARDS(store, state, opponent.hand, opponent.deck, { cards: [card], sourceCard: self });
       });
       next();
     });
   }
 
   // Clean up supporter
-
 
   return state;
 }

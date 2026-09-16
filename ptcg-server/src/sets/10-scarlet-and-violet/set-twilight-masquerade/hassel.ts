@@ -10,7 +10,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { CardList, ChooseCardsPrompt, Player } from '../../../game';
-import { REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Hassel, effect: TrainerEffect): IterableIterator<State> {
@@ -22,7 +22,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
@@ -40,7 +40,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   }
 
   const deckTop = new CardList();
-  player.deck.moveTo(deckTop, 8);
+  MOVE_CARDS(store, state, player.deck, deckTop, { count: 8, sourceCard: self });
 
   return store.prompt(state, new ChooseCardsPrompt(
     player,
@@ -49,10 +49,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
     {},
     { min: 0, max: 3, allowCancel: false }
   ), selected => {
-    deckTop.moveCardsTo(selected, player.hand);
-    deckTop.moveTo(player.deck);
-
-
+    MOVE_CARDS(store, state, deckTop, player.hand, { cards: selected, sourceCard: self });
+    MOVE_CARDS(store, state, deckTop, player.deck, { sourceCard: self });
 
     return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
       player.deck.applyOrder(order);
@@ -91,7 +89,6 @@ export class Hassel extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

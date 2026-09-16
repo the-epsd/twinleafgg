@@ -31,7 +31,7 @@ export class ProfessorLaventon extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       // Find Hisuian Pokemon in discard
       const hisuianInDiscard = player.discard.cards.filter(c =>

@@ -1,6 +1,7 @@
 import { CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, EnergyType, GameError, GameMessage, Player, PlayerType, SlotType, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Ruffian extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -29,7 +30,6 @@ export class Ruffian extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -81,7 +81,7 @@ export class Ruffian extends TrainerCard {
               { min: 1, max: 1, allowCancel: false }
             ), selected => {
               if (selected && selected.length > 0) {
-                target.moveCardTo(selected[0], opponent.discard);
+                MOVE_CARDS(store, state, target, opponent.discard, { cards: [selected[0]], sourceCard: this });
               }
               // continue to energy discard
               // removing special energies
@@ -98,15 +98,15 @@ export class Ruffian extends TrainerCard {
                   { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
                   { min: 1, max: 1, allowCancel: false }
                 ), selected => {
-                  target.moveCardsTo(selected, opponent.discard);
-                  player.supporter.moveTo(player.discard);
+                  MOVE_CARDS(store, state, target, opponent.discard, { cards: selected, sourceCard: this });
+                  MOVE_CARDS(store, state, player.supporter, player.discard, { sourceCard: this });
                 });
               } else {
-                player.supporter.moveTo(player.discard);
+                MOVE_CARDS(store, state, player.supporter, player.discard, { sourceCard: this });
               }
             });
           } else {
-            target.moveCardTo(toolToDiscard, opponent.discard);
+            MOVE_CARDS(store, state, target, opponent.discard, { cards: [toolToDiscard], sourceCard: this });
           }
         }
 
@@ -124,11 +124,11 @@ export class Ruffian extends TrainerCard {
             { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
             { min: 1, max: 1, allowCancel: false }
           ), selected => {
-            target.moveCardsTo(selected, opponent.discard);
-            player.supporter.moveTo(player.discard);
+            MOVE_CARDS(store, state, target, opponent.discard, { cards: selected, sourceCard: this });
+            MOVE_CARDS(store, state, player.supporter, player.discard, { sourceCard: this });
           });
         } else {
-          player.supporter.moveTo(player.discard);
+          MOVE_CARDS(store, state, player.supporter, player.discard, { sourceCard: this });
         }
       });
     }

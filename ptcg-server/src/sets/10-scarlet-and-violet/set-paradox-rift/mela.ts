@@ -10,7 +10,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { AttachEnergyPrompt, Player, PlayerType, SlotType } from '../../../game';
-import { REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Mela, effect: TrainerEffect): IterableIterator<State> {
@@ -47,10 +47,9 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   // We will discard this card after prompt confirmation
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   // This will prevent unblocked supporter to appear in the discard pile
   effect.preventDefault = true;
-
 
   return store.prompt(state, new AttachEnergyPrompt(
     player.id,
@@ -64,17 +63,15 @@ function* playCard(next: Function, store: StoreLike, state: State,
     if (transfers && transfers.length > 0) {
       for (const transfer of transfers) {
         const target = StateUtils.getTarget(state, player, transfer.to);
-        player.discard.moveCardTo(transfer.card, target);
+        MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: self });
       }
     }
-
-
 
     while (player.hand.cards.length < 6) {
       if (player.deck.cards.length === 0) {
         break;
       }
-      player.deck.moveTo(player.hand, 1);
+      MOVE_CARDS(store, state, player.deck, player.hand, { count: 1, sourceCard: self });
     }
     return state;
   });
@@ -114,7 +111,6 @@ Attach a Basic [R] Energy card from your discard pile to 1 of your Pokémon. If 
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

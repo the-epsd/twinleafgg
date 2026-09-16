@@ -6,6 +6,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class RedCard extends TrainerCard {
 
@@ -36,13 +37,13 @@ export class RedCard extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      opponent.hand.moveCardsTo(opponentCards, opponent.deck);
+      MOVE_CARDS(store, state, opponent.hand, opponent.deck, { cards: opponentCards, sourceCard: this });
 
       store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
         opponent.deck.applyOrder(order);
       });
 
-      opponent.deck.moveTo(opponent.hand, 4);
+      MOVE_CARDS(store, state, opponent.deck, opponent.hand, { count: 4, sourceCard: this });
 
     }
 

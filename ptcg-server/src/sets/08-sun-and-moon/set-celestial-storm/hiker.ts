@@ -7,6 +7,8 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, CardList, SelectPrompt, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Hiker, effect: TrainerEffect): IterableIterator<State> {
 
@@ -15,7 +17,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // Move to supporter zone, prevent default discard
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
 
   // Choose which player's deck to look at
   const options: GameMessage[] = [
@@ -42,7 +44,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // Look at top 5 cards
   const topCards = new CardList();
-  targetPlayer.deck.moveTo(topCards, Math.min(5, targetPlayer.deck.cards.length));
+  MOVE_CARDS(store, state, targetPlayer.deck, topCards, { count: Math.min(5, targetPlayer.deck.cards.length), sourceCard: self });
 
   // Choose 1 card
   let chosenCards: any[] = [];
@@ -63,7 +65,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // Move unchosen cards back to deck
   const remainingCards = topCards.cards.filter(c => c !== chosenCard);
   remainingCards.forEach(card => {
-    topCards.moveCardTo(card, targetPlayer.deck);
+    MOVE_CARDS(store, state, topCards, targetPlayer.deck, { cards: [card], sourceCard: self });
   });
 
   // Shuffle the deck
@@ -73,7 +75,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   // Put the chosen card on top of the deck
-  topCards.moveCardTo(chosenCard, targetPlayer.deck);
+  MOVE_CARDS(store, state, topCards, targetPlayer.deck, { cards: [chosenCard], sourceCard: self });
   // unshift to put on top (cards[0] = top)
   const idx = targetPlayer.deck.cards.indexOf(chosenCard);
   if (idx > 0) {

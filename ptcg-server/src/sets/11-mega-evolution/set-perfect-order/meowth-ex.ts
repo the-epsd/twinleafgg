@@ -123,7 +123,7 @@ export class Meowthex extends PokemonCard {
 
       // Move tools to hand explicitly
       for (const tool of tools) {
-        player.active.moveCardTo(tool, player.hand);
+        MOVE_CARDS(store, state, player.active, player.hand, { cards: [tool], sourceCard: this });
       }
 
       // Move Pokémon to hand

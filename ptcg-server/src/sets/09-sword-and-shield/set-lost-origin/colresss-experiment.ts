@@ -6,6 +6,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { CardList, ChooseCardsPrompt, GameError } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class ColresssExperiment extends TrainerCard {
 
@@ -40,12 +41,12 @@ export class ColresssExperiment extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
       const deckTop = new CardList();
-      player.deck.moveTo(deckTop, 5);
+      MOVE_CARDS(store, state, player.deck, deckTop, { count: 5, sourceCard: this });
 
       return store.prompt(state, new ChooseCardsPrompt(
         player,
@@ -54,9 +55,8 @@ export class ColresssExperiment extends TrainerCard {
         {},
         { min: 3, max: 3, allowCancel: true }
       ), selected => {
-        deckTop.moveCardsTo(selected, player.hand);
-        deckTop.moveTo(player.lostzone);
-
+        MOVE_CARDS(store, state, deckTop, player.hand, { cards: selected, sourceCard: this });
+        MOVE_CARDS(store, state, deckTop, player.lostzone, { sourceCard: this });
 
         return state;
 

@@ -20,7 +20,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
@@ -64,7 +64,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
       // Move tools to hand explicitly
       for (const tool of tools) {
-        cardList.moveCardTo(tool, player.hand);
+        MOVE_CARDS(store, state, cardList, player.hand, { cards: [tool], sourceCard: effect.trainerCard });
       }
 
       // Move Pokémon to hand

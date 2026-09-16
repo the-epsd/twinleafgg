@@ -5,6 +5,7 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { StateUtils, CardTarget, PlayerType, GameError, GameMessage, Player, PokemonCardList, ChoosePokemonPrompt, SlotType, Card, ChooseCardsPrompt } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Giacomo extends TrainerCard {
 
@@ -46,7 +47,6 @@ export class Giacomo extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-
       let oppSpecialPokemon = 0;
       let hasPokemonWithEnergy = false;
       const blocked: CardTarget[] = [];
@@ -69,7 +69,7 @@ export class Giacomo extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -103,12 +103,9 @@ export class Giacomo extends TrainerCard {
       if (cards.length > 0) {
         // Discard selected special energy card
         cards.forEach(card => {
-          target.moveCardTo(card, opponent.discard);
+          MOVE_CARDS(store, state, target, opponent.discard, { cards: [card], sourceCard: this });
         });
       }
-
-
-
 
       return state;
     }

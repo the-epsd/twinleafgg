@@ -20,14 +20,13 @@ export class TrashExchange extends TrainerCard {
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       effect.preventDefault = true;
 
       const discardCount = player.discard.cards.length;
       MOVE_CARDS(store, state, player.discard, player.deck);
       SHUFFLE_DECK(store, state, player);
-      player.deck.moveTo(player.discard, discardCount);
-
+      MOVE_CARDS(store, state, player.deck, player.discard, { count: discardCount, sourceCard: this });
 
     }
 

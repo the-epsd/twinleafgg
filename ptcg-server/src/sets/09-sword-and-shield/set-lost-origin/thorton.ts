@@ -6,6 +6,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { BoardEffect, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, PlayerType, PokemonCard, SlotType } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Thorton extends TrainerCard {
 
@@ -36,7 +37,7 @@ export class Thorton extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -85,10 +86,10 @@ export class Thorton extends TrainerCard {
             targetList.removeBoardEffect(BoardEffect.ABILITY_USED);
           });
 
-          targetList.moveCardTo(targetList.cards[0], player.discard);
+          MOVE_CARDS(store, state, targetList, player.discard, { cards: [targetList.cards[0]], sourceCard: this });
 
           // Move the selected card from the discard to the target slot
-          player.discard.moveCardTo(card, targetList);
+          MOVE_CARDS(store, state, player.discard, targetList, { cards: [card], sourceCard: this });
 
           // Move Thorton to the discard pile
 

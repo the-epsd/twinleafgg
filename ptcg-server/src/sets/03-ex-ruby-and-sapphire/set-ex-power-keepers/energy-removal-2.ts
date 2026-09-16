@@ -5,7 +5,7 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {COIN_FLIP_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 import { PlayerType, SlotType, StateUtils, CardTarget, GameError, GameMessage, PokemonCardList, ChooseCardsPrompt, Card } from '../../../game';
 
@@ -71,7 +71,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     next();
   });
 
-  target.moveCardsTo(cards, opponent.discard);
+  MOVE_CARDS(store, state, target, opponent.discard, { cards: cards, sourceCard: effect.trainerCard });
 
   return state;
 }

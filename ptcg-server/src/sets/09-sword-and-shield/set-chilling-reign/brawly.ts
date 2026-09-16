@@ -58,7 +58,7 @@ function* useKeepCalling(
     slots[index].pokemonPlayedTurn = state.turn;
   });
 
-  player.supporter.moveCardTo(self, player.discard);
+  MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [self], sourceCard: self });
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);

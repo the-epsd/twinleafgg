@@ -7,7 +7,7 @@ import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 import { StateUtils } from '../../../game/store/state-utils';
 import { AttachEnergyPrompt, GameMessage, PlayerType, SlotType } from '../../../game';
 import { ToolEffect } from '../../../game/store/effects/play-card-effects';
-
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class HandyFan extends TrainerCard {
   public regulationMark = 'H';
@@ -58,7 +58,7 @@ export class HandyFan extends TrainerCard {
           transfers = transfers || [];
           for (const transfer of transfers) {
             const target = StateUtils.getTarget(state, opponent, transfer.to);
-            player.active.moveCardTo(transfer.card, target);
+            MOVE_CARDS(store, state, player.active, target, { cards: [transfer.card], sourceCard: this });
           }
         });
       }

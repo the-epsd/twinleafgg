@@ -7,7 +7,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State, GameError, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Iscan extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -29,7 +29,7 @@ export class Iscan extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       // Draw 2 cards
       DRAW_CARDS(store, state, player, 2);
@@ -39,7 +39,6 @@ export class Iscan extends TrainerCard {
       if (activePokemon && activePokemon.name.includes('Hisuian')) {
         DRAW_CARDS(store, state, player, 2);
       }
-
 
     }
 

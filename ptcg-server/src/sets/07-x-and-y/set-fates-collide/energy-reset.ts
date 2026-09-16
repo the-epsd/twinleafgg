@@ -8,6 +8,7 @@ import { GameError, GameMessage, PlayerType, SlotType, StoreLike, State, StateUt
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { DiscardEnergyPrompt, DiscardEnergyTransfer } from '../../../game/store/prompts/discard-energy-prompt';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -26,7 +27,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // Do not discard the card yet
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
 
   let transfers: DiscardEnergyTransfer[] = [];
   yield store.prompt(state, new DiscardEnergyPrompt(
@@ -44,9 +45,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   // Move selected energy cards to hand instead of discard
   transfers.forEach(transfer => {
     const source = StateUtils.getTarget(state, player, transfer.from);
-    source.moveCardTo(transfer.card, player.hand);
+    MOVE_CARDS(store, state, source, player.hand, { cards: [transfer.card], sourceCard: effect.trainerCard });
   });
-
 
   return state;
 }

@@ -3,7 +3,7 @@ import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { Card, ChooseCardsPrompt, GameError, GameMessage, Player, ShuffleDeckPrompt, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class HelperBell extends TrainerCard {
 
@@ -30,7 +30,6 @@ Search your deck for a Supporter card, reveal it, and put it into your hand. The
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       // Get current turn
@@ -42,7 +41,7 @@ Search your deck for a Supporter card, reveal it, and put it into your hand. The
       } else {
         const player = effect.player;
         effect.preventDefault = true;
-        player.hand.moveCardTo(effect.trainerCard, player.supporter);
+        MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
         if (player.deck.cards.length === 0) {
           throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -62,10 +61,10 @@ Search your deck for a Supporter card, reveal it, and put it into your hand. The
           cards = selectedCards || [];
 
           cards.forEach((card, index) => {
-            player.deck.moveCardTo(card, player.hand);
+            MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this });
           });
 
-          player.supporter.moveCardTo(this, player.discard);
+          MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
 
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);

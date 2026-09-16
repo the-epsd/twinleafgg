@@ -6,7 +6,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { GameError, GameMessage } from '../../game';
-import { ADD_MARKER, DRAW_CARDS_UNTIL_CARDS_IN_HAND, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
+import {ADD_MARKER, DRAW_CARDS_UNTIL_CARDS_IN_HAND, REMOVE_MARKER_AT_END_OF_TURN, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class ProfessorElm extends TrainerCard {
 
@@ -27,12 +27,12 @@ export class ProfessorElm extends TrainerCard {
       const player = effect.player;
       const cards = player.hand.cards.filter(c => c !== this);
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
       if (cards.length > 0) {
-        player.hand.moveCardsTo(cards, player.deck);
+        MOVE_CARDS(store, state, player.hand, player.deck, { cards: cards, sourceCard: this });
 
         store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
@@ -41,7 +41,6 @@ export class ProfessorElm extends TrainerCard {
 
       DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 7);
       ADD_MARKER(this.PROFESSOR_ELM_MARKER, player, this);
-
 
       return state;
     }

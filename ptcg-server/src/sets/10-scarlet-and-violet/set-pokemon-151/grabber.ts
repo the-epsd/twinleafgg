@@ -5,7 +5,7 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { CardList, ChooseCardsPrompt, GameMessage, Player, StateUtils } from '../../../game';
-
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Grabber extends TrainerCard {
 
@@ -29,7 +29,6 @@ export class Grabber extends TrainerCard {
   public canPlay(store: StoreLike, state: State, player: Player): boolean {    return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
@@ -49,19 +48,18 @@ export class Grabber extends TrainerCard {
       ), selectedCard => {
         const selected = selectedCard || [];
         if (selectedCard === null || selected.length === 0) {
-          player.supporter.moveCardTo(this, player.discard);
+          MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
           return;
         }
 
-        opponent.hand.moveCardTo(selected[0], deckBottom);
-        deckBottom.moveTo(opponent.deck);
+        MOVE_CARDS(store, state, opponent.hand, deckBottom, { cards: [selected[0]], sourceCard: this });
+        MOVE_CARDS(store, state, deckBottom, opponent.deck, { sourceCard: this });
 
-        player.supporter.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
 
       });
     }
     return state;
   }
-
 
 }

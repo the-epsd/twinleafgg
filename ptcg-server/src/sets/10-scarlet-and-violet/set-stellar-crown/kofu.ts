@@ -8,6 +8,7 @@ import { Card, CardList, OrderCardsPrompt, Player } from '../../../game';
 import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -35,7 +36,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     next();
   });
 
-  player.hand.moveCardsTo(cards, deckBottom);
+  MOVE_CARDS(store, state, player.hand, deckBottom, { cards: cards, sourceCard: effect.trainerCard });
 
   return store.prompt(state, new OrderCardsPrompt(
     player.id,
@@ -48,11 +49,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     }
 
     deckBottom.applyOrder(order);
-    deckBottom.moveTo(player.deck);
+    MOVE_CARDS(store, state, deckBottom, player.deck, { sourceCard: effect.trainerCard });
 
-    player.deck.moveTo(player.hand, Math.min(4, player.deck.cards.length));
-
-
+    MOVE_CARDS(store, state, player.deck, player.hand, { count: Math.min(4, player.deck.cards.length), sourceCard: effect.trainerCard });
 
   });
 }
@@ -85,7 +84,6 @@ export class Kofu extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

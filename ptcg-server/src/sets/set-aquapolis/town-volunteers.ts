@@ -70,7 +70,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
     next();
   });
 
-
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
       opponent.id,

@@ -7,7 +7,7 @@ import { TrainerType, SuperType, EnergyType } from '../../../game/store/card/car
 import { StoreLike, State, GameError, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, StateUtils, GamePhase } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class WaitAndSeeTurbo extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -43,7 +43,7 @@ export class WaitAndSeeTurbo extends TrainerCard {
         transfers = transfers || [];
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.deck.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.deck, target, { cards: [transfer.card], sourceCard: this });
         }
         SHUFFLE_DECK(store, state, player);
 

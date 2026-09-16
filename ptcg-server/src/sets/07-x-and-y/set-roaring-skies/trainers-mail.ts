@@ -11,16 +11,17 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { CardList } from '../../../game/store/state/card-list';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
   const deckTop = new CardList();
-  player.deck.moveTo(deckTop, 4);
+  MOVE_CARDS(store, state, player.deck, deckTop, { count: 4, sourceCard: effect.trainerCard });
 
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
 
   const blocked: number[] = [];
   deckTop.cards.forEach((card, index) => {
@@ -41,9 +42,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     next();
   });
 
-  deckTop.moveCardsTo(cards, player.hand);
-  deckTop.moveTo(player.deck);
-
+  MOVE_CARDS(store, state, deckTop, player.hand, { cards: cards, sourceCard: effect.trainerCard });
+  MOVE_CARDS(store, state, deckTop, player.deck, { sourceCard: effect.trainerCard });
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(

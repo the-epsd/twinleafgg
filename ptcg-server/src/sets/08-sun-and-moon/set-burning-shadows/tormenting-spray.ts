@@ -8,6 +8,7 @@ import { GameMessage, ShowCardsPrompt, StoreLike, State, StateUtils } from '../.
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class TormentingSpray extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -49,7 +50,7 @@ export class TormentingSpray extends TrainerCard {
           // If it's a Supporter card, discard it
           const card = cards[0];
           if (card instanceof TrainerCard && card.trainerType === TrainerType.SUPPORTER) {
-            opponent.hand.moveCardTo(card, opponent.discard);
+            MOVE_CARDS(store, state, opponent.hand, opponent.discard, { cards: [card], sourceCard: this });
           }
         }
       });

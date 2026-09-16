@@ -9,6 +9,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, self: EcoArm, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -23,7 +24,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: EcoArm,
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
 
   const min = Math.min(3, toolCards);
 
@@ -40,7 +41,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: EcoArm,
   });
 
   if (cards.length > 0) {
-    player.discard.moveCardsTo(cards, player.deck);
+    MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: self });
     if (cards.length > 0) {
       state = store.prompt(state, new ShowCardsPrompt(
         opponent.id,

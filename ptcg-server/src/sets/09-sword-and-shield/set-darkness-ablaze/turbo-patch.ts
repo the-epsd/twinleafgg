@@ -17,7 +17,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-prompt';
 import { StateUtils } from '../../../game/store/state-utils';
-import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {COIN_FLIP_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class TurboPatch extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -71,12 +71,12 @@ export class TurboPatch extends TrainerCard {
       }
 
       effect.preventDefault = true;
-      player.hand.moveCardTo(this, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [this], sourceCard: this });
 
       state = COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (!result) {
           // Tails - no effect, just discard trainer
-          player.supporter.moveCardTo(this, player.discard);
+          MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
           return;
         }
 
@@ -97,10 +97,10 @@ export class TurboPatch extends TrainerCard {
 
             for (const transfer of transfers) {
               const target = StateUtils.getTarget(state, player, transfer.to);
-              player.discard.moveCardTo(transfer.card, target);
+              MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
             }
 
-            player.supporter.moveCardTo(this, player.discard);
+            MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
           },
         );
       });

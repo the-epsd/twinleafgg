@@ -17,7 +17,7 @@ import { PokemonCard,
   EnergyType, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { EvolveEffect } from '../../../game/store/effects/game-effects';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {IS_ABILITY_BLOCKED, WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { THIS_POKEMON_HAS_NO_WEAKNESS_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Archaludonex extends PokemonCard {
@@ -102,7 +102,7 @@ export class Archaludonex extends PokemonCard {
 
                 for (const transfer of transfers) {
                   const target = StateUtils.getTarget(state, player, transfer.to);
-                  player.discard.moveCardTo(transfer.card, target);
+                  MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
                 }
               },
             );

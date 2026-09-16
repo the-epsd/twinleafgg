@@ -18,14 +18,12 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import {
-  ABILITY_USED,
+import {ABILITY_USED,
   ADD_MARKER,
   HAS_MARKER,
   REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN,
   WAS_ATTACK_USED,
-  WAS_POWER_USED,
-} from '../../../game/store/prefabs/prefabs';
+  WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Plusle extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -105,7 +103,7 @@ export class Plusle extends PokemonCard {
           cards = cards || [];
 
           if (cards.length > 0) {
-            player.discard.moveCardsTo(cards, player.hand);
+            MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
             if (cards.length > 0) {
               state = store.prompt(
                 state,
@@ -117,7 +115,7 @@ export class Plusle extends PokemonCard {
 
           if (cards.length > 0) {
             // Recover discarded Energy
-            player.discard.moveCardsTo(cards, player.hand);
+            MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
           }
         },
       );

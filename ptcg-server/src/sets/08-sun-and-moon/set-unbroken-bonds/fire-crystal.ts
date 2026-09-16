@@ -9,6 +9,7 @@ import { DiscardToHandEffect, TrainerEffect } from '../../../game/store/effects/
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -31,7 +32,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
 
   return store.prompt(state, new ChooseCardsPrompt(
     player,
@@ -42,7 +43,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   ), selected => {
     if (selected && selected.length > 0) {
       // Recover discarded energies
-      player.discard.moveCardsTo(selected, player.hand);
+      MOVE_CARDS(store, state, player.discard, player.hand, { cards: selected, sourceCard: effect.trainerCard });
     }
 
   });

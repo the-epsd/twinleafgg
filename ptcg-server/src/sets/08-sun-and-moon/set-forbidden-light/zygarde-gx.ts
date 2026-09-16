@@ -13,7 +13,7 @@ import {
 import { StoreLike, State, GameMessage, EnergyCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class ZygardeGx extends PokemonCard {
@@ -80,7 +80,7 @@ export class ZygardeGx extends PokemonCard {
           (cards) => {
             cards = cards || [];
             cards.forEach((card) => {
-              player.discard.moveCardTo(card, player.active);
+              MOVE_CARDS(store, state, player.discard, player.active, { cards: [card], sourceCard: this });
             });
           },
         );

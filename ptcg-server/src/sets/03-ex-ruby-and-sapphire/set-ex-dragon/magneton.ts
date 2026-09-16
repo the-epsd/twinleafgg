@@ -111,7 +111,6 @@ export class Magneton extends PokemonCard {
             MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this, sourceEffect: this.powers[0] });
           });
 
-
           // Move the discarded card to the discard pile after energy cards are added to the hand
           MOVE_CARDS(store, state, player.hand, player.discard, { cards: [cardToDiscard], sourceCard: this, sourceEffect: this.powers[0] });
         });

@@ -46,7 +46,7 @@ export class PuzzleOfTime extends TrainerCard {
           }
 
           const deckTop = new CardList();
-          player.deck.moveTo(deckTop, 3);
+          MOVE_CARDS(store, state, player.deck, deckTop, { count: 3, sourceCard: this });
 
           return store.prompt(state, new OrderCardsPrompt(
             player.id,
@@ -60,7 +60,6 @@ export class PuzzleOfTime extends TrainerCard {
 
             deckTop.applyOrder(order);
             deckTop.moveToTopOfDestination(player.deck);
-
 
           });
         } else if (choice === 1) {
@@ -80,7 +79,6 @@ export class PuzzleOfTime extends TrainerCard {
           if (secondPuzzle) {
             MOVE_CARDS(store, state, player.hand, player.discard, { cards: [secondPuzzle], sourceCard: this });
           }
-
 
         }
       });

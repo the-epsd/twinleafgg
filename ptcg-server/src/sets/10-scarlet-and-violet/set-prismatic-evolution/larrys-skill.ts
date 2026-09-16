@@ -25,11 +25,11 @@ function* playCard(next: Function, store: StoreLike, state: State,
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
-  MOVE_CARDS(store, state, player.hand, player.discard, { sourceCard: effect.trainerCard });
+  MOVE_CARDS(store, state, player.hand, player.discard, { sourceCard: self });
 
   // Count tools and items separately
   let pokemons = 0;
@@ -68,9 +68,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     next();
   });
 
-  player.deck.moveCardsTo(cards, player.hand);
-
-
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
 
   cards.forEach((card, index) => {
     store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
@@ -107,7 +105,6 @@ export class LarrysSkill extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

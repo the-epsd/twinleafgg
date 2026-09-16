@@ -10,6 +10,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -44,7 +45,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // Do not discard the card yet
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
 
   let targets: PokemonCardList[] = [];
   yield store.prompt(state, new ChoosePokemonPrompt(
@@ -62,7 +63,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     const healEffect = new HealEffect(player, targets[0], 50);
     store.reduceEffect(state, healEffect);
   }
-
 
   return state;
 }

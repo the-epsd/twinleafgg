@@ -3,6 +3,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class ZinniasTrust extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -24,7 +25,6 @@ export class ZinniasTrust extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-chaos-rising/azs-tranquility.ts (switch), set-plasma-storm/scramble-switch.ts (move energy)
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -39,7 +39,7 @@ export class ZinniasTrust extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       effect.preventDefault = true;
 
       return store.prompt(state, new ChoosePokemonPrompt(
@@ -58,7 +58,7 @@ export class ZinniasTrust extends TrainerCard {
 
         const hasEnergy = previousActive.cards.some(c => c.superType === SuperType.ENERGY);
         if (!hasEnergy) {
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [effect.trainerCard], sourceCard: this });
           return state;
         }
 
@@ -71,9 +71,9 @@ export class ZinniasTrust extends TrainerCard {
         ), cards => {
           cards = cards || [];
           if (cards.length > 0) {
-            previousActive.moveCardsTo(cards, player.active);
+            MOVE_CARDS(store, state, previousActive, player.active, { cards: cards, sourceCard: this });
           }
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [effect.trainerCard], sourceCard: this });
           return state;
         });
       });

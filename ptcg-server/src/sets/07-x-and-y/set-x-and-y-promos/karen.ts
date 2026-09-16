@@ -2,7 +2,7 @@ import { PokemonCard, StateUtils, StoreLike, State } from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Karen extends TrainerCard {
@@ -22,7 +22,7 @@ export class Karen extends TrainerCard {
       for (const player of [effect.player, StateUtils.getOpponent(state, effect.player)]) {
         const pokemonCards = player.discard.cards.filter(c => c instanceof PokemonCard).slice();
         pokemonCards.forEach(card => {
-          player.discard.moveCardTo(card, player.deck);
+          MOVE_CARDS(store, state, player.discard, player.deck, { cards: [card], sourceCard: this });
         });
         if (pokemonCards.length > 0) {
           state = SHUFFLE_DECK(store, state, player);

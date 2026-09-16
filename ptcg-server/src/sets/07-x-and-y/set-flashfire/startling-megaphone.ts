@@ -5,7 +5,7 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { PlayerType, StateUtils, GameError, GameMessage, PokemonCardList } from '../../../game';
-
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class StartlingMegaphone extends TrainerCard {
 
@@ -44,7 +44,7 @@ export class StartlingMegaphone extends TrainerCard {
       pokemonsWithTool.forEach(target => {
         if (target.tools.length > 0) {
           for (const tool of [...target.tools]) {
-            target.moveCardTo(tool, opponent.discard);
+            MOVE_CARDS(store, state, target, opponent.discard, { cards: [tool], sourceCard: this });
           }
         }
 

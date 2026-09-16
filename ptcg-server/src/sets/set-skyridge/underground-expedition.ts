@@ -5,6 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { GameError, GameMessage, CardList, ChooseCardsPrompt } from '../../game';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class UndergroundExpedition extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -25,7 +26,7 @@ export class UndergroundExpedition extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       effect.preventDefault = true;
 
       // Take the bottom 4 cards of the deck using slice
@@ -47,14 +48,13 @@ export class UndergroundExpedition extends TrainerCard {
       ), selected => {
         // Put chosen cards into hand
         for (const card of selected) {
-          bottomCardList.moveCardTo(card, player.hand);
+          MOVE_CARDS(store, state, bottomCardList, player.hand, { cards: [card], sourceCard: this });
         }
 
         // The rest go back to the bottom of the deck
         while (bottomCardList.cards.length > 0) {
-          bottomCardList.moveCardTo(bottomCardList.cards[0], player.deck);
+          MOVE_CARDS(store, state, bottomCardList, player.deck, { cards: [bottomCardList.cards[0]], sourceCard: this });
         }
-
 
         return state;
       });

@@ -98,7 +98,7 @@ export class IronBundle extends PokemonCard {
             }
             if (tools.length > 0) {
               for (const tool of tools) {
-                cardList.moveCardTo(tool, player.discard);
+                MOVE_CARDS(store, state, cardList, player.discard, { cards: [tool], sourceCard: this });
               }
               // Move other cards (tools, energies, etc.) to the discard
               if (otherCards.length > 0) {
@@ -107,7 +107,7 @@ export class IronBundle extends PokemonCard {
               // Move tools to the discard
               if (tools.length > 0) {
                 for (const tool of tools) {
-                  cardList.moveCardTo(tool, player.discard);
+                  MOVE_CARDS(store, state, cardList, player.discard, { cards: [tool], sourceCard: this });
                 }
               }
               return state;

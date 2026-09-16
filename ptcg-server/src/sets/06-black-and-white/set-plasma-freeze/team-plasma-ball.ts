@@ -4,12 +4,10 @@ import { CardTag, SuperType, TrainerType } from '../../../game/store/card/card-t
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  BLOCK_IF_DECK_EMPTY,
+import {BLOCK_IF_DECK_EMPTY,
   MOVE_CARDS_TO_HAND,
   SHOW_CARDS_TO_PLAYER,
-  SHUFFLE_DECK,
-} from '../../../game/store/prefabs/prefabs';
+  SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
@@ -40,7 +38,7 @@ export class TeamPlasmaBall extends TrainerCard {
       });
 
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       store.prompt(
         state,
         new ChooseCardsPrompt(

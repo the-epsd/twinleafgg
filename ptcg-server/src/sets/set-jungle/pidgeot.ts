@@ -5,7 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import {WAS_ATTACK_USED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Pidgeot extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -58,8 +58,8 @@ export class Pidgeot extends PokemonCard {
       const player = effect.player;
       const cardList = effect.player.active;
       const pokemons = cardList.getPokemons();
-      cardList.moveCardsTo(pokemons, player.hand);
-      cardList.moveTo(player.hand);
+      MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons, sourceCard: this });
+      MOVE_CARDS(store, state, cardList, player.hand, { sourceCard: this });
       cardList.clearEffects();
     }
 

@@ -11,6 +11,7 @@ import { GameMessage } from '../../../game/game-message';
 import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-prompt';
 import { PlayerType, SlotType, CardTarget } from '../../../game/store/actions/play-card-action';
 import { EnergyCard } from '../../../game/store/card/energy-card';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Blacksmith extends TrainerCard {
 
@@ -43,7 +44,6 @@ export class Blacksmith extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-
       let hasFirePokemon = false;
       const blockedTo: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, _pokemonCard, target) => {
@@ -67,7 +67,7 @@ export class Blacksmith extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       // Do not discard the card yet
       effect.preventDefault = true;
@@ -89,9 +89,8 @@ export class Blacksmith extends TrainerCard {
 
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
         }
-
 
       });
     }

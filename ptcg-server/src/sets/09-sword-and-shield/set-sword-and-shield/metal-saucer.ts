@@ -11,6 +11,7 @@ import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-pr
 import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class MetalSaucer extends TrainerCard {
 
@@ -71,7 +72,7 @@ export class MetalSaucer extends TrainerCard {
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
@@ -90,9 +91,8 @@ export class MetalSaucer extends TrainerCard {
 
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
         }
-
 
       });
     }

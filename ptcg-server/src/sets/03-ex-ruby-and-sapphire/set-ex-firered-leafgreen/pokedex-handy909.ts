@@ -5,7 +5,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { CardList, GameMessage, GameError, OrderCardsPrompt } from '../../../game';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class PokeDexHANDY909 extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -33,7 +33,7 @@ export class PokeDexHANDY909 extends TrainerCard {
       SHUFFLE_DECK(store, state, player);
 
       const deckTop = new CardList();
-      player.deck.moveTo(deckTop, 6);
+      MOVE_CARDS(store, state, player.deck, deckTop, { count: 6, sourceCard: this });
 
       store.prompt(state, new OrderCardsPrompt(
         player.id,
@@ -49,7 +49,7 @@ export class PokeDexHANDY909 extends TrainerCard {
         deckTop.moveToTopOfDestination(player.deck);
       });
 
-      player.supporter.moveCardTo(this, player.discard);
+      MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
     }
     return state;
   }

@@ -13,7 +13,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardManager } from '../../../game/cards/card-manager';
 import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -104,10 +104,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   // Evolve Pokemon
-  player.deck.moveCardTo(evolution, targets[0]);
+  MOVE_CARDS(store, state, player.deck, targets[0], { cards: [evolution], sourceCard: effect.trainerCard });
   targets[0].clearEffects();
   targets[0].pokemonPlayedTurn = state.turn;
-
 
   SHUFFLE_DECK(store, state, player);
 }

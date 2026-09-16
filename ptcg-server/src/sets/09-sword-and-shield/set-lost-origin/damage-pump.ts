@@ -6,6 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { DamageMap, GameError, GameMessage, MoveDamagePrompt, PlayerType, SlotType, StateUtils } from '../../../game';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class DamagePump extends TrainerCard {
 
@@ -62,7 +63,7 @@ export class DamagePump extends TrainerCard {
         { min: 1, max: 2, allowCancel: false, blockedFrom: [], blockedTo: [] }
       ), transfers => {
         if (transfers === null) {
-          player.hand.moveCardTo(effect.trainerCard, player.discard);
+          MOVE_CARDS(store, state, player.hand, player.discard, { cards: [effect.trainerCard], sourceCard: this });
           return state;
         }
 
@@ -80,7 +81,6 @@ export class DamagePump extends TrainerCard {
 
           if (totalDamageMoved >= 20) break;
         }
-
 
         return state;
       });

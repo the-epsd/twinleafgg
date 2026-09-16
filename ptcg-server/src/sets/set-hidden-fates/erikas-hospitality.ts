@@ -7,6 +7,7 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { StateUtils } from '../../game/store/state-utils';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: ErikasHospitality, effect: TrainerEffect): IterableIterator<State> {
@@ -18,7 +19,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
@@ -39,10 +40,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
   const cardsToDraw = opponentBenched + 1;
 
-  player.deck.moveTo(player.hand, cardsToDraw);
-
-
-
+  MOVE_CARDS(store, state, player.deck, player.hand, { count: cardsToDraw, sourceCard: self });
 
   return state;
 }

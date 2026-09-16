@@ -6,6 +6,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Lillie extends TrainerCard {
 
@@ -33,17 +34,15 @@ export class Lillie extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       effect.preventDefault = true;
 
       while (player.hand.cards.length < targetHandSize && player.deck.cards.length > 0) {
-        player.deck.moveTo(player.hand, 1);
+        MOVE_CARDS(store, state, player.deck, player.hand, { count: 1, sourceCard: this });
         if (player.deck.cards.length === 0) {
           break;
         }
       }
-
-
 
     }
 

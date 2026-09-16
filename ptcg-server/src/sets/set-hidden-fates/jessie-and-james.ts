@@ -9,6 +9,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Weezing } from './weezing';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class JessieAndJames extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -36,7 +37,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const opponent = StateUtils.getOpponent(state, player);
 
   // Move to supporter zone, prevent default discard
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   effect.preventDefault = true;
 
   // Opponent discards first (up to 2 from their hand)
@@ -50,7 +51,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
       { min: opponentMax, max: opponentMax, allowCancel: false }
     ), (selected: Card[] | null) => {
       const cards = selected || [];
-      opponent.hand.moveCardsTo(cards, opponent.discard);
+      MOVE_CARDS(store, state, opponent.hand, opponent.discard, { cards: cards, sourceCard: self });
       next();
     });
   }
@@ -68,7 +69,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
       { min: playerMax, max: playerMax, allowCancel: false }
     ), (selected: Card[] | null) => {
       playerDiscarded = selected || [];
-      player.hand.moveCardsTo(playerDiscarded, player.discard);
+      MOVE_CARDS(store, state, player.hand, player.discard, { cards: playerDiscarded, sourceCard: self });
       next();
     });
   }
@@ -106,7 +107,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
           { min: discardCount, max: discardCount, allowCancel: false }
         ), (selected: Card[] | null) => {
           const cards = selected || [];
-          opponent.hand.moveCardsTo(cards, opponent.discard);
+          MOVE_CARDS(store, state, opponent.hand, opponent.discard, { cards: cards, sourceCard: self });
           next();
         });
       }
@@ -114,7 +115,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   }
 
   // Clean up supporter
-
 
   return state;
 }

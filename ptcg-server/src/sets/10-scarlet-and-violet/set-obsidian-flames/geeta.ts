@@ -7,6 +7,7 @@ import { Card, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, P
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Geeta extends TrainerCard {
   public regulationMark = 'G';
@@ -29,7 +30,6 @@ export class Geeta extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -41,7 +41,7 @@ export class Geeta extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -73,13 +73,13 @@ export class Geeta extends TrainerCard {
             { allowCancel: true }
           ), targets => {
             if (!targets || targets.length === 0) {
-              player.supporter.moveTo(player.discard);
+              MOVE_CARDS(store, state, player.supporter, player.discard, { sourceCard: this });
               return;
             }
             const target = targets[0];
-            player.deck.moveCardsTo(cards, target);
+            MOVE_CARDS(store, state, player.deck, target, { cards: cards, sourceCard: this });
             player.marker.addMarker(this.GEETA_MARKER, this);
-            player.supporter.moveTo(player.discard);
+            MOVE_CARDS(store, state, player.supporter, player.discard, { sourceCard: this });
           });
         }
       });

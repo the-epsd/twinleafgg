@@ -6,7 +6,7 @@ import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects
 import { PowerType, StoreLike, State, PlayerType, SlotType, StateUtils, PokemonCardList, EnergyCard, GameError, AttachEnergyPrompt } from '../../../game';
 
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { ABILITY_USED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {ABILITY_USED, WAS_ATTACK_USED, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Celebi extends PokemonCard {
@@ -88,7 +88,7 @@ export class Celebi extends PokemonCard {
 
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.hand.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.hand, target, { cards: [transfer.card], sourceCard: this });
         }
 
       });

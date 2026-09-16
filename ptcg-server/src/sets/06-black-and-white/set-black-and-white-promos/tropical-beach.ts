@@ -8,6 +8,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class TropicalBeach extends TrainerCard {
 
@@ -40,7 +41,7 @@ export class TropicalBeach extends TrainerCard {
       // Use prefab behavior similar to ASR Jubilife Village: draw via helper
       for (let i = 0; i < cardsToDraw; i++) {
         if (player.deck.cards.length > 0) {
-          player.deck.moveTo(player.hand, 1);
+          MOVE_CARDS(store, state, player.deck, player.hand, { count: 1, sourceCard: this });
         }
       }
 

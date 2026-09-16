@@ -105,7 +105,7 @@ export class Espeon extends PokemonCard {
           { allowCancel: false }
         ), energy => {
           const cards: Card[] = (energy || []).map(e => e.card);
-          targets[0].moveCardsTo(cards, player.hand);
+          MOVE_CARDS(store, state, targets[0], player.hand, { cards: cards, sourceCard: this });
           MOVE_CARDS(store, state, targets[0], player.hand, { cards, sourceCard: this, sourceEffect: this.powers[0] });
         });
       });

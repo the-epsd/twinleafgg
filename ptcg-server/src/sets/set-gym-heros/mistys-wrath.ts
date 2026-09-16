@@ -5,6 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { GameError, GameMessage, CardList, ChooseCardsPrompt } from '../../game';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class MistysWrath extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -25,12 +26,12 @@ export class MistysWrath extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
       const deckTop = new CardList();
-      player.deck.moveTo(deckTop, 7);
+      MOVE_CARDS(store, state, player.deck, deckTop, { count: 7, sourceCard: this });
 
       const min = player.deck.cards.length > 1 ? Math.min(2, deckTop.cards.length) : 1;
 
@@ -42,8 +43,8 @@ export class MistysWrath extends TrainerCard {
         { min, max: 2, allowCancel: false }
       ), selected => {
         player.ancientSupporter = true;
-        deckTop.moveCardsTo(selected, player.hand);
-        deckTop.moveTo(player.discard);
+        MOVE_CARDS(store, state, deckTop, player.hand, { cards: selected, sourceCard: this });
+        MOVE_CARDS(store, state, deckTop, player.discard, { sourceCard: this });
 
       });
     }

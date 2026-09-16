@@ -9,6 +9,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class RescueStretcher extends TrainerCard {
 
@@ -29,7 +30,6 @@ export class RescueStretcher extends TrainerCard {
 
   • Put a Pokémon from your discard pile into your hand.
   • Shuffle 3 Pokémon from your discard pile into your deck.`;
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -53,7 +53,7 @@ export class RescueStretcher extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
@@ -74,8 +74,7 @@ export class RescueStretcher extends TrainerCard {
             ), selected => {
               cards = selected || [];
 
-              player.discard.moveCardsTo(cards, player.deck);
-
+              MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: this });
 
               return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
                 player.deck.applyOrder(order);
@@ -97,9 +96,7 @@ export class RescueStretcher extends TrainerCard {
             ), selected => {
               cards = selected || [];
 
-
-              player.discard.moveCardsTo(cards, player.hand);
-
+              MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
 
               return state;
             });

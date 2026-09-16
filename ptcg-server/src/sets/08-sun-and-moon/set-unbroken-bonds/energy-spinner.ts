@@ -9,7 +9,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class EnergySpinner extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -46,7 +46,7 @@ export class EnergySpinner extends TrainerCard {
             cards
           ), () => {
             cards.forEach(card => {
-              player.deck.moveCardTo(card, player.hand);
+              MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this });
             });
           });
         }

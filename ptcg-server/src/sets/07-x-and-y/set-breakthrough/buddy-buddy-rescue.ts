@@ -68,7 +68,7 @@ export class BuddyBuddyRescue extends TrainerCard {
           { min: 1, max: 1, allowCancel: false }
         ), selected => {
           if (selected && selected.length > 0) {
-            player.supporter.moveCardsTo(selected, player.discard);
+            MOVE_CARDS(store, state, player.supporter, player.discard, { cards: selected, sourceCard: this });
           }
         });
         return state;
@@ -133,7 +133,7 @@ export class BuddyBuddyRescue extends TrainerCard {
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         if (selected && selected.length > 0) {
-          player.supporter.moveCardsTo(selected, player.discard);
+          MOVE_CARDS(store, state, player.supporter, player.discard, { cards: selected, sourceCard: this });
         }
       });
       return state;

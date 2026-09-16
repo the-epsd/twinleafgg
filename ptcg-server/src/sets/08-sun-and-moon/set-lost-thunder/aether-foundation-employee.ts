@@ -10,6 +10,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { StateUtils } from '../../../game/store/state-utils';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class AetherFoundationEmployee extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -51,7 +52,7 @@ export class AetherFoundationEmployee extends TrainerCard {
       ), selected => {
         const cards = selected || [];
         cards.forEach(c => {
-          player.discard.moveCardTo(c, player.hand);
+          MOVE_CARDS(store, state, player.discard, player.hand, { cards: [c], sourceCard: this });
         });
 
         if (cards.length > 0) {

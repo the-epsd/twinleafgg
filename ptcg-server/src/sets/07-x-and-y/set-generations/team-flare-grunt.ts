@@ -2,6 +2,7 @@ import { StoreLike, State, StateUtils, SuperType, GameError, GameMessage, Pokemo
 import { Effect } from "../../../game/store/effects/effect";
 import { TrainerEffect } from "../../../game/store/effects/play-card-effects";
 import { TRAINER_TARGET_BLOCKED } from "../../../game/store/prefabs/trainer-target";
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect, trainerCard: TeamFlareGrunt): IterableIterator<State> {
   const player = effect.player;
@@ -17,7 +18,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
@@ -39,7 +40,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     cards = selected;
     next();
   });
-  target.moveCardsTo(cards, opponent.discard);
+  MOVE_CARDS(store, state, target, opponent.discard, { cards: cards, sourceCard: effect.trainerCard });
   return state;
 }
 

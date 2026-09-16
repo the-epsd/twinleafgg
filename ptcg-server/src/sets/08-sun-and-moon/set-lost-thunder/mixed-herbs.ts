@@ -8,6 +8,7 @@ import { StoreLike, State, GameError, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class MixedHerbs extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -39,7 +40,7 @@ export class MixedHerbs extends TrainerCard {
       if (otherMixedHerbs) {
         // Playing 2 cards - heal 90 damage and remove all Special Conditions
         // Discard the other Mixed Herbs too
-        player.hand.moveCardTo(otherMixedHerbs, player.discard);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards: [otherMixedHerbs], sourceCard: this });
 
         const healEffect = new HealEffect(player, player.active, 90);
         store.reduceEffect(state, healEffect);

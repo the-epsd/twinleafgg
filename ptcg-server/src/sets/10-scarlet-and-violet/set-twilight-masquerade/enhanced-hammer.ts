@@ -6,6 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { Card, CardTarget, ChooseCardsPrompt, GameError, GameMessage, Player, PlayerType, PokemonCardList, SlotType, StateUtils, SuperType } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -59,7 +60,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   if (cards.length > 0) {
     // Discard selected special energy card
-    target.moveCardsTo(cards, opponent.discard);
+    MOVE_CARDS(store, state, target, opponent.discard, { cards: cards, sourceCard: effect.trainerCard });
   }
 
   return state;
@@ -97,7 +98,6 @@ export class EnhancedHammer extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

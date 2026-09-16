@@ -10,7 +10,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 
-import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {COIN_FLIP_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -40,7 +40,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       cards = selected || [];
       next();
     });
-    player.discard.moveCardsTo(cards, player.hand);
+    MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: effect.trainerCard });
   }
 
 }

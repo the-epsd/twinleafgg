@@ -10,7 +10,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { Effect } from '../../../game/store/effects/effect';
 import { StateUtils, ShowCardsPrompt, GameError, Player } from '../../../game';
 
-import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {COIN_FLIP_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -43,7 +43,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       });
 
     if (cards.length > 0) {
-      player.discard.moveCardsTo(cards, player.deck);
+      MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: effect.trainerCard });
       if (cards.length > 0) {
         state = store.prompt(state, new ShowCardsPrompt(
           opponent.id,
@@ -52,7 +52,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       }
     }
 
-    player.deck.moveCardsTo(cards, player.hand);
+    MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: effect.trainerCard });
   }
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {

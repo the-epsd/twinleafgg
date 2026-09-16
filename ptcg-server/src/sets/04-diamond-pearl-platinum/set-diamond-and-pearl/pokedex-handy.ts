@@ -8,6 +8,7 @@ import { CardList } from '../../../game/store/state/card-list';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -17,7 +18,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   const deckTop = new CardList();
-  player.deck.moveTo(deckTop, 2);
+  MOVE_CARDS(store, state, player.deck, deckTop, { count: 2, sourceCard: effect.trainerCard });
 
   return store.prompt(state, new ChooseCardsPrompt(
     player,
@@ -26,8 +27,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     {},
     { min: 1, max: 1, allowCancel: false }
   ), selected => {
-    deckTop.moveCardsTo(selected, player.hand);
-    deckTop.moveTo(player.deck);
+    MOVE_CARDS(store, state, deckTop, player.hand, { cards: selected, sourceCard: effect.trainerCard });
+    MOVE_CARDS(store, state, deckTop, player.deck, { sourceCard: effect.trainerCard });
 
   });
 }

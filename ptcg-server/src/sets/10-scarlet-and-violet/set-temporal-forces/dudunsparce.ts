@@ -56,7 +56,7 @@ export class Dudunsparce extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      player.deck.moveTo(player.hand, 3);
+      MOVE_CARDS(store, state, player.deck, player.hand, { count: 3, sourceCard: this });
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {
@@ -72,7 +72,7 @@ export class Dudunsparce extends PokemonCard {
           // Move tools to the deck first
           if (tools.length > 0) {
             for (const tool of tools) {
-              cardList.moveCardTo(tool, player.deck);
+              MOVE_CARDS(store, state, cardList, player.deck, { cards: [tool], sourceCard: this });
             }
           }
 

@@ -40,7 +40,7 @@ export class DangerousDrill extends TrainerCard {
           return;
         }
 
-        player.hand.moveCardsTo(cards, player.discard);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
       });
 
       let pokemonsWithTool = 0;
@@ -68,7 +68,7 @@ export class DangerousDrill extends TrainerCard {
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       const toolOption = {
         message: GameMessage.CHOICE_TOOL,
@@ -102,15 +102,15 @@ export class DangerousDrill extends TrainerCard {
             targets.forEach(target => {
               const owner = StateUtils.findOwner(state, target);
               if (target.tools.length > 0) {
-                target.moveCardTo(target.tools[0], owner.discard);
+                MOVE_CARDS(store, state, target, owner.discard, { cards: [target.tools[0]], sourceCard: this });
                 target.tools = [];
               }
 
-              player.supporter.moveCardTo(this, player.discard);
+              MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
               return state;
             });
 
-            player.supporter.moveCardTo(this, player.discard);
+            MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
             return state;
           });
         }
@@ -129,7 +129,7 @@ export class DangerousDrill extends TrainerCard {
           const owner = StateUtils.findOwner(state, cardList);
           MOVE_CARDS(store, state, cardList, owner.discard, { sourceCard: this });
 
-          player.supporter.moveCardTo(this, player.discard);
+          MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
           return state;
         }
       };
@@ -171,7 +171,7 @@ export class DangerousDrill extends TrainerCard {
               cards = selected || [];
               if (cards.length > 0) {
 
-                target.moveCardsTo(cards, opponent.discard);
+                MOVE_CARDS(store, state, target, opponent.discard, { cards: cards, sourceCard: this });
               }
 
               return state;
@@ -206,7 +206,7 @@ export class DangerousDrill extends TrainerCard {
           option.action();
         }
 
-        player.supporter.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
         return state;
       });
 

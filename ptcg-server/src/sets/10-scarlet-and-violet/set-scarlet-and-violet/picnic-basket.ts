@@ -2,6 +2,7 @@ import { TrainerCard, TrainerType, StoreLike, State, PlayerType, StateUtils, Gam
 import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class PicnicBasket extends TrainerCard {
 
@@ -88,7 +89,7 @@ export class PicnicBasket extends TrainerCard {
         state = store.reduceEffect(state, healEffect);
       });
 
-      player.supporter.moveCardTo(this, player.discard);
+      MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
       return state;
     }
     return state;

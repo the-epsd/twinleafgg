@@ -44,7 +44,7 @@ export class Delinquent extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(this, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [this], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 

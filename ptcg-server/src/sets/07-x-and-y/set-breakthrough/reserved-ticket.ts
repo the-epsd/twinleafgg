@@ -7,7 +7,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { Card, CardList, GameMessage, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {COIN_FLIP_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 
@@ -43,7 +43,7 @@ export class ReservedTicket extends TrainerCard {
           ), selected => {
             cards = selected || [];
             if (cards.length > 0) {
-              player.deck.moveCardsTo(cards, deckTop);
+              MOVE_CARDS(store, state, player.deck, deckTop, { cards: cards, sourceCard: this });
 
               store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
                 player.deck.applyOrder(order);

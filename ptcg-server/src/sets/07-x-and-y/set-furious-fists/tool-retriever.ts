@@ -8,6 +8,8 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+
 import {
   PlayerType, GameError, GameMessage,
   PokemonCardList,
@@ -55,10 +57,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // Discard trainer only when user selected a Pokemon
 
-
   targets.forEach(target => {
     if (target.tools.length > 0) {
-      target.moveCardTo(target.tools[0], player.hand);
+      MOVE_CARDS(store, state, target, player.hand, { cards: [target.tools[0]], sourceCard: effect.trainerCard });
     }
   });
 

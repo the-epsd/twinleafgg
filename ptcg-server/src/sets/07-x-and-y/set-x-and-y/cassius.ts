@@ -8,7 +8,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { GameError } from '../../../game';
-import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 export class Cassius extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -36,7 +36,7 @@ export class Cassius extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -54,10 +54,9 @@ export class Cassius extends TrainerCard {
           cardList.damage = 0;
           cardList.removeBoardEffect(BoardEffect.ABILITY_USED);
 
-          cardList.moveCardsTo(cardList.getPokemons(), player.deck);
-          cardList.moveTo(player.deck);
+          MOVE_CARDS(store, state, cardList, player.deck, { cards: cardList.getPokemons(), sourceCard: this });
+          MOVE_CARDS(store, state, cardList, player.deck, { sourceCard: this });
           SHUFFLE_DECK(store, state, player);
-
 
         }
       });

@@ -7,7 +7,7 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import { MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { MULTIPLE_COIN_FLIPS_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class TimeSpaceDistortion extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -58,7 +58,7 @@ export class TimeSpaceDistortion extends TrainerCard {
             // Discard trainer only when user selected a Pokemon
 
             // Recover discarded Pokemon
-            player.discard.moveCardsTo(selected, player.hand);
+            MOVE_CARDS(store, state, player.discard, player.hand, { cards: selected, sourceCard: this });
           }
 
         });

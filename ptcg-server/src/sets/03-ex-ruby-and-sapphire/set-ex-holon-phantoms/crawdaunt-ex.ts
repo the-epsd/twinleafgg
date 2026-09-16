@@ -116,7 +116,7 @@ export class CrawdauntEx extends PokemonCard {
             // Move tools to hand
             if (tools.length > 0) {
               for (const tool of tools) {
-                cardList.moveCardTo(tool, opponent.hand);
+                MOVE_CARDS(store, state, cardList, opponent.hand, { cards: [tool], sourceCard: this });
               }
             }
 

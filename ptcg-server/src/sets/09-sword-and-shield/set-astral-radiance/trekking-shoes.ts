@@ -8,6 +8,8 @@ import { CardList } from '../../../game/store/state/card-list';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { ConfirmCardsPrompt } from '../../../game/store/prompts/confirm-cards-prompt';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+
 export class TrekkingShoes extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -40,7 +42,7 @@ export class TrekkingShoes extends TrainerCard {
       effect.preventDefault = true;
 
       const deckTop = new CardList();
-      player.deck.moveTo(deckTop, 1);
+      MOVE_CARDS(store, state, player.deck, deckTop, { count: 1, sourceCard: this });
 
       return store.prompt(state, new ConfirmCardsPrompt(
         player.id,
@@ -51,14 +53,14 @@ export class TrekkingShoes extends TrainerCard {
 
         if (selected !== null) {
           // Add card to hand
-          deckTop.moveCardsTo(deckTop.cards, player.hand);
+          MOVE_CARDS(store, state, deckTop, player.hand, { cards: deckTop.cards, sourceCard: this });
         } else {
 
           // Discard card
-          deckTop.moveTo(player.discard);
+          MOVE_CARDS(store, state, deckTop, player.discard, { sourceCard: this });
 
           // Draw a card
-          player.deck.moveTo(player.hand, 1);
+          MOVE_CARDS(store, state, player.deck, player.hand, { count: 1, sourceCard: this });
         }
       });
     }

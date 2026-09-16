@@ -6,7 +6,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, CardList, ShowCardsPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { SHOW_CARDS_TO_PLAYER } from '../../../game/store/prefabs/prefabs';
+import {SHOW_CARDS_TO_PLAYER, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class DroneRotom extends TrainerCard {
@@ -32,7 +32,7 @@ export class DroneRotom extends TrainerCard {
       // Look at top card of opponent's deck
       if (opponent.deck.cards.length > 0) {
         const deckTop = new CardList();
-        opponent.deck.moveTo(deckTop, 1);
+        MOVE_CARDS(store, state, opponent.deck, deckTop, { count: 1, sourceCard: this });
 
         store.prompt(state, new ShowCardsPrompt(
           player.id,

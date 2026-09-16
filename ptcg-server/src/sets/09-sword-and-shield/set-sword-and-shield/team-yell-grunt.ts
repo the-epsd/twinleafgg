@@ -8,6 +8,7 @@ import { StoreLike, State, StateUtils, GameError, GameMessage, Card, CardTarget,
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, self: TeamYellGrunt, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -32,7 +33,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: TeamYel
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   effect.preventDefault = true;
 
   // Player chooses which of opponent's Pokemon to take energy from
@@ -49,7 +50,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: TeamYel
   });
 
   if (targets.length === 0) {
-    player.supporter.moveCardTo(self, player.discard);
+    MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [self], sourceCard: self });
     return state;
   }
 
@@ -66,8 +67,8 @@ function* playCard(next: Function, store: StoreLike, state: State, self: TeamYel
     next();
   });
 
-  target.moveCardsTo(cards, opponent.hand);
-  player.supporter.moveCardTo(self, player.discard);
+  MOVE_CARDS(store, state, target, opponent.hand, { cards: cards, sourceCard: self });
+  MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [self], sourceCard: self });
   return state;
 }
 

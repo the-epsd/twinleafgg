@@ -9,7 +9,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import { MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { MULTIPLE_COIN_FLIPS_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class LureBall extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -63,7 +63,7 @@ export class LureBall extends TrainerCard {
           { min: maxChoose, max: maxChoose, allowCancel: false, blocked }
         ), selected => {
           if (selected && selected.length > 0) {
-            player.discard.moveCardsTo(selected, player.hand);
+            MOVE_CARDS(store, state, player.discard, player.hand, { cards: selected, sourceCard: this });
           }
         });
       });

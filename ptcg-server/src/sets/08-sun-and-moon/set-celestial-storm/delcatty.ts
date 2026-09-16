@@ -93,7 +93,6 @@ export class Delcatty extends PokemonCard {
               MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: this, sourceEffect: this.powers[0] });
             });
 
-
             return state;
           });
         }

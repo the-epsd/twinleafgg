@@ -33,7 +33,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
 
   const maxPokemons = Math.min(pokemons, 1);
   const maxTrainers = Math.min(trainers, 1);
@@ -83,7 +83,6 @@ export class FogCrystal extends TrainerCard {
 
   public text: string =
     'Search your deck for a [P] Energy card or a Basic [P] Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.';
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

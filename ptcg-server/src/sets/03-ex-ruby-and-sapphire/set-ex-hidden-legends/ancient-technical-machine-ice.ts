@@ -58,7 +58,7 @@ export class AncientTechnicalMachineIce extends TrainerCard {
           { min: 1, max: 1, allowCancel: false, blocked },
         ),
         (transfers) => {
-          player.supporter.moveCardTo(effect.trainerCard, transfers[0]);
+          MOVE_CARDS(store, state, player.supporter, transfers[0], { cards: [effect.trainerCard], sourceCard: this });
         },
       );
     }
@@ -68,7 +68,7 @@ export class AncientTechnicalMachineIce extends TrainerCard {
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
         if (cardList.cards.includes(this)) {
-          cardList.moveCardTo(this, player.discard);
+          MOVE_CARDS(store, state, cardList, player.discard, { cards: [this], sourceCard: this });
         }
       });
     }
@@ -86,7 +86,7 @@ export class AncientTechnicalMachineIce extends TrainerCard {
             !!attachedTo &&
             (attachedTo.hasTag(CardTag.POKEMON_ex) || cardList.getPokemons().length < 2)
           ) {
-            cardList.moveCardTo(this, player.discard);
+            MOVE_CARDS(store, state, cardList, player.discard, { cards: [this], sourceCard: this });
           }
         });
       });

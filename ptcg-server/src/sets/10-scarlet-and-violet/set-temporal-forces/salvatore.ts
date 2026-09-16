@@ -9,7 +9,7 @@ import { GameMessage } from '../../../game/game-message';
 import { Card } from '../../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { CardManager, CardTarget, ChoosePokemonPrompt, Player, PlayerType, PokemonCard, PokemonCardList, PowerType, SlotType } from '../../../game';
-import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
@@ -21,7 +21,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
@@ -116,11 +116,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   // Evolve Pokemon
-  player.deck.moveCardTo(evolution, targets[0]);
+  MOVE_CARDS(store, state, player.deck, targets[0], { cards: [evolution], sourceCard: effect.trainerCard });
   targets[0].clearEffects();
   targets[0].pokemonPlayedTurn = state.turn;
-
-
 
   SHUFFLE_DECK(store, state, player);
 }
@@ -160,7 +158,6 @@ export class Salvatore extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

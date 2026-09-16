@@ -11,6 +11,7 @@ import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-pr
 import { PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
 import { StateUtils } from '../../../game/store/state-utils';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Welder extends TrainerCard {
 
@@ -39,7 +40,7 @@ export class Welder extends TrainerCard {
       }
 
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
@@ -58,9 +59,9 @@ export class Welder extends TrainerCard {
           store.reduceEffect(state, attachEnergyEffect);
         }
         if (transfers.length > 0) {
-          player.deck.moveTo(player.hand, 3);
+          MOVE_CARDS(store, state, player.deck, player.hand, { count: 3, sourceCard: this });
         }
-        player.supporter.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
       });
     }
 

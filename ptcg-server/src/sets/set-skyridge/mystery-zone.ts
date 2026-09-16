@@ -10,6 +10,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class MysteryZone extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
@@ -40,7 +41,7 @@ export class MysteryZone extends TrainerCard {
       ), selected => {
         cards = selected || [];
 
-        player.deck.moveCardsTo(cards, player.hand);
+        MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
 
         if (cards.length > 0) {
           state = store.prompt(state, new ShowCardsPrompt(
@@ -72,7 +73,7 @@ export class MysteryZone extends TrainerCard {
               GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
               evolutionCards
             ), () => { });
-            player.hand.moveCardsTo(evolutionCards, player.deck);
+            MOVE_CARDS(store, state, player.hand, player.deck, { cards: evolutionCards, sourceCard: this });
           }
 
           state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

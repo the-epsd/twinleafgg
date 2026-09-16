@@ -8,6 +8,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: BillsAnalysis, effect: TrainerEffect): IterableIterator<State> {
@@ -23,12 +24,12 @@ function* playCard(next: Function, store: StoreLike, state: State,
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
   const deckTop = new CardList();
-  player.deck.moveTo(deckTop, 7);
+  MOVE_CARDS(store, state, player.deck, deckTop, { count: 7, sourceCard: self });
 
   return store.prompt(state, new ChooseCardsPrompt(
     player,
@@ -37,10 +38,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
     { superType: SuperType.TRAINER },
     { min: 0, max: 2, allowCancel: false }
   ), selected => {
-    deckTop.moveCardsTo(selected, player.hand);
-    deckTop.moveTo(player.deck);
-
-
+    MOVE_CARDS(store, state, deckTop, player.hand, { cards: selected, sourceCard: self });
+    MOVE_CARDS(store, state, deckTop, player.deck, { sourceCard: self });
 
     const opponent = StateUtils.getOpponent(state, player);
 

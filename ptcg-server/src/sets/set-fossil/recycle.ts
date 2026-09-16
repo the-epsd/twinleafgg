@@ -2,7 +2,7 @@ import { Card, CardList, ChooseCardsPrompt, GameError, GameMessage, OrderCardsPr
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect, TrainerToDeckEffect } from '../../game/store/effects/play-card-effects';
 
-import { COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
+import {COIN_FLIP_PROMPT, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Recycle extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -59,7 +59,7 @@ export class Recycle extends TrainerCard {
 
             if (cardsToMove.length > 0) {
               cardsToMove.forEach(card => {
-                player.discard.moveCardTo(card, deckTop);
+                MOVE_CARDS(store, state, player.discard, deckTop, { cards: [card], sourceCard: this });
               });
 
               return store.prompt(state, new OrderCardsPrompt(

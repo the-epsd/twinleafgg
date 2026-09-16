@@ -8,7 +8,7 @@ import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects
 import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {IS_ABILITY_BLOCKED, WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Mewtwo extends PokemonCard {
 
@@ -94,7 +94,7 @@ export class Mewtwo extends PokemonCard {
             { min: 1, max: 1, allowCancel: false }
           ), selected => {
 
-            player.discard.moveCardTo(selected[0], deckTop);
+            MOVE_CARDS(store, state, player.discard, deckTop, { cards: [selected[0]], sourceCard: this });
             deckTop.moveToTopOfDestination(player.deck);
 
             store.prompt(state, new ShowCardsPrompt(

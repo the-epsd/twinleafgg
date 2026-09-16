@@ -34,10 +34,10 @@ export class Clay extends TrainerCard {
       }
 
       effect.preventDefault = true;
-      player.hand.moveCardTo(this, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [this], sourceCard: this });
 
       const deckTop = new CardList();
-      player.deck.moveTo(deckTop, 7);
+      MOVE_CARDS(store, state, player.deck, deckTop, { count: 7, sourceCard: this });
 
       // Filter for item cards
       const itemCards = deckTop.cards.filter(c => c instanceof TrainerCard && c.trainerType === TrainerType.ITEM);
@@ -52,7 +52,7 @@ export class Clay extends TrainerCard {
       }
 
       // Move all cards to discard
-      deckTop.moveTo(player.discard, deckTop.cards.length);
+      MOVE_CARDS(store, state, deckTop, player.discard, { count: deckTop.cards.length, sourceCard: this });
 
       itemCards.forEach((card, index) => {
         store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });

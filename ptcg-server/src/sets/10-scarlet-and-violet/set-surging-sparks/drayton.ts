@@ -13,6 +13,7 @@ import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { StateUtils } from '../../../game/store/state-utils';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { Player, PokemonCard } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -24,10 +25,10 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
 
   const deckTop = new CardList();
-  player.deck.moveTo(deckTop, 7);
+  MOVE_CARDS(store, state, player.deck, deckTop, { count: 7, sourceCard: effect.trainerCard });
 
   // Count tools and items separately
   let trainers = 0;
@@ -71,8 +72,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     next();
   });
 
-  deckTop.moveCardsTo(cards, player.hand);
-  deckTop.moveTo(player.deck);
+  MOVE_CARDS(store, state, deckTop, player.hand, { cards: cards, sourceCard: effect.trainerCard });
+  MOVE_CARDS(store, state, deckTop, player.deck, { sourceCard: effect.trainerCard });
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
@@ -115,7 +116,6 @@ export class Drayton extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

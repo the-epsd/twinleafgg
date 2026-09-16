@@ -9,7 +9,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
@@ -106,10 +106,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   // Evolve Pokemon
-  player.deck.moveCardTo(evolution, targets[0]);
+  MOVE_CARDS(store, state, player.deck, targets[0], { cards: [evolution], sourceCard: effect.trainerCard });
   targets[0].clearEffects();
   targets[0].pokemonPlayedTurn = state.turn;
-
 
   SHUFFLE_DECK(store, state, player);
 

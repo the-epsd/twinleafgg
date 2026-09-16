@@ -2,7 +2,7 @@ import { Card, CardType, ChooseCardsPrompt, GameMessage, PokemonCard, ShowCardsP
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Chimecho extends PokemonCard {
 
@@ -78,7 +78,7 @@ export class Chimecho extends PokemonCard {
         cards = selected || [];
 
         cards.forEach((card, index) => {
-          player.deck.moveCardTo(card, player.hand);
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this });
         });
 
         state = store.prompt(state, new ShowCardsPrompt(

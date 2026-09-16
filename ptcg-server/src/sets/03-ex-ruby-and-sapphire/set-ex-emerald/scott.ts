@@ -24,7 +24,7 @@ export class Scott extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(this, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [this], sourceCard: this });
       BLOCK_IF_DECK_EMPTY(player);
 
       const blocked: number[] = [];

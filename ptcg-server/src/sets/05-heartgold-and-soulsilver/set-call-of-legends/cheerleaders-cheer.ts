@@ -5,7 +5,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 import { GameError, GameMessage, StateUtils } from '../../../game';
-import { CONFIRMATION_PROMPT, DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
+import { CONFIRMATION_PROMPT, DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class CheerleadersCheer extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -31,7 +31,7 @@ export class CheerleadersCheer extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       DRAW_CARDS(store, state, player, 3);
 
@@ -42,7 +42,6 @@ export class CheerleadersCheer extends TrainerCard {
           }
         }, GameMessage.WANT_TO_DRAW_CARDS);
       }
-
 
     }
 

@@ -9,8 +9,7 @@ import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-pr
 import { PlayerType, SlotType, CardTarget } from '../../../game/store/actions/play-card-action';
 import { StateUtils } from '../../../game/store/state-utils';
 import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
-import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
-
+import {IS_TOOL_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class ExpShare extends TrainerCard {
 
@@ -91,7 +90,7 @@ export class ExpShare extends TrainerCard {
         active.marker.removeMarker(this.EXP_SHARE_MARKER);
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
         }
       });
     }

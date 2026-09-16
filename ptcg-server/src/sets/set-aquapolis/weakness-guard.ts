@@ -7,6 +7,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class WeaknessGuard extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -31,7 +32,7 @@ export class WeaknessGuard extends TrainerCard {
         [SlotType.BENCH, SlotType.ACTIVE],
         { min: 1, max: 1, allowCancel: false },
       ), transfers => {
-        player.supporter.moveCardTo(effect.trainerCard, transfers[0]);
+        MOVE_CARDS(store, state, player.supporter, transfers[0], { cards: [effect.trainerCard], sourceCard: this });
       });
     }
 
@@ -47,7 +48,7 @@ export class WeaknessGuard extends TrainerCard {
 
       player.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, index) => {
         if (cardList.cards.includes(this)) {
-          cardList.moveCardTo(this, player.discard);
+          MOVE_CARDS(store, state, cardList, player.discard, { cards: [this], sourceCard: this });
         }
       });
     }

@@ -2,7 +2,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, ChooseCardsPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import {WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { THIS_POKEMON_HAS_NO_WEAKNESS_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Escavalier extends PokemonCard {
@@ -52,7 +52,7 @@ export class Escavalier extends PokemonCard {
         ), selected => {
           const cards = selected || [];
           if (cards.length > 0) {
-            opponent.active.moveCardsTo(cards, opponent.discard);
+            MOVE_CARDS(store, state, opponent.active, opponent.discard, { cards: cards, sourceCard: this });
           }
         });
       }

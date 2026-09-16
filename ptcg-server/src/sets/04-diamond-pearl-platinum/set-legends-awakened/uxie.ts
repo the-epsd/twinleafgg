@@ -115,7 +115,7 @@ export class Uxie extends PokemonCard {
           const powerEffect = new PowerEffect(player, this.powers[0], this);
           store.reduceEffect(state, powerEffect);
 
-          player.deck.moveTo(player.hand, cardsToDraw);
+          MOVE_CARDS(store, state, player.deck, player.hand, { count: cardsToDraw, sourceCard: this });
         }
       });
     }

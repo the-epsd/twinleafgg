@@ -12,6 +12,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { ShowCardsPrompt, StateUtils } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: PalmersContribution, effect: TrainerEffect): IterableIterator<State> {
@@ -69,7 +70,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
     next();
   });
 
-
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
       opponent.id,
@@ -78,8 +78,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     ), () => next());
   }
 
-  player.discard.moveCardsTo(cards, player.deck);
-
+  MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: self });
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

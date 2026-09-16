@@ -4,7 +4,7 @@ import { Card, ChooseEnergyPrompt, GameError, GameMessage, StoreLike, State, Sta
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { TRAINER_TARGET_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import {TRAINER_TARGET_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Nita extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -54,7 +54,7 @@ export class Nita extends TrainerCard {
         const cards: Card[] = (energy || []).map(e => e.card);
         if (cards.length > 0) {
           // Put on top of opponent's deck (unshift = top)
-          opponent.active.moveCardsTo(cards, opponent.deck);
+          MOVE_CARDS(store, state, opponent.active, opponent.deck, { cards: cards, sourceCard: this });
           // Move card to top (index 0)
           cards.forEach(c => {
             const idx = opponent.deck.cards.indexOf(c);

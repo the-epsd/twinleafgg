@@ -3,7 +3,7 @@ import { Stage, SuperType, TrainerType } from '../../../game/store/card/card-typ
 import { StoreLike, State, ChooseCardsPrompt, GameMessage, GameError, ShuffleDeckPrompt, PokemonCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonFromDeckEffect, TrainerEffect } from '../../../game/store/effects/play-card-effects';
-
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class BattleVIPPass extends TrainerCard {
 
@@ -36,7 +36,7 @@ Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, 
       }
 
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       const maxCards = Math.min(2, openSlots.length);
 
@@ -54,7 +54,7 @@ Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, 
           store.reduceEffect(state, playPokemonFromDeckEffect);
         });
 
-        player.supporter.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

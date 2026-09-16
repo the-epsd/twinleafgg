@@ -1,6 +1,6 @@
 import { Card, CardList, ChooseCardsPrompt, GameError, GameMessage, State, StoreLike, TrainerCard, TrainerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import {SHUFFLE_DECK, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 
 export class VictoryRing extends TrainerCard {
@@ -40,7 +40,7 @@ export class VictoryRing extends TrainerCard {
           selected.forEach((card: Card) => {
             const sourcePrize = player.prizes.find(p => p.cards.includes(card));
             if (sourcePrize) {
-              sourcePrize.moveCardTo(card, player.deck);
+              MOVE_CARDS(store, state, sourcePrize, player.deck, { cards: [card], sourceCard: this });
             }
           });
 
@@ -49,7 +49,7 @@ export class VictoryRing extends TrainerCard {
           player.prizes
             .filter(p => p.cards.length === 0)
             .forEach(emptyPrize => {
-              player.deck.moveTo(emptyPrize, 1);
+              MOVE_CARDS(store, state, player.deck, emptyPrize, { count: 1, sourceCard: this });
               emptyPrize.isSecret = true;
             });
         }

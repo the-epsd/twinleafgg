@@ -1,7 +1,7 @@
 import { Card, CardType, ChooseCardsPrompt, GameMessage, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import {WAS_ATTACK_USED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class AlolanVulpix extends PokemonCard {
 
@@ -55,8 +55,7 @@ export class AlolanVulpix extends PokemonCard {
         cards = selected || [];
 
         cards.forEach((card, index) => {
-          player.deck.moveCardTo(card, player.hand);
-
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this });
 
         });
 

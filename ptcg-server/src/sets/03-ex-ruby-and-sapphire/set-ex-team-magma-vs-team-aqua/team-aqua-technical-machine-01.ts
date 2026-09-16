@@ -29,6 +29,7 @@ import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class TeamAquaTechnicalMachine01 extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -81,7 +82,7 @@ export class TeamAquaTechnicalMachine01 extends TrainerCard {
           { min: 1, max: 1, allowCancel: false, blocked },
         ),
         (transfers) => {
-          player.supporter.moveCardTo(effect.trainerCard, transfers[0]);
+          MOVE_CARDS(store, state, player.supporter, transfers[0], { cards: [effect.trainerCard], sourceCard: this });
         },
       );
     }
@@ -91,7 +92,7 @@ export class TeamAquaTechnicalMachine01 extends TrainerCard {
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
         if (cardList.cards.includes(this)) {
-          cardList.moveCardTo(this, player.discard);
+          MOVE_CARDS(store, state, cardList, player.discard, { cards: [this], sourceCard: this });
         }
       });
     }
@@ -106,7 +107,7 @@ export class TeamAquaTechnicalMachine01 extends TrainerCard {
           const attachedTo = cardList.getPokemonCard();
 
           if (!!attachedTo && !attachedTo.hasTag(CardTag.TEAM_AQUA)) {
-            cardList.moveCardTo(this, player.discard);
+            MOVE_CARDS(store, state, cardList, player.discard, { cards: [this], sourceCard: this });
           }
         });
       });

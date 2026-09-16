@@ -10,8 +10,9 @@ import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { Player } from '../../../game/store/state/player';
 import { StateUtils } from '../../../game/store/state-utils';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
-function pickUpBenchedPokemon(next: Function, store: StoreLike, state: State, player: Player): State {
+function pickUpBenchedPokemon(next: Function, store: StoreLike, state: State, player: Player, sourceCard: TrainerCard): State {
   return store.prompt(state, new ChoosePokemonPrompt(
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
@@ -20,7 +21,7 @@ function pickUpBenchedPokemon(next: Function, store: StoreLike, state: State, pl
     { allowCancel: false }
   ), selection => {
     const cardList = selection[0];
-    cardList.moveTo(player.hand);
+    MOVE_CARDS(store, state, cardList, player.hand, { sourceCard });
     cardList.clearEffects();
     next();
   });
@@ -37,11 +38,11 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   if (playerHasBench) {
-    yield pickUpBenchedPokemon(next, store, state, player);
+    yield pickUpBenchedPokemon(next, store, state, player, effect.trainerCard);
   }
 
   if (opponentHasBench) {
-    yield pickUpBenchedPokemon(next, store, state, opponent);
+    yield pickUpBenchedPokemon(next, store, state, opponent, effect.trainerCard);
   }
 
   return state;

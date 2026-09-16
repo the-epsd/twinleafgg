@@ -6,7 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 import { StateUtils } from '../../../game/store/state-utils';
 import { ToolEffect } from '../../../game/store/effects/play-card-effects';
-
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class LuckyHelmet extends TrainerCard {
 
@@ -46,8 +46,7 @@ export class LuckyHelmet extends TrainerCard {
         return state;
       }
 
-
-      opponent.deck.moveTo(opponent.hand, 2);
+      MOVE_CARDS(store, state, opponent.deck, opponent.hand, { count: 2, sourceCard: this });
     }
     return state;
   }

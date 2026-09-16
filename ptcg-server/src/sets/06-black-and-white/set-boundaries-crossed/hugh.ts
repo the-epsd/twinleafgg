@@ -7,7 +7,6 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { ChooseCardsPrompt, GameError, GameMessage, StateUtils } from '../../..';
 import { DRAW_CARDS_UNTIL_CARDS_IN_HAND, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
-
 export class Hugh extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;

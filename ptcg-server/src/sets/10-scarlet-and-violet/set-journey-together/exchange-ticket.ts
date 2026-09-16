@@ -1,6 +1,7 @@
 import { Card, GameError, GameMessage, Player, State, StoreLike, TrainerCard, TrainerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class RedeemableTicket extends TrainerCard {
 
@@ -28,7 +29,6 @@ export class RedeemableTicket extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
@@ -40,7 +40,7 @@ export class RedeemableTicket extends TrainerCard {
       }
 
       // Move the trainer card to discard
-      player.hand.moveCardTo(effect.trainerCard, player.discard);
+      MOVE_CARDS(store, state, player.hand, player.discard, { cards: [effect.trainerCard], sourceCard: this });
 
       // Collect all prize cards
       const allPrizeCards: Card[] = [];
@@ -72,7 +72,7 @@ export class RedeemableTicket extends TrainerCard {
 
       // Set the new prize cards to be face down
       player.prizes.forEach(p => p.isSecret = true);
-      player.supporter.moveCardTo(this, player.discard);
+      MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
       return state;
     }
 

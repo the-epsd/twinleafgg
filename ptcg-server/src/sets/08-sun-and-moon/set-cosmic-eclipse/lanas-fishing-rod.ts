@@ -15,7 +15,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: LanasFi
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   effect.preventDefault = true;
 
   let tools = 0;
@@ -47,8 +47,6 @@ function* playCard(next: Function, store: StoreLike, state: State, self: LanasFi
   });
 
   MOVE_CARDS(store, state, player.discard, player.deck, { cards, sourceCard: self });
-
-
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(

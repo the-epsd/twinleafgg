@@ -8,6 +8,8 @@ import { EnergyCard } from '../../../game/store/card/energy-card';
 import { AttachEnergyPrompt, CardTarget, PlayerType, SlotType, StoreLike, State, StateUtils, GameMessage, GameError, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+
 export class TheMaskedRoyal extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'CES';
@@ -56,7 +58,7 @@ export class TheMaskedRoyal extends TrainerCard {
         transfers = transfers || [];
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.hand.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.hand, target, { cards: [transfer.card], sourceCard: this });
         }
       });
     }

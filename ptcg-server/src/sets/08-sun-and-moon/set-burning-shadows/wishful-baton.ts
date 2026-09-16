@@ -11,7 +11,6 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { IS_TOOL_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { CardList } from '../../../game/store/state/card-list';
 
-
 export class WishfulBaton extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.TOOL;

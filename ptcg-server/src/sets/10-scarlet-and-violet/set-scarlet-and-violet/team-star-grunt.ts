@@ -7,7 +7,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { StateUtils, CardList, ChooseCardsPrompt, Player } from '../../../game';
-import { TRAINER_TARGET_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import {TRAINER_TARGET_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class TeamStarGrunt extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -45,7 +45,7 @@ export class TeamStarGrunt extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -71,14 +71,11 @@ export class TeamStarGrunt extends TrainerCard {
         const cards: CardList[] = (energy || []).map(e => e.cards);
 
         if (cards.length > 0) {
-          target.moveCardsTo(energy, deckTop);
+          MOVE_CARDS(store, state, target, deckTop, { cards: energy, sourceCard: this });
           deckTop.moveToTopOfDestination(opponent.deck);
-
-
 
         }
       });
-
 
       return state;
     }
@@ -86,5 +83,4 @@ export class TeamStarGrunt extends TrainerCard {
   }
 
 }
-
 

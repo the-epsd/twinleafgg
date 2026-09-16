@@ -6,7 +6,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
-import { REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { StateUtils } from '../../../game/store/state-utils';
@@ -32,7 +32,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  player.hand.moveCardTo(self, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [self], sourceCard: self });
 
   // We will discard this card after prompt confirmation
   // This will prevent unblocked supporter to appear in the discard pile
@@ -49,8 +49,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     cards = selected || [];
     next();
 
-    player.deck.moveCardsTo(cards, player.hand);
-
+    MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
 
     return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
       player.deck.applyOrder(order);

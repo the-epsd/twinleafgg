@@ -8,6 +8,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { Player, ShuffleDeckPrompt } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Cassiopeia extends TrainerCard {
 
@@ -35,7 +36,6 @@ Search your deck for up to 2 cards and put them into your hand. Then, shuffle yo
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
@@ -53,7 +53,7 @@ Search your deck for up to 2 cards and put them into your hand. Then, shuffle yo
         {},
         { min: 1, max: 2, allowCancel: false }
       ), cards => {
-        player.deck.moveCardsTo(cards, player.hand);
+        MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
 
         state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

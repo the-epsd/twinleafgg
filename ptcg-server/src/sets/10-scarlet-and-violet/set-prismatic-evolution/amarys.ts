@@ -3,7 +3,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { ADD_MARKER, DRAW_CARDS, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
+import {ADD_MARKER, DRAW_CARDS, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { Player } from '../../../game/store/state/player';
@@ -35,7 +35,6 @@ export class Amarys extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       DRAW_CARDS(store, state, effect.player, 4);
@@ -47,7 +46,7 @@ export class Amarys extends TrainerCard {
       const discard = effect.player.discard;
 
       if (hand.cards.length >= 5)
-        hand.moveCardsTo(hand.cards, discard);
+        MOVE_CARDS(store, state, hand, discard, { cards: hand.cards, sourceCard: this });
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.AMARYS_USED_MARKER, this);

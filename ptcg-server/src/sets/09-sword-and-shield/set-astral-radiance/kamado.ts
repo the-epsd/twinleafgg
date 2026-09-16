@@ -8,7 +8,7 @@ import { StoreLike, State, GameMessage, Card, ChooseCardsPrompt } from '../../..
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { GameError } from '../../../game/game-error';
-import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
+import {DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Kamado, effect: TrainerEffect): IterableIterator<State> {
@@ -40,7 +40,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // Discard all other cards from hand
   const cardsToDiscard = player.hand.cards.filter(c => c !== keptCard);
   cardsToDiscard.forEach(card => {
-    player.hand.moveCardTo(card, player.discard);
+    MOVE_CARDS(store, state, player.hand, player.discard, { cards: [card], sourceCard: self });
   });
 
   // Draw 4 cards
@@ -65,12 +65,12 @@ export class Kamado extends TrainerCard {
 
       // Must have other cards (not just Kamado) to use this card
       // After move to supporter, check remaining hand cards
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       effect.preventDefault = true;
 
       if (player.hand.cards.length === 0) {
         // No other cards in hand - can't use
-        player.supporter.moveCardTo(effect.trainerCard, player.hand);
+        MOVE_CARDS(store, state, player.supporter, player.hand, { cards: [effect.trainerCard], sourceCard: this });
         effect.preventDefault = false;
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }

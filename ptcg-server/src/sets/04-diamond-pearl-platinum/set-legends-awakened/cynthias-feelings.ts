@@ -46,14 +46,14 @@ export class CynthiasFeelings extends TrainerCard {
       if (HAS_MARKER(this.FEELINGS_MARKER, player, this))
         cardsToDraw = 8;
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
       MOVE_CARDS(store, state, player.hand, player.deck, { cards: player.hand.cards.filter(c => c !== this) });
       SHUFFLE_DECK(store, state, player);
       DRAW_CARDS(store, state, player, cardsToDraw);
-      player.supporter.moveCardTo(this, player.discard);
+      MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
     }
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.FEELINGS_MARKER, this);
 

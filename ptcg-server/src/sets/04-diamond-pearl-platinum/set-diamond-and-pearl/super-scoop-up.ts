@@ -47,7 +47,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
       // Move tools to hand explicitly
       for (const tool of tools) {
-        cardList.moveCardTo(tool, player.hand);
+        MOVE_CARDS(store, state, cardList, player.hand, { cards: [tool], sourceCard: effect.trainerCard });
       }
 
       // Move Pokémon to hand

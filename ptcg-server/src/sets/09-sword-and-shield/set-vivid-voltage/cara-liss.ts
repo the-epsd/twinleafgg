@@ -8,7 +8,7 @@ import { StoreLike, State, GameError, GameMessage, Card, ChooseCardsPrompt } fro
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class CaraLiss extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -30,7 +30,7 @@ export class CaraLiss extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       effect.preventDefault = true;
 
       const slots = player.bench.filter(b => b.cards.length === 0);

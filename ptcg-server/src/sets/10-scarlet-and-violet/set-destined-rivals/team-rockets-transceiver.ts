@@ -25,7 +25,7 @@ function* playCard(
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   effect.preventDefault = true;
 
   if (player.deck.cards.length === 0) {
@@ -60,7 +60,6 @@ function* playCard(
   );
 
   MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
-
 
   if (cards.length > 0) {
     yield store.prompt(

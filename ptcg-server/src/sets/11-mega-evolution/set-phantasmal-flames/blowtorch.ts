@@ -85,7 +85,7 @@ export class Blowtorch extends TrainerCard {
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       store.prompt(state, new ChooseCardsPrompt(
         player,
@@ -96,7 +96,7 @@ export class Blowtorch extends TrainerCard {
       ), cards => {
         cards = cards || [];
 
-        player.hand.moveCardsTo(cards, player.discard);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
 
         const toolOption = {
           message: GameMessage.CHOICE_TOOL,
@@ -127,16 +127,16 @@ export class Blowtorch extends TrainerCard {
                     { min: 1, max: 1, allowCancel: false }
                   ), selected => {
                     if (selected && selected.length > 0) {
-                      cardList.moveCardTo(selected[0], owner.discard);
+                      MOVE_CARDS(store, state, cardList, owner.discard, { cards: [selected[0]], sourceCard: this });
                     }
-                    player.supporter.moveCardTo(this, player.discard);
+                    MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
                     return state;
                   });
                 } else {
-                  cardList.moveCardTo(cardList.tools[0], owner.discard);
+                  MOVE_CARDS(store, state, cardList, owner.discard, { cards: [cardList.tools[0]], sourceCard: this });
                 }
               }
-              player.supporter.moveCardTo(this, player.discard);
+              MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
               return state;
             });
           }
@@ -155,7 +155,7 @@ export class Blowtorch extends TrainerCard {
             const owner = StateUtils.findOwner(state, cardList);
             MOVE_CARDS(store, state, cardList, owner.discard, { sourceCard: this });
 
-            player.supporter.moveCardTo(this, player.discard);
+            MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
             return state;
           }
         };
@@ -197,7 +197,7 @@ export class Blowtorch extends TrainerCard {
                 cards = selected || [];
                 if (cards.length > 0) {
 
-                  target.moveCardsTo(cards, opponent.discard);
+                  MOVE_CARDS(store, state, target, opponent.discard, { cards: cards, sourceCard: this });
                 }
 
                 return state;
@@ -232,7 +232,7 @@ export class Blowtorch extends TrainerCard {
             option.action();
           }
 
-          player.supporter.moveCardTo(this, player.discard);
+          MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
           return state;
         });
       });

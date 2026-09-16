@@ -7,7 +7,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { StateUtils } from '../../../game/store/state-utils';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
-import { COIN_FLIP_PROMPT, TRAINER_TARGET_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import {COIN_FLIP_PROMPT, TRAINER_TARGET_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(
   next: Function,
@@ -27,7 +27,7 @@ function* playCard(
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
 
   if (TRAINER_TARGET_BLOCKED(store, state, player, trainerCard, active)) {
     return state;

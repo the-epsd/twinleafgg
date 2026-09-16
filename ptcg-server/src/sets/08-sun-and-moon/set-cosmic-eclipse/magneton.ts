@@ -81,7 +81,6 @@ export class Magneton extends PokemonCard {
           MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this, sourceEffect: this.powers[0] });
         });
 
-
         SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
         SHUFFLE_DECK(store, state, player);
 

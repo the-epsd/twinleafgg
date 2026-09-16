@@ -65,7 +65,7 @@ export class Wishiwashi extends PokemonCard {
 
                 if (tools.length > 0) {
                   for (const tool of tools) {
-                    cardList.moveCardTo(tool, opponent.deck);
+                    MOVE_CARDS(store, state, cardList, opponent.deck, { cards: [tool], sourceCard: this });
                   }
                 }
 

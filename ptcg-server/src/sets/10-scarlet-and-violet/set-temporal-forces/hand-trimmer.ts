@@ -5,7 +5,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { ChooseCardsPrompt, GameMessage, Player, StateUtils } from '../../..';
-
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class HandTrimmer extends TrainerCard {
 
@@ -29,7 +29,6 @@ export class HandTrimmer extends TrainerCard {
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -55,7 +54,7 @@ export class HandTrimmer extends TrainerCard {
           { min: discardAmount, max: discardAmount, allowCancel: false }
         ), selected => {
           const cards = selected || [];
-          opponent.hand.moveCardsTo(cards, opponent.discard);
+          MOVE_CARDS(store, state, opponent.hand, opponent.discard, { cards: cards, sourceCard: this });
         });
       }
 
@@ -76,7 +75,7 @@ export class HandTrimmer extends TrainerCard {
           { min: playerDiscardAmount, max: playerDiscardAmount, allowCancel: false }
         ), selected => {
           const cards = selected || [];
-          player.hand.moveCardsTo(cards, player.discard);
+          MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
         });
 
       }

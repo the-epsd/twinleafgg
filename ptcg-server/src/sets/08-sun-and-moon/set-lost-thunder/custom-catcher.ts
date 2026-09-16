@@ -7,6 +7,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -28,7 +29,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       return c.name === name && c !== effect.trainerCard;
     });
     if (second !== undefined) {
-      player.hand.moveCardTo(second, player.discard);
+      MOVE_CARDS(store, state, player.hand, player.discard, { cards: [second], sourceCard: effect.trainerCard });
     }
 
     const hasBench = player.bench.some(b => b.cards.length > 0);
@@ -75,7 +76,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
         // Discard trainer only when user selected a Pokemon
         player.active.clearEffects();
         player.switchPokemon(target[0]);
-
 
         return state;
       });
@@ -131,8 +131,8 @@ export class CustomCatcher extends TrainerCard {
           throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
         }
 
-        player.deck.moveTo(player.hand, cardsToDraw);
-        player.supporter.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.deck, player.hand, { count: cardsToDraw, sourceCard: this });
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
 
         for (let i = 0; i < cardsToDraw; i++) {
           store.log(state, GameLog.LOG_PLAYER_DRAWS_CARD, { name: player.name });

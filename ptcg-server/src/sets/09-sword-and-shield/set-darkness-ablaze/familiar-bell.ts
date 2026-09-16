@@ -10,6 +10,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: FamiliarBell, effect: TrainerEffect): IterableIterator<State> {
@@ -39,7 +40,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   }
 
   effect.preventDefault = true;
-  player.hand.moveCardTo(self, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [self], sourceCard: self });
 
   // Build blocked list: block deck cards that don't match any discard Pokemon name
   const blocked: number[] = [];
@@ -62,11 +63,11 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   if (selected.length === 0) {
-    player.supporter.moveCardTo(self, player.discard);
+    MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [self], sourceCard: self });
     return state;
   }
 
-  player.deck.moveCardsTo(selected, player.hand);
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards: selected, sourceCard: self });
 
   // Reveal the card to opponent
   yield store.prompt(state, new ShowCardsPrompt(
@@ -75,7 +76,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     selected
   ), () => next());
 
-  player.supporter.moveCardTo(self, player.discard);
+  MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [self], sourceCard: self });
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

@@ -7,6 +7,7 @@ import { ToolEffect } from '../../../game/store/effects/play-card-effects';
 
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class EnergyPouch extends TrainerCard {
 
@@ -60,12 +61,11 @@ export class EnergyPouch extends TrainerCard {
         });
       });
 
-      basicEnergy.moveTo(player.hand);
+      MOVE_CARDS(store, state, basicEnergy, player.hand, { sourceCard: this });
 
       return state;
     }
     return state;
   }
 }
-
 

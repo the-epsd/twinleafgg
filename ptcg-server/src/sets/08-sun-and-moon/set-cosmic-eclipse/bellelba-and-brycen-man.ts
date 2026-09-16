@@ -51,14 +51,14 @@ When you play this card, you may discard 3 other cards from your hand. If you do
       const cannotDiscardFromHand =
         (benchedPokemon <= 3 && opponentsBenchedPokemon <= 3) || player.hand.cards.length <= 2;
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
       // discard player cards
       const cardsToDiscard = Math.min(player.deck.cards.length, 3);
       const deckTop = new CardList();
-      player.deck.moveTo(deckTop, cardsToDiscard);
+      MOVE_CARDS(store, state, player.deck, deckTop, { count: cardsToDiscard, sourceCard: this });
 
       deckTop.cards.forEach((card, index) => {
         store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, {
@@ -68,12 +68,12 @@ When you play this card, you may discard 3 other cards from your hand. If you do
         });
       });
 
-      deckTop.moveTo(player.discard, deckTop.cards.length);
+      MOVE_CARDS(store, state, deckTop, player.discard, { count: deckTop.cards.length, sourceCard: this });
 
       // discard opponent cards
       const opponentCardsToDiscard = Math.min(opponent.deck.cards.length, 3);
       const opponentDeckTop = new CardList();
-      opponent.deck.moveTo(opponentDeckTop, opponentCardsToDiscard);
+      MOVE_CARDS(store, state, opponent.deck, opponentDeckTop, { count: opponentCardsToDiscard, sourceCard: this });
 
       opponentDeckTop.cards.forEach((card, index) => {
         store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, {
@@ -83,7 +83,7 @@ When you play this card, you may discard 3 other cards from your hand. If you do
         });
       });
 
-      opponentDeckTop.moveTo(opponent.discard, opponentDeckTop.cards.length);
+      MOVE_CARDS(store, state, opponentDeckTop, opponent.discard, { count: opponentDeckTop.cards.length, sourceCard: this });
 
       if (cannotDiscardFromHand) {
         return state;
@@ -127,7 +127,7 @@ When you play this card, you may discard 3 other cards from your hand. If you do
                     ),
                     (selected: any[]) => {
                       selected.forEach((card) => {
-                        card.moveTo(opponent.discard);
+                        MOVE_CARDS(store, state, card, opponent.discard, { sourceCard: this });
                       });
 
                       if (benchDifference > 0) {
@@ -146,7 +146,7 @@ When you play this card, you may discard 3 other cards from your hand. If you do
                           ),
                           (selected: any[]) => {
                             selected.forEach((card) => {
-                              card.moveTo(player.discard);
+                              MOVE_CARDS(store, state, card, player.discard, { sourceCard: this });
                             });
 
                             return state;
@@ -173,7 +173,7 @@ When you play this card, you may discard 3 other cards from your hand. If you do
                     ),
                     (selected: any[]) => {
                       selected.forEach((card) => {
-                        card.moveTo(player.discard);
+                        MOVE_CARDS(store, state, card, player.discard, { sourceCard: this });
                       });
 
                       return state;

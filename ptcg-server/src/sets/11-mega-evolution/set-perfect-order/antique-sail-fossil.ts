@@ -24,7 +24,7 @@ import {
   TrainerEffect,
 } from '../../../game/store/effects/play-card-effects';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
-import { IS_ABILITY_BLOCKED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {IS_ABILITY_BLOCKED, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class AntiqueSailFossil extends TrainerCard {
   public trainerType = TrainerType.ITEM;
@@ -92,7 +92,7 @@ export class AntiqueSailFossil extends TrainerCard {
         effect: 'Antique Sail Fossil',
       });
       const cardList = StateUtils.findCardList(state, this);
-      cardList.moveCardTo(this, player.discard);
+      MOVE_CARDS(store, state, cardList, player.discard, { cards: [this], sourceCard: this });
     }
 
     // Play as Pokemon

@@ -11,7 +11,7 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { CardList } from '../../game/store/state/card-list';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { OrderCardsPrompt } from '../../game';
-
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Oracle, effect: TrainerEffect): IterableIterator<State> {
@@ -24,7 +24,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
@@ -45,7 +45,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     next();
   });
 
-  player.deck.moveCardsTo(cards, deckTop);
+  MOVE_CARDS(store, state, player.deck, deckTop, { cards: cards, sourceCard: self });
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
@@ -62,8 +62,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
       deckTop.applyOrder(order);
       deckTop.moveToTopOfDestination(player.deck);
-
-
 
     });
   });

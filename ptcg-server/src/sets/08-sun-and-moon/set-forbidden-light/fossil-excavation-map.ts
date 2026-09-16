@@ -1,6 +1,7 @@
 import { TrainerCard, TrainerType, StoreLike, State, StateUtils, GameMessage, Card, ChooseCardsPrompt, ShuffleDeckPrompt, ShowCardsPrompt, SelectPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class FossilExcavationMap extends TrainerCard {
 
@@ -27,7 +28,7 @@ export class FossilExcavationMap extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -48,7 +49,7 @@ export class FossilExcavationMap extends TrainerCard {
               cards = selected || [];
             });
 
-            player.deck.moveCardsTo(cards, player.hand);
+            MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
 
             if (cards.length > 0) {
               return store.prompt(state, new ShowCardsPrompt(
@@ -79,7 +80,7 @@ export class FossilExcavationMap extends TrainerCard {
               cards = selected || [];
             });
 
-            player.discard.moveCardsTo(cards, player.hand);
+            MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
 
             if (cards.length > 0) {
               return store.prompt(state, new ShowCardsPrompt(
@@ -88,7 +89,6 @@ export class FossilExcavationMap extends TrainerCard {
                 cards
               ), () => { });
             }
-
 
           }
         }
@@ -116,7 +116,5 @@ export class FossilExcavationMap extends TrainerCard {
     }
     return state;
   }
-
-
 
 }

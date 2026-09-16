@@ -7,7 +7,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { PlayerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import {IS_TOOL_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class SitrusBerry extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
@@ -43,7 +43,7 @@ export class SitrusBerry extends TrainerCard {
             // Heal 30 damage
             cardList.damage = Math.max(0, cardList.damage - 30);
             // Discard this tool
-            cardList.moveCardTo(this, checkPlayer.discard);
+            MOVE_CARDS(store, state, cardList, checkPlayer.discard, { cards: [this], sourceCard: this });
           }
         });
       }

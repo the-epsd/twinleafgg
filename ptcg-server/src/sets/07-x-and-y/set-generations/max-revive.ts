@@ -5,6 +5,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { State } from '../../../game/store/state/state';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class MaxRevive extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -41,7 +42,7 @@ export class MaxRevive extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
@@ -59,7 +60,7 @@ export class MaxRevive extends TrainerCard {
           const deckTop = new CardList();
 
           cards.forEach(card => {
-            player.discard.moveCardTo(card, deckTop);
+            MOVE_CARDS(store, state, player.discard, deckTop, { cards: [card], sourceCard: this });
           });
 
           return store.prompt(state, new OrderCardsPrompt(
@@ -74,7 +75,6 @@ export class MaxRevive extends TrainerCard {
 
             deckTop.applyOrder(order);
             deckTop.moveToTopOfDestination(player.deck);
-
 
             if (cards.length > 0) {
               const opponent = StateUtils.getOpponent(state, player);

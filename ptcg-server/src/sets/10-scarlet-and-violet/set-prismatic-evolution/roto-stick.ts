@@ -13,6 +13,7 @@ import { GameMessage } from '../../../game/game-message';
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { StateUtils } from '../../../game/store/state-utils';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -26,7 +27,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   effect.preventDefault = true;
 
   const deckTop = new CardList();
-  player.deck.moveTo(deckTop, 4);
+  MOVE_CARDS(store, state, player.deck, deckTop, { count: 4, sourceCard: effect.trainerCard });
 
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
@@ -40,8 +41,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     next();
   });
 
-  deckTop.moveCardsTo(cards, player.hand);
-  deckTop.moveTo(player.deck);
+  MOVE_CARDS(store, state, deckTop, player.hand, { cards: cards, sourceCard: effect.trainerCard });
+  MOVE_CARDS(store, state, deckTop, player.deck, { sourceCard: effect.trainerCard });
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
@@ -75,7 +76,6 @@ export class RotoStick extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

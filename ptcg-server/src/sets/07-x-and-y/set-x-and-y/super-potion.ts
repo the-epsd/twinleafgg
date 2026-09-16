@@ -10,6 +10,7 @@ import {
   PokemonCardList, Card, ChooseCardsPrompt
 } from '../../../game';
 import { HealEffect } from '../../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -64,7 +65,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     return state;
   }
 
-  target.moveCardsTo(cards, player.discard);
+  MOVE_CARDS(store, state, target, player.discard, { cards: cards, sourceCard: effect.trainerCard });
 
   // Heal Pokemon
   const healEffect = new HealEffect(player, target, 60);

@@ -3,7 +3,7 @@ import { Stage, SuperType, TrainerType } from '../../../game/store/card/card-typ
 import { StoreLike, State, ChooseCardsPrompt, GameMessage, GameError, ShuffleDeckPrompt, PokemonCard, Player } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonFromDeckEffect, TrainerEffect } from '../../../game/store/effects/play-card-effects';
-
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class BuddyBuddyPoffin extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -44,7 +44,7 @@ export class BuddyBuddyPoffin extends TrainerCard {
 
       const maxPokemons = Math.min(openSlots.length, 2);
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       return store.prompt(state, new ChooseCardsPrompt(
         player,
@@ -60,7 +60,7 @@ export class BuddyBuddyPoffin extends TrainerCard {
           store.reduceEffect(state, playPokemonFromDeckEffect);
         });
 
-        player.supporter.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

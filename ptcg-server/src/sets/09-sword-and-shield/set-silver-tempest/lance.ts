@@ -11,6 +11,7 @@ import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Lance, effect: TrainerEffect): IterableIterator<State> {
@@ -24,7 +25,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
 
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
@@ -37,7 +38,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
     next();
   });
 
-
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
       opponent.id,
@@ -46,8 +46,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
     ), () => next());
   }
 
-  player.deck.moveCardsTo(cards, player.hand);
-  player.supporter.moveCardTo(self, player.discard);
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
+  MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [self], sourceCard: self });
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

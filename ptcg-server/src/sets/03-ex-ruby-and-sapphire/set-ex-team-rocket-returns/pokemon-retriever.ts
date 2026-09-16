@@ -9,6 +9,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class PokemonRetriever extends TrainerCard {
 
@@ -25,7 +26,6 @@ export class PokemonRetriever extends TrainerCard {
   public fullName: string = 'Pokémon Retriever TRR';
 
   public text: string = 'Search your discard pile for Basic Pokémon and Evolution cards. You may either show 1 Basic Pokémon or Evolution card to your opponent and put it into your hand, or show a combination of 3 Basic Pokémon or Evolution cards to your opponent and shuffle them into your deck.';
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -49,7 +49,7 @@ export class PokemonRetriever extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
@@ -70,8 +70,7 @@ export class PokemonRetriever extends TrainerCard {
             ), selected => {
               cards = selected || [];
 
-              player.discard.moveCardsTo(cards, player.deck);
-
+              MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: this });
 
               return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
                 player.deck.applyOrder(order);
@@ -93,9 +92,7 @@ export class PokemonRetriever extends TrainerCard {
             ), selected => {
               cards = selected || [];
 
-
-              player.discard.moveCardsTo(cards, player.hand);
-
+              MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
 
               return state;
             });

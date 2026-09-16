@@ -8,7 +8,7 @@ import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { CardList } from '../../..';
-import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
+import {DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -18,7 +18,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   effect.preventDefault = true;
 
   const deckTop = new CardList();
-  player.deck.moveTo(deckTop, 1);
+  MOVE_CARDS(store, state, player.deck, deckTop, { count: 1, sourceCard: effect.trainerCard });
 
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
@@ -53,7 +53,6 @@ export class SwitchingCups extends TrainerCard {
 
   public text: string =
     'Switch a card from your hand with the top card of your deck.';
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

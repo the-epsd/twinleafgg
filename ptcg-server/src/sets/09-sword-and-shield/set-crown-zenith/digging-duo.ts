@@ -8,7 +8,7 @@ import { StoreLike, State, GameError, GameMessage, Card, ChooseCardsPrompt, Shuf
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { CardList } from '../../../game/store/state/card-list';
-import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {COIN_FLIP_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 // Ref: set-battle-styles/sordward-and-shielbert.ts (generator pattern with effect.preventDefault)
 // Ref: set-plasma-blast/root-fossil-lileep.ts (bottom deck lookup pattern)
@@ -54,7 +54,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // Move chosen card to hand; the rest stay in deck
   chosen.forEach(card => {
-    player.deck.moveCardTo(card, player.hand);
+    MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: effect.trainerCard });
   });
 
   // Shuffle the remaining deck cards
@@ -84,7 +84,7 @@ export class DiggingDuo extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       effect.preventDefault = true;
 
       const generator = playCard(() => generator.next(), store, state, effect);

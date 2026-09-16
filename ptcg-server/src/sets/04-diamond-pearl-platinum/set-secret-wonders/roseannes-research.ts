@@ -1,7 +1,7 @@
 import { TrainerCard, TrainerType, StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, GameError, EnergyCard, EnergyType, PokemonCard, Stage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { BLOCK_IF_DECK_EMPTY, SHOW_CARDS_TO_PLAYER, MOVE_CARD_TO, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {BLOCK_IF_DECK_EMPTY, SHOW_CARDS_TO_PLAYER, MOVE_CARD_TO, SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class RoseannesResearch extends TrainerCard {
 
@@ -24,7 +24,7 @@ export class RoseannesResearch extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(this, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [this], sourceCard: this });
       BLOCK_IF_DECK_EMPTY(player);
 
       const blocked: number[] = [];
@@ -54,7 +54,7 @@ export class RoseannesResearch extends TrainerCard {
         SHUFFLE_DECK(store, state, player);
       });
 
-      player.supporter.moveCardTo(this, player.discard);
+      MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
     }
 
     return state;

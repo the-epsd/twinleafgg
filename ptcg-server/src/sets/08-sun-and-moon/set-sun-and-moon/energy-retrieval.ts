@@ -8,6 +8,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { EnergyCard } from '../../../game/store/card/energy-card';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -37,7 +38,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     cards = cards || [];
     if (cards.length > 0) {
       // Recover discarded Pokemon
-      player.discard.moveCardsTo(cards, player.hand);
+      MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: effect.trainerCard });
     }
 
   });

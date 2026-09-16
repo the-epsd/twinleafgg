@@ -30,7 +30,7 @@ function* playCard(
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   effect.preventDefault = true;
 
   // If player has less than 2 cards in hand (excluding this card), only allow stadium search
@@ -140,7 +140,6 @@ function* playCard(
           (cards) => {
             cards = cards || [];
             MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: self });
-
 
             // Search for tool, special energy, and stadium
             const blocked: number[] = [];

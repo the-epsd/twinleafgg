@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { AfterWeaknessAndResistanceEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { MOVE_CARD_TO } from '../../game/store/prefabs/prefabs';
+import {MOVE_CARD_TO, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { PlayerType } from '../../game';
 
 export class PlusPower extends TrainerCard {
@@ -43,7 +43,7 @@ export class PlusPower extends TrainerCard {
       const player = effect.player;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
         if (cardList.cards.includes(this)) {
-          cardList.moveCardTo(this, player.discard);
+          MOVE_CARDS(store, state, cardList, player.discard, { cards: [this], sourceCard: this });
         }
       });
     }

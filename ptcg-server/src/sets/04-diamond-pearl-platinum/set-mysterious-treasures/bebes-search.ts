@@ -2,7 +2,7 @@ import { ChooseCardsPrompt, GameError, GameMessage } from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND } from '../../../game/store/prefabs/prefabs';
+import {SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
@@ -31,7 +31,7 @@ export class BebesSearch extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       effect.preventDefault = true;
 
       state = store.prompt(state, new ChooseCardsPrompt(
@@ -45,10 +45,9 @@ export class BebesSearch extends TrainerCard {
         if (cards.length === 0) {
           return;
         }
-        player.hand.moveCardsTo(cards, player.deck);
+        MOVE_CARDS(store, state, player.hand, player.deck, { cards: cards, sourceCard: this });
         SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, {}, { min: 0, max: 1 });
       });
-
 
       return state;
     }

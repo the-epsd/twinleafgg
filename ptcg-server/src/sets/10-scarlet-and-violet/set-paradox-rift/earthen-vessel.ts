@@ -13,6 +13,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { Player } from '../../../game/store/state/player';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(
   next: Function,
@@ -36,7 +37,7 @@ function* playCard(
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
 
   // prepare card list without Junk Arm
   const handTemp = new CardList();
@@ -62,7 +63,7 @@ function* playCard(
     return state;
   }
 
-  player.hand.moveCardsTo(cards, player.discard);
+  MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: self });
 
   yield store.prompt(
     state,
@@ -79,7 +80,6 @@ function* playCard(
     },
   );
 
-
   if (cards.length > 0) {
     yield store.prompt(
       state,
@@ -88,7 +88,7 @@ function* playCard(
     );
   }
 
-  player.deck.moveCardsTo(cards, player.hand);
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);

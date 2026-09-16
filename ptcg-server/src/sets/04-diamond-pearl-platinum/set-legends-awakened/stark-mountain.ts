@@ -9,6 +9,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { IS_STADIUM_EFFECT_BLOCKED } from '../../../game/store/prefabs/stadium-effect';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 const STARK_TYPES = [CardType.FIRE, CardType.FIGHTING];
 const MOVABLE_ENERGY = [...STARK_TYPES, CardType.ANY];
@@ -72,7 +73,7 @@ export class StarkMountain extends TrainerCard {
           ) {
             continue;
           }
-          source.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, source, target, { cards: [transfer.card], sourceCard: this });
         }
       });
     }

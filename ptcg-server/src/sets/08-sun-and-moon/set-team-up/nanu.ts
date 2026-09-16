@@ -7,6 +7,7 @@ import { CardType, Stage, SuperType, TrainerType } from '../../../game/store/car
 import { GameError, GameMessage, StoreLike, State, PlayerType, SlotType, PokemonCard, PokemonCardList, ChooseCardsPrompt, ChoosePokemonPrompt, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Nanu extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -36,7 +37,7 @@ export class Nanu extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       effect.preventDefault = true;
 
       return store.prompt(state, new ChooseCardsPrompt(
@@ -69,12 +70,11 @@ export class Nanu extends TrainerCard {
           // Move all Pokemon cards (entire evolution chain) to discard
           const pokemons = targetList.getPokemons();
           pokemons.forEach(p => {
-            targetList.moveCardTo(p, player.discard);
+            MOVE_CARDS(store, state, targetList, player.discard, { cards: [p], sourceCard: this });
           });
 
           // Place the new Basic Darkness Pokemon into the slot
-          player.discard.moveCardTo(card, targetList);
-
+          MOVE_CARDS(store, state, player.discard, targetList, { cards: [card], sourceCard: this });
 
         });
       });

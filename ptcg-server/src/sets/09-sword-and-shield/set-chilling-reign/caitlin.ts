@@ -3,6 +3,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, ChooseCardsPrompt, CardList } from '../../../game';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { Effect } from '../../../game/store/effects/effect';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -23,10 +24,10 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     const selectedLength = selected.length;
     const deckTop = new CardList();
 
-    player.hand.moveCardsTo(selected, deckTop);
-    deckTop.moveTo(player.deck);
+    MOVE_CARDS(store, state, player.hand, deckTop, { cards: selected, sourceCard: effect.trainerCard });
+    MOVE_CARDS(store, state, deckTop, player.deck, { sourceCard: effect.trainerCard });
 
-    player.deck.moveTo(player.hand, selectedLength);
+    MOVE_CARDS(store, state, player.deck, player.hand, { count: selectedLength, sourceCard: effect.trainerCard });
   });
 }
 

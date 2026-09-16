@@ -1,6 +1,7 @@
 import { Card, CardList, ChooseCardsPrompt, GameError, GameMessage, ShowCardsPrompt, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class WonderPlatinum extends TrainerCard {
 
@@ -45,14 +46,13 @@ export class WonderPlatinum extends TrainerCard {
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       // state = store.prompt(state, new ChoosePrizePrompt(
       //   player.id,
       //   GameMessage.CHOOSE_POKEMON,
       //   { count: 1, blocked: blocked, allowCancel: true },
       // ), chosenPrize => {
-
 
       const allPrizeCards = new CardList();
       player.prizes.forEach(prizeList => {
@@ -90,8 +90,8 @@ export class WonderPlatinum extends TrainerCard {
         }
 
         if (chosenPrizeList) {
-          chosenPrizeList.moveCardTo(prizePokemon, hand);
-          player.supporter.moveCardTo(heavyBall, chosenPrizeList);
+          MOVE_CARDS(store, state, chosenPrizeList, hand, { cards: [prizePokemon], sourceCard: this });
+          MOVE_CARDS(store, state, player.supporter, chosenPrizeList, { cards: [heavyBall], sourceCard: this });
         }
 
         player.prizes.forEach(p => { p.isSecret = true; });

@@ -10,6 +10,7 @@ import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effect
 import { Effect } from '../../../game/store/effects/effect';
 import { AttachEnergyEffect, TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class NsResolve extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -52,7 +53,7 @@ export class NsResolve extends TrainerCard {
 
       // Discard top 6 cards
       const deckTop = new CardList();
-      player.deck.moveTo(deckTop, Math.min(6, player.deck.cards.length));
+      MOVE_CARDS(store, state, player.deck, deckTop, { count: Math.min(6, player.deck.cards.length), sourceCard: this });
 
       // Find basic energy cards in the discarded cards
       const basicEnergies = deckTop.cards.filter(c =>
@@ -63,11 +64,11 @@ export class NsResolve extends TrainerCard {
       const nonEnergies = deckTop.cards.filter(c =>
         !(c instanceof EnergyCard && c.energyType === EnergyType.BASIC)
       );
-      nonEnergies.forEach(c => deckTop.moveCardTo(c, player.discard));
+      nonEnergies.forEach(c => MOVE_CARDS(store, state, deckTop, player.discard, { cards: [c], sourceCard: this }));
 
       if (basicEnergies.length === 0 || !hasDragonBench) {
         // Move remaining energy cards to discard too
-        deckTop.moveTo(player.discard);
+        MOVE_CARDS(store, state, deckTop, player.discard, { sourceCard: this });
         return state;
       }
 
@@ -84,11 +85,11 @@ export class NsResolve extends TrainerCard {
           basicEnergies.forEach(energyCard => {
             const attachEffect = new AttachEnergyEffect(player, energyCard as EnergyCard, target);
             store.reduceEffect(state, attachEffect);
-            deckTop.moveCardTo(energyCard, target);
+            MOVE_CARDS(store, state, deckTop, target, { cards: [energyCard], sourceCard: this });
           });
         }
         // Move any remaining cards to discard
-        deckTop.moveTo(player.discard);
+        MOVE_CARDS(store, state, deckTop, player.discard, { sourceCard: this });
       });
     }
 

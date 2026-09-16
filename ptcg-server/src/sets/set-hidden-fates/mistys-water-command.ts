@@ -7,6 +7,7 @@ import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { GameMessage, MoveEnergyPrompt, PlayerType, SlotType, StoreLike, State, StateUtils, CardTarget } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class MistysWaterCommand extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -79,7 +80,7 @@ export class MistysWaterCommand extends TrainerCard {
         for (const transfer of transfers) {
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);
-          source.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, source, target, { cards: [transfer.card], sourceCard: this });
         }
       });
     }

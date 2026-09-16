@@ -11,6 +11,7 @@ import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class ProfessorsLetter extends TrainerCard {
 
@@ -42,7 +43,7 @@ export class ProfessorsLetter extends TrainerCard {
       }
 
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       let cards: Card[] = [];
       store.prompt(state, new ChooseCardsPrompt(
@@ -62,8 +63,7 @@ export class ProfessorsLetter extends TrainerCard {
           ), () => { });
         }
 
-        player.deck.moveCardsTo(cards, player.hand);
-
+        MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
 
         store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

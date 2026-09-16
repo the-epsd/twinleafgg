@@ -6,7 +6,7 @@ import { Effect } from '../../../game/store/effects/effect';
 
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class GalarianMeowth extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -80,8 +80,7 @@ export class GalarianMeowth extends PokemonCard {
       ), selected => {
         cards = selected || [];
 
-
-        player.hand.moveCardsTo(cards, player.discard);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
 
         store.prompt(state, new ChooseCardsPrompt(
           player,
@@ -91,7 +90,7 @@ export class GalarianMeowth extends PokemonCard {
           { min: 1, max: 1, allowCancel: true }
         ), selected => {
           cards = selected || [];
-          player.deck.moveCardsTo(cards, player.hand);
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
 
           store.prompt(state, new ShowCardsPrompt(
             opponent.id,

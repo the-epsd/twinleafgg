@@ -101,7 +101,6 @@ export class RocketsWobbuffet extends PokemonCard {
               (selected) => {
                 cards = selected || [];
 
-
                 MOVE_CARDS(store, state, player.discard, player.hand, { cards });
               },
             );

@@ -18,7 +18,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: TMMachi
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
 
   const blocked: number[] = [];
   player.deck.cards.forEach((c, index) => {
@@ -39,7 +39,6 @@ function* playCard(next: Function, store: StoreLike, state: State, self: TMMachi
     next();
   });
 
-
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
       opponent.id,
@@ -49,7 +48,6 @@ function* playCard(next: Function, store: StoreLike, state: State, self: TMMachi
   }
 
   MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
-
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
@@ -81,7 +79,6 @@ export class TMMachine extends TrainerCard {
     }
     return true;
   }
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

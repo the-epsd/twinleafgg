@@ -9,6 +9,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardType, SuperType } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class ArchiesAceInTheHole extends TrainerCard {
 
@@ -48,7 +49,7 @@ export class ArchiesAceInTheHole extends TrainerCard {
       // It is not possible to recover Water Pokemon,
       // but we can still draw 5 cards
       if (!hasPokemon || slot === undefined) {
-        player.deck.moveTo(player.hand, 5);
+        MOVE_CARDS(store, state, player.deck, player.hand, { count: 5, sourceCard: this });
         return state;
       }
 
@@ -60,9 +61,9 @@ export class ArchiesAceInTheHole extends TrainerCard {
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         const cards = selected || [];
-        player.discard.moveCardsTo(cards, slot);
+        MOVE_CARDS(store, state, player.discard, slot, { cards: cards, sourceCard: this });
         slot.pokemonPlayedTurn = state.turn;
-        player.deck.moveTo(player.hand, 5);
+        MOVE_CARDS(store, state, player.deck, player.hand, { count: 5, sourceCard: this });
       });
     }
 

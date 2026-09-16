@@ -7,7 +7,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, ConfirmPrompt, ShuffleDeckPrompt, ShowCardsPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
+import {DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class PeekingRedCard extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -45,7 +45,7 @@ export class PeekingRedCard extends TrainerCard {
 
             // Shuffle opponent's hand into deck
             const cards = opponent.hand.cards.slice();
-            opponent.hand.moveCardsTo(cards, opponent.deck);
+            MOVE_CARDS(store, state, opponent.hand, opponent.deck, { cards: cards, sourceCard: this });
 
             store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
               opponent.deck.applyOrder(order);

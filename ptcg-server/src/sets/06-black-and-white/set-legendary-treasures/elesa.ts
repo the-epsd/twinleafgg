@@ -7,7 +7,7 @@ import { TrainerType, SuperType } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, GameError } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import { SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 
 export class Elesa extends TrainerCard {
@@ -33,7 +33,7 @@ export class Elesa extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       const toolCount = player.deck.cards.filter(c =>
         c instanceof TrainerCard && c.trainerType === TrainerType.TOOL
@@ -59,7 +59,7 @@ export class Elesa extends TrainerCard {
         selected = selected || [];
         if (selected.length > 0) {
           SHOW_CARDS_TO_PLAYER(store, state, opponent, selected);
-          player.deck.moveCardsTo(selected, player.hand);
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards: selected, sourceCard: this });
         }
 
         SHUFFLE_DECK(store, state, player);

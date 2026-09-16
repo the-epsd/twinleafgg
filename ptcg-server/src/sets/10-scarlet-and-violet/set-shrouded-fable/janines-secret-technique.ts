@@ -7,7 +7,7 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { AttachEnergyPrompt, GameError, Player, StateUtils, pokemonHasCardType } from '../../../game';
-import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class JaninesSecretTechnique extends TrainerCard {
 
@@ -28,7 +28,6 @@ export class JaninesSecretTechnique extends TrainerCard {
   public text: string =
     'Choose up to 2 of your [D] Pokémon. For each of those Pokémon, search your deck for a Basic [D] Energy card and attach it to that Pokémon. Then, shuffle your deck. If you attached Energy to your Active Pokémon in this way, it is now Poisoned.';
 
-
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     if (player.supporterTurn > 0) {
       return false;
@@ -45,7 +44,6 @@ export class JaninesSecretTechnique extends TrainerCard {
     return true;
   }
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -57,7 +55,7 @@ export class JaninesSecretTechnique extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -108,7 +106,7 @@ export class JaninesSecretTechnique extends TrainerCard {
 
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.deck.moveCardTo(transfer.card, target);
+          MOVE_CARDS(store, state, player.deck, target, { cards: [transfer.card], sourceCard: this });
 
           if (target == player.active) {
             player.active.addSpecialCondition(SpecialCondition.POISONED);
@@ -117,7 +115,6 @@ export class JaninesSecretTechnique extends TrainerCard {
         }
         SHUFFLE_DECK(store, state, player);
       });
-
 
     }
     return state;
