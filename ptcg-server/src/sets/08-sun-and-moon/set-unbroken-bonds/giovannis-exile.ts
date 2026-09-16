@@ -7,7 +7,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType, GameError, CardTarget } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { MOVE_POKEMON_OFF_BOARD } from '../../../game/store/prefabs/prefabs';
 
 export class GiovannisExile extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -51,11 +51,10 @@ export class GiovannisExile extends TrainerCard {
       ), selected => {
         if (selected && selected.length > 0) {
           selected.forEach(target => {
-            // Discard all cards from the bench slot (tools + cards)
-            const tools = target.tools.slice();
-            tools.forEach(t => { MOVE_CARDS(store, state, target, player.discard, { cards: [t], sourceCard: this }); });
-            MOVE_CARDS(store, state, target, player.discard, { sourceCard: this });
-            target.clearEffects();
+            MOVE_POKEMON_OFF_BOARD(store, state, target, {
+              pokemonDestination: player.discard,
+              sourceCard: this,
+            });
           });
         }
       });

@@ -10,7 +10,7 @@ import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { Player } from '../../../game/store/state/player';
 import { StateUtils } from '../../../game/store/state-utils';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { MOVE_POKEMON_OFF_BOARD } from '../../../game/store/prefabs/prefabs';
 
 function pickUpBenchedPokemon(next: Function, store: StoreLike, state: State, player: Player, sourceCard: TrainerCard): State {
   return store.prompt(state, new ChoosePokemonPrompt(
@@ -21,8 +21,10 @@ function pickUpBenchedPokemon(next: Function, store: StoreLike, state: State, pl
     { allowCancel: false }
   ), selection => {
     const cardList = selection[0];
-    MOVE_CARDS(store, state, cardList, player.hand, { sourceCard });
-    cardList.clearEffects();
+    MOVE_POKEMON_OFF_BOARD(store, state, cardList, {
+      pokemonDestination: player.hand,
+      sourceCard,
+    });
     next();
   });
 }

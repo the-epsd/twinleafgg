@@ -1,6 +1,6 @@
 import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
-import { BoardEffect, CardTag, CardType, SpecialCondition, SuperType } from '../card/card-types';
+import { CardTag, CardType, SpecialCondition, SuperType } from '../card/card-types';
 import { PokemonCard, getPrimaryCardType } from '../card/pokemon-card';
 import { Power, PowerType, Resistance, Weakness } from '../card/pokemon-types';
 import { ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect } from '../effects/attack-effects';
@@ -108,13 +108,33 @@ function applyWeaknessAndResistance(
   return (damage * multiply) + modifier;
 }
 
+/**
+ * Fully reset a board slot after its Pokémon leave play.
+ * Attachments must already have been moved off the slot before calling this.
+ */
 function resetEmptyPokemonSlot(slot: PokemonCardList): void {
+  slot.removeAttackEffects();
   slot.clearEffects();
   slot.damage = 0;
+  slot.hp = 0;
   slot.specialConditions = [];
+  slot.poisonDamage = 10;
+  slot.burnDamage = 20;
+  slot.confusionDamage = 30;
   slot.marker.markers = [];
   slot.tools = [];
-  slot.removeBoardEffect(BoardEffect.ABILITY_USED);
+  slot.boardEffect = [];
+  slot.abilityLockActivationOrder = 0;
+  slot.pokemonPlayedTurn = 0;
+  slot.hpBonus = 0;
+  slot.attacksThisTurn = undefined;
+  slot.stadium = undefined;
+  slot.sleepFlips = 1;
+  slot.showAllStageAbilities = false;
+  slot.triggerEvolutionAnimation = false;
+  slot.showBasicAnimation = false;
+  slot.triggerAttackAnimation = false;
+  slot.isActivatingCard = false;
 }
 
 function* useAttack(next: Function, store: StoreLike, state: State, effect: UseAttackEffect | AttackEffect): IterableIterator<State> {
@@ -919,10 +939,35 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
       }
     }
 
-    // Discard orphan attachments when no Pokemon remain in the slot.
+    // Salvage orphan attachments when no Pokemon remain in the slot.
+    // Tools live in tools[] (not cards[]), so they must be moved explicitly
+    // before resetEmptyPokemonSlot wipes the array.
     if (source instanceof PokemonCardList && source.getPokemons().length === 0) {
       const player = StateUtils.findOwner(state, source);
-      source.moveTo(player.discard);
+
+      // Remaining cards/energies → discard (Prism Star → lost zone)
+      if (source.cards.length > 0) {
+        const toLostZone = source.cards.filter(card => card.tags && card.tags.includes(CardTag.PRISM_STAR));
+        const toDiscard = source.cards.filter(card => !(card.tags && card.tags.includes(CardTag.PRISM_STAR)));
+        if (toLostZone.length > 0) {
+          source.moveCardsTo(toLostZone, player.lostzone);
+        }
+        if (toDiscard.length > 0) {
+          source.moveCardsTo(toDiscard, player.discard);
+        }
+      }
+      if (source.energies && source.energies.cards.length > 0) {
+        source.energies.cards = [];
+      }
+
+      // Remaining tools → discard (Prism Star → lost zone)
+      for (const tool of [...source.tools]) {
+        if (tool.tags && tool.tags.includes(CardTag.PRISM_STAR)) {
+          source.moveCardTo(tool, player.lostzone);
+        } else {
+          source.moveCardTo(tool, player.discard);
+        }
+      }
     }
 
     // In-play state (damage, special conditions, etc.) lives on the slot, not on cards.

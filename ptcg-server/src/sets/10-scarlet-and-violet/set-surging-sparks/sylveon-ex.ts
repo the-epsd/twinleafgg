@@ -86,8 +86,6 @@ export class Sylveonex extends PokemonCard {
           player.marker.addMarker(this.ANGELITE_MARKER, this);
 
           targets.forEach((target) => {
-            target.clearEffects();
-            target.damage = 0;
             MOVE_CARDS(store, state, target, opponent.deck, { sourceCard: this });
 
             return store.prompt(state, new ShuffleDeckPrompt(opponent.id), (order) => {

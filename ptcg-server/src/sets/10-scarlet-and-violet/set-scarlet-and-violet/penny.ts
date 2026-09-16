@@ -7,8 +7,8 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
-import { GameError, Player, PokemonCard } from '../../../game';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { GameError, Player } from '../../../game';
+import { MOVE_CARDS, MOVE_POKEMON_OFF_BOARD } from '../../../game/store/prefabs/prefabs';
 export class Penny extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -88,30 +88,10 @@ export class Penny extends TrainerCard {
       ), result => {
         const cardList = result.length > 0 ? result[0] : null;
         if (cardList !== null) {
-          const pokemons = cardList.getPokemons();
-          const otherCards = cardList.cards.filter(card =>
-            !(card instanceof PokemonCard) &&
-            !pokemons.includes(card as PokemonCard) &&
-            (!cardList.tools || !cardList.tools.includes(card))
-          );
-          const tools = [...cardList.tools];
-
-          // Move other cards to hand
-          if (otherCards.length > 0) {
-            MOVE_CARDS(store, state, cardList, player.hand, { cards: otherCards });
-          }
-
-          // Move tools to hand explicitly
-          if (tools.length > 0) {
-            for (const tool of tools) {
-              MOVE_CARDS(store, state, cardList, player.hand, { cards: [tool], sourceCard: this });
-            }
-          }
-
-          // Move Pokémon to hand
-          if (pokemons.length > 0) {
-            MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
-          }
+          MOVE_POKEMON_OFF_BOARD(store, state, cardList, {
+            pokemonDestination: player.hand,
+            sourceCard: this,
+          });
         }
       });
     }

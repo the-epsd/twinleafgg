@@ -13,7 +13,7 @@ import {
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, MOVE_POKEMON_OFF_BOARD } from '../../../game/store/prefabs/prefabs';
 
 export class Volo extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -79,10 +79,10 @@ export class Volo extends TrainerCard {
         (result) => {
           const cardList = result.length > 0 ? result[0] : null;
           if (cardList !== null) {
-            const pokemons = cardList.getPokemons();
-            MOVE_CARDS(store, state, cardList, player.discard, { cards: pokemons, sourceCard: this });
-            MOVE_CARDS(store, state, cardList, player.discard, { sourceCard: this });
-            cardList.clearEffects();
+            MOVE_POKEMON_OFF_BOARD(store, state, cardList, {
+              pokemonDestination: player.discard,
+              sourceCard: this,
+            });
           }
         },
       );

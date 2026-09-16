@@ -2,10 +2,13 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import {ADD_CONFUSION_TO_PLAYER_ACTIVE,
+import {
+  ADD_CONFUSION_TO_PLAYER_ACTIVE,
   AFTER_ATTACK,
   BLOCK_IF_GX_ATTACK_USED,
-  WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+  WAS_ATTACK_USED,
+  MOVE_POKEMON_OFF_BOARD,
+} from '../../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
@@ -89,13 +92,10 @@ export class ShiftryGx extends PokemonCard {
         ),
         (selection) => {
           selection.forEach((r) => {
-            // Move tools to deck first (moveTo doesn't handle tools)
-            const tools = r.tools.slice();
-            tools.forEach((tool) => {
-              MOVE_CARDS(store, state, r, opponent.deck, { cards: [tool], sourceCard: this });
+            MOVE_POKEMON_OFF_BOARD(store, state, r, {
+              pokemonDestination: opponent.deck,
+              sourceCard: this,
             });
-            MOVE_CARDS(store, state, r, opponent.deck, { sourceCard: this });
-            r.clearEffects();
           });
 
           store.prompt(state, new ShuffleDeckPrompt(opponent.id), (order) => {

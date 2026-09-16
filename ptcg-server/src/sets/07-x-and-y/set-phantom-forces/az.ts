@@ -7,8 +7,8 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
-import { GameError, PokemonCard } from '../../../game';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { GameError } from '../../../game';
+import { MOVE_CARDS, MOVE_POKEMON_OFF_BOARD } from '../../../game/store/prefabs/prefabs';
 
 export class AZ extends TrainerCard {
 
@@ -51,30 +51,11 @@ export class AZ extends TrainerCard {
       ), result => {
         const cardList = result.length > 0 ? result[0] : null;
         if (cardList !== null) {
-          const pokemons = cardList.getPokemons();
-          const otherCards = cardList.cards.filter(card =>
-            !(card instanceof PokemonCard) &&
-            !pokemons.includes(card as PokemonCard) &&
-            (!cardList.tools || !cardList.tools.includes(card))
-          );
-          const tools = [...cardList.tools];
-
-          // Move tools to discard first
-          if (tools.length > 0) {
-            for (const tool of tools) {
-              MOVE_CARDS(store, state, cardList, player.discard, { cards: [tool], sourceCard: this });
-            }
-          }
-
-          // Move other cards to discard
-          if (otherCards.length > 0) {
-            MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
-          }
-
-          // Move Pokémon to hand
-          if (pokemons.length > 0) {
-            MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
-          }
+          MOVE_POKEMON_OFF_BOARD(store, state, cardList, {
+            pokemonDestination: player.hand,
+            attachedDestination: player.discard,
+            sourceCard: this,
+          });
         }
       });
     }

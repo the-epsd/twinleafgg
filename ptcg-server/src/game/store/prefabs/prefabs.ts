@@ -1860,6 +1860,69 @@ export function MOVE_CARDS(
   return store.reduceEffect(state, new MoveCardsEffect(source, destination, options));
 }
 
+/**
+ * Move a Pokémon (and its attachments) off a board slot.
+ * When `attachedDestination` differs from `pokemonDestination`, attachments go to
+ * the attached destination first, then Pokémon move to their destination.
+ * Slot cleanup (damage, markers, tools array, etc.) is handled by MoveCardsEffect
+ * when the slot is vacated — callers should not manually clearEffects/damage=0.
+ */
+export function MOVE_POKEMON_OFF_BOARD(
+  store: StoreLike,
+  state: State,
+  slot: PokemonCardList,
+  options: {
+    pokemonDestination: CardList;
+    attachedDestination?: CardList;
+    sourceCard?: Card;
+    sourceEffect?: any;
+  },
+): State {
+  const pokemonDestination = options.pokemonDestination;
+  const attachedDestination = options.attachedDestination ?? pokemonDestination;
+  const sourceCard = options.sourceCard;
+  const sourceEffect = options.sourceEffect;
+
+  // Same destination: full-stack move handles tools + slot reset in the engine.
+  if (attachedDestination === pokemonDestination) {
+    return MOVE_CARDS(store, state, slot, pokemonDestination, { sourceCard, sourceEffect });
+  }
+
+  const pokemons = slot.getPokemons();
+  const tools = [...slot.tools];
+  const otherCards = slot.cards.filter(
+    card =>
+      !(card instanceof PokemonCard) &&
+      !pokemons.includes(card as PokemonCard) &&
+      !tools.includes(card),
+  );
+
+  // Attachments first so vacating via Pokémon move does not orphan them.
+  if (otherCards.length > 0) {
+    state = MOVE_CARDS(store, state, slot, attachedDestination, {
+      cards: otherCards,
+      sourceCard,
+      sourceEffect,
+    });
+  }
+  for (const tool of tools) {
+    state = MOVE_CARDS(store, state, slot, attachedDestination, {
+      cards: [tool],
+      sourceCard,
+      sourceEffect,
+    });
+  }
+  if (pokemons.length > 0) {
+    state = MOVE_CARDS(store, state, slot, pokemonDestination, {
+      cards: pokemons,
+      sourceCard,
+      sourceEffect,
+    });
+  }
+
+  return state;
+}
+
 export function MOVE_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, cards: Card[]) {
   cards.forEach((card, index) => {
     player.deck.moveCardTo(card, player.hand);

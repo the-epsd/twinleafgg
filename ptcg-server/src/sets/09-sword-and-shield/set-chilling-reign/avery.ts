@@ -4,9 +4,8 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { Card, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../../game';
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../../game';
+import { DRAW_CARDS, MOVE_CARDS, MOVE_POKEMON_OFF_BOARD } from '../../../game/store/prefabs/prefabs';
 
 //Avery is not done yet!! have to add the "remove from bench" logic
 
@@ -66,29 +65,10 @@ export class Avery extends TrainerCard {
           }
         ), (selected: any[]): State => {
           selected.forEach((cardList: any) => {
-            // Separate pokemons, other cards, and tools
-            const pokemons = cardList.getPokemons();
-            const otherCards = cardList.cards.filter((card: Card) =>
-              !(card instanceof PokemonCard) &&
-              !pokemons.includes(card as PokemonCard) &&
-              (!cardList.tools || !cardList.tools.includes(card))
-            );
-            const tools = [...cardList.tools];
-
-            // Move other cards to discard using MOVE_CARDS
-            if (otherCards.length > 0) {
-              MOVE_CARDS(store, state, cardList, opponent.discard, { cards: otherCards });
-            }
-
-            // Move tools to discard using MOVE_CARDS
-            if (tools.length > 0) {
-              MOVE_CARDS(store, state, cardList, opponent.discard, { cards: tools });
-            }
-
-            // Move Pokémon to discard using MOVE_CARDS
-            if (pokemons.length > 0) {
-              MOVE_CARDS(store, state, cardList, opponent.discard, { cards: pokemons });
-            }
+            MOVE_POKEMON_OFF_BOARD(store, state, cardList, {
+              pokemonDestination: opponent.discard,
+              sourceCard: this,
+            });
           });
           return state;
         });
@@ -101,4 +81,3 @@ export class Avery extends TrainerCard {
     return state;
   }
 }
-

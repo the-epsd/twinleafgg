@@ -17,6 +17,7 @@ import { Player } from '../../../game/store/state/player';
 import {
   BLOCK_IF_GX_ATTACK_USED,
   MOVE_CARDS,
+  MOVE_POKEMON_OFF_BOARD,
   PLAY_POKEMON_FROM_HAND_TO_BENCH,
   WAS_ATTACK_USED,
   WAS_POWER_USED,
@@ -128,31 +129,10 @@ export class GreninjaGX extends PokemonCard {
         (result) => {
           const cardList = result.length > 0 ? result[0] : null;
           if (cardList !== null) {
-            const pokemons = cardList.getPokemons();
-            const otherCards = cardList.cards.filter(
-              (card) =>
-                !(card instanceof PokemonCard) &&
-                !pokemons.includes(card as PokemonCard) &&
-                (!cardList.tools || !cardList.tools.includes(card)),
-            );
-            const tools = [...cardList.tools];
-
-            // Move other cards to hand
-            if (otherCards.length > 0) {
-              MOVE_CARDS(store, state, cardList, opponent.hand, { cards: otherCards });
-            }
-
-            // Move tools to hand
-            if (tools.length > 0) {
-              for (const tool of tools) {
-                MOVE_CARDS(store, state, cardList, opponent.hand, { cards: [tool], sourceCard: this });
-              }
-            }
-
-            // Move Pokémon to hand
-            if (pokemons.length > 0) {
-              MOVE_CARDS(store, state, cardList, opponent.hand, { cards: pokemons });
-            }
+            MOVE_POKEMON_OFF_BOARD(store, state, cardList, {
+              pokemonDestination: opponent.hand,
+              sourceCard: this,
+            });
           }
         },
       );
