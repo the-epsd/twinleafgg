@@ -9,6 +9,7 @@ import { ChooseCardsPrompt } from '../prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../prompts/shuffle-prompt';
 import { canPlayDualStadium } from '../dual-stadium-utils';
+import { getOverriddenCanPlay } from '../card/card-effect-overrides';
 import { StateUtils } from '../state-utils';
 import { Player } from '../state/player';
 import { State, GamePhase } from '../state/state';
@@ -301,11 +302,15 @@ export function CAN_PLAY_TRAINER_CARD(
       }
     }
 
-    // Rely on canPlay method for card-specific validation
-    if (trainerCard.canPlay) {
-      const canPlayResult = trainerCard.canPlay(store, state, player);
+    // Prefer format-overridden canPlay (same print routing as reduceEffect), then instance canPlay
+    const format = state.gameSettings?.format ?? Format.NONE;
+    const canPlayFn =
+      getOverriddenCanPlay(trainerCard, format) ??
+      (trainerCard.canPlay ? trainerCard.canPlay.bind(trainerCard) : undefined);
+    if (canPlayFn) {
+      const canPlayResult = canPlayFn(store, state, player);
       if (canPlayResult !== undefined) {
-        return canPlayResult; // Use canPlay result
+        return canPlayResult;
       }
     }
 
