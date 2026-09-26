@@ -10,7 +10,12 @@ import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   if (player.deck.cards.length === 0) {
@@ -20,22 +25,27 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const deckTop = new CardList();
   MOVE_CARDS(store, state, player.deck, deckTop, { count: 2, sourceCard: effect.trainerCard });
 
-  return store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    deckTop,
-    {},
-    { min: 1, max: 1, allowCancel: false }
-  ), selected => {
-    MOVE_CARDS(store, state, deckTop, player.hand, { cards: selected, sourceCard: effect.trainerCard });
-    MOVE_CARDS(store, state, deckTop, player.deck, { sourceCard: effect.trainerCard });
-
-  });
+  return store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      deckTop,
+      {},
+      { min: 1, max: 1, allowCancel: false },
+    ),
+    (selected) => {
+      MOVE_CARDS(store, state, deckTop, player.hand, {
+        cards: selected,
+        sourceCard: effect.trainerCard,
+      });
+      MOVE_CARDS(store, state, deckTop, player.deck, { sourceCard: effect.trainerCard });
+    },
+  );
 }
 
 export class PokedexHandy extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'DP';
 
@@ -59,5 +69,4 @@ export class PokedexHandy extends TrainerCard {
 
     return state;
   }
-
 }

@@ -8,7 +8,7 @@ import { GameError, GameMessage, SelectPrompt, StateUtils } from '../../../game'
 import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Dan extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'RCL';
   public name: string = 'Dan';
   public fullName: string = 'Dan RCL';
@@ -32,46 +32,57 @@ export class Dan extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
+      MOVE_CARDS(store, state, player.hand, player.supporter, {
+        cards: [effect.trainerCard],
+        sourceCard: this,
+      });
 
       DRAW_CARDS(store, state, player, 2);
 
       const options = [
         { value: 'Rock', message: 'Rock' },
         { value: 'Paper', message: 'Paper' },
-        { value: 'Scissors', message: 'Scissors' }
+        { value: 'Scissors', message: 'Scissors' },
       ];
 
       // simultaneous prompt showing gaming
-      store.prompt(state, [
-        new SelectPrompt(
-          player.id, GameMessage.CHOOSE_OPTION,
-          options.map(c => c.message),
-          { allowCancel: false }
-        ),
-        new SelectPrompt(
-          opponent.id, GameMessage.CHOOSE_OPTION,
-          options.map(c => c.message),
-          { allowCancel: false }
-        ),
-      ], results => {
-        // variable time
-        const playerChosenValue = results[0];
-        const opponentChosenValue = results[1];
-        // if they tie, restart it
-        if (playerChosenValue === opponentChosenValue) { return this.reduceEffect(store, state, effect); }
+      store.prompt(
+        state,
+        [
+          new SelectPrompt(
+            player.id,
+            GameMessage.CHOOSE_OPTION,
+            options.map((c) => c.message),
+            { allowCancel: false },
+          ),
+          new SelectPrompt(
+            opponent.id,
+            GameMessage.CHOOSE_OPTION,
+            options.map((c) => c.message),
+            { allowCancel: false },
+          ),
+        ],
+        (results) => {
+          // variable time
+          const playerChosenValue = results[0];
+          const opponentChosenValue = results[1];
+          // if they tie, restart it
+          if (playerChosenValue === opponentChosenValue) {
+            return this.reduceEffect(store, state, effect);
+          }
 
-        // Gotta make the win conditions
-        if ((playerChosenValue === 1 && opponentChosenValue === 0)
-          || (playerChosenValue === 2 && opponentChosenValue === 1)
-          || (playerChosenValue === 0 && opponentChosenValue === 2)) {
-          DRAW_CARDS(store, state, player, 2);
-        }
-      });
-
+          // Gotta make the win conditions
+          if (
+            (playerChosenValue === 1 && opponentChosenValue === 0) ||
+            (playerChosenValue === 2 && opponentChosenValue === 1) ||
+            (playerChosenValue === 0 && opponentChosenValue === 2)
+          ) {
+            DRAW_CARDS(store, state, player, 2);
+          }
+        },
+      );
     }
 
     return state;
   }
-
 }

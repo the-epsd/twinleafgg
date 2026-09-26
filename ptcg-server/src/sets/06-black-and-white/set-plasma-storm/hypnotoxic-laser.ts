@@ -7,7 +7,11 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { StateUtils } from '../../../game/store/state-utils';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
-import {COIN_FLIP_PROMPT, TRAINER_TARGET_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import {
+  COIN_FLIP_PROMPT,
+  TRAINER_TARGET_BLOCKED,
+  MOVE_CARDS,
+} from '../../../game/store/prefabs/prefabs';
 
 function* playCard(
   next: Function,
@@ -27,7 +31,10 @@ function* playCard(
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
+  MOVE_CARDS(store, state, player.hand, player.supporter, {
+    cards: [effect.trainerCard],
+    sourceCard: effect.trainerCard,
+  });
 
   if (TRAINER_TARGET_BLOCKED(store, state, player, trainerCard, active)) {
     return state;
@@ -36,7 +43,7 @@ function* playCard(
   active.addSpecialCondition(SpecialCondition.POISONED);
 
   let coinResult: boolean = false;
-  yield COIN_FLIP_PROMPT(store, state, player, result => {
+  yield COIN_FLIP_PROMPT(store, state, player, (result) => {
     coinResult = result;
     next();
   });
@@ -50,14 +57,15 @@ function* playCard(
 }
 
 export class HypnotoxicLaser extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   protected _tags = [CardTag.TEAM_PLASMA];
   public set: string = 'PLS';
   public name: string = 'Hypnotoxic Laser';
   public fullName: string = 'Hypnotoxic Laser PLS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '123';
-  public text: string = "Your opponent's Active Pokemon is now Poisoned. Flip a coin. If heads, your opponent's Active Pokemon is also Asleep.";
+  public text: string =
+    "Your opponent's Active Pokemon is now Poisoned. Flip a coin. If heads, your opponent's Active Pokemon is also Asleep.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

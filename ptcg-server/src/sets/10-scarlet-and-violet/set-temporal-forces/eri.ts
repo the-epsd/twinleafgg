@@ -8,10 +8,9 @@ import { ChooseCardsPrompt, GameError, GameMessage, Player, StateUtils } from '.
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Eri extends TrainerCard {
-
   public regulationMark = 'H';
 
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'TEF';
 
@@ -44,27 +43,42 @@ export class Eri extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
+      MOVE_CARDS(store, state, player.hand, player.supporter, {
+        cards: [effect.trainerCard],
+        sourceCard: this,
+      });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        opponent.hand,
-        { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
-        { allowCancel: false, min: 0, max: 2 }
-      ), cards => {
-        if (cards === null || cards.length === 0) {
-          MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
-          return;
-        }
-        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
-        cards.forEach(card => {
-          MOVE_CARDS(store, state, opponent.hand, opponent.discard, { cards: [card], sourceCard: this });
-
-        });
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          opponent.hand,
+          { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
+          { allowCancel: false, min: 0, max: 2 },
+        ),
+        (cards) => {
+          if (cards === null || cards.length === 0) {
+            MOVE_CARDS(store, state, player.supporter, player.discard, {
+              cards: [this],
+              sourceCard: this,
+            });
+            return;
+          }
+          MOVE_CARDS(store, state, player.supporter, player.discard, {
+            cards: [this],
+            sourceCard: this,
+          });
+          cards.forEach((card) => {
+            MOVE_CARDS(store, state, opponent.hand, opponent.discard, {
+              cards: [card],
+              sourceCard: this,
+            });
+          });
+        },
+      );
     }
     return state;
   }

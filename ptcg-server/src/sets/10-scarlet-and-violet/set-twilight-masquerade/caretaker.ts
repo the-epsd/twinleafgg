@@ -10,10 +10,9 @@ import { Player, StateUtils } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Caretaker extends TrainerCard {
-
   public regulationMark = 'H';
 
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'TWM';
 
@@ -52,7 +51,10 @@ export class Caretaker extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
+      MOVE_CARDS(store, state, player.hand, player.supporter, {
+        cards: [effect.trainerCard],
+        sourceCard: this,
+      });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -62,9 +64,7 @@ export class Caretaker extends TrainerCard {
       if (stadiumCard !== undefined && stadiumCard.name === 'Community Center') {
         MOVE_CARDS(store, state, player.supporter, player.deck, { sourceCard: this });
       } else {
-
         MOVE_CARDS(store, state, player.supporter, player.discard, { sourceCard: this });
-
       }
 
       return state;

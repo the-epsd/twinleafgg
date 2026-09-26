@@ -7,8 +7,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game';
 
 export class PokemonRanger extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'STS';
 
@@ -20,9 +19,7 @@ export class PokemonRanger extends TrainerCard {
 
   public setNumber: string = '104';
 
-  public text: string =
-    'Remove all effects of attacks on each player and his ' +
-    'or her Pokémon.';
+  public text: string = 'Remove all effects of attacks on each player and his ' + 'or her Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

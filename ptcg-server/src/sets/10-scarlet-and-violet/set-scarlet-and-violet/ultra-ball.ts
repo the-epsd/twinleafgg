@@ -14,61 +14,73 @@ import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { Player } from '../../../game/store/state/player';
 
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: UltraBall, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: UltraBall,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
-  if (player.hand.cards.filter(c => c !== self).length < 2 || player.deck.cards.length === 0) {
+  if (player.hand.cards.filter((c) => c !== self).length < 2 || player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
   const handTemp = new CardList();
-  handTemp.cards = player.hand.cards.filter(c => c !== self);
+  handTemp.cards = player.hand.cards.filter((c) => c !== self);
 
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_DISCARD,
-    handTemp,
-    {},
-    { min: 2, max: 2, allowCancel: false }
-  ), selected => {
-    if (selected) {
-      MOVE_CARDS(store, state, player.hand, player.discard, { cards: selected });
-    }
-    next();
-  });
-
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    { superType: SuperType.POKEMON },
-    { min: 0, max: 1, allowCancel: false }
-  ), selected => {
-    if (selected && selected.length > 0) {
-      MOVE_CARDS(store, state, player.deck, player.hand, { cards: selected, sourceCard: self });
-
-      store.prompt(state, new ShowCardsPrompt(
-        opponent.id,
-        GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-        selected
-      ), () => next());
-    } else {
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DISCARD,
+      handTemp,
+      {},
+      { min: 2, max: 2, allowCancel: false },
+    ),
+    (selected) => {
+      if (selected) {
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards: selected });
+      }
       next();
-    }
-  });
+    },
+  );
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.deck,
+      { superType: SuperType.POKEMON },
+      { min: 0, max: 1, allowCancel: false },
+    ),
+    (selected) => {
+      if (selected && selected.length > 0) {
+        MOVE_CARDS(store, state, player.deck, player.hand, { cards: selected, sourceCard: self });
+
+        store.prompt(
+          state,
+          new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, selected),
+          () => next(),
+        );
+      } else {
+        next();
+      }
+    },
+  );
+
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
 }
 
 export class UltraBall extends TrainerCard {
-
   public regulationMark = 'G';
 
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'SVI';
 
@@ -80,14 +92,13 @@ export class UltraBall extends TrainerCard {
 
   public fullName: string = 'Ultra Ball SVI';
 
-  public text: string =
-    `You can use this card only if you discard 2 other cards from your hand.
+  public text: string = `You can use this card only if you discard 2 other cards from your hand.
 
 Search your deck for a Pokemon, reveal it, and put it into your hand. Then, shuffle your deck.`;
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     // Check if player has at least 2 other cards in hand (excluding Ultra Ball)
-    const otherCards = player.hand.cards.filter(c => c !== this);
+    const otherCards = player.hand.cards.filter((c) => c !== this);
     if (otherCards.length < 2) {
       return false;
     }
@@ -107,5 +118,4 @@ Search your deck for a Pokemon, reveal it, and put it into your hand. Then, shuf
     }
     return state;
   }
-
 }

@@ -14,8 +14,13 @@ import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { ShowCardsPrompt, StateUtils, Player } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: SuperRod, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: SuperRod,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
@@ -54,37 +59,40 @@ function* playCard(next: Function, store: StoreLike, state: State,
   effect.preventDefault = true;
 
   let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_DECK,
-    player.discard,
-    {},
-    { min: 1, max: 3, allowCancel: false, blocked }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DECK,
+      player.discard,
+      {},
+      { min: 1, max: 3, allowCancel: false, blocked },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   if (cards.length > 0) {
-    yield store.prompt(state, new ShowCardsPrompt(
-      opponent.id,
-      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-      cards
-    ), () => next());
+    yield store.prompt(
+      state,
+      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+      () => next(),
+    );
   }
 
   MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: self });
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
 }
 
 export class SuperRod extends TrainerCard {
-
   public regulationMark = 'G';
 
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'PAL';
 
@@ -101,8 +109,9 @@ export class SuperRod extends TrainerCard {
     'your discard pile back into your deck.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
-    const hasValidCards = player.discard.cards.some(c =>
-      c instanceof PokemonCard || (c instanceof EnergyCard && c.energyType === EnergyType.BASIC)
+    const hasValidCards = player.discard.cards.some(
+      (c) =>
+        c instanceof PokemonCard || (c instanceof EnergyCard && c.energyType === EnergyType.BASIC),
     );
     return hasValidCards;
   }
@@ -115,5 +124,4 @@ export class SuperRod extends TrainerCard {
 
     return state;
   }
-
 }

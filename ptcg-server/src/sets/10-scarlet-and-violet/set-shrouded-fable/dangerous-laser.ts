@@ -9,7 +9,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { TRAINER_TARGET_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class DangerousLaser extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   protected _tags = [CardTag.ACE_SPEC];
   public set: string = 'SFA';
   public cardImage: string = 'assets/cardback.png';

@@ -10,7 +10,12 @@ import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   if (player.deck.cards.length < 3) {
@@ -23,20 +28,26 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const deckBottom = new CardList();
   MOVE_CARDS(store, state, player.deck, deckBottom, { count: 3, sourceCard: effect.trainerCard });
 
-  return store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARDS_ORDER,
-    deckBottom,
-    {},
-    { min: 3, max: 3, allowCancel: false }
-  ), selected => {
-    MOVE_CARDS(store, state, deckBottom, player.deck, { cards: selected, sourceCard: effect.trainerCard });
-  });
+  return store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARDS_ORDER,
+      deckBottom,
+      {},
+      { min: 3, max: 3, allowCancel: false },
+    ),
+    (selected) => {
+      MOVE_CARDS(store, state, deckBottom, player.deck, {
+        cards: selected,
+        sourceCard: effect.trainerCard,
+      });
+    },
+  );
 }
 
 export class ExpeditionUniform extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'CRE';
 
@@ -61,5 +72,4 @@ export class ExpeditionUniform extends TrainerCard {
 
     return state;
   }
-
 }

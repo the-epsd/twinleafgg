@@ -4,13 +4,20 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { DamageMap, GameError, GameMessage, MoveDamagePrompt, PlayerType, SlotType, StateUtils } from '../../../game';
+import {
+  DamageMap,
+  GameError,
+  GameMessage,
+  MoveDamagePrompt,
+  PlayerType,
+  SlotType,
+  StateUtils,
+} from '../../../game';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class DamagePump extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'LOR';
 
@@ -54,38 +61,44 @@ export class DamagePump extends TrainerCard {
 
       effect.preventDefault = true;
 
-      return store.prompt(state, new MoveDamagePrompt(
-        effect.player.id,
-        GameMessage.MOVE_DAMAGE,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        maxAllowedDamage,
-        { min: 1, max: 2, allowCancel: false, blockedFrom: [], blockedTo: [] }
-      ), transfers => {
-        if (transfers === null) {
-          MOVE_CARDS(store, state, player.hand, player.discard, { cards: [effect.trainerCard], sourceCard: this });
-          return state;
-        }
-
-        let totalDamageMoved = 0;
-        for (const transfer of transfers) {
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          const target = StateUtils.getTarget(state, player, transfer.to);
-
-          const damageToMove = Math.min(20 - totalDamageMoved, Math.min(10, source.damage));
-          if (damageToMove > 0) {
-            source.damage -= damageToMove;
-            target.damage += damageToMove;
-            totalDamageMoved += damageToMove;
+      return store.prompt(
+        state,
+        new MoveDamagePrompt(
+          effect.player.id,
+          GameMessage.MOVE_DAMAGE,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          maxAllowedDamage,
+          { min: 1, max: 2, allowCancel: false, blockedFrom: [], blockedTo: [] },
+        ),
+        (transfers) => {
+          if (transfers === null) {
+            MOVE_CARDS(store, state, player.hand, player.discard, {
+              cards: [effect.trainerCard],
+              sourceCard: this,
+            });
+            return state;
           }
 
-          if (totalDamageMoved >= 20) break;
-        }
+          let totalDamageMoved = 0;
+          for (const transfer of transfers) {
+            const source = StateUtils.getTarget(state, player, transfer.from);
+            const target = StateUtils.getTarget(state, player, transfer.to);
 
-        return state;
-      });
+            const damageToMove = Math.min(20 - totalDamageMoved, Math.min(10, source.damage));
+            if (damageToMove > 0) {
+              source.damage -= damageToMove;
+              target.damage += damageToMove;
+              totalDamageMoved += damageToMove;
+            }
+
+            if (totalDamageMoved >= 20) break;
+          }
+
+          return state;
+        },
+      );
     }
     return state;
   }
-
 }

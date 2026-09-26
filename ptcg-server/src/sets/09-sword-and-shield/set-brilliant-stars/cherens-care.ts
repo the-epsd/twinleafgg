@@ -11,7 +11,12 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 import { pokemonHasCardType } from '../../../game';
 import { MOVE_CARDS, MOVE_POKEMON_OFF_BOARD } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   const supporterTurn = player.supporterTurn;
@@ -20,7 +25,10 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
-  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
+  MOVE_CARDS(store, state, player.hand, player.supporter, {
+    cards: [effect.trainerCard],
+    sourceCard: effect.trainerCard,
+  });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
@@ -40,26 +48,29 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  return store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.ACTIVE, SlotType.BENCH],
-    { min: 1, max: 1, allowCancel: true, blocked }
-  ), result => {
-    const cardList = result.length > 0 ? result[0] : null;
-    if (cardList !== null) {
-      MOVE_POKEMON_OFF_BOARD(store, state, cardList, {
-        pokemonDestination: player.hand,
-        sourceCard: effect.trainerCard,
-      });
-    }
-  });
+  return store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.ACTIVE, SlotType.BENCH],
+      { min: 1, max: 1, allowCancel: true, blocked },
+    ),
+    (result) => {
+      const cardList = result.length > 0 ? result[0] : null;
+      if (cardList !== null) {
+        MOVE_POKEMON_OFF_BOARD(store, state, cardList, {
+          pokemonDestination: player.hand,
+          sourceCard: effect.trainerCard,
+        });
+      }
+    },
+  );
 }
 
 export class CherensCare extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public regulationMark = 'F';
 
@@ -69,9 +80,9 @@ export class CherensCare extends TrainerCard {
 
   public setNumber: string = '134';
 
-  public name: string = 'Cheren\'s Care';
+  public name: string = "Cheren's Care";
 
-  public fullName: string = 'Cheren\'s Care BRS';
+  public fullName: string = "Cheren's Care BRS";
 
   public text: string =
     'Put 1 of your [C] Pokémon that has any damage counters on it and all attached cards into your hand.';
@@ -84,5 +95,4 @@ export class CherensCare extends TrainerCard {
 
     return state;
   }
-
 }

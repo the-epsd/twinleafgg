@@ -10,8 +10,7 @@ import { StateUtils } from '../../..';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Schoolgirl extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public regulationMark = 'E';
 
@@ -39,10 +38,12 @@ export class Schoolgirl extends TrainerCard {
 
       MOVE_CARDS(store, state, player.deck, player.hand, { count: 2, sourceCard: this });
 
-      if (opponent.getPrizeLeft() === 2 || opponent.getPrizeLeft() === 4 || opponent.getPrizeLeft() === 6) {
-
+      if (
+        opponent.getPrizeLeft() === 2 ||
+        opponent.getPrizeLeft() === 4 ||
+        opponent.getPrizeLeft() === 6
+      ) {
         MOVE_CARDS(store, state, player.deck, player.hand, { count: 2, sourceCard: this });
-
       }
 
       return state;

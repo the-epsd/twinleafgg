@@ -11,8 +11,7 @@ import { GameError } from '../../../game';
 import { MOVE_CARDS, MOVE_POKEMON_OFF_BOARD } from '../../../game/store/prefabs/prefabs';
 
 export class AZ extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'PHF';
 
@@ -25,8 +24,7 @@ export class AZ extends TrainerCard {
   public setNumber: string = '91';
 
   public text: string =
-    'Put 1 of your Pokemon into your hand. (Discard all cards attached ' +
-    'to that Pokemon.)';
+    'Put 1 of your Pokemon into your hand. (Discard all cards attached ' + 'to that Pokemon.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -38,29 +36,32 @@ export class AZ extends TrainerCard {
 
       // Move to supporter pile
       state = MOVE_CARDS(store, state, player.hand, player.supporter, {
-        cards: [effect.trainerCard]
+        cards: [effect.trainerCard],
       });
       effect.preventDefault = true;
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { allowCancel: false }
-      ), result => {
-        const cardList = result.length > 0 ? result[0] : null;
-        if (cardList !== null) {
-          MOVE_POKEMON_OFF_BOARD(store, state, cardList, {
-            pokemonDestination: player.hand,
-            attachedDestination: player.discard,
-            sourceCard: this,
-          });
-        }
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { allowCancel: false },
+        ),
+        (result) => {
+          const cardList = result.length > 0 ? result[0] : null;
+          if (cardList !== null) {
+            MOVE_POKEMON_OFF_BOARD(store, state, cardList, {
+              pokemonDestination: player.hand,
+              attachedDestination: player.discard,
+              sourceCard: this,
+            });
+          }
+        },
+      );
     }
 
     return state;
   }
-
 }

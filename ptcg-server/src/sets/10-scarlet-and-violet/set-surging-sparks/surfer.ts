@@ -9,8 +9,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Surfer extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'SSP';
 
@@ -36,7 +35,6 @@ export class Surfer extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
 
       const supporterTurn = player.supporterTurn;
@@ -45,32 +43,37 @@ export class Surfer extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
+      MOVE_CARDS(store, state, player.hand, player.supporter, {
+        cards: [effect.trainerCard],
+        sourceCard: this,
+      });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: false }
-      ), result => {
-        const cardList = result[0];
-        player.switchPokemon(cardList);
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { allowCancel: false },
+        ),
+        (result) => {
+          const cardList = result[0];
+          player.switchPokemon(cardList);
 
-        while (player.hand.cards.length < 5) {
-          if (player.deck.cards.length === 0) {
-            break;
+          while (player.hand.cards.length < 5) {
+            if (player.deck.cards.length === 0) {
+              break;
+            }
+            MOVE_CARDS(store, state, player.deck, player.hand, { count: 1, sourceCard: this });
           }
-          MOVE_CARDS(store, state, player.deck, player.hand, { count: 1, sourceCard: this });
-        }
 
-        return state;
-      });
-
+          return state;
+        },
+      );
     }
     return state;
   }
-
 }

@@ -13,7 +13,12 @@ import { GameMessage } from '../../../game/game-message';
 import { PokemonCard } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
@@ -33,23 +38,29 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     }
   }
 
-  yield store.prompt(state, [
-    new ShowCardsPrompt(player.id, GameMessage.CARDS_SHOWED_BY_EFFECT, cards),
-    new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards)
-  ], () => next());
+  yield store.prompt(
+    state,
+    [
+      new ShowCardsPrompt(player.id, GameMessage.CARDS_SHOWED_BY_EFFECT, cards),
+      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+    ],
+    () => next(),
+  );
 
   if (pokemon !== undefined) {
-    MOVE_CARDS(store, state, player.deck, player.hand, { cards: [pokemon], sourceCard: effect.trainerCard });
+    MOVE_CARDS(store, state, player.deck, player.hand, {
+      cards: [pokemon],
+      sourceCard: effect.trainerCard,
+    });
   }
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
 }
 
 export class QuickBall extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'MD';
 
@@ -62,10 +73,9 @@ export class QuickBall extends TrainerCard {
   public setNumber: string = '86';
 
   public text: string =
-    'Reveal cards from the top of your deck until you reveal a Pokémon. Show that Pokémon to your opponent and put it into your hand. Shuffle the other revealed cards back into your deck. (If you don\'t reveal a Pokémon, shuffle all revealed cards back into your deck.)';
+    "Reveal cards from the top of your deck until you reveal a Pokémon. Show that Pokémon to your opponent and put it into your hand. Shuffle the other revealed cards back into your deck. (If you don't reveal a Pokémon, shuffle all revealed cards back into your deck.)";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
@@ -73,5 +83,4 @@ export class QuickBall extends TrainerCard {
 
     return state;
   }
-
 }

@@ -5,7 +5,12 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   // if (player.deck.cards.length === 0) {
@@ -14,28 +19,37 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   const max = player.hand.cards.length;
 
-  return store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.hand,
-    {},
-    { min: 1, max: max, allowCancel: false }
-  ), selected => {
-    const selectedLength = selected.length;
-    const deckTop = new CardList();
+  return store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.hand,
+      {},
+      { min: 1, max: max, allowCancel: false },
+    ),
+    (selected) => {
+      const selectedLength = selected.length;
+      const deckTop = new CardList();
 
-    MOVE_CARDS(store, state, player.hand, deckTop, { cards: selected, sourceCard: effect.trainerCard });
-    MOVE_CARDS(store, state, deckTop, player.deck, { sourceCard: effect.trainerCard });
+      MOVE_CARDS(store, state, player.hand, deckTop, {
+        cards: selected,
+        sourceCard: effect.trainerCard,
+      });
+      MOVE_CARDS(store, state, deckTop, player.deck, { sourceCard: effect.trainerCard });
 
-    MOVE_CARDS(store, state, player.deck, player.hand, { count: selectedLength, sourceCard: effect.trainerCard });
-  });
+      MOVE_CARDS(store, state, player.deck, player.hand, {
+        count: selectedLength,
+        sourceCard: effect.trainerCard,
+      });
+    },
+  );
 }
 
 export class Caitlin extends TrainerCard {
-
   public regulationMark = 'E';
 
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'CRE';
 
@@ -58,5 +72,4 @@ export class Caitlin extends TrainerCard {
 
     return state;
   }
-
 }

@@ -8,8 +8,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Mars extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'UPR';
 
@@ -21,13 +20,10 @@ export class Mars extends TrainerCard {
 
   public fullName: string = 'Mars UPR';
 
-  public text: string =
-    'Draw 2 cards. If you do, discard a random card from your opponent\'s hand.';
+  public text: string = "Draw 2 cards. If you do, discard a random card from your opponent's hand.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
 
       const supporterTurn = player.supporterTurn;
@@ -40,7 +36,10 @@ export class Mars extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
+      MOVE_CARDS(store, state, player.hand, player.supporter, {
+        cards: [effect.trainerCard],
+        sourceCard: this,
+      });
       effect.preventDefault = true;
 
       MOVE_CARDS(store, state, player.deck, player.hand, { count: 2, sourceCard: this });
@@ -50,12 +49,13 @@ export class Mars extends TrainerCard {
       if (opponent.hand.cards.length > 0) {
         const randomIndex = Math.floor(Math.random() * opponent.hand.cards.length);
         const randomCard = opponent.hand.cards[randomIndex];
-        MOVE_CARDS(store, state, opponent.hand, opponent.discard, { cards: [randomCard], sourceCard: this });
+        MOVE_CARDS(store, state, opponent.hand, opponent.discard, {
+          cards: [randomCard],
+          sourceCard: this,
+        });
       }
-
     }
 
     return state;
   }
-
 }

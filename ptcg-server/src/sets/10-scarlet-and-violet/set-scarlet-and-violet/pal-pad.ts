@@ -11,10 +11,16 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { Player, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State, self: PalPad, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: PalPad,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
-  const hasSupporter = player.discard.cards.some(c => {
+  const hasSupporter = player.discard.cards.some((c) => {
     return c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER;
   });
 
@@ -24,51 +30,56 @@ function* playCard(next: Function, store: StoreLike, state: State, self: PalPad,
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
+  MOVE_CARDS(store, state, player.hand, player.supporter, {
+    cards: [effect.trainerCard],
+    sourceCard: self,
+  });
 
   let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_DECK,
-    player.discard,
-    { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-    { min: 0, max: 2, allowCancel: false }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DECK,
+      player.discard,
+      { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
+      { min: 0, max: 2, allowCancel: false },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   if (cards.length > 0) {
     MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: self });
     if (cards.length > 0) {
-      state = store.prompt(state, new ShowCardsPrompt(
-        opponent.id,
-        GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-        cards), () => state);
+      state = store.prompt(
+        state,
+        new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+        () => state,
+      );
     }
-
   }
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
 }
 
 export class PalPad extends TrainerCard {
-
   public regulationMark = 'G';
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'SVI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '182';
   public name: string = 'Pal Pad';
   public fullName: string = 'Pal Pad SVI';
 
-  public text: string =
-    'Shuffle up to 2 Supporter cards from your discard pile into your deck.';
+  public text: string = 'Shuffle up to 2 Supporter cards from your discard pile into your deck.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
-    const hasSupporter = player.discard.cards.some(c => {
+    const hasSupporter = player.discard.cards.some((c) => {
       return c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER;
     });
 

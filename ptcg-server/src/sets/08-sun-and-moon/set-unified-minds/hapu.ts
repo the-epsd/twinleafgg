@@ -8,8 +8,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Hapu extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'UNM';
 
@@ -21,10 +20,10 @@ export class Hapu extends TrainerCard {
 
   public fullName: string = 'Hapu UNM';
 
-  public text: string = 'Look at the top 6 cards of your deck and put 2 of them into your hand. Discard the other cards.';
+  public text: string =
+    'Look at the top 6 cards of your deck and put 2 of them into your hand. Discard the other cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
@@ -34,7 +33,10 @@ export class Hapu extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
+      MOVE_CARDS(store, state, player.hand, player.supporter, {
+        cards: [effect.trainerCard],
+        sourceCard: this,
+      });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -47,19 +49,21 @@ export class Hapu extends TrainerCard {
 
       const min = Math.min(2, deckTop.cards.length);
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        deckTop,
-        {},
-        { min, max: 2, allowCancel: false }
-      ), selected => {
-        MOVE_CARDS(store, state, deckTop, player.hand, { cards: selected, sourceCard: this });
-        MOVE_CARDS(store, state, deckTop, player.discard, { sourceCard: this });
-
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          deckTop,
+          {},
+          { min, max: 2, allowCancel: false },
+        ),
+        (selected) => {
+          MOVE_CARDS(store, state, deckTop, player.hand, { cards: selected, sourceCard: this });
+          MOVE_CARDS(store, state, deckTop, player.discard, { sourceCard: this });
+        },
+      );
     }
     return state;
   }
-
 }

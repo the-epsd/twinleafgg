@@ -11,8 +11,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class AcroBike extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'PRC';
 
@@ -36,25 +35,30 @@ export class AcroBike extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
+      MOVE_CARDS(store, state, player.hand, player.supporter, {
+        cards: [effect.trainerCard],
+        sourceCard: this,
+      });
 
       const deckTop = new CardList();
       MOVE_CARDS(store, state, player.deck, deckTop, { count: 2, sourceCard: this });
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        deckTop,
-        {},
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        MOVE_CARDS(store, state, deckTop, player.hand, { cards: selected, sourceCard: this });
-        MOVE_CARDS(store, state, deckTop, player.discard, { sourceCard: this });
-
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          deckTop,
+          {},
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          MOVE_CARDS(store, state, deckTop, player.hand, { cards: selected, sourceCard: this });
+          MOVE_CARDS(store, state, deckTop, player.discard, { sourceCard: this });
+        },
+      );
     }
 
     return state;
   }
-
 }

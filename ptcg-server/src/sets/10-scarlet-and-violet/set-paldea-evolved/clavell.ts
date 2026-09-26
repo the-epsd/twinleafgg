@@ -1,4 +1,16 @@
-import { Card, ChooseCardsPrompt, GameError, GameMessage, Player, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, State, StateUtils, StoreLike } from '../../../game';
+import {
+  Card,
+  ChooseCardsPrompt,
+  GameError,
+  GameMessage,
+  Player,
+  PokemonCard,
+  ShowCardsPrompt,
+  ShuffleDeckPrompt,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
 import { Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -6,8 +18,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Clavell extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'PAL';
 
@@ -33,7 +44,6 @@ export class Clavell extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -49,40 +59,48 @@ export class Clavell extends TrainerCard {
       player.deck.cards.forEach((c, index) => {
         // eslint-disable-next-line no-empty
         if (c instanceof PokemonCard && c.stage === Stage.BASIC && c.hp <= 120) {
-
         } else {
           blocked.push(index);
         }
       });
 
-      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
+      MOVE_CARDS(store, state, player.hand, player.supporter, {
+        cards: [effect.trainerCard],
+        sourceCard: this,
+      });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
       let cards: Card[] = [];
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        { superType: SuperType.POKEMON, stage: Stage.BASIC },
-        { min: 0, max: 3, allowCancel: false }
-      ), selectedCards => {
-        cards = selectedCards || [];
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.deck,
+          { superType: SuperType.POKEMON, stage: Stage.BASIC },
+          { min: 0, max: 3, allowCancel: false },
+        ),
+        (selectedCards) => {
+          cards = selectedCards || [];
 
-        MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
-        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
+          MOVE_CARDS(store, state, player.supporter, player.discard, {
+            cards: [this],
+            sourceCard: this,
+          });
 
-        state = store.prompt(state, new ShowCardsPrompt(
-          opponent.id,
-          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-          cards
-        ), () => {
-        });
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
-      });
+          state = store.prompt(
+            state,
+            new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+            () => {},
+          );
+          return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+            player.deck.applyOrder(order);
+          });
+        },
+      );
     }
 
     return state;

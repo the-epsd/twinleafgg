@@ -12,8 +12,13 @@ import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { EnergyCard, GameError, Player, PokemonCard, SuperType } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State,
-  self: NightlyStretcher, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  self: NightlyStretcher,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
@@ -41,34 +46,39 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
-
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.discard,
-    {},
-    { min: 0, max: 1, allowCancel: false, blocked, maxPokemons, maxEnergies }
-  ), selected => {
-    cards = selected || [];
-    next();
+  MOVE_CARDS(store, state, player.hand, player.supporter, {
+    cards: [effect.trainerCard],
+    sourceCard: self,
   });
+
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.discard,
+      {},
+      { min: 0, max: 1, allowCancel: false, blocked, maxPokemons, maxEnergies },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
 
   MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: self });
 
   if (cards.length > 0) {
-    yield store.prompt(state, new ShowCardsPrompt(
-      opponent.id,
-      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-      cards
-    ), () => next());
+    yield store.prompt(
+      state,
+      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+      () => next(),
+    );
   }
-
 }
 
 export class NightlyStretcher extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'SFA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '61';
@@ -80,8 +90,8 @@ export class NightlyStretcher extends TrainerCard {
     'Put a Pokémon or a Basic Energy card from your discard pile into your hand.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
-    const hasTarget = player.discard.cards.some(c =>
-      c instanceof PokemonCard || (c.superType === SuperType.ENERGY)
+    const hasTarget = player.discard.cards.some(
+      (c) => c instanceof PokemonCard || c.superType === SuperType.ENERGY,
     );
     if (!hasTarget) {
       return false;
@@ -90,7 +100,6 @@ export class NightlyStretcher extends TrainerCard {
   }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
@@ -111,5 +120,4 @@ export class NightlyStretcher extends TrainerCard {
 
     return state;
   }
-
 }

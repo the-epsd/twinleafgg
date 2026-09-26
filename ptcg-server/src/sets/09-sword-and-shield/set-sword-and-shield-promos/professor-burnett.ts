@@ -11,7 +11,12 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   let cards: Card[] = [];
 
@@ -21,7 +26,10 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
-  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
+  MOVE_CARDS(store, state, player.hand, player.supporter, {
+    cards: [effect.trainerCard],
+    sourceCard: effect.trainerCard,
+  });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
@@ -29,27 +37,33 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_DISCARD,
-    player.deck,
-    {},
-    { min: 1, max: 2, allowCancel: false }
-  ), selected => {
-    cards = selected || [];
-    next();
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DISCARD,
+      player.deck,
+      {},
+      { min: 1, max: 2, allowCancel: false },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
+
+  MOVE_CARDS(store, state, player.deck, player.discard, {
+    cards: cards,
+    sourceCard: effect.trainerCard,
   });
 
-  MOVE_CARDS(store, state, player.deck, player.discard, { cards: cards, sourceCard: effect.trainerCard });
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
 }
 
 export class ProfessorBurnet extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'SWSH';
 
@@ -64,11 +78,9 @@ export class ProfessorBurnet extends TrainerCard {
   public fullName: string = 'Professor Burnet SWSH';
 
   public text: string =
-    'Search your deck for up to 2 cards and discard them. ' +
-    'Then, shuffle your deck.';
+    'Search your deck for up to 2 cards and discard them. ' + 'Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
@@ -76,5 +88,4 @@ export class ProfessorBurnet extends TrainerCard {
 
     return state;
   }
-
 }

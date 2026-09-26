@@ -9,8 +9,7 @@ import { CardList, ChooseCardsPrompt, GameError } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class ColresssExperiment extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'LOR';
 
@@ -20,9 +19,9 @@ export class ColresssExperiment extends TrainerCard {
 
   public setNumber: string = '155';
 
-  public name: string = 'Colress\'s Experiment';
+  public name: string = "Colress's Experiment";
 
-  public fullName: string = 'Colress\'s Experiment LOR';
+  public fullName: string = "Colress's Experiment LOR";
 
   public text: string =
     'Look at the top 5 cards of your deck and put 3 of them into your hand. Put the other cards in the Lost Zone.';
@@ -41,29 +40,34 @@ export class ColresssExperiment extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
+      MOVE_CARDS(store, state, player.hand, player.supporter, {
+        cards: [effect.trainerCard],
+        sourceCard: this,
+      });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
       const deckTop = new CardList();
       MOVE_CARDS(store, state, player.deck, deckTop, { count: 5, sourceCard: this });
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        deckTop,
-        {},
-        { min: 3, max: 3, allowCancel: true }
-      ), selected => {
-        MOVE_CARDS(store, state, deckTop, player.hand, { cards: selected, sourceCard: this });
-        MOVE_CARDS(store, state, deckTop, player.lostzone, { sourceCard: this });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          deckTop,
+          {},
+          { min: 3, max: 3, allowCancel: true },
+        ),
+        (selected) => {
+          MOVE_CARDS(store, state, deckTop, player.hand, { cards: selected, sourceCard: this });
+          MOVE_CARDS(store, state, deckTop, player.lostzone, { sourceCard: this });
 
-        return state;
-
-      });
+          return state;
+        },
+      );
     }
 
     return state;
   }
-
 }

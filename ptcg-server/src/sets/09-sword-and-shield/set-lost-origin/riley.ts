@@ -4,20 +4,30 @@
 
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, CardList, ChooseCardsPrompt, ShowCardsPrompt, GameError } from '../../../game';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  CardList,
+  ChooseCardsPrompt,
+  ShowCardsPrompt,
+  GameError,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Riley extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark: string = 'F';
   public set: string = 'LOR';
   public setNumber: string = '166';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Riley';
   public fullName: string = 'Riley LOR 166';
-  public text: string = 'Reveal the top 5 cards of your deck and have your opponent choose 2 of them. Discard the chosen cards and put the remaining cards into your hand. You may play only 1 Supporter card during your turn.';
+  public text: string =
+    'Reveal the top 5 cards of your deck and have your opponent choose 2 of them. Discard the chosen cards and put the remaining cards into your hand. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-lost-origin/colresss-experiment.ts (deckTop pattern, CardList temp)
@@ -46,35 +56,48 @@ export class Riley extends TrainerCard {
       MOVE_CARDS(store, state, player.deck, deckTop, { count: count, sourceCard: this });
 
       // Show the top 5 cards to opponent
-      state = store.prompt(state, new ShowCardsPrompt(
-        opponent.id,
-        GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-        deckTop.cards
-      ), () => {
-        // Opponent chooses 2 to discard
-        const chooseCount = Math.min(2, deckTop.cards.length);
-        if (chooseCount === 0) {
-          // All cards go to hand
-          MOVE_CARDS(store, state, deckTop, player.hand, { sourceCard: this });
-          MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
-          return;
-        }
+      state = store.prompt(
+        state,
+        new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, deckTop.cards),
+        () => {
+          // Opponent chooses 2 to discard
+          const chooseCount = Math.min(2, deckTop.cards.length);
+          if (chooseCount === 0) {
+            // All cards go to hand
+            MOVE_CARDS(store, state, deckTop, player.hand, { sourceCard: this });
+            MOVE_CARDS(store, state, player.supporter, player.discard, {
+              cards: [this],
+              sourceCard: this,
+            });
+            return;
+          }
 
-        state = store.prompt(state, new ChooseCardsPrompt(
-          opponent,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          deckTop,
-          {},
-          { min: chooseCount, max: chooseCount, allowCancel: false }
-        ), selected => {
-          const discarded = selected || [];
-          // Discard chosen cards
-          MOVE_CARDS(store, state, deckTop, player.discard, { cards: discarded, sourceCard: this });
-          // Rest go to hand
-          MOVE_CARDS(store, state, deckTop, player.hand, { sourceCard: this });
-          MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
-        });
-      });
+          state = store.prompt(
+            state,
+            new ChooseCardsPrompt(
+              opponent,
+              GameMessage.CHOOSE_CARD_TO_DISCARD,
+              deckTop,
+              {},
+              { min: chooseCount, max: chooseCount, allowCancel: false },
+            ),
+            (selected) => {
+              const discarded = selected || [];
+              // Discard chosen cards
+              MOVE_CARDS(store, state, deckTop, player.discard, {
+                cards: discarded,
+                sourceCard: this,
+              });
+              // Rest go to hand
+              MOVE_CARDS(store, state, deckTop, player.hand, { sourceCard: this });
+              MOVE_CARDS(store, state, player.supporter, player.discard, {
+                cards: [this],
+                sourceCard: this,
+              });
+            },
+          );
+        },
+      );
     }
 
     return state;

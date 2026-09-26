@@ -9,8 +9,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Lillie extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'UPR';
 
@@ -23,7 +22,7 @@ export class Lillie extends TrainerCard {
   public setNumber: string = '125';
 
   public text: string =
-    'Draw cards until you have 6 cards in your hand. If it\'s your first turn, draw cards until you have 8 cards in your hand.';
+    "Draw cards until you have 6 cards in your hand. If it's your first turn, draw cards until you have 8 cards in your hand.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -34,7 +33,10 @@ export class Lillie extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
+      MOVE_CARDS(store, state, player.hand, player.supporter, {
+        cards: [effect.trainerCard],
+        sourceCard: this,
+      });
       effect.preventDefault = true;
 
       while (player.hand.cards.length < targetHandSize && player.deck.cards.length > 0) {
@@ -43,7 +45,6 @@ export class Lillie extends TrainerCard {
           break;
         }
       }
-
     }
 
     return state;

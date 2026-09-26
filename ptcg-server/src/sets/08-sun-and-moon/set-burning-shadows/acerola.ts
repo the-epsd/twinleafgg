@@ -10,8 +10,7 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 export class Acerola extends TrainerCard {
-
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'BUS';
 
@@ -36,7 +35,10 @@ export class Acerola extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
+      MOVE_CARDS(store, state, player.hand, player.supporter, {
+        cards: [effect.trainerCard],
+        sourceCard: this,
+      });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -55,21 +57,25 @@ export class Acerola extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { allowCancel: false, blocked }
-      ), result => {
-        const cardList = result.length > 0 ? result[0] : null;
-        if (cardList !== null) {
-          MOVE_POKEMON_OFF_BOARD(store, state, cardList, {
-            pokemonDestination: player.hand,
-            sourceCard: this,
-          });
-        }
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { allowCancel: false, blocked },
+        ),
+        (result) => {
+          const cardList = result.length > 0 ? result[0] : null;
+          if (cardList !== null) {
+            MOVE_POKEMON_OFF_BOARD(store, state, cardList, {
+              pokemonDestination: player.hand,
+              sourceCard: this,
+            });
+          }
+        },
+      );
     }
     return state;
   }

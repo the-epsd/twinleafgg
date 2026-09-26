@@ -7,7 +7,7 @@ import { HealEffect } from '../../game/store/effects/game-effects';
 import { TRAINER_TARGET_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class TeamYellTowel extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  protected _trainerType: TrainerType = TrainerType.ITEM;
   public regulationMark: string = 'D';
   public set: string = 'SHF';
   public setNumber: string = '63';
