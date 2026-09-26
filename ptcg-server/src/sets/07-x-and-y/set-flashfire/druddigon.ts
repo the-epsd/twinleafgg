@@ -11,29 +11,29 @@ import {
 export class Druddigon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType[] = [N];
-  public hp: number = 120;
+  public hp: number = 110;
+  public weakness = [{ type: Y }];
   public retreat = [C, C];
 
   public attacks = [
     {
       name: 'Revenge',
       cost: [R, W],
-      damage: 40,
+      damage: 20,
       damageCalculation: '+',
-      text: "If any of your Pokémon were Knocked Out by damage from an attack from your opponent's Pokémon during their last turn, this attack does 120 more damage.",
+      text: "If any of your Pokémon were Knocked Out by damage from an opponent's attack during his or her last turn, this attack does 70 more damage.",
     },
     {
       name: 'Dragon Claw',
-      cost: [R, W, C],
-      damage: 120,
+      cost: [R, W, C, C],
+      damage: 80,
       text: '',
     },
   ];
 
-  public regulationMark = 'E';
-  public set: string = 'BRS';
+  public set: string = 'FLF';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '113';
+  public setNumber: string = '70';
   public name: string = 'Druddigon';
   public fullName: string = 'Druddigon BRS';
 
@@ -43,7 +43,7 @@ export class Druddigon extends PokemonCard {
       const player = effect.player;
 
       if (WAS_POKEMON_KNOCKED_OUT_DURING_OPPONENTS_LAST_TURN(player, { byAttackDamage: true })) {
-        effect.damage += 120;
+        effect.damage += 70;
       }
       return state;
     }

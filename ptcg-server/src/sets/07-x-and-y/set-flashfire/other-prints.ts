@@ -107,9 +107,3 @@ export class MKangaskhanEX2FLF extends MKangaskhanEXFLF79 {
   public fullName: string = 'M Kangaskhan-EX2 FLF';
   public set = 'FLF';
 }
-
-export class DruddigonFLF extends Druddigon {
-  public set: string = 'FLF';
-  public setNumber: string = '70';
-  public fullName: string = 'Druddigon FLF';
-}
