@@ -8,7 +8,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt, GameMessage } from '../../../game';
 
 export class ChiliAndCilanAndCress extends TrainerCard {
@@ -60,7 +60,7 @@ export class ChiliAndCilanAndCress extends TrainerCard {
         ),
         (selected) => {
           const cards = selected || [];
-          player.deck.moveCardsTo(cards, player.hand);
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
           SHUFFLE_DECK(store, state, player);
         },
       );

@@ -1,5 +1,5 @@
 import { Card } from '../../../game/store/card/card';
-import { GameLog, GameMessage } from '../../../game/game-message';
+import { GameMessage } from '../../../game/game-message';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardType, Format } from '../../../game/store/card/card-types';
@@ -14,13 +14,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { GameError, pokemonHasCardType } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  self: Irida,
-  effect: TrainerEffect,
-): IterableIterator<State> {
+function* playCard(next: Function, store: StoreLike, state: State,
+  self: Irida, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
@@ -31,7 +26,7 @@ function* playCard(
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
@@ -45,11 +40,7 @@ function* playCard(
   player.deck.cards.forEach((c, index) => {
     if (c instanceof PokemonCard && pokemonHasCardType(c, CardType.WATER)) {
       pokemons += 1;
-    } else if (
-      c instanceof TrainerCard &&
-      (c.trainerType === TrainerType.ITEM ||
-        (format === Format.SWSH && c.trainerType === TrainerType.TOOL))
-    ) {
+    } else if (c instanceof TrainerCard && (c.trainerType === TrainerType.ITEM || (format === Format.SWSH && c.trainerType === TrainerType.TOOL))) {
       itemsOrTools += 1;
     } else {
       blocked.push(index);
@@ -60,45 +51,38 @@ function* playCard(
   const maxPokemons = Math.min(pokemons, 1);
   const maxItemsOrTools = Math.min(itemsOrTools, 1);
 
-  // Total max is sum of max for each
+  // Total max is sum of max for each 
   const count = maxPokemons + maxItemsOrTools;
 
   // Pass max counts to prompt options
-  yield store.prompt(
-    state,
-    new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_HAND,
-      player.deck,
-      {},
-      { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxItems: maxItemsOrTools },
-    ),
-    (selected) => {
-      cards = selected || [];
-      next();
-    },
-  );
+  yield store.prompt(state, new ChooseCardsPrompt(
+    player,
+    GameMessage.CHOOSE_CARD_TO_HAND,
+    player.deck,
+    {},
+    { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxItems: maxItemsOrTools }
+  ), selected => {
+    cards = selected || [];
+    next();
+  });
 
   MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: self });
 
-  cards.forEach((card, index) => {
-    store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-  });
-
   if (cards.length > 0) {
-    yield store.prompt(
-      state,
-      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
-      () => next(),
-    );
+    yield store.prompt(state, new ShowCardsPrompt(
+      opponent.id,
+      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+      cards
+    ), () => next());
   }
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });
 }
 
 export class Irida extends TrainerCard {
-  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
+
+  public trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark = 'F';
   public set: string = 'ASR';
   public cardImage: string = 'assets/cardback.png';
@@ -112,6 +96,7 @@ export class Irida extends TrainerCard {
     'Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
@@ -119,4 +104,5 @@ export class Irida extends TrainerCard {
 
     return state;
   }
+
 }

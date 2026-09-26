@@ -11,13 +11,10 @@ import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
-function* playCard(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  effect: TrainerEffect,
-): IterableIterator<State> {
+function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
@@ -29,38 +26,35 @@ function* playCard(
   effect.preventDefault = true;
 
   let cards: Card[] = [];
-  yield store.prompt(
-    state,
-    new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_HAND,
-      player.deck,
-      { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-      { min: 1, max: 1, allowCancel: false },
-    ),
-    (selected) => {
-      cards = selected || [];
-      next();
-    },
-  );
+  yield store.prompt(state, new ChooseCardsPrompt(
+    player,
+    GameMessage.CHOOSE_CARD_TO_HAND,
+    player.deck,
+    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+    { min: 1, max: 1, allowCancel: false }
+  ), selected => {
+    cards = selected || [];
+    next();
+  });
 
-  player.deck.moveCardsTo(cards, player.hand);
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: effect.trainerCard });
 
   if (cards.length > 0) {
-    yield store.prompt(
-      state,
-      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
-      () => next(),
-    );
+    yield store.prompt(state, new ShowCardsPrompt(
+      opponent.id,
+      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+      cards
+    ), () => next());
   }
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });
 }
 
 export class EnergySearch extends TrainerCard {
-  protected _trainerType: TrainerType = TrainerType.ITEM;
+
+  public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'FO';
 
@@ -76,6 +70,7 @@ export class EnergySearch extends TrainerCard {
     'Search your deck for a basic Energy card and put it into your hand. Shuffle your deck afterward.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
@@ -83,4 +78,5 @@ export class EnergySearch extends TrainerCard {
 
     return state;
   }
+
 }

@@ -1,5 +1,6 @@
 import type { Card, CardTarget, MoveEnergyOptions } from 'ptcg-server';
 import { CardList, PokemonCardList } from 'ptcg-server';
+import { matchesPromptFilter } from './matchesPromptFilter';
 import type { FilterType } from 'ptcg-server';
 import {
   mapPokemonItems,
@@ -64,17 +65,6 @@ export function buildBlockedCardList(
   return cards;
 }
 
-function matchesFilter(card: Card, filter: FilterType): boolean {
-  for (const key in filter) {
-    if (Object.prototype.hasOwnProperty.call(filter, key)) {
-      if ((filter as Record<string, unknown>)[key] !== (card as unknown as Record<string, unknown>)[key]) {
-        return false;
-      }
-    }
-  }
-  return true;
-}
-
 /** Energy cards on the selected source that may be dragged (filter + blockedMap). */
 export function filterEligibleEnergyCards(
   item: PokemonItem,
@@ -82,7 +72,7 @@ export function filterEligibleEnergyCards(
   blockedCards: Card[],
 ): Card[] {
   const energies = item.cardList.energies.cards;
-  return energies.filter((card: Card) => !blockedCards.includes(card) && matchesFilter(card, filter));
+  return energies.filter((card: Card) => !blockedCards.includes(card) && matchesPromptFilter(card, filter));
 }
 
 export function moveEnergyBetweenRows(

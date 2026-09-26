@@ -10,17 +10,13 @@ import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { CardList } from '../../../game/store/state/card-list';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  self: RotomPhone,
-  effect: TrainerEffect,
-): IterableIterator<State> {
+function* playCard(next: Function, store: StoreLike, state: State,
+  self: RotomPhone, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
@@ -30,31 +26,35 @@ function* playCard(
 
   const deckTop = new CardList();
   const temp = new CardList();
-  player.deck.moveTo(deckTop, 5);
+  MOVE_CARDS(store, state, player.deck, deckTop, { count: 5, sourceCard: self });
 
   let cards: Card[] = [];
-  yield store.prompt(
-    state,
-    new ChooseCardsPrompt(player, GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 1, max: 1 }),
-    (selected) => {
-      cards = selected || [];
-      next();
-    },
-  );
+  yield store.prompt(state, new ChooseCardsPrompt(
+    player,
+    GameMessage.CHOOSE_CARD_TO_HAND,
+    deckTop,
+    {},
+    { min: 1, max: 1 }
+  ), selected => {
+    cards = selected || [];
+    next();
+  });
 
-  deckTop.moveCardsTo(cards, temp);
-  deckTop.moveTo(player.deck);
+  MOVE_CARDS(store, state, deckTop, temp, { cards: cards, sourceCard: self });
+  MOVE_CARDS(store, state, deckTop, player.deck, { sourceCard: self });
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
     temp.moveToTopOfDestination(player.deck);
   });
+
 }
 
 export class RotomPhone extends TrainerCard {
+
   public regulationMark = 'D';
 
-  protected _trainerType: TrainerType = TrainerType.ITEM;
+  public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'CPA';
 
@@ -76,4 +76,5 @@ export class RotomPhone extends TrainerCard {
     }
     return state;
   }
+
 }

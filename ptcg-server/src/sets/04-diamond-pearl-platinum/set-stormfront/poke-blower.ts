@@ -11,7 +11,7 @@ import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-
 import { PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
 import { StateUtils } from '../../../game/store/state-utils';
 
-import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {COIN_FLIP_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(
   next: Function,
@@ -83,7 +83,7 @@ function* playCard(
     return c.name === name && c !== effect.trainerCard;
   });
   if (second !== undefined) {
-    player.hand.moveCardTo(second, player.discard);
+    MOVE_CARDS(store, state, player.hand, player.discard, { cards: [second], sourceCard: effect.trainerCard });
   }
 
   return store.prompt(

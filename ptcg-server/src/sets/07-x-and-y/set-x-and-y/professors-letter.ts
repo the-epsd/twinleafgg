@@ -11,13 +11,15 @@ import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class ProfessorsLetter extends TrainerCard {
-  protected _trainerType: TrainerType = TrainerType.ITEM;
+
+  public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'XY';
 
-  public name: string = "Professor's Letter";
+  public name: string = 'Professor\'s Letter';
 
   public fullName: string = 'Professors Letter XY';
 
@@ -30,7 +32,9 @@ export class ProfessorsLetter extends TrainerCard {
     'and put them into your hand. Shuffle your deck afterward.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -39,38 +43,37 @@ export class ProfessorsLetter extends TrainerCard {
       }
 
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       let cards: Card[] = [];
-      store.prompt(
-        state,
-        new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          player.deck,
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-          { min: 0, max: 2, allowCancel: false },
-        ),
-        (selected) => {
-          cards = selected || [];
+      store.prompt(state, new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_HAND,
+        player.deck,
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+        { min: 0, max: 2, allowCancel: false }
+      ), selected => {
+        cards = selected || [];
 
-          if (cards.length > 0) {
-            store.prompt(
-              state,
-              new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
-              () => {},
-            );
-          }
+        if (cards.length > 0) {
+          store.prompt(state, new ShowCardsPrompt(
+            opponent.id,
+            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+            cards
+          ), () => { });
+        }
 
-          player.deck.moveCardsTo(cards, player.hand);
+        MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
 
-          store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-            player.deck.applyOrder(order);
-          });
-        },
-      );
+        store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
+      });
+
     }
 
     return state;
+
   }
+
 }

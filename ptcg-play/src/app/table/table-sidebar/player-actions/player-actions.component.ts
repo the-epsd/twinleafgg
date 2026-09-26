@@ -22,6 +22,7 @@ export class PlayerActionsComponent implements OnChanges {
   public isObserver = false;
   public isPlaying = false;
   public isYourTurn = false;
+  public isSelfPlay = false;
 
   constructor(
     private alertService: AlertService,
@@ -57,7 +58,7 @@ export class PlayerActionsComponent implements OnChanges {
   }
 
   public switchSides() {
-    if (!this.gameState) {
+    if (!this.gameState || this.gameState.state?.gameSettings?.selfPlay === true) {
       return;
     }
     const games = this.sessionService.session.gameStates;
@@ -87,6 +88,7 @@ export class PlayerActionsComponent implements OnChanges {
     if (!this.gameState) {
       return;
     }
+    this.isSelfPlay = this.gameState.state?.gameSettings?.selfPlay === true;
     if (this.gameState.replay) {
       this.isObserver = true;
       this.isPlaying = false;

@@ -10,6 +10,7 @@ import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(
   next: Function,
@@ -41,7 +42,7 @@ function* playCard(
   }
 
   if (playTwoCards === false) {
-    player.deck.moveTo(player.hand, 1);
+    MOVE_CARDS(store, state, player.deck, player.hand, { count: 1, sourceCard: effect.trainerCard });
 
     return state;
   }
@@ -51,7 +52,7 @@ function* playCard(
     return c.name === name && c !== effect.trainerCard;
   });
   if (second !== undefined) {
-    player.hand.moveCardTo(second, player.discard);
+    MOVE_CARDS(store, state, player.hand, player.discard, { cards: [second], sourceCard: effect.trainerCard });
   }
 
   let cards: Card[] = [];
@@ -71,7 +72,7 @@ function* playCard(
   );
 
   // Get selected cards
-  player.deck.moveCardsTo(cards, player.hand);
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: effect.trainerCard });
 
   // Shuffle the deck
   return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {

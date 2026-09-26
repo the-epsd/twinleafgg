@@ -19,7 +19,7 @@ import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-e
 import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect, RetreatEffect } from '../../../game/store/effects/game-effects';
 import { PlayItemEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import {WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class SnorlaxDoll extends TrainerCard {
   protected _trainerType = TrainerType.ITEM;
@@ -77,7 +77,7 @@ This card can't be affected by any Special Conditions and can't retreat. If this
       });
 
       const cardList = StateUtils.findCardList(state, this);
-      cardList.moveCardTo(this, player.discard);
+      MOVE_CARDS(store, state, cardList, player.discard, { cards: [this], sourceCard: this });
     }
 
     if (effect instanceof AddSpecialConditionsEffect && effect.target.getPokemonCard() === this) {

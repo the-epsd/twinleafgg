@@ -8,7 +8,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { MoveCardsEffect } from '../../../game/store/effects/game-effects';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { Player, StateUtils } from '../../../game';
-import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
+import {DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class EmceesHype extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -59,7 +59,7 @@ export class EmceesHype extends TrainerCard {
         DRAW_CARDS(store, state, player, 2);
       }
 
-      player.supporter.moveTo(player.discard);
+      MOVE_CARDS(store, state, player.supporter, player.discard, { sourceCard: this });
     }
 
     return state;

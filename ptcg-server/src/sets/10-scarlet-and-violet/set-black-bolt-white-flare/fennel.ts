@@ -6,6 +6,8 @@ import { State } from '../../../game/store/state/state';
 import { PlayerType } from '../../../game/store/actions/play-card-action';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { GameError, GameMessage, Player } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+
 export class Fennel extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark = 'I';
@@ -32,7 +34,7 @@ export class Fennel extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 

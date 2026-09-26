@@ -5,6 +5,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { PlayStadiumEffect } from '../../../game/store/effects/play-card-effects';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class ChaoticSwell extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
@@ -25,7 +26,7 @@ export class ChaoticSwell extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayStadiumEffect && StateUtils.getStadiumCard(state) === this) {
       const player = effect.player;
-      player.hand.moveCardTo(effect.trainerCard, player.discard);
+      MOVE_CARDS(store, state, player.hand, player.discard, { cards: [effect.trainerCard], sourceCard: this });
 
       store.log(state, GameLog.LOG_DISCARD_STADIUM_CHAOTIC_SWELL, {
         name: player.name,

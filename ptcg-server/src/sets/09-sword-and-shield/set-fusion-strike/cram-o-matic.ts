@@ -10,21 +10,14 @@ import { StoreLike } from '../../../game/store/store-like';
 import { Effect } from '../../../game/store/effects/effect';
 import { Card, CardList, GameError } from '../../../game';
 
-import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {COIN_FLIP_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  effect: TrainerEffect,
-): IterableIterator<State> {
+function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
 
   let cards: Card[] = [];
 
-  cards = player.hand.cards.filter(
-    (c) => c instanceof TrainerCard && c.trainerType == TrainerType.ITEM,
-  );
+  cards = player.hand.cards.filter(c => c instanceof TrainerCard && c.trainerType == TrainerType.ITEM);
 
   if (cards.length < 1) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -41,22 +34,18 @@ function* playCard(
   const handTemp = new CardList();
   handTemp.cards = player.hand.cards;
 
-  yield store.prompt(
-    state,
-    new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_DISCARD,
-      handTemp,
-      { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
-      { min: 1, max: 1, allowCancel: false },
-    ),
-    (selected) => {
-      cards = selected || [];
-      next();
-    },
-  );
+  yield store.prompt(state, new ChooseCardsPrompt(
+    player,
+    GameMessage.CHOOSE_CARD_TO_DISCARD,
+    handTemp,
+    { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
+    { min: 1, max: 1, allowCancel: false }
+  ), selected => {
+    cards = selected || [];
+    next();
+  });
 
-  player.hand.moveCardsTo(cards, player.discard);
+  MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: effect.trainerCard });
 
   // Operation canceled by the user
   if (cards.length === 0) {
@@ -64,27 +53,23 @@ function* playCard(
   }
 
   let coin1Result = false;
-  yield COIN_FLIP_PROMPT(store, state, player, (result) => {
+  yield COIN_FLIP_PROMPT(store, state, player, result => {
     coin1Result = result;
     next();
   });
   if (coin1Result) {
     let cards: any[] = [];
-    yield store.prompt(
-      state,
-      new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        {},
-        { min: 1, max: 1, allowCancel: false },
-      ),
-      (selected: any[]) => {
+    yield store.prompt(state, new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.deck,
+      {},
+      { min: 1, max: 1, allowCancel: false }), (selected: any[]) => {
         cards = selected || [];
         next();
-      },
-    );
-    player.deck.moveCardsTo(cards, player.hand);
+      });
+    MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: effect.trainerCard });
+
   }
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {
@@ -93,7 +78,7 @@ function* playCard(
 }
 
 export class Creamomatic extends TrainerCard {
-  protected _trainerType = TrainerType.ITEM;
+  public trainerType = TrainerType.ITEM;
 
   public set: string = 'FST';
   public cardImage: string = 'assets/cardback.png';
@@ -116,4 +101,4 @@ Flip a coin. If heads, search your deck for a card and put it into your hand. Th
 
     return state;
   }
-}
+}                         

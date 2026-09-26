@@ -31,7 +31,7 @@ export class ShadowTriad extends TrainerCard {
       });
 
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       store.prompt(
         state,

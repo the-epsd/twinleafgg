@@ -15,6 +15,8 @@ import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 import { CheckPokemonPlayedTurnEffect } from '../../game/store/effects/check-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { EvolveEffect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+
 function isMatchingStage2(stage1: PokemonCard[], basic: PokemonCard, stage2: PokemonCard): boolean {
   for (const card of stage1) {
     if (card.name === stage2.evolvesFrom && basic.name === card.evolvesFrom) {
@@ -72,7 +74,7 @@ function* playCard(
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
 
   let targets: PokemonCardList[] = [];
   yield store.prompt(

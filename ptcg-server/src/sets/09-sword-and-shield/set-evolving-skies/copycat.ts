@@ -8,18 +8,13 @@ import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { StateUtils } from '../../../game/store/state-utils';
 import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  self: Copycat,
-  effect: TrainerEffect,
-): IterableIterator<State> {
+function* playCard(next: Function, store: StoreLike, state: State,
+  self: Copycat, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
-  const cards = player.hand.cards.filter((c) => c !== self);
+  const cards = player.hand.cards.filter(c => c !== self);
 
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
@@ -27,7 +22,7 @@ function* playCard(
     MOVE_CARDS(store, state, player.hand, player.deck, { cards: cards, sourceCard: self });
   }
 
-  yield store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+  yield store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
     next();
   });
@@ -38,7 +33,8 @@ function* playCard(
 }
 
 export class Copycat extends TrainerCard {
-  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
+
+  public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'EVS';
 
@@ -54,7 +50,7 @@ export class Copycat extends TrainerCard {
 
   public text: string =
     'Shuffle your hand into your deck. Then, draw a card for each card in ' +
-    "your opponent's hand.";
+    'your opponent\'s hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -64,4 +60,5 @@ export class Copycat extends TrainerCard {
 
     return state;
   }
+
 }

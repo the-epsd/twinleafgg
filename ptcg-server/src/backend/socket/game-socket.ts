@@ -206,7 +206,9 @@ export class GameSocket {
     try {
       game.dispatch(this.client, action);
     } catch (error: any) {
-      response('error', error.message);
+      const message = socketErrorMessage(error);
+      console.error('Game action failed:', message, error);
+      response('error', message as ApiErrorEnum);
       return;
     }
     response('ok');
@@ -262,11 +264,21 @@ export class GameSocket {
     try {
       params.result = prompt.decode(params.result, game.state);
       if (prompt.validate(params.result, game.state) === false) {
+        const filter = (prompt as { filter?: unknown }).filter;
+        const resultLength = Array.isArray(params.result)
+          ? params.result.length
+          : params.result == null ? null : 1;
+        console.error(
+          `Prompt validation failed type='${prompt.type}' resultLength=${resultLength}`,
+          filter
+        );
         response('error', ApiErrorEnum.PROMPT_INVALID_RESULT);
         return;
       }
     } catch (error: any) {
-      response('error', error);
+      const message = socketErrorMessage(error);
+      console.error('Prompt resolve failed:', message, error);
+      response('error', message as ApiErrorEnum);
       return;
     }
 
@@ -486,4 +498,11 @@ export class GameSocket {
     this.socket.removeListener('game:sandbox:modifyPokemon');
   }
 
+}
+
+function socketErrorMessage(error: unknown): string {
+  if (error && typeof error === 'object' && 'message' in error && (error as { message?: unknown }).message) {
+    return String((error as { message: unknown }).message);
+  }
+  return String(error);
 }

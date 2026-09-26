@@ -5,6 +5,8 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+
 import {
   PlayerType,
   SlotType,
@@ -93,7 +95,7 @@ function* playCard(
     },
   );
 
-  target.moveCardsTo(cards, player.discard);
+  MOVE_CARDS(store, state, target, player.discard, { cards: cards, sourceCard: effect.trainerCard });
 
   let targets2: PokemonCardList[] = [];
   yield store.prompt(
@@ -132,7 +134,7 @@ function* playCard(
     },
   );
 
-  target2.moveCardsTo(cards2, opponent.discard);
+  MOVE_CARDS(store, state, target2, opponent.discard, { cards: cards2, sourceCard: effect.trainerCard });
 
   return state;
 }

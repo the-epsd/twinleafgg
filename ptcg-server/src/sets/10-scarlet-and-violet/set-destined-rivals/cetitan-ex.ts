@@ -12,10 +12,11 @@ import {
   PlayerType,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerTargetEffect } from '../../../game/store/effects/play-card-effects';
 import {
+  BLOCK_TRAINER_TARGET,
   DISCARD_A_STADIUM_CARD_IN_PLAY,
   IS_ABILITY_BLOCKED,
+  IS_TRAINER_TARGET,
   WAS_ATTACK_USED,
 } from '../../../game/store/prefabs/prefabs';
 
@@ -55,7 +56,7 @@ export class Cetitanex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Snow Cover
-    if (effect instanceof TrainerTargetEffect && effect.target?.cards.includes(this)) {
+    if (IS_TRAINER_TARGET(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -74,7 +75,7 @@ export class Cetitanex extends PokemonCard {
         return state;
       }
 
-      effect.preventDefault = true;
+      BLOCK_TRAINER_TARGET(effect);
     }
 
     // Crush Press

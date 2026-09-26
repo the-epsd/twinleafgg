@@ -10,6 +10,7 @@ import { HealEffect } from '../../../game/store/effects/game-effects';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class AzsTranquility extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -42,7 +43,7 @@ export class AzsTranquility extends TrainerCard {
       if (!hasBench) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       effect.preventDefault = true;
       return store.prompt(
         state,

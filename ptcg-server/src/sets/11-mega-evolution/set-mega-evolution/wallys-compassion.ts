@@ -15,6 +15,7 @@ import {
   Player,
 } from '../../../game';
 import { HealEffect } from '../../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(
   next: Function,
@@ -71,7 +72,7 @@ function* playCard(
   store.reduceEffect(state, healEffect);
 
   const energy = target.cards.filter((c) => c.superType === SuperType.ENERGY);
-  target.moveCardsTo(energy, player.hand);
+  MOVE_CARDS(store, state, target, player.hand, { cards: energy, sourceCard: effect.trainerCard });
 
   return state;
 }

@@ -5,6 +5,7 @@ import { Card } from '../card/card';
 import { EnergyType, SuperType, TrainerType } from '../card/card-types';
 import { EnergyCard } from '../card/energy-card';
 import { TrainerCard } from '../card/trainer-card';
+import { matchesPromptFilter } from '../prompts/prompt-card-filter';
 
 export enum StadiumDirection {
   UP = 'up',
@@ -126,18 +127,7 @@ export class CardList {
   }
 
   public filter(query: Partial<Card>): Card[] {
-    return this.cards.filter(c => {
-      for (const key in query) {
-        if (Object.prototype.hasOwnProperty.call(query, key)) {
-          const value: any = (c as any)[key];
-          const expected: any = (query as any)[key];
-          if (value !== expected) {
-            return false;
-          }
-        }
-      }
-      return true;
-    });
+    return this.cards.filter(c => matchesPromptFilter(c, query));
   }
 
   public count(query: Partial<Card>): number {

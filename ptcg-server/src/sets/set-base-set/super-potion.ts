@@ -6,28 +6,19 @@ import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import {
-  PlayerType,
-  SlotType,
-  CardTarget,
-  GameError,
-  GameMessage,
-  PokemonCardList,
-  Card,
-  ChooseCardsPrompt,
+  PlayerType, SlotType, CardTarget, GameError, GameMessage,
+  PokemonCardList, Card, ChooseCardsPrompt
 } from '../../game';
 import { HealEffect } from '../../game/store/effects/game-effects';
-function* playCard(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  effect: TrainerEffect,
-): IterableIterator<State> {
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+
+function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
 
   const blocked: CardTarget[] = [];
   let hasPokemonWithDamage: boolean = false;
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-    if (cardList.damage === 0 || !cardList.cards.some((c) => c.superType === SuperType.ENERGY)) {
+    if (cardList.damage === 0 || !cardList.cards.some(c => c.superType === SuperType.ENERGY)) {
       blocked.push(target);
     } else {
       hasPokemonWithDamage = true;
@@ -42,20 +33,16 @@ function* playCard(
   effect.preventDefault = true;
 
   let targets: PokemonCardList[] = [];
-  yield store.prompt(
-    state,
-    new ChoosePokemonPrompt(
-      player.id,
-      GameMessage.CHOOSE_POKEMON_TO_HEAL,
-      PlayerType.BOTTOM_PLAYER,
-      [SlotType.ACTIVE, SlotType.BENCH],
-      { allowCancel: true, blocked },
-    ),
-    (results) => {
-      targets = results || [];
-      next();
-    },
-  );
+  yield store.prompt(state, new ChoosePokemonPrompt(
+    player.id,
+    GameMessage.CHOOSE_POKEMON_TO_HEAL,
+    PlayerType.BOTTOM_PLAYER,
+    [SlotType.ACTIVE, SlotType.BENCH],
+    { allowCancel: true, blocked }
+  ), results => {
+    targets = results || [];
+    next();
+  });
 
   if (targets.length === 0) {
     return state;
@@ -63,27 +50,23 @@ function* playCard(
 
   const target = targets[0];
   let cards: Card[] = [];
-  yield store.prompt(
-    state,
-    new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_DISCARD,
-      target,
-      { superType: SuperType.ENERGY },
-      { min: 1, max: 1, allowCancel: true },
-    ),
-    (selected) => {
-      cards = selected || [];
-      next();
-    },
-  );
+  yield store.prompt(state, new ChooseCardsPrompt(
+    player,
+    GameMessage.CHOOSE_CARD_TO_DISCARD,
+    target,
+    { superType: SuperType.ENERGY },
+    { min: 1, max: 1, allowCancel: true }
+  ), selected => {
+    cards = selected || [];
+    next();
+  });
 
   if (cards.length === 0) {
     return state;
   }
 
   // Discard trainer only when user selected a Pokemon
-  target.moveCardsTo(cards, player.discard);
+  MOVE_CARDS(store, state, target, player.discard, { cards: cards, sourceCard: effect.trainerCard });
 
   // Heal Pokemon
   const healEffect = new HealEffect(player, target, 40);
@@ -92,7 +75,8 @@ function* playCard(
 }
 
 export class SuperPotion extends TrainerCard {
-  protected _trainerType: TrainerType = TrainerType.ITEM;
+
+  public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'BS';
 
@@ -114,4 +98,5 @@ export class SuperPotion extends TrainerCard {
     }
     return state;
   }
+
 }

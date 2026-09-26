@@ -1,17 +1,9 @@
-import {
-  StoreLike,
-  State,
-  GameError,
-  GameMessage,
-  StateUtils,
-  SelectPrompt,
-  GameLog,
-} from '../../../game';
+import { StoreLike, State, GameError, GameMessage, StateUtils, SelectPrompt } from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { MoveCardsEffect } from '../../../game/store/effects/game-effects';
-import { DRAW_UP_TO_X_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import {DRAW_UP_TO_X_CARDS, SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class TeamGalacticsWager extends TrainerCard {
@@ -36,7 +28,7 @@ export class TeamGalacticsWager extends TrainerCard {
       }
 
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       const cards = player.hand.cards.filter((c) => c !== this);
       const opponentCards = opponent.hand.cards.filter((c) => c !== this);
@@ -75,58 +67,40 @@ export class TeamGalacticsWager extends TrainerCard {
       let maxOpponentDraw = 6;
 
       // simultaneous prompt showing gaming
-      store.prompt(
-        state,
-        [
-          new SelectPrompt(
-            player.id,
-            GameMessage.CHOOSE_OPTION,
-            options.map((c) => c.message),
-            { allowCancel: false },
-          ),
-          new SelectPrompt(
-            opponent.id,
-            GameMessage.CHOOSE_OPTION,
-            options.map((c) => c.message),
-            { allowCancel: false },
-          ),
-        ],
-        (results) => {
-          // variable time
-          const playerChosenValue = results[0];
-          const opponentChosenValue = results[1];
-          // outputting what both players chose
-          store.log(state, GameLog.LOG_PLAYER_CHOOSES, {
-            name: player.name,
-            string: options[playerChosenValue].message,
-          });
-          store.log(state, GameLog.LOG_PLAYER_CHOOSES, {
-            name: opponent.name,
-            string: options[opponentChosenValue].message,
-          });
-          // if they tie, restart it
-          if (playerChosenValue === opponentChosenValue) {
-            return this.reduceEffect(store, state, effect);
-          }
+      store.prompt(state, [
+        new SelectPrompt(
+          player.id, GameMessage.CHOOSE_OPTION,
+          options.map(c => c.message),
+          { allowCancel: false }
+        ),
+        new SelectPrompt(
+          opponent.id, GameMessage.CHOOSE_OPTION,
+          options.map(c => c.message),
+          { allowCancel: false }
+        ),
+      ], results => {
+        // variable time
+        const playerChosenValue = results[0];
+        const opponentChosenValue = results[1];
+        // if they tie, restart it
+        if (playerChosenValue === opponentChosenValue) { return this.reduceEffect(store, state, effect); }
 
-          // Gotta make the win conditions (where player wins)
-          if (
-            (playerChosenValue === 1 && opponentChosenValue === 0) ||
-            (playerChosenValue === 2 && opponentChosenValue === 1) ||
-            (playerChosenValue === 0 && opponentChosenValue === 2)
-          ) {
-            maxPlayerDraw = 6;
-            maxOpponentDraw = 3;
-          }
+        // Gotta make the win conditions (where player wins)
+        if ((playerChosenValue === 1 && opponentChosenValue === 0)
+          || (playerChosenValue === 2 && opponentChosenValue === 1)
+          || (playerChosenValue === 0 && opponentChosenValue === 2)) {
+          maxPlayerDraw = 6;
+          maxOpponentDraw = 3;
+        }
 
-          // Draw cards based on who won
-          DRAW_UP_TO_X_CARDS(store, state, player, maxPlayerDraw);
+        // Draw cards based on who won
+        DRAW_UP_TO_X_CARDS(store, state, player, maxPlayerDraw);
 
-          if (!opponentMoveEffect.preventDefault) {
-            DRAW_UP_TO_X_CARDS(store, state, opponent, maxOpponentDraw);
-          }
-        },
-      );
+        if (!opponentMoveEffect.preventDefault) {
+          DRAW_UP_TO_X_CARDS(store, state, opponent, maxOpponentDraw);
+        }
+      });
+
     }
 
     return state;

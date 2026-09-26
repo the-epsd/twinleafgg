@@ -12,16 +12,11 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  AttachEnergyPrompt,
-  GameError,
-  Player,
-  StateUtils,
-  pokemonHasCardType,
-} from '../../../game';
+import { AttachEnergyPrompt, GameError, Player, StateUtils, pokemonHasCardType } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class GlassTrumpet extends TrainerCard {
-  protected _trainerType: TrainerType = TrainerType.ITEM;
+  public trainerType: TrainerType = TrainerType.ITEM;
   public regulationMark = 'H';
   public set: string = 'SCR';
   public cardImage: string = 'assets/cardback.png';
@@ -65,7 +60,7 @@ Choose up to 2 of your Benched [C] Pokémon and attach a Basic Energy card from 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -116,7 +111,7 @@ Choose up to 2 of your Benched [C] Pokémon and attach a Basic Energy card from 
 
           for (const transfer of transfers) {
             const target = StateUtils.getTarget(state, player, transfer.to);
-            player.discard.moveCardTo(transfer.card, target);
+            MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
           }
 
           return state;

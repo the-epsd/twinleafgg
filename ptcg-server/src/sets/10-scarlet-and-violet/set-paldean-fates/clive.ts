@@ -5,9 +5,11 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { GameError, GameMessage, Player, ShowCardsPrompt, StateUtils } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Clive extends TrainerCard {
-  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
+
+  public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public regulationMark = 'G';
 
@@ -32,6 +34,7 @@ export class Clive extends TrainerCard {
   }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -42,27 +45,24 @@ export class Clive extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      const cardsInOpponentHand = opponent.hand.cards.filter(
-        (card) => card instanceof TrainerCard && card.trainerType === TrainerType.SUPPORTER,
-      );
+      const cardsInOpponentHand = opponent.hand.cards.filter(card => card instanceof TrainerCard && card.trainerType === TrainerType.SUPPORTER);
 
-      state = store.prompt(
-        state,
-        new ShowCardsPrompt(
-          player.id,
-          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-          opponent.hand.cards,
-        ),
-        () => {
-          const cardsToMove = cardsInOpponentHand.length * 2;
-          player.deck.moveTo(player.hand, cardsToMove);
-        },
-      );
+      state = store.prompt(state, new ShowCardsPrompt(
+        player.id,
+        GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+        opponent.hand.cards
+      ), () => {
+
+        const cardsToMove = cardsInOpponentHand.length * 2;
+        MOVE_CARDS(store, state, player.deck, player.hand, { count: cardsToMove, sourceCard: this });
+
+      });
     }
     return state;
   }
+
 }

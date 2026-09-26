@@ -5,9 +5,11 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { PlayerType, StateUtils, GameError, GameMessage, PokemonCardList } from '../../../game';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class StartlingMegaphone extends TrainerCard {
-  protected _trainerType: TrainerType = TrainerType.ITEM;
+
+  public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'FLF';
 
@@ -20,7 +22,8 @@ export class StartlingMegaphone extends TrainerCard {
   public setNumber: string = '97';
 
   public text: string =
-    'Discard all Pokemon Tool cards attached to each of your ' + "opponent's Pokemon.";
+    'Discard all Pokemon Tool cards attached to each of your ' +
+    'opponent\'s Pokemon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -38,15 +41,17 @@ export class StartlingMegaphone extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      pokemonsWithTool.forEach((target) => {
+      pokemonsWithTool.forEach(target => {
         if (target.tools.length > 0) {
           for (const tool of [...target.tools]) {
-            target.moveCardTo(tool, opponent.discard);
+            MOVE_CARDS(store, state, target, opponent.discard, { cards: [tool], sourceCard: this });
           }
         }
+
       });
     }
 
     return state;
   }
+
 }

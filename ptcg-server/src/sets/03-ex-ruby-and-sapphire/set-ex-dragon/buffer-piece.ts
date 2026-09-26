@@ -4,7 +4,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { IS_TOOL_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import {IS_TOOL_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 import { StateUtils } from '../../../game/store/state-utils';
 import { GamePhase, State } from '../../../game/store/state/state';
@@ -32,7 +32,7 @@ export class BufferPiece extends TrainerCard {
           ) {
             // Check if tool is blocked before discarding
             if (!IS_TOOL_BLOCKED(store, state, StateUtils.findOwner(state, cardList), this)) {
-              cardList.moveCardTo(this, player.discard);
+              MOVE_CARDS(store, state, cardList, player.discard, { cards: [this], sourceCard: this });
             }
           }
         });

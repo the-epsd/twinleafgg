@@ -3,6 +3,8 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+
 export class StevensAdvice extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'PK';
@@ -38,7 +40,7 @@ export class StevensAdvice extends TrainerCard {
       );
       const totalOpponentPokemon = opponentBenched + 1;
 
-      player.deck.moveTo(player.hand, Math.min(totalOpponentPokemon, player.deck.cards.length));
+      MOVE_CARDS(store, state, player.deck, player.hand, { count: Math.min(totalOpponentPokemon, player.deck.cards.length), sourceCard: this });
     }
 
     return state;

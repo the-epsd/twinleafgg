@@ -7,7 +7,7 @@ import { ChooseCardsPrompt, GameError, PokemonCard } from '../../../game';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { BLOCK_IF_NO_SLOTS, GET_PLAYER_BENCH_SLOTS } from '../../../game/store/prefabs/prefabs';
+import {BLOCK_IF_NO_SLOTS, GET_PLAYER_BENCH_SLOTS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class StrangeCave extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
@@ -48,23 +48,19 @@ export class StrangeCave extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_USE_STADIUM);
       }
 
-      store.prompt(
-        state,
-        new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-          player.hand,
-          { superType: SuperType.POKEMON },
-          { min: 1, max: 1, allowCancel: false, blocked: blockedHand },
-        ),
-        (selected) => {
-          const cards = selected || [];
-          cards.forEach((card, index) => {
-            player.hand.moveCardTo(card, slots[index]);
-            slots[index].pokemonPlayedTurn = state.turn;
-          });
-        },
-      );
+      store.prompt(state, new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+        player.hand,
+        { superType: SuperType.POKEMON },
+        { min: 1, max: 1, allowCancel: false, blocked: blockedHand }
+      ), selected => {
+        const cards = selected || [];
+        cards.forEach((card, index) => {
+          MOVE_CARDS(store, state, player.hand, slots[index], { cards: [card], sourceCard: this });
+          slots[index].pokemonPlayedTurn = state.turn;
+        });
+      });
     }
     return state;
   }

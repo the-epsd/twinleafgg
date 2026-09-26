@@ -12,6 +12,8 @@ import {
 import { Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+
 import {
   PlayPokemonFromDeckEffect,
   TrainerEffect,
@@ -57,7 +59,7 @@ export class Gloria extends TrainerCard {
           }
         });
 
-        player.hand.moveCardTo(effect.trainerCard, player.supporter);
+        MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
         // We will discard this card after prompt confirmation
         effect.preventDefault = true;
 

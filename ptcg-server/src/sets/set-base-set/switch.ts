@@ -6,14 +6,11 @@ import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { PlayerType, SlotType, GameError, GameMessage, PokemonCardList } from '../../game';
-function* playCard(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  effect: TrainerEffect,
-): IterableIterator<State> {
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+
+function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
-  const hasBench = player.bench.some((b) => b.cards.length > 0);
+  const hasBench = player.bench.some(b => b.cards.length > 0);
 
   if (hasBench === false) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -21,23 +18,19 @@ function* playCard(
 
   // Do not discard the card yet
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
 
   let targets: PokemonCardList[] = [];
-  yield store.prompt(
-    state,
-    new ChoosePokemonPrompt(
-      player.id,
-      GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-      PlayerType.BOTTOM_PLAYER,
-      [SlotType.BENCH],
-      { allowCancel: false },
-    ),
-    (results) => {
-      targets = results || [];
-      next();
-    },
-  );
+  yield store.prompt(state, new ChoosePokemonPrompt(
+    player.id,
+    GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+    PlayerType.BOTTOM_PLAYER,
+    [SlotType.BENCH],
+    { allowCancel: false }
+  ), results => {
+    targets = results || [];
+    next();
+  });
 
   if (targets.length === 0) {
     return state;
@@ -50,9 +43,10 @@ function* playCard(
 }
 
 export class Switch extends TrainerCard {
+
   public regulationMark = 'G';
 
-  protected _trainerType: TrainerType = TrainerType.ITEM;
+  public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'BS';
 
@@ -64,7 +58,8 @@ export class Switch extends TrainerCard {
 
   public fullName: string = 'Switch BS';
 
-  public text: string = 'Switch your Active Pokemon with 1 of your Benched Pokemon.';
+  public text: string =
+    'Switch your Active Pokemon with 1 of your Benched Pokemon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -73,4 +68,5 @@ export class Switch extends TrainerCard {
     }
     return state;
   }
+
 }

@@ -19,6 +19,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(
   next: Function,
@@ -122,7 +123,7 @@ function* playCard(
     const evolution = cards[0] as PokemonCard;
 
     // Evolve Pokemon
-    player.deck.moveCardTo(evolution, target);
+    MOVE_CARDS(store, state, player.deck, target, { cards: [evolution], sourceCard: effect.trainerCard });
     target.clearEffects();
     target.pokemonPlayedTurn = state.turn;
   }

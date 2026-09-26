@@ -7,12 +7,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { ChooseCardsPrompt, PokemonCard } from '../../../game';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import {
-  BLOCK_IF_NO_SLOTS,
-  GET_PLAYER_BENCH_SLOTS,
-  SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH,
-  COIN_FLIP_PROMPT,
-} from '../../../game/store/prefabs/prefabs';
+import { BLOCK_IF_NO_SLOTS, GET_PLAYER_BENCH_SLOTS, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, COIN_FLIP_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class HolonFossil extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
@@ -88,23 +83,19 @@ export class HolonFossil extends TrainerCard {
             return state;
           }
 
-          store.prompt(
-            state,
-            new ChooseCardsPrompt(
-              player,
-              GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-              player.hand,
-              { superType: SuperType.POKEMON },
-              { min: 1, max: 1, allowCancel: false, blocked: blockedHand },
-            ),
-            (selected) => {
-              const cards = selected || [];
-              cards.forEach((card, index) => {
-                player.hand.moveCardTo(card, slots[index]);
-                slots[index].pokemonPlayedTurn = state.turn;
-              });
-            },
-          );
+          store.prompt(state, new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+            player.hand,
+            { superType: SuperType.POKEMON },
+            { min: 1, max: 1, allowCancel: false, blocked: blockedHand }
+          ), selected => {
+            const cards = selected || [];
+            cards.forEach((card, index) => {
+              MOVE_CARDS(store, state, player.hand, slots[index], { cards: [card], sourceCard: this });
+              slots[index].pokemonPlayedTurn = state.turn;
+            });
+          });
         }
         return state;
       });

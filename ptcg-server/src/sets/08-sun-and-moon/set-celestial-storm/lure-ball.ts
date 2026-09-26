@@ -9,10 +9,10 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import { MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { MULTIPLE_COIN_FLIPS_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class LureBall extends TrainerCard {
-  protected _trainerType: TrainerType = TrainerType.ITEM;
+  public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'CES';
   public setNumber: string = '138';
@@ -20,8 +20,7 @@ export class LureBall extends TrainerCard {
   public name: string = 'Lure Ball';
   public fullName: string = 'Lure Ball CES';
 
-  public text: string =
-    'Flip 3 coins. For each heads, put an Evolution Pokémon from your discard pile into your hand.';
+  public text: string = 'Flip 3 coins. For each heads, put an Evolution Pokémon from your discard pile into your hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-celestial-storm/sneasel.ts (MULTIPLE_COIN_FLIPS_PROMPT), set-ex-team-rocket-returns/pokemon-retriever.ts (choose Pokemon from discard)
@@ -29,16 +28,16 @@ export class LureBall extends TrainerCard {
       const player = effect.player;
 
       // Check if there are any Evolution Pokemon in the discard
-      const hasEvolutionInDiscard = player.discard.cards.some(
-        (c) => c instanceof PokemonCard && c.stage !== Stage.BASIC,
+      const hasEvolutionInDiscard = player.discard.cards.some(c =>
+        c instanceof PokemonCard && c.stage !== Stage.BASIC
       );
 
       if (!hasEvolutionInDiscard) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, (results) => {
-        const heads = results.filter((r) => r).length;
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, results => {
+        const heads = results.filter(r => r).length;
         if (heads === 0) {
           return;
         }
@@ -56,21 +55,17 @@ export class LureBall extends TrainerCard {
 
         const maxChoose = Math.min(heads, evolutionCount);
 
-        store.prompt(
-          state,
-          new ChooseCardsPrompt(
-            player,
-            GameMessage.CHOOSE_CARD_TO_HAND,
-            player.discard,
-            {},
-            { min: maxChoose, max: maxChoose, allowCancel: false, blocked },
-          ),
-          (selected) => {
-            if (selected && selected.length > 0) {
-              player.discard.moveCardsTo(selected, player.hand);
-            }
-          },
-        );
+        store.prompt(state, new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.discard,
+          {},
+          { min: maxChoose, max: maxChoose, allowCancel: false, blocked }
+        ), selected => {
+          if (selected && selected.length > 0) {
+            MOVE_CARDS(store, state, player.discard, player.hand, { cards: selected, sourceCard: this });
+          }
+        });
       });
     }
 

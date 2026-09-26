@@ -5,7 +5,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {COIN_FLIP_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { ChoosePokemonPrompt, Player, PlayerType, SlotType } from '../../../game';
 
 export class TeamRocketsVentureBomb extends TrainerCard {
@@ -55,7 +55,7 @@ export class TeamRocketsVentureBomb extends TrainerCard {
         }
       });
 
-      player.supporter.moveTo(player.discard);
+      MOVE_CARDS(store, state, player.supporter, player.discard, { sourceCard: this });
 
       return state;
     }

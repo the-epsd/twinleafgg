@@ -41,7 +41,7 @@ export class MrStonesProject extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       const options: { message: GameMessage; action: () => void }[] = [
         {
@@ -122,8 +122,9 @@ export class MrStonesProject extends TrainerCard {
             );
 
             return state;
-          },
-        },
+
+          }
+        }
       ];
 
       return store.prompt(

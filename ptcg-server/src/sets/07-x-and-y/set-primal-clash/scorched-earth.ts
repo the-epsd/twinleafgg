@@ -9,6 +9,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { EnergyCard } from '../../../game/store/card/energy-card';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class ScorchedEarth extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.STADIUM;
@@ -42,25 +43,21 @@ export class ScorchedEarth extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      return store.prompt(
-        state,
-        new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          player.hand,
-          { superType: SuperType.ENERGY },
-          { allowCancel: true, min: 1, max: 1, blocked },
-        ),
-        (selected) => {
-          selected = selected || [];
-          if (selected.length === 0) {
-            player.stadiumUsedTurn = stadiumUsedTurn;
-            return;
-          }
-          player.hand.moveCardsTo(selected, player.discard);
-          player.deck.moveTo(player.hand, 2);
-        },
-      );
+      return store.prompt(state, new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_DISCARD,
+        player.hand,
+        { superType: SuperType.ENERGY },
+        { allowCancel: true, min: 1, max: 1, blocked }
+      ), selected => {
+        selected = selected || [];
+        if (selected.length === 0) {
+          player.stadiumUsedTurn = stadiumUsedTurn;
+          return;
+        }
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards: selected, sourceCard: this });
+        MOVE_CARDS(store, state, player.deck, player.hand, { count: 2, sourceCard: this });
+      });
     }
 
     return state;

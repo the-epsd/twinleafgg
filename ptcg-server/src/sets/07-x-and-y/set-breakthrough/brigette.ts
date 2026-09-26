@@ -65,7 +65,7 @@ export class Brigette extends TrainerCard {
           }
         });
 
-        player.hand.moveCardTo(effect.trainerCard, player.supporter);
+        MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
         // We will discard this card after prompt confirmation
         effect.preventDefault = true;
 

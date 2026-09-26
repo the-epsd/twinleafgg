@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { AlertService } from '../shared/alert/alert.service';
 import { ApiError } from '../api/api.error';
 import { CreateGamePopupComponent, CreateGamePopupResult } from './create-game-popup/create-game-popup.component';
+import { SelfPlayGameDialogComponent } from './self-play-game-dialog/self-play-game-dialog.component';
 import { DeckService } from '../api/services/deck.service';
 import { MainService } from '../api/services/main.service';
 import { SelectPopupOption } from '../shared/alert/select-popup/select-popup.component';
@@ -83,6 +84,18 @@ export class GamesComponent implements OnInit, OnDestroy {
       data: { decks, invitedUserId }
     });
     return dialog.afterClosed().toPromise();
+  }
+
+  public openSelfPlay() {
+    const dialog = this.dialog.open(SelfPlayGameDialogComponent, {
+      width: '640px',
+      maxWidth: '95vw'
+    });
+    dialog.afterClosed().subscribe(started => {
+      if (started) {
+        this.closeSidebar();
+      }
+    });
   }
 
   public createGame(invitedId?: number) {

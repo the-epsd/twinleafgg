@@ -2,7 +2,6 @@ import {
   Card,
   ChooseCardsPrompt,
   GameError,
-  GameLog,
   GameMessage,
   StateUtils,
 } from '../../../game';
@@ -69,13 +68,7 @@ export class HolonScientist extends TrainerCard {
             if (cards.length === 0) {
               return;
             }
-            player.hand.moveCardsTo(cards, player.discard);
-            cards.forEach((card, index) => {
-              store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, {
-                name: player.name,
-                card: card.name,
-              });
-            });
+            MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
             DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, opponent.hand.cards.length);
           },
         );

@@ -3,17 +3,10 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
-import {
-  CardList,
-  GameMessage,
-  ShuffleDeckPrompt,
-  ChooseCardsPrompt,
-  ShowCardsPrompt,
-  GameLog,
-  StateUtils,
-  GameError,
-} from '../../../game';
+import { CardList, GameMessage, ShuffleDeckPrompt, ChooseCardsPrompt, ShowCardsPrompt, StateUtils, GameError } from '../../../game';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+
 export class MasterBall extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'DX';
@@ -38,25 +31,30 @@ export class MasterBall extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      player.deck.moveTo(temp, 7);
+      MOVE_CARDS(store, state, player.deck, temp, { count: 7, sourceCard: this });
 
-      return store.prompt(
-        state,
-        new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          temp,
-          { superType: SuperType.POKEMON },
-          { allowCancel: false, min: 0, max: 1 },
-        ),
-        (chosenCards) => {
-          if (chosenCards.length <= 0) {
-            // No Pokemon chosen, shuffle all back
-            temp.cards.forEach((card) => {
-              temp.moveTo(player.deck);
-              player.supporter.moveCardTo(this, player.discard);
-            });
-          }
+      return store.prompt(state, new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_HAND,
+        temp,
+        { superType: SuperType.POKEMON },
+        { allowCancel: false, min: 0, max: 1 }
+      ), chosenCards => {
+
+        if (chosenCards.length <= 0) {
+          // No Pokemon chosen, shuffle all back
+          temp.cards.forEach(card => {
+            MOVE_CARDS(store, state, temp, player.deck, { sourceCard: this });
+            MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
+          });
+        }
+
+        if (chosenCards.length > 0) {
+          // Move chosen Pokemon to hand
+          const pokemon = chosenCards[0];
+          MOVE_CARDS(store, state, temp, player.hand, { cards: [pokemon], sourceCard: this });
+          MOVE_CARDS(store, state, temp, player.deck, { sourceCard: this });
+          MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
 
           if (chosenCards.length > 0) {
             // Move chosen Pokemon to hand

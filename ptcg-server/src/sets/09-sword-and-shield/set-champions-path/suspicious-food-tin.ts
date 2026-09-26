@@ -5,17 +5,9 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardType, TrainerType } from '../../../game/store/card/card-types';
 import {
-  StoreLike,
-  State,
-  GameError,
-  GameMessage,
-  Player,
-  PlayerType,
-  SlotType,
-  CardTarget,
-  PokemonCardList,
-  ChooseEnergyPrompt,
-  Card,
+  StoreLike, State, GameError, GameMessage, Player,
+  PlayerType, SlotType, CardTarget, PokemonCardList,
+  ChooseEnergyPrompt, Card
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
@@ -24,13 +16,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
-function* playCard(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  effect: TrainerEffect,
-  self: SuspiciousFoodTin,
-): IterableIterator<State> {
+function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect, self: SuspiciousFoodTin): IterableIterator<State> {
   const player = effect.player;
 
   // Find Pokemon with at least 1 Psychic Energy that also has damage
@@ -40,8 +26,8 @@ function* playCard(
     const checkEnergy = new CheckProvidedEnergyEffect(player, cardList);
     store.reduceEffect(state, checkEnergy);
 
-    const hasPsychicEnergy = checkEnergy.energyMap.some((em) =>
-      em.provides.some((t) => t === CardType.PSYCHIC || t === CardType.ANY),
+    const hasPsychicEnergy = checkEnergy.energyMap.some(em =>
+      em.provides.some(t => t === CardType.PSYCHIC || t === CardType.ANY)
     );
 
     if (!hasPsychicEnergy || cardList.damage === 0) {
@@ -59,20 +45,16 @@ function* playCard(
   effect.preventDefault = true;
 
   let targets: PokemonCardList[] = [];
-  yield store.prompt(
-    state,
-    new ChoosePokemonPrompt(
-      player.id,
-      GameMessage.CHOOSE_POKEMON_TO_HEAL,
-      PlayerType.BOTTOM_PLAYER,
-      [SlotType.ACTIVE, SlotType.BENCH],
-      { min: 1, max: 1, allowCancel: false, blocked },
-    ),
-    (results) => {
-      targets = results || [];
-      next();
-    },
-  );
+  yield store.prompt(state, new ChoosePokemonPrompt(
+    player.id,
+    GameMessage.CHOOSE_POKEMON_TO_HEAL,
+    PlayerType.BOTTOM_PLAYER,
+    [SlotType.ACTIVE, SlotType.BENCH],
+    { min: 1, max: 1, allowCancel: false, blocked }
+  ), results => {
+    targets = results || [];
+    next();
+  });
 
   if (targets.length === 0) {
     return state;
@@ -90,34 +72,29 @@ function* playCard(
 
   const energyToDiscard: CardType[] = [CardType.PSYCHIC];
 
-  state = store.prompt(
-    state,
-    new ChooseEnergyPrompt(
-      player.id,
-      GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-      checkProvidedEnergy.energyMap,
-      energyToDiscard,
-      { allowCancel: false },
-    ),
-    (energy) => {
-      const cards: Card[] = (energy || []).map((e) => e.card);
-      MOVE_CARDS(store, state, target, player.discard, { cards: cards, sourceCard: self });
-    },
-  );
+  state = store.prompt(state, new ChooseEnergyPrompt(
+    player.id,
+    GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+    checkProvidedEnergy.energyMap,
+    energyToDiscard,
+    { allowCancel: false }
+  ), energy => {
+    const cards: Card[] = (energy || []).map(e => e.card);
+    MOVE_CARDS(store, state, target, player.discard, { cards: cards, sourceCard: self });
+  });
 
   return state;
 }
 
 export class SuspiciousFoodTin extends TrainerCard {
-  protected _trainerType: TrainerType = TrainerType.ITEM;
+  public trainerType: TrainerType = TrainerType.ITEM;
   public regulationMark: string = 'D';
   public set: string = 'CPA';
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Suspicious Food Tin';
   public fullName: string = 'Suspicious Food Tin CPA';
-  public text: string =
-    'Heal 80 damage from 1 of your Pokémon that has at least 1 [P] Energy attached. If you healed any damage in this way, discard a [P] Energy from it.';
+  public text: string = 'Heal 80 damage from 1 of your Pokémon that has at least 1 [P] Energy attached. If you healed any damage in this way, discard a [P] Energy from it.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     let hasPokemonEligible = false;
@@ -125,8 +102,8 @@ export class SuspiciousFoodTin extends TrainerCard {
       const checkEnergy = new CheckProvidedEnergyEffect(player, cardList);
       store.reduceEffect(state, checkEnergy);
 
-      const hasPsychicEnergy = checkEnergy.energyMap.some((em) =>
-        em.provides.some((t) => t === CardType.PSYCHIC || t === CardType.ANY),
+      const hasPsychicEnergy = checkEnergy.energyMap.some(em =>
+        em.provides.some(t => t === CardType.PSYCHIC || t === CardType.ANY)
       );
 
       if (hasPsychicEnergy && cardList.damage > 0) {

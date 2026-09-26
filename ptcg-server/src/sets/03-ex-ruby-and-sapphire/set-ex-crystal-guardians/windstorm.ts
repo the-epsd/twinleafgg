@@ -64,7 +64,7 @@ export class Windstorm extends TrainerCard {
 
       // Prevent default effect and move card to supporter pile temporarily
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       // Handle the case where only stadium is in play
       if (pokemonsWithTool === 0 && stadiumCard !== undefined) {
@@ -76,7 +76,7 @@ export class Windstorm extends TrainerCard {
           card: stadiumCard.name,
           effectName: this.name,
         });
-        player.supporter.moveCardTo(this, player.discard);
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
         return state;
       }
 
@@ -154,9 +154,19 @@ export class Windstorm extends TrainerCard {
           player.supporter.moveCardTo(this, player.discard);
         });
 
+      if (targets.length === 0) {
+        // No Pokémon selected, just discard the Field Blower
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
         return state;
-      },
-    );
+      }
+
+      // Process tool discards sequentially
+      this.processToolDiscards(store, state, player, targets, 0, () => {
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this], sourceCard: this });
+      });
+
+      return state;
+    });
   }
 
   private processToolDiscards(
@@ -178,7 +188,7 @@ export class Windstorm extends TrainerCard {
     if (target.tools.length === 1) {
       // Single tool, discard it directly
       const tool = target.tools[0];
-      target.moveCardTo(tool, owner.discard);
+      MOVE_CARDS(store, state, target, owner.discard, { cards: [tool], sourceCard: this });
       store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, {
         name: player.name,
         card: tool.name,
@@ -190,28 +200,24 @@ export class Windstorm extends TrainerCard {
       const toolList = new CardList();
       toolList.cards = [...target.tools];
 
-      store.prompt(
-        state,
-        new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          toolList,
-          { trainerType: TrainerType.TOOL },
-          { min: 1, max: 1, allowCancel: false },
-        ),
-        (selectedTools) => {
-          if (selectedTools && selectedTools.length > 0) {
-            const tool = selectedTools[0];
-            target.moveCardTo(tool, owner.discard);
-            store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, {
-              name: player.name,
-              card: tool.name,
-              effectName: this.name,
-            });
-          }
-          this.processToolDiscards(store, state, player, targets, index + 1, onComplete);
-        },
-      );
+      store.prompt(state, new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_DISCARD,
+        toolList,
+        { trainerType: TrainerType.TOOL },
+        { min: 1, max: 1, allowCancel: false }
+      ), selectedTools => {
+        if (selectedTools && selectedTools.length > 0) {
+          const tool = selectedTools[0];
+          MOVE_CARDS(store, state, target, owner.discard, { cards: [tool], sourceCard: this });
+          store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, {
+            name: player.name,
+            card: tool.name,
+            effectName: this.name
+          });
+        }
+        this.processToolDiscards(store, state, player, targets, index + 1, onComplete);
+      });
     } else {
       // No tools on this Pokémon, continue to next
       this.processToolDiscards(store, state, player, targets, index + 1, onComplete);

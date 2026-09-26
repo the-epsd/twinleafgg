@@ -1,28 +1,17 @@
 import { CardTarget, PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
 import { GameMessage } from '../../../game/game-message';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
-import {
-  CardType,
-  EnergyType,
-  SpecialCondition,
-  SuperType,
-  TrainerType,
-} from '../../../game/store/card/card-types';
+import { CardType, EnergyType, SpecialCondition, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  AttachEnergyPrompt,
-  GameError,
-  Player,
-  StateUtils,
-  pokemonHasCardType,
-} from '../../../game';
-import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { AttachEnergyPrompt, GameError, Player, StateUtils, pokemonHasCardType } from '../../../game';
+import {SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class JaninesSecretTechnique extends TrainerCard {
-  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
+
+  public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public regulationMark = 'H';
 
@@ -32,9 +21,9 @@ export class JaninesSecretTechnique extends TrainerCard {
 
   public setNumber: string = '59';
 
-  public name: string = "Janine's Secret Art";
+  public name: string = 'Janine\'s Secret Art';
 
-  public fullName: string = "Janine's Secret Technique SFA";
+  public fullName: string = 'Janine\'s Secret Technique SFA';
 
   public text: string =
     'Choose up to 2 of your [D] Pokémon. For each of those Pokémon, search your deck for a Basic [D] Energy card and attach it to that Pokémon. Then, shuffle your deck. If you attached Energy to your Active Pokémon in this way, it is now Poisoned.';
@@ -56,6 +45,7 @@ export class JaninesSecretTechnique extends TrainerCard {
   }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
@@ -65,7 +55,7 @@ export class JaninesSecretTechnique extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -98,36 +88,34 @@ export class JaninesSecretTechnique extends TrainerCard {
 
       //   chosen.forEach(target => {
 
-      state = store.prompt(
-        state,
-        new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_TO_ACTIVE,
-          player.deck,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH, SlotType.ACTIVE],
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Darkness Energy' },
-          { allowCancel: false, min: 0, max: 2, blockedTo: blocked2, differentTargets: true },
-        ),
-        (transfers) => {
-          transfers = transfers || [];
+      state = store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_TO_ACTIVE,
+        player.deck,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH, SlotType.ACTIVE],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Darkness Energy' },
+        { allowCancel: false, min: 0, max: 2, blockedTo: blocked2, differentTargets: true }
+      ), transfers => {
+        transfers = transfers || [];
 
-          if (transfers.length === 0) {
-            SHUFFLE_DECK(store, state, player);
-            return;
-          }
-
-          for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            player.deck.moveCardTo(transfer.card, target);
-
-            if (target == player.active) {
-              player.active.addSpecialCondition(SpecialCondition.POISONED);
-            }
-          }
+        if (transfers.length === 0) {
           SHUFFLE_DECK(store, state, player);
-        },
-      );
+          return;
+        }
+
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          MOVE_CARDS(store, state, player.deck, target, { cards: [transfer.card], sourceCard: this });
+
+          if (target == player.active) {
+            player.active.addSpecialCondition(SpecialCondition.POISONED);
+          }
+
+        }
+        SHUFFLE_DECK(store, state, player);
+      });
+
     }
     return state;
   }

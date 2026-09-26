@@ -16,6 +16,7 @@ import { Card } from '../../../game/store/card/card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 const FOSSIL_NAMES = ['Helix Fossil Omanyte', 'Dome Fossil Kabuto', 'Old Amber Aerodactyl'];
 
@@ -37,7 +38,7 @@ function* playCard(
 
   // Do not discard the card yet
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
 
   // Discard pile is public knowledge, so enforce exact count when possible
   const max = Math.min(2, fossilCount);
@@ -67,7 +68,7 @@ function* playCard(
   );
 
   if (cards.length > 0) {
-    player.discard.moveCardsTo(cards, player.hand);
+    MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: effect.trainerCard });
 
     state = store.prompt(
       state,

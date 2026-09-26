@@ -1,5 +1,5 @@
 import { GameError, PokemonCard, pokemonHasCardType } from '../../../game';
-import { GameLog, GameMessage } from '../../../game/game-message';
+import { GameMessage } from '../../../game/game-message';
 import { Card } from '../../../game/store/card/card';
 import { CardType, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
@@ -8,9 +8,11 @@ import { DiscardToHandEffect, TrainerEffect } from '../../../game/store/effects/
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Revitalizer extends TrainerCard {
-  protected _trainerType: TrainerType = TrainerType.ITEM;
+
+  public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'GEN';
 
@@ -22,10 +24,13 @@ export class Revitalizer extends TrainerCard {
 
   public fullName: string = 'Revitalizer GEN';
 
-  public text: string = 'Put 2 [G] Pokémon from your discard pile into your hand.';
+  public text: string =
+    'Put 2 [G] Pokémon from your discard pile into your hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+
       const player = effect.player;
 
       let pokemonInDiscard: number = 0;
@@ -53,38 +58,28 @@ export class Revitalizer extends TrainerCard {
         return state;
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
       let cards: Card[] = [];
 
-      store.prompt(
-        state,
-        new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          player.discard,
-          { superType: SuperType.POKEMON },
-          { min: Math.min(pokemonInDiscard, 2), max: 2, allowCancel: false, blocked },
-        ),
-        (selected) => {
-          cards = selected || [];
+      store.prompt(state, new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_HAND,
+        player.discard,
+        { superType: SuperType.POKEMON },
+        { min: Math.min(pokemonInDiscard, 2), max: 2, allowCancel: false, blocked }
+      ), selected => {
+        cards = selected || [];
 
-          cards.forEach((card, index) => {
-            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
-              name: player.name,
-              card: card.name,
-            });
-          });
+        MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
 
-          player.discard.moveCardsTo(cards, player.hand);
-
-          return state;
-        },
-      );
+        return state;
+      });
     }
 
     return state;
   }
+
 }

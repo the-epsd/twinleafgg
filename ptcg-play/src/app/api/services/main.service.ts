@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GameInfo, CoreInfo, ClientInfo, GameSettings, UserInfo, isActiveListGameInfo } from 'ptcg-server';
+import { GameInfo, CoreInfo, ClientInfo, GameSettings, GameState, UserInfo, isActiveListGameInfo } from 'ptcg-server';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
@@ -131,6 +131,24 @@ export class MainService {
   public createGame(deck: string[], gameSettings: GameSettings, clientId?: number, deckId?: number, sleeveImagePath?: string) {
     this.loading = true;
     return this.socketService.emit('core:createGame', { deck, gameSettings, clientId, deckId, sleeveImagePath })
+      .pipe(finalize(() => { this.loading = false; }));
+  }
+
+  public createSelfPlayGame(params: {
+    deck: string[];
+    secondDeck: string[];
+    gameSettings: GameSettings;
+    deckId?: number;
+    secondDeckId?: number;
+    sleeveImagePath?: string;
+    secondSleeveImagePath?: string;
+    deckBoxImagePath?: string;
+    secondDeckBoxImagePath?: string;
+    coinImagePath?: string;
+    secondCoinImagePath?: string;
+  }): Observable<GameState> {
+    this.loading = true;
+    return this.socketService.emit<typeof params, GameState>('core:createSelfPlayGame', params)
       .pipe(finalize(() => { this.loading = false; }));
   }
 

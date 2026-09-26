@@ -11,9 +11,11 @@ import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-pr
 import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class MetalSaucer extends TrainerCard {
-  protected _trainerType: TrainerType = TrainerType.ITEM;
+
+  public trainerType: TrainerType = TrainerType.ITEM;
 
   public regulationMark = 'D';
 
@@ -34,12 +36,10 @@ export class MetalSaucer extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
-      const hasEnergyInDiscard = player.discard.cards.some((c) => {
-        return (
-          c instanceof EnergyCard &&
-          c.energyType === EnergyType.BASIC &&
-          c.provides.includes(CardType.METAL)
-        );
+      const hasEnergyInDiscard = player.discard.cards.some(c => {
+        return c instanceof EnergyCard
+          && c.energyType === EnergyType.BASIC
+          && c.provides.includes(CardType.METAL);
       });
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -60,7 +60,7 @@ export class MetalSaucer extends TrainerCard {
           const target: CardTarget = {
             player: PlayerType.BOTTOM_PLAYER,
             slot: SlotType.BENCH,
-            index,
+            index
           };
           blockedTo.push(target);
         }
@@ -72,34 +72,32 @@ export class MetalSaucer extends TrainerCard {
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
-      state = store.prompt(
-        state,
-        new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_TO_BENCH,
-          player.discard,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH],
-          { superType: SuperType.ENERGY, name: 'Metal Energy' },
-          { allowCancel: true, min: 1, max: 1, blockedTo },
-        ),
-        (transfers) => {
-          transfers = transfers || [];
+      state = store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_TO_BENCH,
+        player.discard,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH],
+        { superType: SuperType.ENERGY, name: 'Metal Energy' },
+        { allowCancel: true, min: 1, max: 1, blockedTo }
+      ), transfers => {
+        transfers = transfers || [];
 
-          if (transfers.length === 0) {
-            return;
-          }
+        if (transfers.length === 0) {
+          return;
+        }
 
-          for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            player.discard.moveCardTo(transfer.card, target);
-          }
-        },
-      );
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
+        }
+
+      });
     }
 
     return state;
   }
+
 }

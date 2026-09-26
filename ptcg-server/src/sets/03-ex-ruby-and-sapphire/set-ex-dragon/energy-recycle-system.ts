@@ -1,5 +1,5 @@
 import { GameError, SelectPrompt } from '../../../game';
-import { GameLog, GameMessage } from '../../../game/game-message';
+import { GameMessage } from '../../../game/game-message';
 import { Card } from '../../../game/store/card/card';
 import { EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
@@ -44,7 +44,7 @@ export class EnergyRecycleSystem extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
@@ -55,23 +55,14 @@ export class EnergyRecycleSystem extends TrainerCard {
           action: () => {
             let cards: Card[] = [];
 
-            store.prompt(
-              state,
-              new ChooseCardsPrompt(
-                player,
-                GameMessage.CHOOSE_CARD_TO_DECK,
-                player.discard,
-                { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-                { min: Math.min(basicEnergyInDiscard, 3), max: 3, allowCancel: false, blocked },
-              ),
-              (selected) => {
-                cards = selected || [];
-                cards.forEach((card, index) => {
-                  store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, {
-                    name: player.name,
-                    card: card.name,
-                  });
-                });
+            store.prompt(state, new ChooseCardsPrompt(
+              player,
+              GameMessage.CHOOSE_CARD_TO_DECK,
+              player.discard,
+              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+              { min: Math.min(basicEnergyInDiscard, 3), max: 3, allowCancel: false, blocked }
+            ), selected => {
+              cards = selected || [];
 
                 MOVE_CARDS(store, state, player.discard, player.deck, {
                   cards: cards,
@@ -102,17 +93,7 @@ export class EnergyRecycleSystem extends TrainerCard {
               (selected) => {
                 cards = selected || [];
 
-                cards.forEach((card, index) => {
-                  store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, {
-                    name: player.name,
-                    card: card.name,
-                  });
-                });
-
-                MOVE_CARDS(store, state, player.discard, player.hand, {
-                  cards: cards,
-                  sourceCard: this,
-                });
+              MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
 
                 return state;
               },

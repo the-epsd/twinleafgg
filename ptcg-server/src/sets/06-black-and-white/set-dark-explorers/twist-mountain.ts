@@ -12,7 +12,7 @@ import { Card } from '../../../game/store/card/card';
 import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 
-import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {COIN_FLIP_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 function* useStadium(
   next: Function,
@@ -61,7 +61,7 @@ function* useStadium(
   }
 
   cards.forEach((card, index) => {
-    player.hand.moveCardTo(card, slots[index]);
+    MOVE_CARDS(store, state, player.hand, slots[index], { cards: [card], sourceCard: effect.stadium });
     slots[index].pokemonPlayedTurn = state.turn;
   });
 
