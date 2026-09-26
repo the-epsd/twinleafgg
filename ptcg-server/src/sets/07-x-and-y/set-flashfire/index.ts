@@ -225,7 +225,6 @@ export const setFlashfire: Card[] = [
   new MCharizardEX4FLF(),
   new MKangaskhanEX2FLF(),
   new Blacksmith2FLF(),
-  new DruddigonFLF(),
   new CharizardEx3(),
   new MagnezoneEx2(),
   new PokemonCenterLady2(),
