@@ -10,10 +10,10 @@ import {
   DamageMap,
   PutDamagePrompt,
   StateUtils,
-  EnergyCard,
   CardList,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
+import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
 import { DiscardCardsEffect, PutCountersEffect } from '../../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
@@ -48,33 +48,19 @@ export class Starmie extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
+      const checkEnergy = new CheckProvidedEnergyEffect(player, player.active);
+      store.reduceEffect(state, checkEnergy);
+
+      const waterCards = new Set(
+        checkEnergy.energyMap
+          .filter(em => em.provides.includes(CardType.WATER) || em.provides.includes(CardType.ANY))
+          .map(em => em.card),
+      );
+
       const blocked: number[] = [];
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (
-          cardList.cards.some(
-            (c) =>
-              c.superType === SuperType.ENERGY &&
-              (c as EnergyCard).provides.includes(CardType.WATER),
-          )
-        ) {
-          blocked.push();
-        }
-        if (
-          cardList.cards.some(
-            (c) =>
-              c.superType === SuperType.ENERGY && (c as EnergyCard).provides.includes(CardType.ANY),
-          )
-        ) {
-          blocked.push();
-        }
-        if (
-          cardList.cards.some(
-            (c) =>
-              c.superType === SuperType.ENERGY &&
-              (c as EnergyCard).blendedEnergies.includes(CardType.WATER),
-          )
-        ) {
-          blocked.push();
+      player.active.cards.forEach((c, i) => {
+        if (c.superType === SuperType.ENERGY && !waterCards.has(c)) {
+          blocked.push(i);
         }
       });
 

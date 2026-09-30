@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { LocalGameState } from '../../../shared/session/session.interface';
 import { Prompt } from 'ptcg-server';
 import { GameService } from '../../../api/services/game.service';
+import { SKIP_WAIT_MESSAGES } from '../../self-play-background-waits';
 
 @Component({
   selector: 'ptcg-prompt-wait',
@@ -19,6 +20,13 @@ export class PromptWaitComponent implements OnInit {
   }
 
   ngOnInit() {
+    const message = this.waitMessage;
+    if (message && SKIP_WAIT_MESSAGES.has(message)) {
+      // Resolve on next tick so the prompt is fully mounted before we clear it.
+      setTimeout(() => this.resolve(), 0);
+      return;
+    }
+
     const duration = (this.prompt as any)?.duration;
     if (duration) {
       setTimeout(() => {

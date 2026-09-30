@@ -43,7 +43,7 @@ export class Seaking extends PokemonCard {
       checkEnergy.energyMap.forEach((em) => {
         waterUnits += em.provides.filter(
           (t) =>
-            t === CardType.WATER || t === CardType.ANY || t === CardType.WLFM || t === CardType.GRW,
+            t === CardType.WATER || t === CardType.ANY,
         ).length;
       });
       const totalDamage = 30 * waterUnits;

@@ -33,11 +33,11 @@ export class Zeraora extends PokemonCard {
   public fullName: string = 'Zeraora 30C';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-chilling-reign/ledian.ts (Rapid Draw — draw cards)
+    // Rapid Draw
     if (WAS_ATTACK_USED(effect, 0, this)) {
       DRAW_CARDS(store, state, effect.player, 1);
     }
-    // Ref: set-fusion-strike/heliolisk.ts (Electrobullet — bench damage)
+    // Electrobullet
     if (WAS_ATTACK_USED(effect, 1, this)) {
       THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON(20, effect, store, state);
     }

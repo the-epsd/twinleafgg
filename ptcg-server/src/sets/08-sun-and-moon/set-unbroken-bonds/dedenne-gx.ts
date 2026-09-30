@@ -14,11 +14,9 @@ import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
-import {
-  BLOCK_IF_GX_ATTACK_USED,
+import {BLOCK_IF_GX_ATTACK_USED,
   IS_ABILITY_BLOCKED,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
+  WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class DedenneGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -93,8 +91,8 @@ export class DedenneGX extends PokemonCard {
             player.marker.addMarker(this.DEDECHANGE_MARKER, this);
 
             const cards = player.hand.cards.filter((c) => c !== this);
-            player.hand.moveCardsTo(cards, player.discard);
-            player.deck.moveTo(player.hand, 6);
+            MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
+            MOVE_CARDS(store, state, player.deck, player.hand, { count: 6, sourceCard: this });
           }
         },
       );
@@ -124,8 +122,8 @@ export class DedenneGX extends PokemonCard {
           const cardList = result.length > 0 ? result[0] : null;
           if (cardList !== null) {
             const pokemons = cardList.getPokemons();
-            cardList.moveCardsTo(pokemons, player.hand);
-            cardList.moveTo(player.hand);
+            MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons, sourceCard: this });
+            MOVE_CARDS(store, state, cardList, player.hand, { sourceCard: this });
             cardList.clearEffects();
           }
         },

@@ -7,7 +7,6 @@ import { TeamFlareGrunt } from '../set-generations/team-flare-grunt';
 import { RainbowEnergyPL } from '../../04-diamond-pearl-platinum/set-platinum/other-prints';
 import { YveltalEx as YveltalExXY79 } from './yveltal-ex';
 import { XerneasEX as XerneasEXXY97 } from './xerneas-ex';
-import { ProfessorJuniper } from '../../06-black-and-white/set-black-and-white/professor-juniper';
 import { Venipede } from '../../06-black-and-white/set-black-and-white/venipede';
 import { VenusaurEx } from './venusaur-ex';
 import { BlastoiseEx } from './blastoise-ex';
@@ -15,12 +14,6 @@ import { EmolgaEx } from './emolga-ex';
 import { SkarmoryEx } from './skarmory-ex';
 import { DoubleColorlessEnergy } from '../../set-base-set/double-colorless-energy';
 
-export class ProfessorSycamoreXY extends ProfessorJuniper {
-  public set: string = 'XY';
-  public setNumber: string = '122';
-  public name: string = 'Professor Sycamore';
-  public fullName: string = 'Professor Sycamore XY 122';
-}
 export class YveltalXY extends Yveltal {
   public setNumber = '78';
   public fullName: string = 'Yveltal XY';

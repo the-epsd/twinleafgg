@@ -1,20 +1,17 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Format } from 'ptcg-server';
-import { Board3dAccessService } from '../../../shared/services/board3d-access.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class SettingsService {
-  constructor(private board3dAccessService: Board3dAccessService) { }
   private readonly HOLO_ENABLED_KEY = 'holoEnabled';
   private readonly SHOW_CARD_NAMES_KEY = 'showCardName';
   private readonly SHOW_TAGS_KEY = 'showTags';
   private readonly CARD_SIZE_KEY = 'cardSize';
   private readonly HIDDEN_FORMATS_KEY = 'hiddenFormats';
-  private readonly USE_3D_BOARD_DEFAULT_KEY = 'use3dBoardDefault';
   private readonly CARD_TEXT_KERNING_KEY = 'cardTextKerning';
   private readonly SFX_ENABLED_KEY = 'sfxEnabled';
   private readonly SFX_VOLUME_KEY = 'sfxVolume';
@@ -25,7 +22,6 @@ export class SettingsService {
   private showCardNameSubject = new BehaviorSubject<boolean>(this.loadCardNamesSetting());
   private showTagsSubject = new BehaviorSubject<boolean>(this.loadTagsSetting());
   private hiddenFormatsSubject = new BehaviorSubject<Format[]>(this.loadHiddenFormats());
-  private use3dBoardDefaultSubject = new BehaviorSubject<boolean>(this.loadUse3dBoardDefaultSetting());
   private cardTextKerningSubject = new BehaviorSubject<number>(this.loadCardTextKerning());
   private sfxEnabledSubject = new BehaviorSubject<boolean>(this.loadSfxSetting());
   private sfxVolumeSubject = new BehaviorSubject<number>(this.loadSfxVolume());
@@ -36,7 +32,6 @@ export class SettingsService {
   showCardName$ = this.showCardNameSubject.asObservable();
   showTags$ = this.showTagsSubject.asObservable();
   hiddenFormats$ = this.hiddenFormatsSubject.asObservable();
-  use3dBoardDefault$ = this.use3dBoardDefaultSubject.asObservable();
   cardTextKerning$ = this.cardTextKerningSubject.asObservable();
   sfxEnabled$ = this.sfxEnabledSubject.asObservable();
   sfxVolume$ = this.sfxVolumeSubject.asObservable();
@@ -67,11 +62,6 @@ export class SettingsService {
       localStorage.setItem(this.HIDDEN_FORMATS_KEY, JSON.stringify(formats));
     }
     return formats;
-  }
-
-  private loadUse3dBoardDefaultSetting(): boolean {
-    const saved = localStorage.getItem(this.USE_3D_BOARD_DEFAULT_KEY);
-    return saved ? JSON.parse(saved) : false;
   }
 
   private loadCardTextKerning(): number {
@@ -117,18 +107,6 @@ export class SettingsService {
   setHiddenFormats(formats: Format[]) {
     localStorage.setItem(this.HIDDEN_FORMATS_KEY, JSON.stringify(formats));
     this.hiddenFormatsSubject.next(formats);
-  }
-
-  setUse3dBoardDefault(enabled: boolean) {
-    // Only allow setting if user has 3D board access
-    if (!this.board3dAccessService.has3dBoardAccess()) {
-      // If user doesn't have access, ensure setting is false
-      enabled = false;
-      localStorage.removeItem(this.USE_3D_BOARD_DEFAULT_KEY);
-    } else {
-      localStorage.setItem(this.USE_3D_BOARD_DEFAULT_KEY, JSON.stringify(enabled));
-    }
-    this.use3dBoardDefaultSubject.next(enabled);
   }
 
   setCardTextKerning(value: number) {

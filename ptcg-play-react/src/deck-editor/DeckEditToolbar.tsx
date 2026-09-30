@@ -41,6 +41,7 @@ export type DeckEditToolbarProps = {
   onSave: () => void;
   onExport: () => void;
   onImport: () => void;
+  customizeTo?: string;
   /** When set, shows Delete (e.g. omit for theme / read-only decks). */
   onDelete?: () => void;
   deleting?: boolean;
@@ -57,6 +58,7 @@ export function DeckEditToolbar({
   onSave,
   onExport,
   onImport,
+  customizeTo,
   onDelete,
   deleting = false,
 }: DeckEditToolbarProps) {
@@ -122,6 +124,11 @@ export function DeckEditToolbar({
           <ShellButtonLink to="/deck" variant="plain">
             {t('DECK_EDIT_BACK')}
           </ShellButtonLink>
+          {customizeTo ? (
+            <ShellButtonLink to={customizeTo} variant="plain">
+              Customize
+            </ShellButtonLink>
+          ) : null}
           <ShellButton type="button" variant="plain" onClick={onImport} disabled={disabled}>
             {t('BUTTON_IMPORT')}
           </ShellButton>

@@ -5,20 +5,12 @@ import {
   StoreLike,
   State,
   StateUtils,
-  GameError,
-  GameMessage,
   PlayerType,
-  ChooseAttackPrompt,
-  Player,
-  EnergyMap,
-  Card,
 } from '../../../game';
+import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { UseAttackEffect, HealEffect } from '../../../game/store/effects/game-effects';
-import {
-  CheckProvidedEnergyEffect,
-  CheckAttackCostEffect,
-} from '../../../game/store/effects/check-effects';
+import { HealEffect } from '../../../game/store/effects/game-effects';
+import { COPY_ATTACK_VIA_ABILITY } from '../../../game/store/prefabs/copy-attack-prefabs';
 import {
   BLOCK_IF_GX_ATTACK_USED,
   WAS_ATTACK_USED,
@@ -73,42 +65,27 @@ export class MewtwoMewGX extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-      const pokemonCard = player.active.getPokemonCard();
-      if (pokemonCard !== this) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
-      // Build cards and blocked for Choose Attack prompt
-      const { pokemonCards, blocked } = this.buildAttackList(state, store, player);
-
-      // No attacks to copy
-      if (pokemonCards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
-      return store.prompt(
-        state,
-        new ChooseAttackPrompt(player.id, GameMessage.CHOOSE_ATTACK_TO_COPY, pokemonCards, {
-          allowCancel: true,
-          blocked,
-        }),
-        (attack) => {
-          if (attack !== null) {
-            const useAttackEffect = new UseAttackEffect(player, attack);
-            store.reduceEffect(state, useAttackEffect);
-          }
-        },
+      const extraCards = player.discard.cards.filter(
+        (card): card is PokemonCard =>
+          card instanceof PokemonCard &&
+          !(card instanceof MewtwoMewGX) &&
+          (card.hasTag(CardTag.POKEMON_EX) || card.hasTag(CardTag.POKEMON_GX)),
       );
+      return COPY_ATTACK_VIA_ABILITY(store, state, effect, {
+        copycatCard: this,
+        filter: (cardList, card) =>
+          cardList !== player.active &&
+          (card.hasTag(CardTag.POKEMON_EX) || card.hasTag(CardTag.POKEMON_GX)),
+        extraCards,
+      });
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      // Handle GX attack marker
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
-      // Check for the extra energy cost.
       const extraEffectCost: CardType[] = [
         CardType.PSYCHIC,
         CardType.PSYCHIC,
@@ -124,8 +101,7 @@ export class MewtwoMewGX extends PokemonCard {
 
       if (!meetsExtraEffectCost) {
         return state;
-      } // If we don't have the extra energy, we just deal damage.
-      // Otherwise, heal all of our Pokemon
+      }
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const healEffect = new HealEffect(player, cardList, 999);
         store.reduceEffect(state, healEffect);
@@ -133,57 +109,5 @@ export class MewtwoMewGX extends PokemonCard {
     }
 
     return state;
-  }
-
-  private buildAttackList(
-    state: State,
-    store: StoreLike,
-    player: Player,
-  ): { pokemonCards: PokemonCard[]; blocked: { index: number; attack: string }[] } {
-    const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
-    store.reduceEffect(state, checkProvidedEnergyEffect);
-    const energyMap = checkProvidedEnergyEffect.energyMap;
-
-    const pokemonCards: PokemonCard[] = [];
-    const blocked: { index: number; attack: string }[] = [];
-
-    player.discard.cards.forEach((card) => {
-      this.checkAttack(state, store, player, card, energyMap, pokemonCards, blocked);
-    });
-    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-      this.checkAttack(state, store, player, card, energyMap, pokemonCards, blocked);
-    });
-
-    return { pokemonCards, blocked };
-  }
-
-  private checkAttack(
-    state: State,
-    store: StoreLike,
-    player: Player,
-    card: Card,
-    energyMap: EnergyMap[],
-    pokemonCards: PokemonCard[],
-    blocked: { index: number; attack: string }[],
-  ) {
-    if (
-      !(card instanceof PokemonCard) ||
-      card instanceof MewtwoMewGX ||
-      !(card.hasTag(CardTag.POKEMON_EX) || card.hasTag(CardTag.POKEMON_GX))
-    ) {
-      return;
-    }
-    const attacks = card.attacks.filter((attack) => {
-      const checkAttackCost = new CheckAttackCostEffect(player, attack);
-      state = store.reduceEffect(state, checkAttackCost);
-      return StateUtils.checkEnoughEnergy(energyMap, checkAttackCost.cost);
-    });
-    const index = pokemonCards.length;
-    pokemonCards.push(card);
-    card.attacks.forEach((attack) => {
-      if (!attacks.includes(attack)) {
-        blocked.push({ index, attack: attack.name });
-      }
-    });
   }
 }

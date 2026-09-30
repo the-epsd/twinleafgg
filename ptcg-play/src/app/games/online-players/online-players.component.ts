@@ -20,6 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class OnlinePlayersComponent implements OnInit, OnDestroy {
   @Output() createGameRequested = new EventEmitter<number>();
+  @Output() selfPlayRequested = new EventEmitter<void>();
 
   public clients$: Observable<ClientInfo[]>;
   public friendsList$: Observable<any[]>;
@@ -137,6 +138,10 @@ export class OnlinePlayersComponent implements OnInit, OnDestroy {
 
   public createGame(invitedId?: number) {
     this.createGameRequested.emit(invitedId);
+  }
+
+  public playAgainstYourself() {
+    this.selfPlayRequested.emit();
   }
 
   banUser(userId: number) {

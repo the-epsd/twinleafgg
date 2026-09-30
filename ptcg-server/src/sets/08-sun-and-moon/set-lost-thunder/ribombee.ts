@@ -2,7 +2,7 @@ import { Stage, CardType, PowerType, State, StoreLike, StateUtils, TrainerType }
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerTargetEffect } from '../../../game/store/effects/play-card-effects';
+import { BLOCK_TRAINER_TARGET, IS_TRAINER_TARGET } from '../../../game/store/prefabs/prefabs';
 
 export class Ribombee extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -33,7 +33,7 @@ export class Ribombee extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof TrainerTargetEffect && effect.target && effect.trainerCard?.trainerType === TrainerType.SUPPORTER) {
+    if (IS_TRAINER_TARGET(effect, { trainerType: TrainerType.SUPPORTER })) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -48,7 +48,7 @@ export class Ribombee extends PokemonCard {
       store.reduceEffect(state, checkPokemonType);
 
       if (isRibombeeInPlay && checkPokemonType.cardTypes.includes(CardType.FAIRY)) {
-        effect.target = undefined;
+        BLOCK_TRAINER_TARGET(effect);
       }
     }
 

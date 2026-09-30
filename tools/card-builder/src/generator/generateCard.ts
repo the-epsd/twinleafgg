@@ -628,24 +628,27 @@ ${props.join('\n')}${reduceBlock}
 function generateEnergy(draft: CardDraft, className: string, fullName: string): string {
   const provides = formatEnergyArray(parseEnergyCost(draft.provides));
   const blended = formatEnergyArray(parseEnergyCost(draft.blendedEnergies));
+  const blendCount = Math.max(1, Number(draft.blendedEnergyCount) || 1);
   const effect = draft.energyServerEffect;
   const imports: string[] = [
     `import { EnergyCard } from '../../game/store/card/energy-card';`,
     `import { EnergyType, CardType, CardTag } from '../../game/store/card/card-types';`,
   ];
-  if (effect) {
+  if (effect || blended !== '[]') {
     imports.push(`import { StoreLike, State } from '../../game';`);
     imports.push(`import { Effect } from '../../game/store/effects/effect';`);
+  }
+  if (effect) {
     imports.push(...effect.imports);
+  }
+  if (blended !== '[]') {
+    imports.push(`import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';`);
+    imports.push(`import { EnergyEffect } from '../../game/store/effects/play-card-effects';`);
   }
   const props = [
     `  public provides: CardType[] = ${provides};`,
     `  public energyType = EnergyType.${draft.energyType};`,
   ];
-  if (blended !== '[]') {
-    props.push(`  public blendedEnergies: CardType[] = ${blended};`);
-    props.push(`  public blendedEnergyCount = ${Math.max(1, Number(draft.blendedEnergyCount) || 1)};`);
-  }
   if (draft.tags.trim()) {
     props.push(`  public tags = [${formatTags(draft.tags)}];`);
   }
@@ -660,9 +663,32 @@ function generateEnergy(draft: CardDraft, className: string, fullName: string): 
   if (draft.regulationMark.trim()) {
     props.push(`  public regulationMark = '${escapeString(draft.regulationMark.trim())}';`);
   }
-  const effectBlock = effect
-    ? `\n\n  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {\n${effect.body
-        .map(line => `    ${line}`)
+
+  const bodyLines: string[] = [];
+  if (effect) {
+    bodyLines.push(...effect.body);
+  }
+  if (blended !== '[]') {
+    const pushLines = Array.from({ length: blendCount }, () =>
+      `      effect.energyMap.push({ card: this, provides: [...choosable] });`
+    ).join('\n');
+    bodyLines.push(
+      `    if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {`,
+      `      try {`,
+      `        const energyEffect = new EnergyEffect(effect.player, this);`,
+      `        store.reduceEffect(state, energyEffect);`,
+      `      } catch {`,
+      `        return state;`,
+      `      }`,
+      `      const choosable = ${blended};`,
+      pushLines,
+      `    }`,
+    );
+  }
+
+  const effectBlock = bodyLines.length > 0
+    ? `\n\n  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {\n${bodyLines
+        .map(line => (line.startsWith('    ') ? line : `    ${line}`))
         .join('\n')}\n    return state;\n  }`
     : '';
   const helperBlock = effect?.helpers && effect.helpers.length > 0 ? `\n\n${effect.helpers.join('\n\n')}` : '';

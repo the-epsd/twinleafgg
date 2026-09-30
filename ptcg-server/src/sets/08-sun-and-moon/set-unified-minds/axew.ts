@@ -6,8 +6,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils, PlayerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerTargetEffect } from '../../../game/store/effects/play-card-effects';
-import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_TRAINER_TARGET, IS_ABILITY_BLOCKED, IS_TRAINER_TARGET } from '../../../game/store/prefabs/prefabs';
 
 export class Axew extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -40,7 +39,7 @@ export class Axew extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Unnerve (passive - prevent trainer effects targeting this Pokemon)
     // Ref: set-team-up/galvantula.ts (Unnerve)
-    if (effect instanceof TrainerTargetEffect && effect.target?.cards.includes(this)) {
+    if (IS_TRAINER_TARGET(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -58,7 +57,7 @@ export class Axew extends PokemonCard {
         return state;
       }
 
-      effect.target = undefined;
+      BLOCK_TRAINER_TARGET(effect);
     }
 
     return state;

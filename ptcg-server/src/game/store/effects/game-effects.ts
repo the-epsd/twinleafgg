@@ -174,6 +174,8 @@ export class UseAttackEffect implements Effect {
   public attack: Attack;
   public source: PokemonCardList;
   public ignoreStatusConditions = false;
+  /** When set, attack logic runs via sourceCard.reduceEffect.call(copycatCard, ...). */
+  public delegateFrom?: PokemonCard;
   constructor(player: Player, attack: Attack) {
     this.player = player;
     this.attack = attack;

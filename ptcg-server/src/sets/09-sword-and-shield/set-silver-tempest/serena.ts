@@ -5,6 +5,8 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardTag, Stage, TrainerType } from '../../../game/store/card/card-types';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+
 import {
   Card,
   CardTarget,
@@ -19,7 +21,7 @@ import {
 } from '../../../game';
 
 export class Serena extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  protected _trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'SIT';
 
@@ -49,7 +51,7 @@ export class Serena extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -70,13 +72,13 @@ export class Serena extends TrainerCard {
               ),
               (selected) => {
                 cards = selected || [];
-                player.hand.moveCardsTo(cards, player.discard);
+                MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
 
                 while (player.hand.cards.length < 5) {
                   if (player.deck.cards.length === 0) {
                     break;
                   }
-                  player.deck.moveTo(player.hand, 1);
+                  MOVE_CARDS(store, state, player.deck, player.hand, { count: 1, sourceCard: this });
                 }
                 return state;
               },
@@ -111,7 +113,10 @@ export class Serena extends TrainerCard {
                 { allowCancel: false, blocked: blocked },
               ),
               (result) => {
-                const cardList = result[0];
+                const cardList = result && result[0];
+                if (!cardList) {
+                  return state;
+                }
 
                 if (cardList.isStage(Stage.BASIC)) {
                   try {
@@ -123,9 +128,9 @@ export class Serena extends TrainerCard {
                 }
 
                 if (
-                  !result[0].getPokemonCard()?.hasTag(CardTag.POKEMON_V) &&
-                  !result[0].getPokemonCard()?.hasTag(CardTag.POKEMON_VMAX) &&
-                  !result[0].getPokemonCard()?.hasTag(CardTag.POKEMON_VSTAR)
+                  !cardList.getPokemonCard()?.hasTag(CardTag.POKEMON_V) &&
+                  !cardList.getPokemonCard()?.hasTag(CardTag.POKEMON_VMAX) &&
+                  !cardList.getPokemonCard()?.hasTag(CardTag.POKEMON_VSTAR)
                 ) {
                   throw new GameError(GameMessage.INVALID_TARGET);
                 }

@@ -1,5 +1,5 @@
 import { defineConfig, type Plugin } from 'vite';
-import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync, unlinkSync, writeFileSync } from 'node:fs';
 import { dirname, join, normalize, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { IncomingMessage, ServerResponse } from 'node:http';
@@ -286,6 +286,141 @@ function addCardToSetIndex(indexPath: string, className: string, fileName: strin
   }
 
   if (updated !== source) writeFileSync(indexPath, updated, 'utf8');
+}
+
+function removeCardFromSetIndex(indexPath: string, className: string): void {
+  if (!existsSync(indexPath)) return;
+  const source = readFileSync(indexPath, 'utf8');
+  let updated = source.replace(
+    new RegExp(`^import \\{\\s*${escapeRegExp(className)}\\s*\\} from '[^']+';\\r?\\n?`, 'gm'),
+    ''
+  );
+  updated = updated.replace(
+    /import \{([^}]+)\} from ('[^']+');/g,
+    (line, names: string, module: string) => {
+      const parts = names.split(',').map(name => name.trim()).filter(Boolean);
+      if (!parts.includes(className)) return line;
+      const kept = parts.filter(name => name !== className);
+      return kept.length > 0 ? `import { ${kept.join(', ')} } from ${module};` : '';
+    }
+  );
+  updated = updated.replace(new RegExp(`^ {2}new ${escapeRegExp(className)}\\(\\),\\r?\\n?`, 'gm'), '');
+  updated = updated.replace(/\n{3,}/g, '\n\n');
+  if (updated !== source) writeFileSync(indexPath, updated, 'utf8');
+}
+
+function removeUnusedImports(source: string): string {
+  const { imports, body } = splitImportLines(source);
+  const kept = imports.filter(line => {
+    const match = line.match(/^import \{([^}]+)\} from/);
+    if (!match) return true;
+    const names = match[1].split(',').map(name => name.trim()).filter(Boolean);
+    const used = names.filter(name => sourceUsesName(body, name));
+    return used.length > 0;
+  }).map(line => {
+    const match = line.match(/^import \{([^}]+)\} from ('[^']+');$/);
+    if (!match) return line;
+    const names = match[1].split(',').map(name => name.trim()).filter(Boolean);
+    const used = names.filter(name => sourceUsesName(body, name));
+    return used.length === names.length
+      ? line
+      : `import { ${used.join(', ')} } from ${match[2]};`;
+  });
+  return `${kept.length ? `${kept.join('\n')}\n\n` : ''}${body.trimStart()}`.replace(/\n{3,}/g, '\n\n');
+}
+
+function removeExportedClass(source: string, className: string): string {
+  const match = new RegExp(`export class\\s+${escapeRegExp(className)}\\b`).exec(source);
+  if (!match || match.index === undefined) {
+    throw new Error(`Class ${className} was not found in that file.`);
+  }
+  const open = source.indexOf('{', match.index);
+  const close = open < 0 ? -1 : matchingBrace(source, open);
+  if (open < 0 || close < 0) {
+    throw new Error(`Could not locate the ${className} class body.`);
+  }
+  let start = match.index;
+  while (start > 0 && (source[start - 1] === '\n' || source[start - 1] === '\r')) start--;
+  const updated = `${source.slice(0, start)}\n${source.slice(close + 1)}`;
+  return removeUnusedImports(updated);
+}
+
+function resolveSetsPath(sourcePath: string): string {
+  const normalized = normalize(join(serverSetsRoot, sourcePath));
+  if (!normalized.startsWith(serverSetsRoot + sep) && normalized !== serverSetsRoot) {
+    throw new Error('Source path is outside ptcg-server/src/sets.');
+  }
+  return normalized;
+}
+
+function removeCardFromDisk(sourcePath: string, className: string): { message: string; deletedFile: boolean } {
+  if (!/^[A-Za-z][A-Za-z0-9]*$/.test(className)) {
+    throw new Error('Class name is invalid.');
+  }
+  if (!sourcePath || sourcePath.includes('..') || sourcePath.endsWith('/index.ts') || sourcePath === 'index.ts') {
+    throw new Error('That source path cannot be removed.');
+  }
+
+  const filePath = resolveSetsPath(sourcePath);
+  if (!existsSync(filePath) || !statSync(filePath).isFile()) {
+    throw new Error(`File not found: ${sourcePath}`);
+  }
+
+  const fileName = filePath.split(sep).pop() || '';
+  const directory = dirname(filePath);
+  const source = readFileSync(filePath, 'utf8');
+  if (!hasExportedClass(source, className)) {
+    throw new Error(`Class ${className} was not found in ${sourcePath}.`);
+  }
+
+  let deletedFile = false;
+  if (['other-prints.ts', 'full-art.ts', 'alt-arts.ts'].includes(fileName)) {
+    const updated = removeExportedClass(source, className);
+    if (!updated.trim()) {
+      unlinkSync(filePath);
+      deletedFile = true;
+    } else {
+      writeFileSync(filePath, updated.endsWith('\n') ? updated : `${updated}\n`, 'utf8');
+    }
+  } else {
+    // Single-card stub / implementation files: delete the whole file.
+    const exportedClasses = [...source.matchAll(/^export class\s+([A-Za-z_$][\w$]*)/gm)].map(match => match[1]);
+    if (exportedClasses.length > 1) {
+      const updated = removeExportedClass(source, className);
+      writeFileSync(filePath, updated.endsWith('\n') ? updated : `${updated}\n`, 'utf8');
+    } else {
+      unlinkSync(filePath);
+      deletedFile = true;
+    }
+  }
+
+  removeCardFromSetIndex(join(directory, 'index.ts'), className);
+  return {
+    message: deletedFile
+      ? `Deleted ${sourcePath} and removed ${className} from index.ts`
+      : `Removed ${className} from ${sourcePath} and index.ts`,
+    deletedFile,
+  };
+}
+
+async function serveRemoveCard(req: IncomingMessage, res: ServerResponse, next: () => void): Promise<void> {
+  if (req.url?.split('?')[0] !== '/remove-card' || req.method !== 'POST') {
+    next();
+    return;
+  }
+
+  try {
+    const payload = JSON.parse(await readRequestBody(req)) as {
+      sourcePath?: string;
+      className?: string;
+    };
+    const sourcePath = payload.sourcePath?.trim().replaceAll('\\', '/') || '';
+    const className = payload.className?.trim() || '';
+    const result = removeCardFromDisk(sourcePath, className);
+    jsonResponse(res, 200, result);
+  } catch (error) {
+    jsonResponse(res, 400, { error: error instanceof Error ? error.message : String(error) });
+  }
 }
 
 function escapeRegExp(value: string): string {
@@ -615,6 +750,312 @@ function buildServerEffects(): ServerEffect[] {
   return results;
 }
 
+interface DuplicateCardRecord {
+  className: string;
+  name: string;
+  set: string;
+  setNumber: string;
+  fullName: string;
+  sourcePath: string;
+  kind: string;
+  indexCount: number;
+  ownSet?: string;
+  ownSetNumber?: string;
+  directory?: string;
+}
+
+interface DuplicateReason {
+  id: string;
+  message: string;
+}
+
+interface DuplicateGroup {
+  key: string;
+  reasons: DuplicateReason[];
+  cards: DuplicateCardRecord[];
+}
+
+const REPRINT_FILE_NAMES = new Set(['other-prints.ts', 'full-art.ts', 'alt-arts.ts']);
+const SKIP_FILE_NAMES = new Set(['index.ts']);
+
+function cardFileKind(fileName: string): string {
+  if (fileName === 'other-prints.ts') return 'other-prints';
+  if (fileName === 'full-art.ts') return 'full-art';
+  if (fileName === 'alt-arts.ts') return 'alt-arts';
+  return 'implementation';
+}
+
+function shouldScanCardFile(filePath: string): boolean {
+  const base = filePath.split(sep).pop() || '';
+  if (!base.endsWith('.ts')) return false;
+  if (SKIP_FILE_NAMES.has(base)) return false;
+  if (base.startsWith('generate-')) return false;
+  if (base.includes('.test.') || base.includes('.spec.')) return false;
+  if (filePath.includes(`${sep}tests${sep}`)) return false;
+  return true;
+}
+
+function parseIndexInstantiations(indexPath: string): Map<string, number> {
+  const counts = new Map<string, number>();
+  if (!existsSync(indexPath)) return counts;
+  const source = readFileSync(indexPath, 'utf8');
+  for (const match of source.matchAll(/\bnew\s+([A-Za-z_$][\w$]*)\s*\(/g)) {
+    const className = match[1];
+    counts.set(className, (counts.get(className) || 0) + 1);
+  }
+  return counts;
+}
+
+function findCardDuplicates(): DuplicateGroup[] {
+  interface ParsedClass {
+    className: string;
+    extendsName: string;
+    classSource: string;
+    filePath: string;
+  }
+
+  const allFiles = collectTsFiles(serverSetsRoot);
+  const classes = allFiles
+    .filter(shouldScanCardFile)
+    .flatMap(filePath => {
+      const source = readFileSync(filePath, 'utf8');
+      return [...source.matchAll(/^export class\s+([A-Za-z_$][\w$]*)[^\{]*\{/gm)].flatMap(match => {
+        if (match.index === undefined) return [];
+        const open = source.indexOf('{', match.index);
+        const close = open < 0 ? -1 : matchingBrace(source, open);
+        if (open < 0 || close < 0) return [];
+        const declaration = match[0];
+        const extendsName = declaration.match(/\bextends\s+([A-Za-z_$][\w$]*)/)?.[1] || '';
+        // Skip non-card helper classes that don't extend a card base or another card
+        if (!extendsName) return [];
+        return [{
+          className: match[1],
+          extendsName,
+          classSource: source.slice(match.index, close + 1),
+          filePath,
+        }];
+      });
+    });
+
+  const classByName = new Map<string, ParsedClass>();
+  for (const parsed of classes) {
+    if (!classByName.has(parsed.className)) classByName.set(parsed.className, parsed);
+  }
+
+  const resolveProperty = (parsed: ParsedClass, property: string, seen = new Set<string>()): string => {
+    const own = extractPublicString(parsed.classSource, property);
+    if (own || !parsed.extendsName || seen.has(parsed.className)) return own;
+    seen.add(parsed.className);
+    const parent = classByName.get(parsed.extendsName);
+    return parent ? resolveProperty(parent, property, seen) : '';
+  };
+
+  const indexCountsByDir = new Map<string, Map<string, number>>();
+  const getIndexCounts = (dir: string): Map<string, number> => {
+    let counts = indexCountsByDir.get(dir);
+    if (!counts) {
+      counts = parseIndexInstantiations(join(dir, 'index.ts'));
+      indexCountsByDir.set(dir, counts);
+    }
+    return counts;
+  };
+
+  const cards: DuplicateCardRecord[] = classes.map(parsed => {
+    const fileName = parsed.filePath.split(sep).pop() || '';
+    const dir = dirname(parsed.filePath);
+    const indexCounts = getIndexCounts(dir);
+    const ownSet = extractPublicString(parsed.classSource, 'set').toUpperCase();
+    const ownSetNumber = extractPublicString(parsed.classSource, 'setNumber');
+    const set = ownSet || resolveProperty(parsed, 'set').toUpperCase();
+    const setNumber = ownSetNumber || resolveProperty(parsed, 'setNumber');
+    const name = resolveProperty(parsed, 'name');
+    const fullName = extractPublicString(parsed.classSource, 'fullName') || resolveProperty(parsed, 'fullName');
+    return {
+      className: parsed.className,
+      name,
+      set,
+      setNumber,
+      fullName,
+      sourcePath: relative(serverSetsRoot, parsed.filePath).replaceAll(sep, '/'),
+      kind: cardFileKind(fileName),
+      indexCount: indexCounts.get(parsed.className) || 0,
+      ownSet,
+      ownSetNumber,
+      directory: relative(serverSetsRoot, dir).replaceAll(sep, '/') || '.',
+    };
+  }).filter(card => card.set || card.setNumber || card.fullName);
+
+  // Reprints often omit `public set` and inherit the parent print's set code.
+  // Prefer an own set, else the unique own-set declared by siblings in the same folder.
+  const directorySets = new Map<string, Set<string>>();
+  for (const card of cards) {
+    if (!card.ownSet) continue;
+    const sets = directorySets.get(card.directory) || new Set<string>();
+    sets.add(card.ownSet);
+    directorySets.set(card.directory, sets);
+  }
+  for (const card of cards) {
+    if (card.ownSet) {
+      card.set = card.ownSet;
+      continue;
+    }
+    const siblingSets = directorySets.get(card.directory);
+    // Do not fall back to an inherited parent set — that causes cross-set false positives
+    // when reprints only override setNumber/fullName.
+    card.set = siblingSets && siblingSets.size === 1 ? [...siblingSets][0] : '';
+  }
+
+  const groups = new Map<string, DuplicateGroup>();
+
+  const addGroup = (key: string, reason: DuplicateReason, groupCards: DuplicateCardRecord[]) => {
+    const existing = groups.get(key);
+    const strip = (c: DuplicateCardRecord): DuplicateCardRecord => ({
+      className: c.className,
+      name: c.name,
+      set: c.set,
+      setNumber: c.setNumber,
+      fullName: c.fullName,
+      sourcePath: c.sourcePath,
+      kind: c.kind,
+      indexCount: c.indexCount,
+    });
+    if (existing) {
+      if (!existing.reasons.some(r => r.id === reason.id && r.message === reason.message)) {
+        existing.reasons.push(reason);
+      }
+      for (const card of groupCards) {
+        if (!existing.cards.some(c => c.className === card.className && c.sourcePath === card.sourcePath)) {
+          existing.cards.push(strip(card));
+        }
+      }
+      return;
+    }
+    groups.set(key, {
+      key,
+      reasons: [reason],
+      cards: groupCards.map(strip),
+    });
+  };
+
+  // same-set-number: ≥2 classes share (set, setNumber)
+  const bySetNumber = new Map<string, DuplicateCardRecord[]>();
+  for (const card of cards) {
+    if (!card.set || !card.setNumber) continue;
+    const key = `${card.set}:${card.setNumber}`;
+    const list = bySetNumber.get(key) || [];
+    list.push(card);
+    bySetNumber.set(key, list);
+  }
+  for (const [key, list] of bySetNumber) {
+    const unique = list.filter((card, index, all) =>
+      all.findIndex(other => other.className === card.className && other.sourcePath === card.sourcePath) === index
+    );
+    if (unique.length < 2) continue;
+    const names = unique.map(c => c.className).join(' and ');
+    addGroup(key, {
+      id: 'same-set-number',
+      message: `Same set + set number (${key.replace(':', ' ')}) registered by ${names}`,
+    }, unique);
+
+    // duplicate-other-prints within the colliding group
+    const reprintCards = unique.filter(c =>
+      REPRINT_FILE_NAMES.has(c.sourcePath.split('/').pop() || '')
+    );
+    if (reprintCards.length >= 2) {
+      const fileLabel = reprintCards[0].sourcePath.split('/').pop() || 'other-prints.ts';
+      addGroup(key, {
+        id: 'duplicate-other-prints',
+        message: `Duplicate reprint for ${key.replace(':', ' ')} in ${fileLabel}`,
+      }, unique);
+    }
+  }
+
+  // duplicate-fullname: ≥2 classes share fullName
+  const byFullName = new Map<string, DuplicateCardRecord[]>();
+  for (const card of cards) {
+    if (!card.fullName) continue;
+    const list = byFullName.get(card.fullName) || [];
+    list.push(card);
+    byFullName.set(card.fullName, list);
+  }
+  for (const [fullName, list] of byFullName) {
+    const unique = list.filter((card, index, all) =>
+      all.findIndex(other => other.className === card.className && other.sourcePath === card.sourcePath) === index
+    );
+    if (unique.length < 2) continue;
+    addGroup(`fullname:${fullName}`, {
+      id: 'duplicate-fullname',
+      message: `Duplicate fullName "${fullName}"`,
+    }, unique);
+  }
+
+  // duplicate-other-prints by fullName within the same reprint file
+  const byReprintFileFullName = new Map<string, DuplicateCardRecord[]>();
+  for (const card of cards) {
+    const fileName = card.sourcePath.split('/').pop() || '';
+    if (!REPRINT_FILE_NAMES.has(fileName) || !card.fullName) continue;
+    const key = `${card.sourcePath}::${card.fullName}`;
+    const list = byReprintFileFullName.get(key) || [];
+    list.push(card);
+    byReprintFileFullName.set(key, list);
+  }
+  for (const [composite, list] of byReprintFileFullName) {
+    if (list.length < 2) continue;
+    const [sourcePath, fullName] = composite.split('::');
+    const fileLabel = sourcePath.split('/').pop() || 'other-prints.ts';
+    addGroup(`reprint-fullname:${sourcePath}:${fullName}`, {
+      id: 'duplicate-other-prints',
+      message: `Duplicate reprint fullName "${fullName}" in ${fileLabel}`,
+    }, list);
+  }
+
+  // duplicate-index: same class appears ≥2× in a set index.ts
+  for (const [dir, counts] of indexCountsByDir) {
+    const relDir = relative(serverSetsRoot, dir).replaceAll(sep, '/') || '.';
+    for (const [className, count] of counts) {
+      if (count < 2) continue;
+      const matching = cards.filter(c => {
+        const cardDir = c.sourcePath.includes('/')
+          ? c.sourcePath.slice(0, c.sourcePath.lastIndexOf('/'))
+          : '.';
+        return c.className === className && cardDir === relDir;
+      });
+      const groupCards = matching.length > 0
+        ? matching
+        : [{
+            className,
+            name: '',
+            set: '',
+            setNumber: '',
+            fullName: '',
+            sourcePath: `${relDir}/index.ts`,
+            kind: 'implementation',
+            indexCount: count,
+          }];
+      addGroup(`index:${relDir}:${className}`, {
+        id: 'duplicate-index',
+        message: `Class ${className} instantiated ${count} times in ${relDir}/index.ts`,
+      }, groupCards.map(c => ({ ...c, indexCount: count })));
+    }
+  }
+
+  return [...groups.values()].sort((a, b) => a.key.localeCompare(b.key));
+}
+
+function serveCardDuplicates(req: IncomingMessage, res: ServerResponse, next: () => void): void {
+  if (req.url?.split('?')[0] !== '/card-duplicates' || req.method !== 'GET') {
+    next();
+    return;
+  }
+  try {
+    jsonResponse(res, 200, { duplicates: findCardDuplicates() });
+  } catch (error) {
+    jsonResponse(res, 500, {
+      error: error instanceof Error ? error.message : 'Failed to scan for duplicate cards.',
+    });
+  }
+}
+
 function serveServerCardEffects(req: IncomingMessage, res: ServerResponse, next: () => void): void {
   if (req.url?.split('?')[0] !== '/server-card-effects.json') {
     next();
@@ -703,15 +1144,19 @@ function tcgDataPlugin(): Plugin {
     configureServer(server) {
       server.middlewares.use(serveImplementedCardIds);
       server.middlewares.use(serveServerCardEffects);
+      server.middlewares.use(serveCardDuplicates);
       server.middlewares.use(serveReprintCandidates);
       server.middlewares.use(serveSaveCard);
+      server.middlewares.use(serveRemoveCard);
       server.middlewares.use(serveTcgData);
     },
     configurePreviewServer(server) {
       server.middlewares.use(serveImplementedCardIds);
       server.middlewares.use(serveServerCardEffects);
+      server.middlewares.use(serveCardDuplicates);
       server.middlewares.use(serveReprintCandidates);
       server.middlewares.use(serveSaveCard);
+      server.middlewares.use(serveRemoveCard);
       server.middlewares.use(serveTcgData);
     },
   };

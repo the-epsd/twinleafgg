@@ -11,14 +11,41 @@ import { PokemonCardList } from '../state/pokemon-card-list';
 import { AttachEnergyEffect } from '../effects/play-card-effects';
 import { PendingEndOfTurnEffect, PendingEndOfTurnEffectBase } from '../state/pending-end-of-turn-effects';
 import { Player } from '../state/player';
-import { FLIP_UNTIL_TAILS_AND_COUNT_HEADS, MOVE_CARDS, ADD_MARKER, HAS_MARKER, REMOVE_MARKER } from './prefabs';
+import { FLIP_UNTIL_TAILS_AND_COUNT_HEADS, MOVE_POKEMON_OFF_BOARD, ADD_MARKER, HAS_MARKER, REMOVE_MARKER } from './prefabs';
 import { CoinFlipEffect } from '../effects/play-card-effects';
 import { scheduleDefendingPokemonEndOfTurnEffect, nextTurnAttackDamageBonusEffect, armNextTurnAttackDamageBonus, nextTurnAttackBaseDamageEffect } from '../effects/effect-of-attack-effects';
 import { GameError } from '../../game-error';
-import { GameLog } from '../../game-message';
 import { CardTag } from '../card/card-types';
 import { Attack } from '../card/pokemon-types';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
+import { runDelegatedCopiedAttackGenerator } from './copy-attack-delegation';
+import { blockCannotUseAttacksNextTurn } from './copy-attack-prefabs';
+
+export {
+  cloneAttack,
+  cloneAttacks,
+  findAttackIndex,
+  withTemporaryDelegatedAttacks,
+  runDelegatedCopiedAttack,
+  runDelegatedCopiedAttackGenerator,
+} from './copy-attack-delegation';
+export type { DelegatedCopiedAttackContext } from './copy-attack-delegation';
+export {
+  COPY_ATTACK_FROM_POKEMON_LIST,
+  COPY_OPPONENT_ACTIVE_AND_BENCH_ATTACK,
+  COPY_OPPONENT_ACTIVE_ATTACK_WITH_RETRY,
+  COPY_BENCH_ATTACK_FROM_LIST,
+  COPY_ATTACK_VIA_ABILITY,
+  buildAttackListWithEnergyBlocking,
+  findPokemonCardForAttack,
+} from './copy-attack-prefabs';
+export type {
+  CopyAttackFromListOptions,
+  CopyOpponentActiveAndBenchOptions,
+  CopyBenchAttackViaListOptions,
+  BuildAttackListOptions,
+  CopyAttackViaAbilityOptions,
+} from './copy-attack-prefabs';
 
 
 // =============================================================================
@@ -422,36 +449,9 @@ export function SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK(
   effect: AfterAttackEffect) {
   const player = effect.player;
 
-  // Get all Pokemon cards (including evolutions)
-  const pokemons = player.active.getPokemons();
-
-  // Get other attached cards (energy, etc.) but not Pokemon or tools
-  const otherCards = player.active.cards.filter(card =>
-    !(card instanceof PokemonCard) &&
-    !pokemons.includes(card as PokemonCard) &&
-    (!player.active.tools || !player.active.tools.includes(card))
-  );
-
-  // Get tools separately
-  const tools = [...player.active.tools];
-
-  // Clear effects from the Pokemon
-  player.active.clearEffects();
-
-  // Move other cards (energy) to deck
-  if (otherCards.length > 0) {
-    MOVE_CARDS(store, state, player.active, player.deck, { cards: otherCards });
-  }
-
-  // Move tools to deck explicitly
-  for (const tool of tools) {
-    player.active.moveCardTo(tool, player.deck);
-  }
-
-  // Move Pokemon cards to deck
-  if (pokemons.length > 0) {
-    MOVE_CARDS(store, state, player.active, player.deck, { cards: pokemons });
-  }
+  state = MOVE_POKEMON_OFF_BOARD(store, state, player.active, {
+    pokemonDestination: player.deck,
+  });
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
@@ -464,36 +464,9 @@ export function PUT_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_HAND(
   effect: AfterAttackEffect) {
   const player = effect.player;
 
-  // Get all Pokemon cards (including evolutions)
-  const pokemons = player.active.getPokemons();
-
-  // Get other attached cards (energy, etc.) but not Pokemon or tools
-  const otherCards = player.active.cards.filter(card =>
-    !(card instanceof PokemonCard) &&
-    !pokemons.includes(card as PokemonCard) &&
-    (!player.active.tools || !player.active.tools.includes(card))
-  );
-
-  // Get tools separately
-  const tools = [...player.active.tools];
-
-  // Clear effects from the Pokemon
-  player.active.clearEffects();
-
-  // Move other cards (energy) to deck
-  if (otherCards.length > 0) {
-    MOVE_CARDS(store, state, player.active, player.hand, { cards: otherCards });
-  }
-
-  // Move tools to deck explicitly
-  for (const tool of tools) {
-    player.active.moveCardTo(tool, player.hand);
-  }
-
-  // Move Pokemon cards to deck
-  if (pokemons.length > 0) {
-    MOVE_CARDS(store, state, player.active, player.hand, { cards: pokemons });
-  }
+  return MOVE_POKEMON_OFF_BOARD(store, state, player.active, {
+    pokemonDestination: player.hand,
+  });
 }
 
 // =============================================================================
@@ -1074,6 +1047,7 @@ function* copyBenchAttackGenerator(
     state,
     new ChooseAttackPrompt(player.id, GameMessage.CHOOSE_ATTACK_TO_COPY, [benchedCard], {
       allowCancel,
+      blocked: blockCannotUseAttacksNextTurn(player, [benchedCard]),
     }),
     (result) => {
       selected = result;
@@ -1086,28 +1060,29 @@ function* copyBenchAttackGenerator(
     return state;
   }
 
+  if ((player.active.cannotUseAttacksNextTurn || []).includes(copiedAttack.name)) {
+    return state;
+  }
+
   if (disallowCopycatAttack && copiedAttack.copycatAttack === true) {
     return state;
   }
 
-  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-    name: player.name,
-    attack: copiedAttack.name,
+  const copycatCard = effect.source.getPokemonCard();
+  if (copycatCard === undefined) {
+    return state;
+  }
+
+  return yield* runDelegatedCopiedAttackGenerator(next, {
+    store,
+    state,
+    player,
+    opponent,
+    copycatCard,
+    sourceCard: benchedCard,
+    selectedAttack: copiedAttack,
+    sourceSlot: effect.source,
   });
-
-  const attackEffect = new AttackEffect(player, opponent, copiedAttack);
-  store.reduceEffect(state, attackEffect);
-
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
-  }
-
-  if (attackEffect.damage > 0) {
-    const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-    state = store.reduceEffect(state, dealDamage);
-  }
-
-  return state;
 }
 
 /**
@@ -1130,14 +1105,21 @@ export function COPY_BENCH_ATTACK(
  * "Choose 1 of your opponent's Active Pokemon's attacks and use it as this attack."
  * Used by: Zoroark (Foul Play), Krookodile (Foul Play), Mew ex (Genome Hacking), etc.
  */
+export interface CopyOpponentActiveAttackOptions {
+  allowCancel?: boolean;
+  disallowCopycatAttack?: boolean;
+}
+
 function* copyOpponentActiveAttackGenerator(
   next: Function,
   store: StoreLike,
   state: State,
   effect: AttackEffect,
+  options: CopyOpponentActiveAttackOptions = {},
 ): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
+  const { allowCancel = false, disallowCopycatAttack = true } = options;
   const pokemonCard = opponent.active.getPokemonCard();
 
   if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
@@ -1148,7 +1130,8 @@ function* copyOpponentActiveAttackGenerator(
   yield store.prompt(
     state,
     new ChooseAttackPrompt(player.id, GameMessage.CHOOSE_ATTACK_TO_COPY, [pokemonCard], {
-      allowCancel: false,
+      allowCancel,
+      blocked: blockCannotUseAttacksNextTurn(player, [pokemonCard]),
     }),
     (result) => {
       selected = result;
@@ -1158,36 +1141,40 @@ function* copyOpponentActiveAttackGenerator(
 
   const attack: Attack | null = selected;
 
-  if (attack === null || attack.copycatAttack === true) {
+  if (attack === null || (disallowCopycatAttack && attack.copycatAttack === true)) {
     return state;
   }
 
-  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-    name: player.name,
-    attack: attack.name,
+  if ((player.active.cannotUseAttacksNextTurn || []).includes(attack.name)) {
+    return state;
+  }
+
+  const copycatCard = effect.source.getPokemonCard();
+  if (copycatCard === undefined) {
+    return state;
+  }
+
+  return yield* runDelegatedCopiedAttackGenerator(next, {
+    store,
+    state,
+    player,
+    opponent,
+    copycatCard,
+    sourceCard: pokemonCard,
+    selectedAttack: attack,
+    sourceSlot: effect.source,
   });
-
-  const attackEffect = new AttackEffect(player, opponent, attack);
-  state = store.reduceEffect(state, attackEffect);
-
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
-  }
-
-  if (attackEffect.damage > 0) {
-    const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-    state = store.reduceEffect(state, dealDamage);
-  }
-
-  return state;
 }
 
 export function COPY_OPPONENT_ACTIVE_ATTACK(
   store: StoreLike,
   state: State,
   effect: AttackEffect,
+  options: CopyOpponentActiveAttackOptions = {},
 ): State {
-  const generator = copyOpponentActiveAttackGenerator(() => generator.next(), store, state, effect);
+  const generator = copyOpponentActiveAttackGenerator(
+    () => generator.next(), store, state, effect, options,
+  );
   return generator.next().value;
 }
 
@@ -1216,35 +1203,21 @@ function* copyOpponentsLastAttackGenerator(
     return state;
   }
 
-  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-    name: player.name,
-    attack: lastAttack.name,
+  const copycatCard = effect.source.getPokemonCard();
+  if (copycatCard === undefined) {
+    return state;
+  }
+
+  return yield* runDelegatedCopiedAttackGenerator(next, {
+    store,
+    state,
+    player,
+    opponent,
+    copycatCard,
+    sourceCard,
+    selectedAttack: lastAttack,
+    sourceSlot: effect.source,
   });
-
-  const copiedAttackEffect = new AttackEffect(player, opponent, lastAttack);
-  copiedAttackEffect.source = player.active;
-  copiedAttackEffect.target = opponent.active;
-
-  // Call the source card's reduceEffect directly so attack logic runs even if card is not in play
-  state = sourceCard.reduceEffect(store, state, copiedAttackEffect);
-
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
-  }
-
-  if (copiedAttackEffect.damage > 0) {
-    const dealDamage = new DealDamageEffect(copiedAttackEffect, copiedAttackEffect.damage);
-    state = store.reduceEffect(state, dealDamage);
-  }
-
-  const afterAttackEffect = new AfterAttackEffect(player, opponent, lastAttack);
-  state = store.reduceEffect(state, afterAttackEffect);
-
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
-  }
-
-  return state;
 }
 
 export function COPY_OPPONENTS_LAST_ATTACK(

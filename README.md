@@ -53,6 +53,12 @@ SERVER_PASSWORD=''
 SERVER_SECRET='!secret!'
 ```
 
+Compile it:
+
+```
+npm run compile
+```
+
 Start it:
 
 ```

@@ -10,7 +10,9 @@ export class AddPlayerAction implements Action {
     public deck: string[],
     public artworksMap?: { [code: string]: { imageUrl: string; holoType?: string } },
     public deckId?: number,
-    public sleeveImagePath?: string
+    public sleeveImagePath?: string,
+    public deckBoxImagePath?: string,
+    public coinImagePath?: string
   ) { }
 
 }

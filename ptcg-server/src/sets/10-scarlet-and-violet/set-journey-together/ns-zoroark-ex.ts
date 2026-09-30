@@ -8,13 +8,9 @@ import {
   GameMessage,
   GameError,
   ChooseCardsPrompt,
-  ChooseAttackPrompt,
-  StateUtils,
-  GameLog,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import {
   ABILITY_USED,
@@ -22,70 +18,7 @@ import {
   WAS_ATTACK_USED,
   WAS_POWER_USED,
 } from '../../../game/store/prefabs/prefabs';
-
-function* useNightJoker(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  effect: AttackEffect,
-): IterableIterator<State> {
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-
-  const benched = player.bench.filter(
-    (b) =>
-      b.cards.length > 0 &&
-      b.getPokemonCard()?.hasTag(CardTag.NS) &&
-      b.getPokemonCard()?.name !== "N's Zoroark ex" &&
-      player.active !== b,
-  );
-
-  // Return early if no valid targets
-  if (benched.length === 0) {
-    return state;
-  }
-
-  const allYourPokemon = [...benched.map((b) => b.getPokemonCard())];
-
-  let selected: any;
-  yield store.prompt(
-    state,
-    new ChooseAttackPrompt(
-      player.id,
-      GameMessage.CHOOSE_ATTACK_TO_COPY,
-      allYourPokemon.filter((card): card is any => card !== undefined),
-      { allowCancel: false },
-    ),
-    (result) => {
-      selected = result;
-      next();
-    },
-  );
-
-  // Validate selected attack
-  if (!selected || selected.copycatAttack) {
-    return state; // Exit if no valid attack is selected
-  }
-
-  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-    name: player.name,
-    attack: selected.name,
-  });
-
-  // Perform attack
-  const attackEffect = new AttackEffect(player, opponent, selected);
-  state = store.reduceEffect(state, attackEffect);
-
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
-  }
-
-  if (attackEffect.damage > 0) {
-    const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-    state = store.reduceEffect(state, dealDamage);
-  }
-  return state;
-}
+import { COPY_ATTACK_FROM_POKEMON_LIST } from '../../../game/store/prefabs/copy-attack-prefabs';
 
 export class NsZoroarkex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex, CardTag.NS];
@@ -173,8 +106,23 @@ export class NsZoroarkex extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const generator = useNightJoker(() => generator.next(), store, state, effect);
-      return generator.next().value;
+      const player = effect.player;
+      const nsPokemon = player.bench
+        .filter(b =>
+          b.cards.length > 0 &&
+          b.getPokemonCard()?.hasTag(CardTag.NS) &&
+          b.getPokemonCard()?.name !== "N's Zoroark ex",
+        )
+        .map(b => b.getPokemonCard())
+        .filter((c): c is PokemonCard => c !== undefined);
+
+      if (nsPokemon.length === 0) {
+        return state;
+      }
+
+      return COPY_ATTACK_FROM_POKEMON_LIST(store, state, effect as AttackEffect, nsPokemon, {
+        disallowCopycatAttack: true,
+      });
     }
 
     return state;

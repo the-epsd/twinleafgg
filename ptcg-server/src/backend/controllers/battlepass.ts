@@ -1,23 +1,59 @@
 import { Request, Response } from 'express';
-import { AuthToken, Validate, check } from '../services';
+import { AuthToken, Validate, check, requireAdmin, validateToken, ADMIN_ROLE_ID } from '../services';
+import {
+  findCurrentBattlePassSeason,
+  findSeasonWithRewards,
+  serializeRewards,
+} from '../services/battle-pass-helpers';
 import { Controller, Get, Post } from './controller';
 import {
   BattlePassSeason, UserBattlePass, User, UserUnlockedItem, MatchXpAward
 } from '../../storage';
 import { ApiErrorEnum } from '../common/errors';
-import { LessThanOrEqual } from 'typeorm';
+import { Not } from 'typeorm';
 import { Application } from 'express';
 import { Core } from '../../game/core/core';
 import { Storage } from '../../storage';
 
-/** Newest season = latest startDate where startDate <= today */
-async function getNewestSeason(): Promise<BattlePassSeason | null> {
-  const today = new Date().toISOString().slice(0, 10);
-  const season = await BattlePassSeason.findOne({
-    where: { startDate: LessThanOrEqual(today) },
-    order: { startDate: 'DESC' }
-  });
-  return season ?? null;
+function includeDraftsQuery(req: Request): boolean {
+  const raw = req.query.includeDrafts;
+  if (raw === undefined || raw === null) {
+    return false;
+  }
+  const value = Array.isArray(raw) ? raw[0] : raw;
+  return value === '1' || value === 'true' || value === 'yes';
+}
+
+/** True when includeDrafts query is set and the caller is an authenticated admin. */
+async function adminWantsDrafts(req: Request): Promise<boolean> {
+  if (!includeDraftsQuery(req)) {
+    return false;
+  }
+  // Prefer userId injected by @AuthToken(); otherwise validate Auth-Token header.
+  let userId: number | undefined = typeof req.body?.userId === 'number' ? req.body.userId : undefined;
+  if (!userId) {
+    userId = validateToken(req.header('Auth-Token') || '') || undefined;
+  }
+  if (!userId) {
+    return false;
+  }
+  const user = await User.findOne(userId);
+  return !!user && user.roleId === ADMIN_ROLE_ID;
+}
+
+async function isAdminUser(userId: number): Promise<boolean> {
+  const user = await User.findOne(userId);
+  return !!user && user.roleId === ADMIN_ROLE_ID;
+}
+
+function canAccessSeason(season: BattlePassSeason | undefined | null, allowDrafts: boolean): boolean {
+  if (!season) {
+    return false;
+  }
+  if (season.status === 'draft' && !allowDrafts) {
+    return false;
+  }
+  return true;
 }
 
 export class BattlePass extends Controller {
@@ -26,11 +62,10 @@ export class BattlePass extends Controller {
     super(path, app, db, core);
   }
 
-  // GET /v1/battlepass/current
   @Get('/current')
   public async onGetCurrent(req: Request, res: Response) {
     try {
-      const currentSeason = await getNewestSeason();
+      const currentSeason = await findCurrentBattlePassSeason();
 
       if (!currentSeason) {
         res.status(404).send({ error: 'No active battle pass season' });
@@ -44,7 +79,9 @@ export class BattlePass extends Controller {
           seasonId: currentSeason.seasonId,
           name: currentSeason.name,
           startDate: currentSeason.startDate,
-          rewards: currentSeason.rewards,
+          endDate: currentSeason.endDate ?? null,
+          status: currentSeason.status,
+          rewards: await serializeRewards(currentSeason.rewards || []),
           maxLevel: currentSeason.maxLevel
         }
       });
@@ -54,7 +91,6 @@ export class BattlePass extends Controller {
     }
   }
 
-  // GET /v1/battlepass/active-season
   @Get('/active-season')
   @AuthToken()
   public async onGetActiveSeason(req: Request, res: Response) {
@@ -72,7 +108,6 @@ export class BattlePass extends Controller {
     }
   }
 
-  // POST /v1/battlepass/active-season
   @Post('/active-season')
   @AuthToken()
   @Validate({ seasonId: check().isString() })
@@ -86,7 +121,8 @@ export class BattlePass extends Controller {
         return;
       }
       const season = await BattlePassSeason.findOne({ where: { seasonId } });
-      if (!season) {
+      // Drafts cannot become the persisted active season (match XP).
+      if (!season || season.status === 'draft') {
         res.status(404).send({ error: 'Season not found' });
         return;
       }
@@ -99,14 +135,13 @@ export class BattlePass extends Controller {
     }
   }
 
-  // GET /v1/battlepass/season/:seasonId
   @Get('/season/:seasonId')
   public async onGetSeason(req: Request, res: Response) {
     try {
-      const seasonId = req.params.seasonId;
-      const season = await BattlePassSeason.findOne({ where: { seasonId } });
+      const allowDrafts = await adminWantsDrafts(req);
+      const season = await findSeasonWithRewards(req.params.seasonId);
 
-      if (!season) {
+      if (!canAccessSeason(season, allowDrafts)) {
         res.status(404).send({ error: 'Season not found' });
         return;
       }
@@ -114,12 +149,14 @@ export class BattlePass extends Controller {
       res.send({
         ok: true,
         season: {
-          id: season.id,
-          seasonId: season.seasonId,
-          name: season.name,
-          startDate: season.startDate,
-          rewards: season.rewards,
-          maxLevel: season.maxLevel
+          id: season!.id,
+          seasonId: season!.seasonId,
+          name: season!.name,
+          startDate: season!.startDate,
+          endDate: season!.endDate ?? null,
+          status: season!.status,
+          rewards: await serializeRewards(season!.rewards || []),
+          maxLevel: season!.maxLevel
         }
       });
     } catch (error) {
@@ -128,19 +165,19 @@ export class BattlePass extends Controller {
     }
   }
 
-  // GET /v1/battlepass/progress?seasonId=xxx (optional)
   @Get('/progress')
   @AuthToken()
   public async onGetProgress(req: Request, res: Response) {
     try {
       const userId: number = req.body.userId;
       const seasonIdParam = req.query.seasonId as string | undefined;
+      const allowDrafts = await adminWantsDrafts(req);
 
       const season = seasonIdParam
-        ? await BattlePassSeason.findOne({ where: { seasonId: seasonIdParam } })
-        : await getNewestSeason();
+        ? await findSeasonWithRewards(seasonIdParam)
+        : await findCurrentBattlePassSeason();
 
-      if (!season) {
+      if (!canAccessSeason(season, allowDrafts)) {
         res.status(404).send({ error: seasonIdParam ? 'Season not found' : 'No active battle pass season' });
         return;
       }
@@ -152,15 +189,15 @@ export class BattlePass extends Controller {
       }
 
       let progress = await UserBattlePass.findOne({
-        where: { userId, seasonId: season.seasonId },
+        where: { userId, seasonId: season!.seasonId },
         relations: ['season']
       });
 
       if (!progress) {
         progress = new UserBattlePass();
         progress.userId = userId;
-        progress.seasonId = season.seasonId;
-        progress.season = season;
+        progress.seasonId = season!.seasonId;
+        progress.season = season!;
         progress.user = user;
         progress.exp = 0;
         progress.level = 1;
@@ -168,7 +205,7 @@ export class BattlePass extends Controller {
         await progress.save();
       }
 
-      const availableRewards = season.getRewardsForLevel(progress.level, false);
+      const availableRewards = await serializeRewards(season!.getRewardsForLevel(progress.level));
 
       res.send({
         ok: true,
@@ -176,8 +213,8 @@ export class BattlePass extends Controller {
           exp: progress.exp,
           level: progress.level,
           claimedRewards: progress.claimedRewards,
-          nextLevelXp: season.getXpForLevel(progress.level),
-          totalXpForCurrentLevel: season.getTotalXpForLevel(progress.level),
+          nextLevelXp: season!.getXpForLevel(progress.level),
+          totalXpForCurrentLevel: season!.getTotalXpForLevel(progress.level),
           availableRewards
         }
       });
@@ -199,8 +236,9 @@ export class BattlePass extends Controller {
       const level: number = req.body.level;
       const seasonId: string = req.body.seasonId;
 
-      const season = await BattlePassSeason.findOne({ where: { seasonId } });
-      if (!season) {
+      const season = await findSeasonWithRewards(seasonId);
+      const allowDraft = season?.status === 'draft' ? await isAdminUser(userId) : true;
+      if (!canAccessSeason(season, allowDraft)) {
         res.status(404).send({ error: 'Season not found' });
         return;
       }
@@ -221,48 +259,36 @@ export class BattlePass extends Controller {
         return;
       }
 
-      // Check if reward can be claimed
       if (!(await progress.canClaimReward(level))) {
         res.status(400).send({ error: 'Cannot claim reward' });
         return;
       }
 
-      const rewards = season.getRewardsForLevel(level, false);
+      const rewards = season!.getRewardsForLevel(level);
       if (rewards.length === 0) {
         res.status(400).send({ error: 'No available rewards' });
         return;
       }
 
-      // Save the claimed reward
       await progress.claimReward(level);
 
-      // Grant the items to the user
       for (const reward of rewards) {
-        switch (reward.type) {
-          case 'avatar':
-          case 'card_back':
-          case 'playmat':
-          case 'marker': {
-            const unlockedItem = new UserUnlockedItem();
-            unlockedItem.userId = userId;
-            unlockedItem.itemId = reward.item;
-            unlockedItem.itemType = reward.type;
-            await unlockedItem.save();
-            break;
-          }
-        }
+        const unlockedItem = new UserUnlockedItem();
+        unlockedItem.userId = userId;
+        unlockedItem.itemId = reward.itemId;
+        unlockedItem.itemType = reward.rewardType;
+        await unlockedItem.save();
       }
 
       await progress.save();
 
       res.send({
         ok: true,
-        rewards,
+        rewards: await serializeRewards(rewards),
         progress: {
           exp: progress.exp,
           level: progress.level,
           claimedRewards: progress.claimedRewards,
-
         }
       });
     } catch (error) {
@@ -278,25 +304,27 @@ export class BattlePass extends Controller {
     seasonId: check().optional().isString()
   })
   public async onAddDebugExp(req: Request, res: Response) {
+    if (!(await requireAdmin(req, res))) {
+      return;
+    }
     try {
       const userId: number = req.body.userId;
       const exp: number = req.body.exp;
       const seasonIdParam: string | undefined = req.body.seasonId;
 
       const season = seasonIdParam
-        ? await BattlePassSeason.findOne({ where: { seasonId: seasonIdParam } })
-        : await getNewestSeason();
+        ? await findSeasonWithRewards(seasonIdParam)
+        : await findCurrentBattlePassSeason();
+      // Admins may add XP to draft seasons while previewing.
       if (!season) {
         return res.status(404).send({ error: seasonIdParam ? 'Season not found' : 'No active battle pass season' });
       }
 
-      // Get user and ensure they are an admin
       const user = await User.findOne(userId);
       if (!user) {
         return res.status(400).send({ error: ApiErrorEnum.PROFILE_INVALID });
       }
 
-      // Get or create user progress
       let progress = await UserBattlePass.findOne({
         where: {
           userId,
@@ -315,7 +343,6 @@ export class BattlePass extends Controller {
         progress.season = season;
       }
 
-      // Add experience and save
       await progress.addExp(exp);
       await progress.save();
 
@@ -337,20 +364,18 @@ export class BattlePass extends Controller {
       const userId: number = req.body.userId;
       const exp: number = req.body.exp;
 
-      const currentSeason = await getNewestSeason();
+      const currentSeason = await findCurrentBattlePassSeason();
       if (!currentSeason) {
         res.status(404).send({ error: 'No active battle pass season' });
         return;
       }
 
-      // Get user
       const user = await User.findOne(userId);
       if (!user) {
         res.status(400).send({ error: ApiErrorEnum.PROFILE_INVALID });
         return;
       }
 
-      // Get or create user progress
       let progress = await UserBattlePass.findOne({
         where: {
           userId,
@@ -374,13 +399,10 @@ export class BattlePass extends Controller {
       await progress.addExp(exp);
       await progress.save();
 
-      // Check for level up
       const leveledUp = progress.level > oldLevel;
-
-      // Get available rewards if leveled up (premium removed)
-      const availableRewards = leveledUp ?
-        currentSeason.getRewardsForLevel(progress.level, false) :
-        [];
+      const availableRewards = leveledUp
+        ? await serializeRewards(currentSeason.getRewardsForLevel(progress.level))
+        : [];
 
       res.send({
         ok: true,
@@ -400,7 +422,6 @@ export class BattlePass extends Controller {
     }
   }
 
-  // GET /v1/battlepass/pending-match-reward
   @Get('/pending-match-reward')
   @AuthToken()
   public async onGetPendingMatchReward(req: Request, res: Response) {
@@ -421,10 +442,10 @@ export class BattlePass extends Controller {
       await award.save();
 
       let season = award.seasonId
-        ? await BattlePassSeason.findOne({ where: { seasonId: award.seasonId } })
+        ? await findSeasonWithRewards(award.seasonId)
         : null;
       if (!season) {
-        season = await getNewestSeason();
+        season = await findCurrentBattlePassSeason();
       }
 
       const xpForNextLevel = season
@@ -462,13 +483,16 @@ export class BattlePass extends Controller {
     }
   }
 
-  // GET /v1/battlepass/seasons
   @Get('/seasons')
   public async onGetSeasons(req: Request, res: Response) {
     try {
-      const seasons = await BattlePassSeason.find({
-        order: { startDate: 'DESC' }
-      });
+      const allowDrafts = await adminWantsDrafts(req);
+      const seasons = allowDrafts
+        ? await BattlePassSeason.find({ order: { startDate: 'DESC' } })
+        : await BattlePassSeason.find({
+            where: { status: Not('draft') },
+            order: { startDate: 'DESC' }
+          });
 
       res.send({
         ok: true,
@@ -477,6 +501,8 @@ export class BattlePass extends Controller {
           seasonId: season.seasonId,
           name: season.name,
           startDate: season.startDate,
+          endDate: season.endDate ?? null,
+          status: season.status,
           maxLevel: season.maxLevel
         }))
       });
@@ -485,4 +511,4 @@ export class BattlePass extends Controller {
       res.status(500).send({ error: ApiErrorEnum.SERVER_ERROR });
     }
   }
-} 
+}

@@ -27,6 +27,7 @@ import type {
   OrderCardsPrompt,
   SelectOptionPrompt,
 } from 'ptcg-server';
+import { chooseCardsSelectionValid, matchesPromptFilter } from './matchesPromptFilter';
 import type { LocalGameState } from '../types/localGameState';
 import { activeGamePrompt } from '../activeGamePrompt';
 import { BoardInteractionService } from '../BoardInteractionService';
@@ -78,16 +79,7 @@ function buildChooseCardsFilterMap(
   const filterMap: Record<string, boolean> = {};
   for (let i = 0; i < cards.length; i++) {
     const card = cards[i];
-    let isBlocked = blocked.includes(i);
-    if (!isBlocked) {
-      for (const key in filter) {
-        if (Object.prototype.hasOwnProperty.call(filter, key)) {
-          isBlocked =
-            isBlocked ||
-            (filter as Record<string, unknown>)[key] !== (card as unknown as Record<string, unknown>)[key];
-        }
-      }
-    }
+    const isBlocked = blocked.includes(i) || !matchesPromptFilter(card, filter);
     filterMap[card.fullName] = !isBlocked;
   }
   return filterMap;
@@ -415,6 +407,128 @@ function AttackAnimationWaitPrompt(props: {
   }, [promptId, boardInteraction, resolve]);
 
   return null;
+}
+
+function renderWaitPromptResolver(
+  wp: WaitPrompt,
+  boardInteraction: BoardInteractionService,
+  resolve: (id: number, result: unknown) => void,
+  t: TFunction,
+) {
+  if (isHandToDeckAnimationWaitPrompt(wp)) {
+    return (
+      <HandToDeckAnimationWaitPrompt
+        key={wp.id}
+        promptId={wp.id}
+        durationMs={wp.duration}
+        boardInteraction={boardInteraction}
+        resolve={resolve}
+      />
+    );
+  }
+  if (isDeckShuffleAnimationWaitPrompt(wp)) {
+    return (
+      <DeckShuffleAnimationWaitPrompt
+        key={wp.id}
+        promptId={wp.id}
+        durationMs={wp.duration}
+        boardInteraction={boardInteraction}
+        resolve={resolve}
+      />
+    );
+  }
+  if (isDrawAnimationWaitPrompt(wp)) {
+    return (
+      <DrawAnimationWaitPrompt
+        key={wp.id}
+        promptId={wp.id}
+        durationMs={wp.duration}
+        boardInteraction={boardInteraction}
+        resolve={resolve}
+      />
+    );
+  }
+  if (wp.showVisual === false) {
+    return (
+      <SilentWaitPrompt
+        key={wp.id}
+        promptId={wp.id}
+        durationMs={wp.duration > 0 ? wp.duration : 0}
+        resolve={resolve}
+      />
+    );
+  }
+  if (isAttackAnimationWaitPrompt(wp)) {
+    return (
+      <AttackAnimationWaitPrompt
+        key={wp.id}
+        promptId={wp.id}
+        boardInteraction={boardInteraction}
+        resolve={resolve}
+      />
+    );
+  }
+  if (isAbilityAnimationWaitPrompt(wp)) {
+    return (
+      <AbilityAnimationWaitPrompt
+        key={wp.id}
+        promptId={wp.id}
+        boardInteraction={boardInteraction}
+        resolve={resolve}
+      />
+    );
+  }
+  if (isCoinFlipAnimationWaitPrompt(wp)) {
+    return (
+      <CoinFlipAnimationWaitPrompt
+        key={wp.id}
+        promptId={wp.id}
+        durationMs={wp.duration > 0 ? wp.duration : COIN_FLIP_SERVER_WAIT_MS}
+        resolve={resolve}
+      />
+    );
+  }
+  return (
+    <WaitPromptPanel key={wp.id} prompt={wp} t={t} gameMessageText={gameMessageText} resolve={resolve} />
+  );
+}
+
+/**
+ * Self-play stays on the acting player's seat for silent opponent waits.
+ * Resolve those gates here so the effect does not hang without a perspective swap.
+ */
+function SelfPlayOpponentWaitPrompts(props: {
+  localGame: LocalGameState;
+  clientId: number;
+  boardInteraction: BoardInteractionService;
+  onResolvePrompt: (promptId: number, result: unknown) => void | Promise<void>;
+}) {
+  const { localGame, clientId, boardInteraction, onResolvePrompt } = props;
+  const { t } = useTranslation();
+  const resolve = useCallback(
+    (id: number, result: unknown) => {
+      void onResolvePrompt(id, result);
+    },
+    [onResolvePrompt],
+  );
+
+  if (localGame.replay || localGame.state.gameSettings?.selfPlay !== true) {
+    return null;
+  }
+
+  const waits = localGame.state.prompts.filter(
+    (p): p is WaitPrompt =>
+      p.type === 'WaitPrompt' && p.result === undefined && p.playerId !== clientId,
+  );
+  if (waits.length === 0) {
+    return null;
+  }
+
+  return (
+    <>
+      {waits.map((wp) => renderWaitPromptResolver(wp, boardInteraction, resolve, t))}
+    </>
+  );
 }
 
 function AbilityAnimationWaitPrompt(props: {
@@ -802,7 +916,24 @@ function ChooseHandCardsBoardOverlay(props: {
   );
 }
 
-export function TablePromptLayer({
+export function TablePromptLayer(props: TablePromptLayerProps) {
+  if (props.localGame.replay) {
+    return null;
+  }
+  return (
+    <>
+      <SelfPlayOpponentWaitPrompts
+        localGame={props.localGame}
+        clientId={props.clientId}
+        boardInteraction={props.boardInteraction}
+        onResolvePrompt={props.onResolvePrompt}
+      />
+      <TablePromptLayerBody {...props} />
+    </>
+  );
+}
+
+function TablePromptLayerBody({
   localGame,
   clientId,
   catalog,
@@ -1083,84 +1214,7 @@ export function TablePromptLayer({
   }
 
   if (p.type === 'WaitPrompt') {
-    const wp = p as WaitPrompt;
-    if (isHandToDeckAnimationWaitPrompt(wp)) {
-      return (
-        <HandToDeckAnimationWaitPrompt
-          key={wp.id}
-          promptId={wp.id}
-          durationMs={wp.duration}
-          boardInteraction={boardInteraction}
-          resolve={resolve}
-        />
-      );
-    }
-    if (isDeckShuffleAnimationWaitPrompt(wp)) {
-      return (
-        <DeckShuffleAnimationWaitPrompt
-          key={wp.id}
-          promptId={wp.id}
-          durationMs={wp.duration}
-          boardInteraction={boardInteraction}
-          resolve={resolve}
-        />
-      );
-    }
-    if (isDrawAnimationWaitPrompt(wp)) {
-      return (
-        <DrawAnimationWaitPrompt
-          key={wp.id}
-          promptId={wp.id}
-          durationMs={wp.duration}
-          boardInteraction={boardInteraction}
-          resolve={resolve}
-        />
-      );
-    }
-    if (wp.showVisual === false) {
-      return (
-        <SilentWaitPrompt
-          key={wp.id}
-          promptId={wp.id}
-          durationMs={wp.duration > 0 ? wp.duration : 0}
-          resolve={resolve}
-        />
-      );
-    }
-    // Server used to block attacks on this prompt; 3D board plays motion from the socket event instead.
-    if (isAttackAnimationWaitPrompt(wp)) {
-      return (
-        <AttackAnimationWaitPrompt
-          key={wp.id}
-          promptId={wp.id}
-          boardInteraction={boardInteraction}
-          resolve={resolve}
-        />
-      );
-    }
-    if (isAbilityAnimationWaitPrompt(wp)) {
-      return (
-        <AbilityAnimationWaitPrompt
-          key={wp.id}
-          promptId={wp.id}
-          boardInteraction={boardInteraction}
-          resolve={resolve}
-        />
-      );
-    }
-    if (isCoinFlipAnimationWaitPrompt(wp)) {
-      return (
-        <CoinFlipAnimationWaitPrompt
-          key={wp.id}
-          promptId={wp.id}
-          durationMs={wp.duration > 0 ? wp.duration : COIN_FLIP_SERVER_WAIT_MS}
-          resolve={resolve}
-        />
-      );
-    }
-    return (
-      <WaitPromptPanel key={wp.id} prompt={wp} t={t} gameMessageText={gameMessageText} resolve={resolve} />
-    );
+    return renderWaitPromptResolver(p as WaitPrompt, boardInteraction, resolve, t);
   }
 
   if (p.type === 'Show cards') {
@@ -1722,7 +1776,7 @@ function ChooseCardsPanel(props: {
   };
 
   const selectedCards = selectedIndices.map((i) => cards[i]);
-  const canConfirm = prompt.validate(selectedCards);
+  const canConfirm = chooseCardsSelectionValid(cards, selectedCards, prompt.filter, prompt.options);
 
   const title = t('PROMPT_CHOOSE_CARDS_TITLE', { defaultValue: 'Choose cards' });
   /** Secret: facedown in live play; in replay, facedown until user checks Reveal. */

@@ -4,10 +4,10 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { ChooseAttackPrompt, GameMessage, StoreLike, State, StateUtils } from '../../game';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { COPY_ATTACK_FROM_POKEMON_LIST } from '../../game/store/prefabs/copy-attack-prefabs';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { UseAttackEffect } from '../../game/store/effects/game-effects';
 
 export class DittoVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
@@ -23,6 +23,7 @@ export class DittoVmax extends PokemonCard {
       name: 'Max Transform',
       cost: [C, C, C],
       damage: 0,
+      copycatAttack: true,
       text: "Choose 1 of your opponent's Active Pokémon's attacks and use it as this attack.",
     },
   ];
@@ -35,8 +36,6 @@ export class DittoVmax extends PokemonCard {
   public fullName: string = 'Ditto VMAX SHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Max Transform
-    // Ref: set-vivid-voltage/sableye.ts (ChooseAttackPrompt), set-burning-shadows/marshadow-gx.ts (UseAttackEffect pattern)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -46,18 +45,9 @@ export class DittoVmax extends PokemonCard {
         return state;
       }
 
-      return store.prompt(
-        state,
-        new ChooseAttackPrompt(player.id, GameMessage.CHOOSE_ATTACK_TO_COPY, [opponentPokemon], {
-          allowCancel: false,
-        }),
-        (attack) => {
-          if (attack !== null) {
-            const useAttackEffect = new UseAttackEffect(player, attack);
-            store.reduceEffect(state, useAttackEffect);
-          }
-        },
-      );
+      return COPY_ATTACK_FROM_POKEMON_LIST(store, state, effect, [opponentPokemon], {
+        allowCancel: false,
+      });
     }
 
     return state;

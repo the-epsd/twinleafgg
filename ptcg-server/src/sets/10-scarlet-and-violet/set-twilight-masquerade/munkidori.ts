@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, PowerType, DamageMap, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike, CardTarget, RemoveDamagePrompt, GameError, SpecialCondition, EnergyCard, BoardEffect, SuperType } from '../../../game';
+import { PokemonCard, Stage, CardType, PowerType, DamageMap, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike, CardTarget, RemoveDamagePrompt, GameError, SpecialCondition, BoardEffect } from '../../../game';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
 import { CheckHpEffect, CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
@@ -115,20 +115,7 @@ export class Munkidori extends PokemonCard {
           store.reduceEffect(state, checkEnergy);
 
           checkEnergy.energyMap.forEach(em => {
-            if (em.provides.includes(CardType.ANY)) {
-              hasDarkAttached = true;
-            }
-            if (em.provides.includes(CardType.DARK)) {
-              hasDarkAttached = true;
-            }
-            const energyCard = em.card;
-            if (energyCard.superType === SuperType.ENERGY && (energyCard as EnergyCard).provides.includes(CardType.DARK)) {
-              hasDarkAttached = true;
-            }
-            if (energyCard.superType === SuperType.ENERGY && (energyCard as EnergyCard).provides.includes(CardType.ANY)) {
-              hasDarkAttached = true;
-            }
-            if (energyCard.superType === SuperType.ENERGY && (energyCard as EnergyCard).blendedEnergies?.includes(CardType.DARK)) {
+            if (em.provides.includes(CardType.ANY) || em.provides.includes(CardType.DARK)) {
               hasDarkAttached = true;
             }
           });

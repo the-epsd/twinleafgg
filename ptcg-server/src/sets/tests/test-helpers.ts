@@ -17,7 +17,7 @@ import { AlertPrompt } from '../../game/store/prompts/alert-prompt';
 import { ConfirmPrompt } from '../../game/store/prompts/confirm-prompt';
 import { ConfirmCardsPrompt } from '../../game/store/prompts/confirm-cards-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
-import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
+import { ChooseCardsPrompt, matchesPromptFilter } from '../../game/store/prompts/choose-cards-prompt';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { ChooseEnergyPrompt } from '../../game/store/prompts/choose-energy-prompt';
@@ -353,17 +353,7 @@ class TestStoreHandler implements StoreHandler {
   }
 
   private cardMatchesPartialFilter(card: Card, filter: Partial<Card>): boolean {
-    for (const key in filter) {
-      if (!Object.prototype.hasOwnProperty.call(filter, key)) {
-        continue;
-      }
-      const expected = (filter as any)[key];
-      const actual = (card as any)[key];
-      if (actual !== expected) {
-        return false;
-      }
-    }
-    return true;
+    return matchesPromptFilter(card, filter);
   }
 
   private resolveChooseCardsRaw(prompt: ChooseCardsPrompt): any {
@@ -967,12 +957,11 @@ function buildPokemonSlot(slot: PokemonCardList, config: PokemonSlotConfig): voi
     }
   }
 
-  // Attach tools
+  // Attach tools — production keeps tools only in tools[] (stripped from cards on attach)
   if (config.tools) {
     for (const toolName of config.tools) {
       const tool = getCardByName(toolName);
       tool.id = nextCardId++;
-      slot.cards.push(tool);
       slot.tools.push(tool);
     }
   }

@@ -127,10 +127,17 @@ export class MatchRecorder {
   private async awardBattlePassXp(manager: EntityManager, match: Match, state: State): Promise<void> {
     try {
       const today = new Date().toISOString().slice(0, 10);
-      const defaultSeason = await manager.findOne(BattlePassSeason, {
-        where: { startDate: LessThanOrEqual(today) },
+      const candidates = await manager.find(BattlePassSeason, {
+        where: { status: 'published', startDate: LessThanOrEqual(today) },
         order: { startDate: 'DESC' }
       });
+      const defaultSeason = candidates.find(season => {
+        if (!season.endDate) {
+          return true;
+        }
+        const end = String(season.endDate).slice(0, 10);
+        return end >= today;
+      }) ?? null;
       if (!defaultSeason) return;
 
       const xpForWin = 100;
@@ -156,7 +163,7 @@ export class MatchRecorder {
           const activeSeason = await manager.findOne(BattlePassSeason, {
             where: { seasonId: dbUser.activeBattlePassSeasonId }
           });
-          if (activeSeason) {
+          if (activeSeason && activeSeason.status !== 'draft') {
             const seasonStart = String(activeSeason.startDate).slice(0, 10);
             if (seasonStart <= today) {
               season = activeSeason;

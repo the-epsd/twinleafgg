@@ -1,6 +1,6 @@
 import { AnimationEvent } from '@angular/animations';
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { Prompt, GamePhase, WaitPrompt } from 'ptcg-server';
+import { Prompt, GamePhase } from 'ptcg-server';
 
 import { GameService } from '../../api/services/game.service';
 import { GameOverPrompt } from './prompt-game-over/game-over.prompt';
@@ -112,15 +112,23 @@ export class PromptComponent implements OnChanges {
   public cannotBeMinimized(): boolean {
     // Add all prompt types you want to NEVER be minimized here
     if (this.prompt?.type === 'WaitPrompt') {
-      return (this.prompt as WaitPrompt).showVisual !== false;
+      return true;
     }
     return this.prompt?.type === 'Choose pokemon';
   }
 
+  /** Prompts rendered outside the dialog container (board overlays / silent waits). */
+  public isOverlayPrompt(): boolean {
+    const type = this.prompt?.type;
+    return (
+      type === 'WaitPrompt' ||
+      type === 'Choose pokemon' ||
+      type === 'Choose prize' ||
+      type === 'Choose cards'
+    );
+  }
+
   public isFullScreenPrompt(): boolean {
-    if (this.prompt?.type === 'WaitPrompt') {
-      return (this.prompt as WaitPrompt).showVisual !== false;
-    }
-    return this.prompt?.type === 'Choose pokemon' || this.prompt?.type === 'Choose prize' || this.prompt?.type === 'Choose cards';
+    return this.isOverlayPrompt();
   }
 }

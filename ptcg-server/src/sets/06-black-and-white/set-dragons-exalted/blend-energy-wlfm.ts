@@ -24,8 +24,6 @@ export class BlendEnergyWLFM extends EnergyCard {
 
   public text = 'This card provides [C] Energy. When attached to a Pokemon, this card provides [W], [L], [F], or [M] but only 1 Energy at a time.';
 
-  public blendedEnergies = [CardType.WATER, CardType.LIGHTNING, CardType.FIGHTING, CardType.METAL];
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       try {
@@ -37,7 +35,7 @@ export class BlendEnergyWLFM extends EnergyCard {
 
       effect.energyMap.push({
         card: this,
-        provides: [...this.blendedEnergies]
+        provides: [CardType.WATER, CardType.LIGHTNING, CardType.FIGHTING, CardType.METAL]
       });
     }
 

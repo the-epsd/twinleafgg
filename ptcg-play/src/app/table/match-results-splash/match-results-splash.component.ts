@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
-import { GameWinner } from 'ptcg-server';
+import { GameWinner, selfPlayFocusPlayerId } from 'ptcg-server';
 import { LocalGameState } from '../../shared/session/session.interface';
 import { GameOverPrompt } from '../prompt/prompt-game-over/game-over.prompt';
 import { SessionService } from '../../shared/session/session.service';
@@ -45,7 +45,9 @@ export class MatchResultsSplashComponent implements OnInit {
     }
 
     const state = this.gameState.state;
-    const currentPlayerId = this.sessionService.session.clientId;
+    const currentPlayerId = state.gameSettings?.selfPlay === true
+      ? selfPlayFocusPlayerId(state)
+      : this.sessionService.session.clientId;
 
     if (this.prompt.winner === GameWinner.DRAW) {
       this.displayText = 'DRAW';

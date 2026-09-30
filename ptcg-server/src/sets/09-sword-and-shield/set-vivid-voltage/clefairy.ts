@@ -1,56 +1,9 @@
-import { Attack, ChooseAttackPrompt, GameLog, GameMessage, PokemonCard, State, StateUtils, StoreLike } from '../../../game';
+import { PokemonCard, State, StoreLike } from '../../../game';
 import { CardType, Stage } from '../../../game/store/card/card-types';
-import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
-
-function* useMetronome(next: Function, store: StoreLike, state: State,
-  effect: AttackEffect): IterableIterator<State> {
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-  const pokemonCard = opponent.active.getPokemonCard();
-
-  if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
-    return state;
-  }
-
-  let selected: any;
-  yield store.prompt(state, new ChooseAttackPrompt(
-    player.id,
-    GameMessage.CHOOSE_ATTACK_TO_COPY,
-    [pokemonCard],
-    { allowCancel: false }
-  ), result => {
-    selected = result;
-    next();
-  });
-
-  const attack: Attack | null = selected;
-
-  if (attack === null) {
-    return state;
-  }
-
-  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-    name: player.name,
-    attack: attack.name
-  });
-
-  const attackEffect = new AttackEffect(player, opponent, attack);
-  store.reduceEffect(state, attackEffect);
-
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
-  }
-
-  if (attackEffect.damage > 0) {
-    const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-    state = store.reduceEffect(state, dealDamage);
-  }
-
-  return state;
-}
+import { COPY_OPPONENT_ACTIVE_ATTACK_WITH_RETRY } from '../../../game/store/prefabs/copy-attack-prefabs';
 
 export class Clefairy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -69,6 +22,7 @@ export class Clefairy extends PokemonCard {
     name: 'Mini-Metronome',
     cost: [C, C],
     damage: 0,
+    copycatAttack: true,
     text: 'Flip a coin. If heads, choose 1 of your opponent\'s Active Pokémon\'s attacks and use it as this attack.'
   }];
 
@@ -85,8 +39,7 @@ export class Clefairy extends PokemonCard {
 
       return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result === true) {
-          const generator = useMetronome(() => generator.next(), store, state, effect);
-          return generator.next().value;
+          return COPY_OPPONENT_ACTIVE_ATTACK_WITH_RETRY(store, state, effect as AttackEffect);
         }
       });
     }

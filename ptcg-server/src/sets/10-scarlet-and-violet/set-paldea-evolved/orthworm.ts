@@ -88,7 +88,7 @@ export class Orthworm extends PokemonCard {
 
       let metalEnergy = 0;
       for (const energyMap of checkProvidedEnergy.energyMap) {
-        const energy = energyMap.provides.filter(t => t === CardType.METAL || t === CardType.ANY || CardType.LPM || CardType.WLFM);
+        const energy = energyMap.provides.filter(t => t === CardType.METAL || t === CardType.ANY);
         if (energy.length > 0) {
           metalEnergy += energy.length;
         }

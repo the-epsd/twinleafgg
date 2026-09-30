@@ -15,7 +15,8 @@ export class Cherubi extends PokemonCard {
     cost: [C],
     damage: 0,
     text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
-  }, {
+  },
+  {
     name: 'Flop',
     cost: [G],
     damage: 10,

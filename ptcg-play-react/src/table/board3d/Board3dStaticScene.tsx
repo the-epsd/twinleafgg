@@ -3,6 +3,8 @@ import {
   BufferGeometry,
   DoubleSide,
   Euler,
+  LinearFilter,
+  LinearMipmapLinearFilter,
   Matrix4,
   MeshBasicMaterial,
   MeshStandardMaterial,
@@ -14,6 +16,7 @@ import {
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { Select } from '@react-three/postprocessing';
 import { useTexture } from '@react-three/drei';
+import { useThree } from '@react-three/fiber';
 import { ZONE_POSITIONS } from './board-3d-zone-positions';
 import {
   BOARD_3D_BENCH_OUTLINE_COLOR,
@@ -72,10 +75,19 @@ export type Board3dStaticSceneProps = {
 export function Board3dStaticScene({ bloomActive = false }: Board3dStaticSceneProps) {
   const emblemPath = publicAssetUrl('assets/twinleaf-board-center.png');
   const centerTex = useTexture(emblemPath);
+  const gl = useThree((s) => s.gl);
 
   useLayoutEffect(() => {
+    // Premultiply on upload so leftover RGB in A=0 texels doesn't bleed into mipmap edges
+    // (classic white/grey halo around transparent PNGs).
     centerTex.colorSpace = SRGBColorSpace;
-  }, [centerTex]);
+    centerTex.premultiplyAlpha = true;
+    centerTex.generateMipmaps = true;
+    centerTex.minFilter = LinearMipmapLinearFilter;
+    centerTex.magFilter = LinearFilter;
+    centerTex.anisotropy = gl.capabilities.getMaxAnisotropy();
+    centerTex.needsUpdate = true;
+  }, [centerTex, gl]);
 
   const boardMaterial = useMemo(
     () =>
@@ -97,6 +109,8 @@ export function Board3dStaticScene({ bloomActive = false }: Board3dStaticScenePr
         side: DoubleSide,
         /** Skip renderer tone mapping so PNG colors match the source art. */
         toneMapped: false,
+        /** Drop near-zero alpha fringe that MSAA can still brighten against the board. */
+        alphaTest: 0.02,
       }),
     [centerTex]
   );

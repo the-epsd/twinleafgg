@@ -87,6 +87,8 @@ export function InvitePlayerPromptPanel(props: InvitePlayerPromptPanelProps) {
       resolve(prompt.id, {
         deck: deckRes.deck.cards,
         sleeveImagePath: deckRes.deck.sleeveImagePath,
+        deckBoxImagePath: deckRes.deck.deckBoxImagePath,
+        coinImagePath: deckRes.deck.coinImagePath,
       });
     } catch (e) {
       setLoadError(e instanceof ApiError ? e.message : t('REACT_ERROR_LOAD_DECKS'));

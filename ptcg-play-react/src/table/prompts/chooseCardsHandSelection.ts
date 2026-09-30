@@ -1,5 +1,6 @@
 import type { Card, CardTarget, ChooseCardsPrompt } from 'ptcg-server';
 import { GameMessage, PlayerType, SlotType } from 'ptcg-server';
+import { matchesPromptFilter } from './matchesPromptFilter';
 
 /**
  * True when every card in the prompt list is from the player's hand (may be a filtered
@@ -140,17 +141,7 @@ export function isChooseCardsHandIndexEligible(
   if (!card) {
     return false;
   }
-  for (const key in filter) {
-    if (Object.prototype.hasOwnProperty.call(filter, key)) {
-      if (
-        (filter as Record<string, unknown>)[key] !==
-        (card as unknown as Record<string, unknown>)[key]
-      ) {
-        return false;
-      }
-    }
-  }
-  return true;
+  return matchesPromptFilter(card, filter);
 }
 
 export function chooseCardsHandIndicesToCards(

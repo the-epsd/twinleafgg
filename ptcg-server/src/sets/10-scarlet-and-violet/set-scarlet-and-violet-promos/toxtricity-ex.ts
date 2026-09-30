@@ -26,7 +26,7 @@ export class Toxtricityex extends PokemonCard {
   public set: string = 'SVP';
   public regulationMark: string = 'I';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '243';
+  public setNumber: string = '215';
   public name: string = 'Toxtricity ex';
   public fullName: string = 'Toxtricity ex SVP';
 

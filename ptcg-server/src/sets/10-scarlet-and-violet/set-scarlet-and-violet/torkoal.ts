@@ -46,7 +46,7 @@ export class Torkoal extends PokemonCard {
       state = store.reduceEffect(state, checkEnergy);
 
       const totalEnergy = checkEnergy.energyMap.reduce((sum, energy) => {
-        return sum + energy.provides.filter(p => p === CardType.FIRE || p === CardType.ANY || p === CardType.GRW || p === CardType.GRPD).length;
+        return sum + energy.provides.filter(p => p === CardType.FIRE || p === CardType.ANY).length;
       }, 0);
 
       if (totalEnergy > 0) {

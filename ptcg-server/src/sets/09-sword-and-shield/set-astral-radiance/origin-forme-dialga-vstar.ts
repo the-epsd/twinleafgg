@@ -2,8 +2,6 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, GameError, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
@@ -51,27 +49,7 @@ export class OriginFormeDialgaVSTAR extends PokemonCard {
 
   public fullName: string = 'Origin Forme Dialga VSTAR ASR';
 
-  public readonly STAR_CHRONOS_MARKER = 'STAR_CHRONOS_MARKER';
-
-  public readonly STAR_CHRONOS_MARKER_2 = 'STAR_CHRONOS_MARKER_2';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (
-      effect instanceof EndTurnEffect &&
-      effect.player.marker.hasMarker(this.STAR_CHRONOS_MARKER_2, this)
-    ) {
-      effect.player.marker.removeMarker(this.STAR_CHRONOS_MARKER, this);
-      effect.player.marker.removeMarker(this.STAR_CHRONOS_MARKER_2, this);
-      effect.player.usedTurnSkip = false;
-    }
-
-    if (
-      effect instanceof EndTurnEffect &&
-      effect.player.marker.hasMarker(this.STAR_CHRONOS_MARKER, this)
-    ) {
-      effect.player.marker.addMarker(this.STAR_CHRONOS_MARKER_2, this);
-    }
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -87,6 +65,7 @@ export class OriginFormeDialgaVSTAR extends PokemonCard {
       effect.damage += energyCount * 40;
     }
 
+    // Ref: usedTurnSkip + usedTurnSkipClearArmed (game-phase-effect)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
@@ -94,8 +73,7 @@ export class OriginFormeDialgaVSTAR extends PokemonCard {
         throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
       player.usedVSTAR = true;
-      player.marker.addMarker(this.STAR_CHRONOS_MARKER, this);
-      effect.player.usedTurnSkip = true;
+      player.usedTurnSkip = true;
     }
 
     return state;

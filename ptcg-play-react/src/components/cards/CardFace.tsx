@@ -1,7 +1,8 @@
 import type { CSSProperties, ReactNode } from 'react';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { Card } from 'ptcg-server';
 import { useOptionalSettings } from '../../context/SettingsContext';
+import { CARDBACK_ASSET_URL } from '../../deck-editor/resolveScanUrl';
 import { readClientSettingsSnapshot } from '../../settings/settingsStorage';
 import { cn } from '../../utils/cn';
 import { getHoloVariant, type HoloVariant } from './holoVariant';
@@ -46,6 +47,12 @@ export function CardFace({
   holoEnabled: holoEnabledProp,
 }: CardFaceProps) {
   const showImg = src.trim().length > 0;
+  const [displaySrc, setDisplaySrc] = useState(src);
+
+  useEffect(() => {
+    setDisplaySrc(src);
+  }, [src]);
+
   const opt = useOptionalSettings();
   const holoEnabled = holoEnabledProp ?? opt?.holoEnabled ?? readClientSettingsSnapshot().holoEnabled;
 
@@ -62,8 +69,13 @@ export function CardFace({
     if (!activeHoloVariant) {
       return undefined;
     }
-    const u = holoMaskUrl(activeHoloVariant);
-    return { ['--holo-mask' as string]: `url('${u}')` };
+    const mask = `url('${holoMaskUrl(activeHoloVariant)}')`;
+    return {
+      WebkitMaskImage: mask,
+      maskImage: mask,
+      WebkitMaskSize: '100% 100%',
+      maskSize: '100% 100%',
+    };
   }, [activeHoloVariant]);
 
   return (
@@ -77,12 +89,17 @@ export function CardFace({
       >
         {showImg ? (
           <img
-            src={src}
+            src={displaySrc}
             alt=""
             loading={loading}
             decoding="async"
             draggable={draggable}
             className={styles.img}
+            onError={() => {
+              if (displaySrc !== CARDBACK_ASSET_URL) {
+                setDisplaySrc(CARDBACK_ASSET_URL);
+              }
+            }}
           />
         ) : (
           <div className={styles.fallback}>{name || '—'}</div>

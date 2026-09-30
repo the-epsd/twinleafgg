@@ -51,21 +51,39 @@ function isMessagesPath(pathname: string): boolean {
   return pathname === '/message' || pathname.startsWith('/message/');
 }
 
+function isProfilePath(pathname: string): boolean {
+  return pathname === '/profile' || pathname.startsWith('/profile/');
+}
+
+function isDeckCustomizePath(pathname: string): boolean {
+  return /^\/deck\/[^/]+\/customize\/?$/.test(pathname);
+}
+
 export function AppLayout() {
   const { t } = useTranslation();
   const { pathname } = useLocation();
   const { language, setLanguage, labels } = useLanguage();
   const { user } = useAuth();
   const { games, clientId } = useCoreSession();
+  const isAdmin = user?.roleId === 4;
   const deckEditorFullBleed = isDeckEditorPath(pathname);
+  const deckCustomizeFullBleed = isDeckCustomizePath(pathname);
   const tableFullBleed = isTablePath(pathname);
   const parentMap = isParentMapPath(pathname);
   const myGamesBleed = isMyGamesPath(pathname);
   const gamesBleed = isGamesPath(pathname);
   const battlePassBleed = isBattlePassPath(pathname);
   const messagesBleed = isMessagesPath(pathname);
+  const profileBleed = isProfilePath(pathname);
   const mainBleed =
-    deckEditorFullBleed || tableFullBleed || myGamesBleed || gamesBleed || battlePassBleed || messagesBleed;
+    deckEditorFullBleed ||
+    deckCustomizeFullBleed ||
+    tableFullBleed ||
+    myGamesBleed ||
+    gamesBleed ||
+    battlePassBleed ||
+    messagesBleed ||
+    profileBleed;
 
   const incomingInviteCount = useMemo(() => {
     const { incoming } = partitionMyGames(games, clientId, user?.userId ?? 0);
@@ -113,6 +131,7 @@ export function AppLayout() {
             <NavLink to="/battle-pass">{t('MAIN_BATTLE_PASS')}</NavLink>
             <NavLink to="/parent">Parents</NavLink>
             <NavLink to="/settings">{t('BUTTON_SETTINGS')}</NavLink>
+            {isAdmin ? <NavLink to="/admin">Admin</NavLink> : null}
           </nav>
           <label style={{ display: 'flex', alignItems: 'center', gap: 6, marginLeft: 'auto' }}>
             <SelectField
@@ -138,7 +157,11 @@ export function AppLayout() {
           minHeight: 0,
           overflowX: parentMap ? 'auto' : 'hidden',
           overflowY:
-            tableFullBleed || myGamesBleed || battlePassBleed || messagesBleed
+            tableFullBleed ||
+            deckCustomizeFullBleed ||
+            myGamesBleed ||
+            battlePassBleed ||
+            messagesBleed
               ? 'hidden'
               : parentMap
                 ? 'hidden'

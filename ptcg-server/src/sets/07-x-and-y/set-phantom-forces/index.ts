@@ -106,7 +106,7 @@ import { MysteryEnergy } from './mystery-energy';
 import {
   AegislashEXPHF,
   EnhancedHammerPHF,
-  ProfessorSycamoreXYPHF,
+  ProfessorSycamorePHF,
   RollerSkatesPHF,
   ShaunaPHF,
   DoubleColorlessEnergyPHF,
@@ -240,7 +240,7 @@ export const setPhantomForces: Card[] = [
   // Other Prints (Reprints & Alt Arts)
   new AegislashEXPHF(),
   new EnhancedHammerPHF(),
-  new ProfessorSycamoreXYPHF(),
+  new ProfessorSycamorePHF(),
   new RollerSkatesPHF(),
   new ShaunaPHF(),
   new DoubleColorlessEnergyPHF(),

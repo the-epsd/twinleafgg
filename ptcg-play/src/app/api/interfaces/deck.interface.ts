@@ -16,6 +16,8 @@ export interface DeckListEntry {
   artworks?: { code: string; artworkId?: number }[];
   sleeveIdentifier?: string;
   sleeveImagePath?: string;
+  deckBoxImagePath?: string;
+  coinImagePath?: string;
 }
 
 export interface DeckListResponse extends Response {
@@ -42,6 +44,8 @@ export interface Deck {
   artworks?: { code: string; artworkId?: number }[];
   sleeveIdentifier?: string;
   sleeveImagePath?: string;
+  deckBoxImagePath?: string;
+  coinImagePath?: string;
 }
 
 export interface DeckResponse extends Response {

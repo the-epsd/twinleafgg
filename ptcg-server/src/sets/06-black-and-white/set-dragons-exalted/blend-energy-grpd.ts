@@ -24,8 +24,6 @@ export class BlendEnergyGRPD extends EnergyCard {
 
   public text = 'This card provides [C] Energy. When this card is attached to a Pokemon, this card provides [G], [R], [P], or [D] Energy but provides only 1 Energy at a time.';
 
-  public blendedEnergies = [CardType.GRASS, CardType.FIRE, CardType.PSYCHIC, CardType.DARK];
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       try {
@@ -37,7 +35,7 @@ export class BlendEnergyGRPD extends EnergyCard {
 
       effect.energyMap.push({
         card: this,
-        provides: [...this.blendedEnergies]
+        provides: [CardType.GRASS, CardType.FIRE, CardType.PSYCHIC, CardType.DARK]
       });
     }
 

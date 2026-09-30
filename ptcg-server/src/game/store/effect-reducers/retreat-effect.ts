@@ -51,13 +51,15 @@ function flatMap<T, U>(array: T[], fn: (item: T) => U[]): U[] {
 }
 
 function promptBenchAndRetreat(store: StoreLike, state: State, player: Player): State {
-  return store.prompt(state, new ChoosePokemonPrompt(
+  const prompt = new ChoosePokemonPrompt(
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_SWITCH,
     PlayerType.BOTTOM_PLAYER,
     [SlotType.BENCH],
     { min: 1, max: 1, allowCancel: true, blocked: [] }
-  ), (benchResult: PokemonCardList[] | null) => {
+  );
+  prompt.skipSwitchLog = true;
+  return store.prompt(state, prompt, (benchResult: PokemonCardList[] | null) => {
     if (benchResult === null) {
       return;
     }
@@ -108,7 +110,7 @@ export function retreatReducer(store: StoreLike, state: State, effect: Effect): 
     }
 
     if (StateUtils.checkExactEnergy(checkProvidedEnergy.energyMap, checkRetreatCost.cost)) {
-      const cards = flatMap(checkProvidedEnergy.energyMap, e => Array.from({ length: e.provides.length }, () => e.card));
+      const cards = flatMap(checkProvidedEnergy.energyMap, e => Array.from({ length: StateUtils.getProvidesUnitCount(e.provides) }, () => e.card));
       player.active.clearEffects();
       player.active.moveCardsTo(cards, player.discard);
       return promptBenchAndRetreat(store, state, player);
@@ -180,7 +182,7 @@ export function retreatReducer(store: StoreLike, state: State, effect: Effect): 
 
     // If the player has the exact energy cost, automatically discard the energy and retreat
     if (StateUtils.checkExactEnergy(checkProvidedEnergy.energyMap, checkRetreatCost.cost)) {
-      const cards = flatMap(checkProvidedEnergy.energyMap, e => Array.from({ length: e.provides.length }, () => e.card));
+      const cards = flatMap(checkProvidedEnergy.energyMap, e => Array.from({ length: StateUtils.getProvidesUnitCount(e.provides) }, () => e.card));
       player.active.clearEffects();
       player.active.moveCardsTo(cards, effect.moveRetreatCostTo);
       retreatPokemon(store, state, effect);

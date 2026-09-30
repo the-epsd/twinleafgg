@@ -8,6 +8,15 @@ import type {
   XpGainData,
 } from '../types/battlePass';
 
+function draftsQuery(includeDrafts?: boolean): string {
+  return includeDrafts ? 'includeDrafts=1' : '';
+}
+
+function withQuery(path: string, parts: Array<string | false | undefined | null>): string {
+  const q = parts.filter(Boolean).join('&');
+  return q ? `${path}?${q}` : path;
+}
+
 export function getBattlePassActiveSeason(): Promise<ActiveSeasonResponse> {
   return apiGet<ActiveSeasonResponse>('/v1/battlepass/active-season');
 }
@@ -24,17 +33,25 @@ export function getBattlePassCurrent(): Promise<BattlePassData> {
   return apiGet<BattlePassData>('/v1/battlepass/current');
 }
 
-export function getBattlePassSeasons(): Promise<BattlePassSeasonsData> {
-  return apiGet<BattlePassSeasonsData>('/v1/battlepass/seasons');
+export function getBattlePassSeasons(includeDrafts?: boolean): Promise<BattlePassSeasonsData> {
+  return apiGet<BattlePassSeasonsData>(
+    withQuery('/v1/battlepass/seasons', [draftsQuery(includeDrafts)])
+  );
 }
 
-export function getBattlePassSeason(seasonId: string): Promise<BattlePassData> {
-  return apiGet<BattlePassData>(`/v1/battlepass/season/${encodeURIComponent(seasonId)}`);
+export function getBattlePassSeason(seasonId: string, includeDrafts?: boolean): Promise<BattlePassData> {
+  return apiGet<BattlePassData>(
+    withQuery(`/v1/battlepass/season/${encodeURIComponent(seasonId)}`, [draftsQuery(includeDrafts)])
+  );
 }
 
-export function getBattlePassProgress(seasonId?: string): Promise<BattlePassProgressData> {
-  const q = seasonId ? `?seasonId=${encodeURIComponent(seasonId)}` : '';
-  return apiGet<BattlePassProgressData>(`/v1/battlepass/progress${q}`);
+export function getBattlePassProgress(seasonId?: string, includeDrafts?: boolean): Promise<BattlePassProgressData> {
+  return apiGet<BattlePassProgressData>(
+    withQuery('/v1/battlepass/progress', [
+      seasonId ? `seasonId=${encodeURIComponent(seasonId)}` : '',
+      draftsQuery(includeDrafts),
+    ])
+  );
 }
 
 export function claimBattlePassReward(level: number, seasonId: string): Promise<void> {

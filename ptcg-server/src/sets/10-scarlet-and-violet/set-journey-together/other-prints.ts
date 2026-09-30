@@ -1,3 +1,4 @@
+import { SuperPotion } from '../../07-x-and-y/set-x-and-y/super-potion';
 import { BlackBeltsTraining } from '../set-prismatic-evolution/black-belts-training';
 import { ProfessorsResearch } from '../set-scarlet-and-violet/professors-research';
 import { BrocksScouting } from './brocks-scouting';
@@ -20,6 +21,16 @@ import { SpikyEnergy } from './spiky-energy';
 import { Swinub } from './swinub';
 import { Volcanionex } from './volcanion-ex';
 import { Wailord } from './wailord';
+
+// MARK: Trainer Reprints
+
+export class SuperPotionJTG extends SuperPotion {
+  public setNumber = '158';
+  public fullName: string = 'Super Potion JTG';
+  public set = 'JTG';
+  public regulationMark = 'I';
+  public legacyFullName = 'Super Potion MC';
+}
 
 export class MaractusIR extends Maractus {
   public fullName = 'MaractusIR JTG';

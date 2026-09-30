@@ -12,6 +12,7 @@ import { GameHistoryComponent } from './game-history/game-history.component';
 import { PlayersComponent } from './players/players.component';
 import { OnlinePlayersComponent } from './online-players/online-players.component';
 import { ChangeDeckDialogComponent } from './change-deck-dialog/change-deck-dialog.component';
+import { SelfPlayGameDialogComponent } from './self-play-game-dialog/self-play-game-dialog.component';
 
 @NgModule({
     declarations: [
@@ -25,7 +26,8 @@ import { ChangeDeckDialogComponent } from './change-deck-dialog/change-deck-dial
         GameHistoryComponent,
         PlayersComponent,
         OnlinePlayersComponent,
-        ChangeDeckDialogComponent
+        ChangeDeckDialogComponent,
+        SelfPlayGameDialogComponent
     ],
     imports: [
         SharedModule

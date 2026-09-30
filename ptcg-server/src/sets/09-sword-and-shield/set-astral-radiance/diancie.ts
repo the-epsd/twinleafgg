@@ -1,10 +1,9 @@
 import { PowerType, State, StateUtils, StoreLike } from '../../../game';
-import { CardType, Stage } from '../../../game/store/card/card-types';
+import { CardType, Stage, TrainerType } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 
-import { TrainerTargetEffect } from '../../../game/store/effects/play-card-effects';
-import { DRAW_CARDS, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { BLOCK_TRAINER_TARGET, DRAW_CARDS, IS_ABILITY_BLOCKED, IS_TRAINER_TARGET, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Diancie extends PokemonCard {
 
@@ -45,7 +44,7 @@ export class Diancie extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof TrainerTargetEffect) {
+    if (IS_TRAINER_TARGET(effect, { trainerType: TrainerType.SUPPORTER })) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -53,8 +52,8 @@ export class Diancie extends PokemonCard {
         return state;
       }
 
-      if (effect.target && effect.target.isStage(Stage.BASIC) && opponent.bench.some(b => b === effect.target)) {
-        effect.preventDefault = true;
+      if (effect.target.isStage(Stage.BASIC) && opponent.bench.some(b => b === effect.target)) {
+        BLOCK_TRAINER_TARGET(effect);
       }
     }
 

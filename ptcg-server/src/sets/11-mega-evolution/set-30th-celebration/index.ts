@@ -3,7 +3,7 @@ import { AlolanExeggutor } from './alolan-exeggutor';
 import { Articuno } from './articuno';
 import { Cherubi } from './cherubi';
 import { Cherrim } from './cherrim';
-import { Eevee } from './eevee';
+import { Eevee2 } from './eevee-2';
 import { Espeon } from './espeon';
 import { Espeonex } from './espeon-ex';
 import { Exeggcute } from './exeggcute';
@@ -50,7 +50,7 @@ import { Sylveonex } from './sylveon-ex';
 import { Greninjaex } from './greninja-ex';
 import { Mewex } from './mew-ex';
 import { Mewtwoex } from './mewtwo-ex';
-import { Eevee118 } from './other-prints';
+import { Eevee118, UltraBall30C, PokePad30C, Switch30C } from './other-prints';
 import { Tropius } from './tropius';
 import { Umbreon } from './umbreon';
 import { Umbreonex } from './umbreon-ex';
@@ -83,6 +83,44 @@ import { Lunala } from './lunala';
 import { Gimmighoul } from './gimmighoul';
 import { Zorua } from './zorua';
 import { Zoroark } from './zoroark';
+import { Groudon } from './groudon';
+import { Lucario } from './lucario';
+import { Seismitoad } from './seismitoad';
+import { Lycanroc } from './lycanroc';
+import { Koraidon } from './koraidon';
+import { NidoranFemale } from './nidoran-f';
+import { Nidorina } from './nidorina';
+import { AlolanMeowth } from './alolan-meowth';
+import { Gengarex } from './gengar-ex';
+import { Murkrow } from './murkrow';
+import { Scraggy } from './scraggy';
+import { Deino } from './deino';
+import { Zweilous } from './zweilous';
+import { Hydreigon } from './hydreigon';
+import { Yveltal } from './yveltal';
+import { GalarianMeowth } from './galarian-meowth';
+import { Jirachiex } from './jirachi-ex';
+import { Dialga } from './dialga';
+import { Ferrothorn } from './ferrothorn';
+import { Solgaleo } from './solgaleo';
+import { Zacian } from './zacian';
+import { Zamazenta } from './zamazenta';
+import { Gholdengo } from './gholdengo';
+import { Salamenceex } from './salamence-ex';
+import { JangmoO } from './jangmo-o';
+import { HakamoO } from './hakamo-o';
+import { KommoO } from './kommo-o';
+import { Meowth } from './meowth';
+import { Kangaskhan } from './kangaskhan';
+import { Ditto } from './ditto';
+import { Eevee } from './eevee';
+import { Snorlax } from './snorlax';
+import { Igglybuff } from './igglybuff';
+import { Lugia } from './lugia';
+import { HisuianZorua } from './hisuian-zorua';
+import { HisuianZoroark } from './hisuian-zoroark';
+import { Minior } from './minior';
+import { Maushold } from './maushold';
 import { DarknessEnergyArt, FightingEnergyArt, FireEnergyArt, GrassEnergyArt, LightningEnergyArt, MetalEnergyArt, PsychicEnergyArt, WaterEnergyArt } from './energy-art';
 
 export const set30thCelebration: Card[] = [
@@ -166,10 +204,51 @@ export const set30thCelebration: Card[] = [
   new Mewtwoex(),
   new Umbreon(),
   new Umbreonex(),
-  new Eevee(),
+  new Eevee2(),
   new Eevee118(),
+  new Groudon(),
+  new Lucario(),
+  new Seismitoad(),
+  new Lycanroc(),
+  new Koraidon(),
+  new NidoranFemale(),
+  new Nidorina(),
+  new AlolanMeowth(),
+  new Gengarex(),
+  new Murkrow(),
+  new Scraggy(),
   new Zorua(),
   new Zoroark(),
+  new Deino(),
+  new Zweilous(),
+  new Hydreigon(),
+  new Yveltal(),
+  new GalarianMeowth(),
+  new Jirachiex(),
+  new UltraBall30C(),
+  new PokePad30C(),
+  new Switch30C(),
+  new Dialga(),
+  new Ferrothorn(),
+  new Solgaleo(),
+  new Zacian(),
+  new Zamazenta(),
+  new Gholdengo(),
+  new Salamenceex(),
+  new JangmoO(),
+  new HakamoO(),
+  new KommoO(),
+  new Meowth(),
+  new Kangaskhan(),
+  new Ditto(),
+  new Eevee(),
+  new Snorlax(),
+  new Igglybuff(),
+  new Lugia(),
+  new HisuianZorua(),
+  new HisuianZoroark(),
+  new Minior(),
+  new Maushold(),
 
   // Energy Art
   new GrassEnergyArt(),

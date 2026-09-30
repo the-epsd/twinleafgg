@@ -65,7 +65,7 @@ export class Veluza extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH],
         { superType: SuperType.ENERGY },
-        { allowCancel: false, min: 0, max: 2, validCardTypes: [CardType.WATER, CardType.ANY, CardType.WLFM, CardType.GRW] }
+        { allowCancel: false, min: 0, max: 2, validCardTypes: [CardType.WATER, CardType.ANY] }
       ), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {
@@ -85,7 +85,7 @@ export class Veluza extends PokemonCard {
       let energyCount = 0;
       checkProvidedEnergyEffect.energyMap.forEach(em => {
         energyCount += em.provides.filter(cardType =>
-          cardType === CardType.WATER || cardType === CardType.ANY || cardType == CardType.WLFM || cardType == CardType.GRW
+          cardType === CardType.WATER || cardType === CardType.ANY
         ).length;
       });
       effect.damage += energyCount * 20;

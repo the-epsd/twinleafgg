@@ -12,7 +12,7 @@ import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-fi
 import { DeckItem, LibraryItem } from '../deck-card/deck-card.interface';
 import { DeckCardType } from '../deck-card/deck-card.component';
 import { DeckEditVirtualScrollStrategy } from './deck-edit-virtual-scroll-strategy';
-import { Card, CardTag, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType, CardType, Stage, Format } from 'ptcg-server';
+import { Card, CardTag, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType, CardType, Stage, Format, getPrimaryCardType } from 'ptcg-server';
 import html2canvas from 'html2canvas';
 import { DeckService } from 'src/app/api/services/deck.service';
 import { SettingsService } from 'src/app/table/table-sidebar/settings-dialog/settings.service';
@@ -335,7 +335,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
       const pokemonB = b.card as PokemonCard;
 
       // First sort by card type
-      const typeCompare = this.compareCardType(pokemonA.cardType) - this.compareCardType(pokemonB.cardType);
+      const typeCompare = this.compareCardType(getPrimaryCardType(pokemonA)) - this.compareCardType(getPrimaryCardType(pokemonB));
       if (typeCompare !== 0) return typeCompare;
 
       // Then sort by name
@@ -578,7 +578,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
         if (result === 0 && item.card.superType === SuperType.POKEMON) {
           const itemCard = item.card as PokemonCard;
           const listCard = list[i].card as PokemonCard;
-          const typeCompare = this.compareCardType(itemCard.cardType) - this.compareCardType(listCard.cardType);
+          const typeCompare = this.compareCardType(getPrimaryCardType(itemCard)) - this.compareCardType(getPrimaryCardType(listCard));
           if (typeCompare < 0) {
             insertIndex = i;
             break;

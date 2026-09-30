@@ -21,6 +21,7 @@ export {
   cardImageUrl,
   clearLocalCache as clearPwCache,
   getCard,
+  findCardBySetAndNumber,
   findCardsByNameAndSet,
   getSerie,
   getSet,

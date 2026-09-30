@@ -1323,11 +1323,6 @@ export enum CardType {
   DRAGAPULT_EX,
   DRIFLOON,
   FROSLASS,
-  WLFM,
-  GRW,
-  LPM,
-  FDY,
-  GRPD
 }
 
 export enum SpecialCondition {

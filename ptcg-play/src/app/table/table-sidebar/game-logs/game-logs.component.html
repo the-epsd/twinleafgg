@@ -1,19 +1,4 @@
-<!-- Overlay mode - pill-style messages -->
-<div class="ptcg-game-logs-overlay" *ngIf="overlayMode">
-  <div 
-    *ngFor="let msg of visibleMessages; trackBy: trackByVisibleMessage"
-    class="log-pill"
-    [@fadeInOut]="msg.state"
-    [style.opacity]="msg.opacity">
-    <span [class]="msg.log.className" class="log-pill-name">{{msg.log.name}}</span>
-    <span class="log-pill-message">
-      {{ 'GAME_LOGS.' + msg.log.message | translate: msg.log.params }}
-    </span>
-  </div>
-</div>
-
-<!-- Standard mode - list view -->
-<div class="ptcg-game-logs-standard" *ngIf="!overlayMode">
+<div class="ptcg-game-logs-standard">
   <div class="ptcg-game-logs-header">
     <h4 class="ptcg-game-logs-header-text" translate>TABLE_LOGS</h4>
     <span class="ptcg-u-spacer"></span>

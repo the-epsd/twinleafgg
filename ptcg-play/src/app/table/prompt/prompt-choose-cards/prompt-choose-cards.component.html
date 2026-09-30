@@ -37,12 +37,12 @@
                 'card-side': !card.isLeftSide && (currentIndex > 1 ? i === 3 : currentIndex > 0 ? i === 2 : i === 1),
                 'card-back': !card.isLeftSide && (currentIndex > 1 ? i === 4 : currentIndex > 0 ? i === 3 : i === 2),
                 'card-exit': !card.isLeftSide && i > (currentIndex > 1 ? 4 : currentIndex > 0 ? 3 : 2),
-                'unavailable': !filterMap[card.card.fullName]
+                'unavailable': !filterMap[card.index]
               }" [cardbackUrl]="cardbackUrl" (click)="toggleCardSelection(card, $event)"
               (mouseenter)="card.showButtons = true" (mouseleave)="card.showButtons = false">
 
               <button mat-mini-fab color="primary"
-                *ngIf="card.showButtons && !cardbackMap[card.index] && !promptValue?.options?.isSecret && filterMap[card.card.fullName]"
+                *ngIf="card.showButtons && !cardbackMap[card.index] && !promptValue?.options?.isSecret && filterMap[card.index]"
                 class="inspect-button" (click)="showCardInfo(card); $event.stopPropagation()">
                 <mat-icon>info_outline</mat-icon>
               </button>

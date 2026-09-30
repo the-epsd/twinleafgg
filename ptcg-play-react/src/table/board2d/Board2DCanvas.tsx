@@ -95,10 +95,12 @@ export function Board2DCanvas(props: Board2DCanvasProps) {
         scansUrl: serverConfig?.scansUrl,
         apiBase: appConfig.apiUrl,
         sleevesUrl: serverConfig?.sleevesUrl,
+        deckBoxesUrl: (serverConfig as { deckBoxesUrl?: string } | null)?.deckBoxesUrl,
+        coinsUrl: (serverConfig as { coinsUrl?: string } | null)?.coinsUrl,
         showCardInfo: queueInfo,
         showCardInfoList: queueList,
       }),
-    [maps, serverConfig?.scansUrl, serverConfig?.sleevesUrl, queueInfo, queueList],
+    [maps, serverConfig?.scansUrl, serverConfig?.sleevesUrl, serverConfig, queueInfo, queueList],
   );
 
   // Keep open card info in sync with board state (e.g. Fossil Ditto Transform).

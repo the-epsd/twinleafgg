@@ -1,4 +1,4 @@
-/** Card dimensions in overlay-anchor space (BoxGeometry 2.5 × 3.5 × 0.02, art on +Z). */
+/** Card dimensions in overlay-anchor space (rounded card 2.5 × 3.5 × 0.02, art on +Z). */
 export const CARD_WIDTH = 2.5;
 export const CARD_HEIGHT = 3.5;
 export const CARD_HALF_WIDTH = CARD_WIDTH / 2;
@@ -6,7 +6,7 @@ export const CARD_HALF_HEIGHT = CARD_HEIGHT / 2;
 export const CARD_HALF_DEPTH = 0.01;
 
 /** Shared depth for right-edge overlays (damage + status markers). */
-export const OVERLAY_FACE_Z = 0.15;
+export const OVERLAY_FACE_Z = 0.28;
 
 /** Center X on the card right edge — disc hangs outward like Angular translate(50%). */
 export const OVERLAY_RIGHT_X = CARD_HALF_WIDTH;

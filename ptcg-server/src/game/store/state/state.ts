@@ -12,7 +12,8 @@ export enum GamePhase {
   AFTER_ATTACK,
   CHOOSE_PRIZES,
   BETWEEN_TURNS,
-  FINISHED
+  FINISHED,
+  DRAW = 8,
 }
 
 export enum GameWinner {

@@ -27,6 +27,7 @@ export class Unown extends PokemonCard {
   public fullName: string = 'Unown 30C';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Mysterious Signal
     return IF_OPPONENTS_POKEMON_KO_BY_ATTACK_DAMAGE_TAKE_MORE_PRIZES(store, state, effect, this, {
       attackName: 'Mysterious Signal',
     });

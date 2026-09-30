@@ -30,11 +30,8 @@
         <span class="subtitle-hp-value">{{getCurrentHp()}}/{{getComputedHp()}}</span>
       </div>
       <div class="subtitle-card-type">
-        <ptcg-energy [type]="card.cardType" style="transform: translateY(12px);"></ptcg-energy>
-        <ng-container *ngIf="card.additionalCardTypes">
-          <ptcg-energy *ngFor="let type of card.additionalCardTypes" [type]="type"
-            style="transform: translateY(12px);"></ptcg-energy>
-        </ng-container>
+        <ptcg-energy *ngFor="let type of getCardTypes(card)" [type]="type"
+          style="transform: translateY(12px);"></ptcg-energy>
       </div>
     </div>
     <div class="subtitle">

@@ -15,7 +15,6 @@ import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack
 import { SettingsService } from '../../table/table-sidebar/settings-dialog/settings.service';
 import { ChangeDeckDialogComponent } from '../change-deck-dialog/change-deck-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
-import { CardPreloadService } from '../../table/board/services/card-preload.service';
 
 
 @UntilDestroy()
@@ -52,7 +51,6 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
   public inQueue = false;
   public queuedPlayers: string[] = [];
   public loading = false;
-  public preloading = false;
   public connectionError = false;
   public timeInQueue = 0;
   public defaultDeckId: number | null = null;
@@ -83,7 +81,6 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     private socketService: SocketService,
     private router: Router,
     private cardsBaseService: CardsBaseService,
-    private cardPreloadService: CardPreloadService,
     private snackBar: MatSnackBar,
     private settingsService: SettingsService,
     private dialog: MatDialog,
@@ -209,23 +206,7 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     this.socketService.on('matchmaking:gameCreated', async (data: { gameId: number }) => {
       if (this.inQueue) {
         this.resetQueueState();
-        this.preloading = true;
-        try {
-          const deckIdToUse = this.deckId;
-          if (deckIdToUse) {
-            const deckResult = await this.deckService.getDeck(deckIdToUse).toPromise();
-            const cards = deckResult?.deck?.cards as string[] | undefined;
-            if (cards && cards.length > 0) {
-              const urls = this.cardPreloadService.preloadFromDeckCards(cards);
-              await this.cardPreloadService.preloadAndWait(urls, 15000);
-            }
-          }
-        } catch {
-          // Preload failure: continue to table anyway
-        } finally {
-          this.preloading = false;
-          this.router.navigate(['/table', data.gameId]);
-        }
+        this.router.navigate(['/table', data.gameId]);
       }
     });
   }

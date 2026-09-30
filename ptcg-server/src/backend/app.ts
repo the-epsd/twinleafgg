@@ -26,7 +26,14 @@ import {
   ResetPassword,
   BattlePass,
   Sleeves,
+  DeckBoxes,
+  Coins,
   MemoryHealthController,
+  AdminBattlePass,
+  AdminAvatars,
+  AdminSleeves,
+  AdminDeckBoxes,
+  AdminCoins,
 } from './controllers';
 import { ApiErrorEnum } from './common/errors';
 
@@ -94,6 +101,8 @@ export class App {
     }
     app.use('/avatars', express.static(config.backend.avatarsDir));
     app.use('/sleeves', express.static(config.backend.sleevesDir));
+    app.use('/deck-boxes', express.static(config.backend.deckBoxesDir));
+    app.use('/coins', express.static(config.backend.coinsDir));
 
     // API routes
     define('/v1/avatars', Avatars);
@@ -111,6 +120,13 @@ export class App {
     define('/v1/resetPassword', ResetPassword);
     define('/v1/battlepass', BattlePass);
     define('/v1/sleeves', Sleeves);
+    define('/v1/deck-boxes', DeckBoxes);
+    define('/v1/coins', Coins);
+    define('/v1/admin/battlepass', AdminBattlePass);
+    define('/v1/admin/avatars', AdminAvatars);
+    define('/v1/admin/sleeves', AdminSleeves);
+    define('/v1/admin/deck-boxes', AdminDeckBoxes);
+    define('/v1/admin/coins', AdminCoins);
     define('/v1/memory', MemoryHealthController);
 
     app.use((err: any, req: any, res: any, next: any) => {
@@ -169,8 +185,14 @@ export class App {
     return ws;
   }
 
-  public connectToDatabase(): Promise<void> {
-    return this.storage.connect();
+  public async connectToDatabase(): Promise<void> {
+    await this.storage.connect();
+    const { seedBattlePassData } = await import('../storage/battle-pass-seed');
+    await seedBattlePassData();
+    const { seedDefaultDeckBoxes } = await import('../storage/deck-box-seed');
+    await seedDefaultDeckBoxes();
+    const { seedDefaultCoins } = await import('../storage/coin-seed');
+    await seedDefaultCoins();
   }
 
   public configureBotManager(botManager: BotManager): void {

@@ -48,7 +48,7 @@ export class MegaZeraoraex extends PokemonCard {
       let n = 0;
       check.energyMap.forEach((em) => {
         n += em.provides.filter(
-          (t) => t === CardType.LIGHTNING || t === CardType.ANY || t === CardType.WLFM,
+          (t) => t === CardType.LIGHTNING || t === CardType.ANY,
         ).length;
       });
       effect.damage = 60 * n;

@@ -235,7 +235,7 @@ export class Board3dHandService {
       const lastCard = cards[lastIdx];
       const scanUrl = this.cardsAdapter.getScanUrlFor3D(lastCard, hand);
       const [backForDeck, maskForDeck] = await Promise.all([
-        this.assetLoader.loadCardBack(),
+        this.loadHandBackTexture(hand),
         this.assetLoader.loadCardMaskTexture()
       ]);
       let revealFrontTexture = backForDeck;
@@ -347,9 +347,9 @@ export class Board3dHandService {
     const cardMap = forOpponent ? this.opponentHandCards : this.handCards;
     const targetGroup = forOpponent ? this.opponentHandGroup : this.handGroup;
 
-    // Progressive loading: show card-back immediately, load front texture in background
+    // Progressive loading: show sleeve/card-back immediately, load front texture in background
     const [backTexture, maskTexture] = await Promise.all([
-      this.assetLoader.loadCardBack(),
+      this.loadHandBackTexture(hand),
       this.assetLoader.loadCardMaskTexture()
     ]);
 
@@ -546,7 +546,7 @@ export class Board3dHandService {
     const cardGroup = board3dCard.getGroup();
     const scanUrl = this.cardsAdapter.getScanUrlFor3D(flyCard, hand);
     const [backForDeck, maskForDeck] = await Promise.all([
-      this.assetLoader.loadCardBack(),
+      this.loadHandBackTexture(hand),
       this.assetLoader.loadCardMaskTexture()
     ]);
     let revealFrontTexture = backForDeck;
@@ -574,6 +574,16 @@ export class Board3dHandService {
     const handSlotWorld = this.getHandSlotWorld(flyIdx, cards.length);
 
     return { flyingCard: cardGroup, handSlotWorld };
+  }
+
+  /** Sleeve texture when the hand list has sleeveImagePath; otherwise default cardback. */
+  private async loadHandBackTexture(hand?: CardList): Promise<Texture> {
+    const path = (hand as { sleeveImagePath?: string } | undefined)?.sleeveImagePath;
+    const url = path ? this.cardsAdapter.getSleeveUrl(path) : undefined;
+    if (url) {
+      return this.assetLoader.loadSleeveTexture(url);
+    }
+    return this.assetLoader.loadCardBack();
   }
 
   /**

@@ -1,5 +1,5 @@
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
-import { Card, SuperType, Stage, PowerType, EnergyType, PokemonCard, PokemonCardList, Attack, Power, CardType, EnergyCard, Player } from 'ptcg-server';
+import { Card, SuperType, Stage, PowerType, EnergyType, PokemonCard, PokemonCardList, Attack, Power, CardType, EnergyCard, Player, getPokemonCardTypes } from 'ptcg-server';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { CardImagePopupComponent } from '../card-image-popup/card-image-popup.component';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -39,6 +39,10 @@ export class PokemonCardInfoPaneComponent implements OnChanges {
   public PowerType = PowerType;
   public EnergyType = EnergyType;
   public isSelectionMode = false;
+
+  public getCardTypes(card: Card): CardType[] {
+    return getPokemonCardTypes(card as PokemonCard);
+  }
 
   // Track available energy types to determine if attack costs are met
   private availableEnergy: { [key in CardType]?: number } = {};

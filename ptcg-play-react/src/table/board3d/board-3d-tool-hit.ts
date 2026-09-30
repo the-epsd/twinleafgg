@@ -1,7 +1,7 @@
 import { Group, Mesh, MeshBasicMaterial, PlaneGeometry, type Object3D } from 'three';
 import type { Board3dCard } from './board-3d-card';
 
-/** Matches {@link getBoard3dCardBoxGeometry} width. */
+/** Matches {@link getBoard3dCardGeometry} width. */
 export const BOARD3D_TOOL_CARD_WIDTH = 2.5;
 /** Half of tool card height (box geometry Y extent before the mesh -90° X rotation). */
 export const BOARD3D_TOOL_CARD_HALF_HEIGHT = 1.75;

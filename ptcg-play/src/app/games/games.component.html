@@ -36,5 +36,6 @@
         <mat-icon>close</mat-icon>
       </button>
     </div>
-    <ptcg-online-players (createGameRequested)="createGame($event)"></ptcg-online-players>
+    <ptcg-online-players (createGameRequested)="createGame($event)" (selfPlayRequested)="openSelfPlay()">
+    </ptcg-online-players>
   </div>

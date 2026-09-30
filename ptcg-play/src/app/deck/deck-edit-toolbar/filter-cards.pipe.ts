@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 import { DeckEditToolbarFilter } from './deck-edit-toolbar-filter.interface';
-import { Card, CardType, SuperType, PokemonCard, EnergyCard, Format, TrainerCard } from 'ptcg-server';
+import { Card, CardType, SuperType, PokemonCard, EnergyCard, Format, TrainerCard, getPrimaryCardType, getPokemonCardTypes } from 'ptcg-server';
 import { LibraryItem } from '../deck-card/deck-card.interface';
 import { FormatValidator } from '../../util/formats-validator';
 
@@ -70,7 +70,13 @@ export class FilterCardsPipe implements PipeTransform {
         return false;
       }
 
-      if (filter.cardTypes.length && (!filter.cardTypes.includes(this.getCardType(card)) && !filter.cardTypes.includes(CardType.ANY))) {
+      if (
+        filter.cardTypes.length &&
+        !filter.cardTypes.includes(CardType.ANY) &&
+        !(card.superType === SuperType.POKEMON
+          ? getPokemonCardTypes(card as PokemonCard).some((t: CardType) => filter.cardTypes.includes(t))
+          : filter.cardTypes.includes(this.getCardType(card)))
+      ) {
         return false;
       }
 
@@ -177,7 +183,7 @@ export class FilterCardsPipe implements PipeTransform {
 
   private getCardType(card: Card): CardType {
     if (card.superType === SuperType.POKEMON) {
-      return (card as PokemonCard).cardType;
+      return getPrimaryCardType(card as PokemonCard);
     }
 
     if (card.superType === SuperType.ENERGY) {

@@ -6,6 +6,10 @@ export interface DeckSaveRequest {
   manualArchetype2?: string;
   sleeveIdentifier?: string;
   sleeveImagePath?: string;
+  deckBoxIdentifier?: string;
+  deckBoxImagePath?: string;
+  coinIdentifier?: string;
+  coinImagePath?: string;
 }
 
 export interface Deck {
@@ -18,4 +22,8 @@ export interface Deck {
   manualArchetype2: string | null;
   sleeveIdentifier?: string;
   sleeveImagePath?: string;
+  deckBoxIdentifier?: string;
+  deckBoxImagePath?: string;
+  coinIdentifier?: string;
+  coinImagePath?: string;
 }

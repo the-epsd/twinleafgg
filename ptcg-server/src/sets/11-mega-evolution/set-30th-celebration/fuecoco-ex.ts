@@ -13,21 +13,19 @@ export class Fuecocoex extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Singe',
-      cost: [R],
-      damage: 0,
-      text: "Your opponent's Active Pokémon is now Burned.",
-    },
-    {
-      name: 'Cheerful Flame',
-      cost: [R, R, C],
-      damage: 70,
-      damageCalculation: 'x',
-      text: 'This attack does 70 damage for each Prize card you have taken.',
-    },
-  ];
+  public attacks = [{
+    name: 'Singe',
+    cost: [R],
+    damage: 0,
+    text: "Your opponent's Active Pokémon is now Burned.",
+  },
+  {
+    name: 'Cheerful Flame',
+    cost: [R, R, C],
+    damage: 70,
+    damageCalculation: 'x',
+    text: 'This attack does 70 damage for each Prize card you have taken.',
+  }];
 
   public regulationMark: string = 'J';
   public set: string = '30C';
