@@ -35,7 +35,7 @@ export class Druddigon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '70';
   public name: string = 'Druddigon';
-  public fullName: string = 'Druddigon BRS';
+  public fullName: string = 'Druddigon FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Revenge
