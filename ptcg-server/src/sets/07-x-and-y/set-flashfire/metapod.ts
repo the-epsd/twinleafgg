@@ -4,10 +4,9 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { PokemonCardList, PowerType, StoreLike, State, StateUtils } from '../../../game';
+import { PowerType, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND } from '../../../game/store/prefabs/prefabs';
+import { ADAPTIVE_EVOLUTION, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { PREVENT_DAMAGE } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
 export class Metapod extends PokemonCard {
@@ -41,15 +40,7 @@ export class Metapod extends PokemonCard {
   public fullName: string = 'Metapod FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-cosmic-eclipse/clamperl.ts (Evolutionary Advantage)
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
-        return state;
-      }
-      CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND(state, player, cardList);
-    }
+    state = ADAPTIVE_EVOLUTION(store, state, effect, this);
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       PREVENT_DAMAGE(store, state, effect, this, { maxDamage: 60 });

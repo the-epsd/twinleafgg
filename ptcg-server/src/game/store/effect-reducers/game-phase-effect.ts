@@ -502,6 +502,9 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
       if (cardList.cannotEvolveNextTurn) {
         cardList.cannotEvolveNextTurn = false;
       }
+      if (cardList.canEvolveThisTurn) {
+        cardList.canEvolveThisTurn = false;
+      }
       if (cardList.cannotBeHealedNextTurn) {
         cardList.cannotBeHealedNextTurn = false;
       }

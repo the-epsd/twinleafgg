@@ -2389,8 +2389,110 @@ export function CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND(
 ) {
   if (state.turn === 2) {
     player.canEvolve = true;
-    pokemon.pokemonPlayedTurn = state.turn - 1;
+    pokemon.canEvolveThisTurn = true;
   }
+}
+
+/**
+ * Evolutionary Advantage: "If you go second, this Pokémon can evolve during your first turn."
+ * Uses CheckTableState so any put-into-play path works. Only applies when `card` is
+ * the active Pokémon of a board slot belonging to the turn player (not hand/deck/etc.).
+ */
+export function EVOLUTIONARY_ADVANTAGE(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  card: PokemonCard,
+): State {
+  if (!(effect instanceof CheckTableStateEffect) || state.turn !== 2) {
+    return state;
+  }
+
+  const cardList = StateUtils.findPokemonSlot(state, card);
+  if (!cardList || cardList.getPokemonCard() !== card) {
+    return state;
+  }
+
+  const owner = StateUtils.findOwner(state, cardList);
+  if (owner !== state.players[state.activePlayer]) {
+    return state;
+  }
+
+  if (IS_ABILITY_BLOCKED(store, state, owner, card)) {
+    cardList.canEvolveThisTurn = false;
+    return state;
+  }
+
+  CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND(state, owner, cardList);
+  return state;
+}
+
+export interface AdaptiveEvolutionOptions {
+  /** Boosted Evolution: only while this Pokémon is Active. */
+  requireActive?: boolean;
+  /** Extra condition (partner in play, opponent Active is ex, etc.). */
+  canActivate?: (
+    store: StoreLike,
+    state: State,
+    player: Player,
+    card: PokemonCard,
+  ) => boolean;
+}
+
+/**
+ * Adaptive / Boosted Evolution: "can evolve during your first turn or the turn you play it."
+ * Board-scoped CheckTableState; uses canEvolve + canEvolveThisTurn (no played-turn rewrite).
+ */
+export function ADAPTIVE_EVOLUTION(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  card: PokemonCard,
+  options: AdaptiveEvolutionOptions = {},
+): State {
+  if (!(effect instanceof CheckTableStateEffect)) {
+    return state;
+  }
+
+  const cardList = StateUtils.findPokemonSlot(state, card);
+  if (!cardList || cardList.getPokemonCard() !== card) {
+    return state;
+  }
+
+  const owner = StateUtils.findOwner(state, cardList);
+  if (owner !== state.players[state.activePlayer]) {
+    return state;
+  }
+
+  const clear = () => {
+    cardList.canEvolveThisTurn = false;
+  };
+
+  if (options.requireActive && owner.active !== cardList) {
+    clear();
+    return state;
+  }
+
+  if (IS_ABILITY_BLOCKED(store, state, owner, card)) {
+    clear();
+    return state;
+  }
+
+  if (options.canActivate && !options.canActivate(store, state, owner, card)) {
+    clear();
+    return state;
+  }
+
+  const isFirstTurn = state.turn <= 2;
+  const playedThisTurn = cardList.pokemonPlayedTurn === state.turn;
+  if (!isFirstTurn && !playedThisTurn) {
+    clear();
+    return state;
+  }
+
+  owner.canEvolve = true;
+  cardList.canEvolveThisTurn = true;
+  return state;
 }
 
 // =============================================================================
@@ -3523,7 +3625,8 @@ export function CAN_PLAY_POKEMON_CARD(
             activePokemon.evolvesFromBase.includes(pokemonCard.evolvesFrom));
         if (matchesEvolution) {
           // Check if Pokemon was played this turn (can't evolve if played this turn)
-          if (player.active.pokemonPlayedTurn < state.turn) {
+          // unless an effect (e.g. Evolutionary Advantage) granted canEvolveThisTurn
+          if (player.active.pokemonPlayedTurn < state.turn || player.active.canEvolveThisTurn) {
             canEvolveActive = true;
           }
         }
@@ -3543,7 +3646,8 @@ export function CAN_PLAY_POKEMON_CARD(
               benchPokemon.evolvesFromBase.includes(pokemonCard.evolvesFrom));
           if (matchesEvolution) {
             // Check if Pokemon was played this turn (can't evolve if played this turn)
-            if (bench.pokemonPlayedTurn < state.turn) {
+            // unless an effect (e.g. Evolutionary Advantage) granted canEvolveThisTurn
+            if (bench.pokemonPlayedTurn < state.turn || bench.canEvolveThisTurn) {
               canEvolveBench = true;
               break;
             }

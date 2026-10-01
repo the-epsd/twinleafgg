@@ -230,6 +230,11 @@ export class PokemonCardList extends CardList {
    */
   public cannotEvolveNextTurn: boolean = false;
   /**
+   * This Pokémon may evolve this turn even if it was put into play this turn
+   * (e.g. Evolutionary Advantage). Cleared at end of turn / when leaving play.
+   */
+  public canEvolveThisTurn: boolean = false;
+  /**
    * The Defending Pokémon has no Abilities until the end of the attacker's next turn
    * (Gastro Acid). Cleared with a two-phase arm on the attacker's EndTurns.
    */
@@ -513,6 +518,7 @@ export class PokemonCardList extends CardList {
     this.blockedAttackNameUntilLeavesActive = undefined;
     this.onlyAllowedAttackNameNextTurn = undefined;
     this.cannotEvolveNextTurn = false;
+    this.canEvolveThisTurn = false;
     this.noAbilities = false;
     this.noAbilitiesAttackerId = undefined;
     this.noAbilitiesClearArmed = false;

@@ -98,7 +98,7 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
         throw new GameError(GameMessage.CANNOT_EVOLVE_ON_YOUR_FIRST_TURN);
       }
 
-      if (playedTurnEffect.pokemonPlayedTurn >= state.turn) {
+      if (playedTurnEffect.pokemonPlayedTurn >= state.turn && !effect.target.canEvolveThisTurn) {
         throw new GameError(GameMessage.POKEMON_CANT_EVOLVE_THIS_TURN);
       }
 
