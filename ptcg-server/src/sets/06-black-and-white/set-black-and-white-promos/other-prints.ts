@@ -26,6 +26,13 @@ import { KeldeoEx } from '../set-boundaries-crossed/keldeo-ex';
 import { TropicalBeach } from './tropical-beach';
 import { Excadrill } from '../set-emerging-powers/excadrill';
 import { Axew } from './axew';
+import { Pansage } from './pansage';
+
+
+export class Pansage2BWP extends Pansage {
+  public setNumber: string = '14';
+  public fullName: string = "Pansage2 BWP"
+}
 
 export class Axew2BWP extends Axew {
   public setNumber: string = '16';
