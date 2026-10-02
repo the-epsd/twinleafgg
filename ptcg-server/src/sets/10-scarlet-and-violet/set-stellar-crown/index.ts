@@ -95,6 +95,10 @@ import { Toedscool } from "./toedscool";
 import { AntiqueRootFossil } from './antique-root-fossil';
 import { Cradily } from './cradily';
 import { Lileep } from './lileep';
+import { Rhydon } from "./rhydon";
+import { Rhyhorn } from "./rhyhorn";
+import { Rhyperior } from "./rhyperior";
+
 export const setStellarCrown: Card[] = [
   new AntiqueRootFossil(),
   new Applin(),
@@ -157,6 +161,9 @@ export const setStellarCrown: Card[] = [
   new Marill(),
   new AntiqueCoverFossil(),
   new Toedscool(),
+  new Rhydon(),
+  new Rhyhorn(),
+  new Rhyperior(),
 
   //FA
   new BulbasaurIR(),
