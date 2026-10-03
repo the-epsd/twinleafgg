@@ -31,7 +31,6 @@ import { Hariyama } from './hariyama';
 import { Hawlucha } from './hawlucha';
 import { HawluchaEx } from './hawlucha-ex';
 import { HeracrossEx } from './heracross-ex';
-import { HeracrossEx2 } from './heracross-ex-2';
 import { Hitmonchan } from './hitmonchan';
 import { Hitmonlee } from './hitmonlee';
 import { Hitmontop } from './hitmontop';
@@ -115,6 +114,7 @@ import {
   FossilResearcher2,
   MHeracrossEx2,
   MLucarioEx3,
+  HeracrossExFFI105,
 } from './other-prints';
 
 export const setFuriousFists: Card[] = [
@@ -151,7 +151,6 @@ export const setFuriousFists: Card[] = [
   new Hawlucha(),
   new HawluchaEx(),
   new HeracrossEx(),
-  new HeracrossEx2(),
   new Hitmonchan(),
   new Hitmonlee(),
   new Hitmontop(),
@@ -231,6 +230,7 @@ export const setFuriousFists: Card[] = [
   new SuperScoopUpFFI(),
   new EnergySwitchPKFFI(),
   new FullHealFFI(),
+  new HeracrossExFFI105(),
   new SeismitoadEx2FFI(),
   new LucarioEx2FFI(),
   new MLucarioEx2(),

@@ -10,6 +10,7 @@ import { DragoniteEx } from './dragonite-ex';
 import { BattleReporter } from './battle-reporter';
 import { FossilResearcher } from './fossil-researcher';
 import { MHeracrossEx } from './m-heracross-ex';
+import { HeracrossEx } from './heracross-ex';
 
 // MARK: Reprints
 
@@ -51,6 +52,12 @@ export class MLucarioEx2 extends MLucarioEx {
 }
 
 // MARK: Full arts
+
+export class HeracrossExFFI105 extends HeracrossEx {
+  public setNumber = '105';
+  public fullName: string = 'Heracross-EX FFI 105';
+  public set = 'FFI';
+}
 
 export class SeismitoadEx2FFI extends SeismitoadExFFI20 {
   public setNumber = '106';
