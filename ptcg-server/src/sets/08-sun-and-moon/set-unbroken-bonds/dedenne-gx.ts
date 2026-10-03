@@ -14,9 +14,12 @@ import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
-import {BLOCK_IF_GX_ATTACK_USED,
+import {
+  BLOCK_IF_GX_ATTACK_USED,
   IS_ABILITY_BLOCKED,
-  WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+  WAS_ATTACK_USED,
+  MOVE_CARDS,
+} from '../../../game/store/prefabs/prefabs';
 
 export class DedenneGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -56,9 +59,10 @@ export class DedenneGX extends PokemonCard {
 
   public set = 'UNB';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '195';
+  public setNumber: string = '57';
   public name = 'Dedenne-GX';
   public fullName = 'Dedenne GX UNB';
+  public legacyFullName = 'Dedenne-GX UNB';
 
   public readonly DEDECHANGE_MARKER = 'DEDECHANGE_MARKER';
 
@@ -91,7 +95,10 @@ export class DedenneGX extends PokemonCard {
             player.marker.addMarker(this.DEDECHANGE_MARKER, this);
 
             const cards = player.hand.cards.filter((c) => c !== this);
-            MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
+            MOVE_CARDS(store, state, player.hand, player.discard, {
+              cards: cards,
+              sourceCard: this,
+            });
             MOVE_CARDS(store, state, player.deck, player.hand, { count: 6, sourceCard: this });
           }
         },
