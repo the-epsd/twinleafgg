@@ -73,8 +73,14 @@ export interface AbilityFocusPoint {
 }
 
 export interface AbilityFocusAnchor {
-  /** Card front face in viewport pixels (perspective quad matching the 3D mesh). */
+  /**
+   * Card front-face silhouette in CSS pixels.
+   * When {@link canvasSize} is set, coordinates are canvas-local (0,0 = canvas top-left);
+   * otherwise they are viewport coordinates (for inspect plates).
+   */
   polygon: readonly AbilityFocusPoint[];
+  /** Canvas CSS size; present for ability-spotlight anchors in canvas-local space. */
+  canvasSize?: { width: number; height: number };
 }
 
 export interface AbilityFocusState {

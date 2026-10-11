@@ -2226,7 +2226,8 @@ export class Board3dController {
     }
 
     const canvasRect = this.canvasEl.getBoundingClientRect();
-    return projectCardFaceToScreenAnchor(cardMesh, this.camera, canvasRect, 6);
+    // Exact card silhouette (Active 1.5 / Bench 1.0 via mesh world scale); no screen pad.
+    return projectCardFaceToScreenAnchor(cardMesh, this.camera, canvasRect, 0);
   }
 
   private startAbilityFocusTracking(group: Object3D, abilityName: string): void {

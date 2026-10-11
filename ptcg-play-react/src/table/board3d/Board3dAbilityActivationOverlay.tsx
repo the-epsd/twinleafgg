@@ -23,8 +23,8 @@ export function Board3dAbilityActivationOverlay({
 
   const { anchor } = focus;
   const holePoints = anchor.polygon.map((p) => `${p.x},${p.y}`).join(' ');
-  const viewW = typeof window !== 'undefined' ? window.innerWidth : 1;
-  const viewH = typeof window !== 'undefined' ? window.innerHeight : 1;
+  const viewW = anchor.canvasSize?.width ?? (typeof window !== 'undefined' ? window.innerWidth : 1);
+  const viewH = anchor.canvasSize?.height ?? (typeof window !== 'undefined' ? window.innerHeight : 1);
 
   return (
     <div className={styles.root} aria-hidden>
@@ -35,14 +35,14 @@ export function Board3dAbilityActivationOverlay({
         aria-hidden
       >
         <defs>
-          <mask id={maskUid}>
-            <rect width="100%" height="100%" fill="white" />
+          <mask id={maskUid} maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
+            <rect width={viewW} height={viewH} fill="white" />
             <polygon points={holePoints} fill="black" />
           </mask>
         </defs>
         <rect
-          width="100%"
-          height="100%"
+          width={viewW}
+          height={viewH}
           className={styles.dimFill}
           mask={`url(#${maskUid})`}
         />
