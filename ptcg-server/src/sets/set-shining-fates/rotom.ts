@@ -113,6 +113,7 @@ export class Rotom extends PokemonCard {
               const cards = selected || [];
 
               if (cards.length > 0) {
+                MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
                 store.prompt(
                   state,
                   [
@@ -123,8 +124,7 @@ export class Rotom extends PokemonCard {
                     ),
                   ],
                   () => {
-                    MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
-                  },
+},
                 );
               }
 

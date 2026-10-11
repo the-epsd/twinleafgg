@@ -104,8 +104,9 @@ function* playCard(
 
   // Reveal and move to hand
   if (allFound.length > 0) {
-    SHOW_CARDS_TO_PLAYER(store, state, opponent, allFound);
     MOVE_CARDS(store, state, player.deck, player.hand, { cards: allFound, sourceCard: self });
+
+    SHOW_CARDS_TO_PLAYER(store, state, opponent, allFound);
   }
 
   // Move supporter to discard

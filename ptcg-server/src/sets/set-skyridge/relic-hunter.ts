@@ -67,8 +67,9 @@ export class RelicHunter extends TrainerCard {
             return state;
           }
 
-          SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
           cards.forEach((card) => MOVE_CARD_TO(state, card, player.hand));
+          SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+          
           SHUFFLE_DECK(store, state, player);
         },
       );

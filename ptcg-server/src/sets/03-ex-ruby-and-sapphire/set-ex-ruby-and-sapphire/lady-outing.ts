@@ -60,8 +60,9 @@ export class LadyOuting extends TrainerCard {
             return state;
           }
 
-          SHOW_CARDS_TO_PLAYER(store, state, opponent, selected);
           MOVE_CARDS(store, state, player.deck, player.hand, { cards: selected, sourceCard: this });
+          SHOW_CARDS_TO_PLAYER(store, state, opponent, selected);
+          
         },
       );
 

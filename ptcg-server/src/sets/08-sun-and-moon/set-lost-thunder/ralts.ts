@@ -33,15 +33,15 @@ function* useBeckon(next: Function, store: StoreLike, state: State, effect: Atta
   });
 
   if (cards.length > 0) {
+    MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: effect.source.getPokemonCard()! });
+  }
+
+  if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
       opponent.id,
       GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
       cards
     ), () => next());
-  }
-
-  if (cards.length > 0) {
-    MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: effect.source.getPokemonCard()! });
   }
 
   return state;

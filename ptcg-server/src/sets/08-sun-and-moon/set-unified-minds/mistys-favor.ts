@@ -47,17 +47,18 @@ function* playCard(
   const opponent = StateUtils.getOpponent(state, player);
 
   if (cards.length > 0) {
-    yield store.prompt(
+    MOVE_CARDS(store, state, player.deck, player.hand, {
+    cards: cards,
+    sourceCard: effect.trainerCard,
+  });
+  yield store.prompt(
       state,
       new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
       () => next(),
     );
   }
 
-  MOVE_CARDS(store, state, player.deck, player.hand, {
-    cards: cards,
-    sourceCard: effect.trainerCard,
-  });
+  
 
   store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);

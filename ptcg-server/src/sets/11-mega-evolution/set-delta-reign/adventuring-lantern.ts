@@ -64,6 +64,11 @@ function* playCard(
     },
   );
 
+  state = MOVE_CARDS(store, state, player.deck, player.hand, {
+    cards,
+    sourceCard: effect.trainerCard,
+  });
+
   if (cards.length > 0) {
     yield store.prompt(
       state,
@@ -71,11 +76,6 @@ function* playCard(
       () => next(),
     );
   }
-
-  state = MOVE_CARDS(store, state, player.deck, player.hand, {
-    cards,
-    sourceCard: effect.trainerCard,
-  });
 
   yield store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);

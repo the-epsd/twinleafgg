@@ -115,15 +115,15 @@ export class Raticate extends PokemonCard {
                       (selectedEnergy) => {
                         cardsToHand.push(...(selectedEnergy || []));
                         if (cardsToHand.length > 0) {
-                          SHOW_CARDS_TO_PLAYER(store, state, opponent, cardsToHand);
                           MOVE_CARDS(store, state, player.discard, player.hand, { cards: cardsToHand, sourceCard: this });
+                          SHOW_CARDS_TO_PLAYER(store, state, opponent, cardsToHand);
                         }
                       },
                     );
                   } else {
                     if (cardsToHand.length > 0) {
-                      SHOW_CARDS_TO_PLAYER(store, state, opponent, cardsToHand);
                       MOVE_CARDS(store, state, player.discard, player.hand, { cards: cardsToHand, sourceCard: this });
+                      SHOW_CARDS_TO_PLAYER(store, state, opponent, cardsToHand);
                     }
                   }
                 },
@@ -154,15 +154,15 @@ export class Raticate extends PokemonCard {
                   (selectedEnergy) => {
                     cardsToHand.push(...(selectedEnergy || []));
                     if (cardsToHand.length > 0) {
-                      SHOW_CARDS_TO_PLAYER(store, state, opponent, cardsToHand);
                       MOVE_CARDS(store, state, player.discard, player.hand, { cards: cardsToHand, sourceCard: this });
+                      SHOW_CARDS_TO_PLAYER(store, state, opponent, cardsToHand);
                     }
                   },
                 );
               } else {
                 if (cardsToHand.length > 0) {
-                  SHOW_CARDS_TO_PLAYER(store, state, opponent, cardsToHand);
                   MOVE_CARDS(store, state, player.discard, player.hand, { cards: cardsToHand, sourceCard: this });
+                  SHOW_CARDS_TO_PLAYER(store, state, opponent, cardsToHand);
                 }
               }
             }

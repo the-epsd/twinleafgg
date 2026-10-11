@@ -48,7 +48,12 @@ function snap(
 }
 
 const kinds = (steps: TransitionStep[]) =>
-  steps.map((s) => (s.kind === 'setupReveal' ? 'setupReveal' : `${s.kind}:${s.playerId}`));
+  steps.map((s) => {
+    if (s.kind === 'setupReveal' || s.kind === 'showCards') {
+      return s.kind;
+    }
+    return `${s.kind}:${s.playerId}`;
+  });
 const hiddenOpp = (init: PlayerInit = {}) =>
   player(OPP, { handIds: null, handCount: 7, ...init });
 
@@ -527,5 +532,67 @@ describe('planTransition', () => {
     const pile = plan.steps[0] as Extract<TransitionStep, { kind: 'toPile' }>;
     expect(pile.cards).toEqual([{ cardId: oldStadium, origin: { kind: 'stadium' } }]);
     expect(plan.players.get(ME)?.handPreTrimIds).toEqual([newStadium]);
+  });
+
+  it('ShowCards overlapping a hidden opponent draw attaches revealCardIds (no dedicated showCards step)', () => {
+    const shown = 99;
+    const prev = snap(player(ME, { handIds: [1] }), hiddenOpp({ handCount: 5, deckCount: 30 }));
+    const next = snap(player(ME, { handIds: [1] }), hiddenOpp({ handCount: 6, deckCount: 29 }), {
+      activePlayerId: OPP,
+    });
+    const plan = planTransition(prev, next, { showCardsRevealIds: [shown] });
+    expect(kinds(plan.steps)).toEqual(['draw:2']);
+    const draw = plan.steps[0] as Extract<TransitionStep, { kind: 'draw' }>;
+    expect(draw.revealCardIds).toEqual([shown]);
+    expect(plan.showCardsRevealIds?.has(shown)).toBe(true);
+  });
+
+  it('ShowCards overlapping a real-hand draw attaches revealCardIds from the drawn id', () => {
+    const shown = 42;
+    const prev = snap(player(ME, { handIds: [1, 2], deckCount: 20 }), hiddenOpp());
+    const next = snap(player(ME, { handIds: [1, 2, shown], deckCount: 19 }), hiddenOpp());
+    const plan = planTransition(prev, next, { showCardsRevealIds: [shown] });
+    expect(kinds(plan.steps)).toEqual(['draw:1']);
+    const draw = plan.steps[0] as Extract<TransitionStep, { kind: 'draw' }>;
+    expect(draw.revealCardIds).toEqual([shown]);
+    expect(plan.steps.some((s) => s.kind === 'showCards')).toBe(false);
+  });
+
+  it('ShowCards without a covering draw emits a dedicated showCards step', () => {
+    const shown = [7, 8];
+    const prev = snap(
+      player(ME, { handIds: [1], deckCount: 20, discardIds: shown }),
+      hiddenOpp(),
+    );
+    // Cards left discard into the deck (not indexed) — classic Ordinary Rod reveal.
+    const next = snap(player(ME, { handIds: [1], deckCount: 22, discardIds: [] }), hiddenOpp());
+    const plan = planTransition(prev, next, {
+      showCardsRevealIds: shown,
+      showCardsDestinationHint: 'deck',
+    });
+    expect(kinds(plan.steps)).toEqual(['showCards']);
+    const sc = plan.steps[0] as Extract<TransitionStep, { kind: 'showCards' }>;
+    expect(sc.cardIds).toEqual(shown);
+    expect(sc.destinationHint).toBe('deck');
+  });
+
+  it('ShowCards while cards are still in discard carries a hand destination hint', () => {
+    const shown = [7, 8];
+    const prev = snap(
+      player(ME, { handIds: [1], deckCount: 20, discardIds: shown }),
+      hiddenOpp(),
+    );
+    // Show-before-move: cards still in discard when the reveal prompt arrives.
+    const next = snap(
+      player(ME, { handIds: [1], deckCount: 20, discardIds: shown }),
+      hiddenOpp(),
+    );
+    const plan = planTransition(prev, next, {
+      showCardsRevealIds: shown,
+      showCardsDestinationHint: 'hand',
+    });
+    expect(kinds(plan.steps)).toEqual(['showCards']);
+    const sc = plan.steps[0] as Extract<TransitionStep, { kind: 'showCards' }>;
+    expect(sc.destinationHint).toBe('hand');
   });
 });

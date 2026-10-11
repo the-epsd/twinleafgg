@@ -114,6 +114,11 @@ export class EldegossV extends PokemonCard {
               (selected) => {
                 const cards = selected || [];
                 if (cards.length > 0) {
+                  MOVE_CARDS(store, state, player.discard, player.hand, {
+                    cards,
+                    sourceCard: this,
+                    sourceEffect: this.powers[0],
+                  });
                   store.prompt(
                     state,
                     [
@@ -128,12 +133,6 @@ export class EldegossV extends PokemonCard {
                         if (cardList.getPokemonCard() === this) {
                           cardList.addBoardEffect(BoardEffect.ABILITY_USED);
                         }
-                      });
-
-                      MOVE_CARDS(store, state, player.discard, player.hand, {
-                        cards,
-                        sourceCard: this,
-                        sourceEffect: this.powers[0],
                       });
                     },
                   );

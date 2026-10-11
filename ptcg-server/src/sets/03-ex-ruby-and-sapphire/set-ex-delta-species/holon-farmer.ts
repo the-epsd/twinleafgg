@@ -69,6 +69,7 @@ export class HolonFarmer extends TrainerCard {
       MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
       effect.preventDefault = true;
 
+      MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: this });
       store.prompt(
         state,
         new ChooseCardsPrompt(
@@ -80,8 +81,6 @@ export class HolonFarmer extends TrainerCard {
         ),
         (selected) => {
           cards = selected || [];
-
-          MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: this });
 
           if (cards.length > 0) {
             SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);

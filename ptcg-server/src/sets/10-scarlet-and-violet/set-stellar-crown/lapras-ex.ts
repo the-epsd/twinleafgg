@@ -104,11 +104,7 @@ export class Laprasex extends PokemonCard {
 
       // If no energy cards were drawn, move all cards to deck & shuffle
       if (energyCardsDrawn.length == 0) {
-        store.prompt(
-          state,
-          [new ShowCardsPrompt(player.id, GameMessage.CARDS_SHOWED_BY_EFFECT, temp.cards)],
-          () => {
-            temp.cards.forEach((card) => {
+        temp.cards.forEach((card) => {
               store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
                 temp.applyOrder(order);
                 MOVE_CARDS(store, state, temp, deckBottom, { cards: [card], sourceCard: this });
@@ -117,6 +113,11 @@ export class Laprasex extends PokemonCard {
               });
               return state;
             });
+            store.prompt(
+          state,
+          [new ShowCardsPrompt(player.id, GameMessage.CARDS_SHOWED_BY_EFFECT, temp.cards)],
+          () => {
+            
             return state;
           },
         );

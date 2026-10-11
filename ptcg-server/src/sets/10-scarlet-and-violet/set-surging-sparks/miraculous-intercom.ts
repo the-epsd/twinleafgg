@@ -50,16 +50,12 @@ function* playCard(
   );
 
   if (cards.length > 0) {
+    MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: self });
     yield store.prompt(
       state,
       new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
       () => next(),
     );
-  }
-
-  if (cards.length > 0) {
-    MOVE_CARDS(store, state, player.hand, player.discard, { cards: [self], sourceCard: self });
-    MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: self });
   }
 
   MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [self], sourceCard: self });

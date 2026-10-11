@@ -50,6 +50,7 @@ export class Emolga extends PokemonCard {
       }
 
       let cards: Card[] = [];
+      MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this });
       return store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
@@ -64,7 +65,6 @@ export class Emolga extends PokemonCard {
           return;
         }
 
-        MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this });
         SHOW_CARDS_TO_PLAYER(store, state, StateUtils.getOpponent(state, player), cards);
         SHUFFLE_DECK(store, state, player);
       });

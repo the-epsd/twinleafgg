@@ -59,6 +59,8 @@ export class CapaciousBucket extends TrainerCard {
         (selected) => {
           cards = selected || [];
 
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
+
           if (cards.length > 0) {
             store.prompt(
               state,
@@ -66,8 +68,6 @@ export class CapaciousBucket extends TrainerCard {
               () => {},
             );
           }
-
-          MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
           MOVE_CARDS(store, state, player.supporter, player.discard, {
             cards: [this],
             sourceCard: this,

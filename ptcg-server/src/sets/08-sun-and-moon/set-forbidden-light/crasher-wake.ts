@@ -93,6 +93,7 @@ function* playCard(
   );
 
   if (cards.length > 0) {
+    MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: self });
     yield store.prompt(
       state,
       new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
@@ -100,7 +101,7 @@ function* playCard(
     );
   }
 
-  MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: self });
+  
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);

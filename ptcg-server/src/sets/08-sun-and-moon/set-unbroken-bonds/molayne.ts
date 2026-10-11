@@ -107,15 +107,15 @@ function* playCard(
 
   if (chosenCards.length > 0) {
     // Show to opponent
+    chosenCards.forEach((c) => {
+      MOVE_CARDS(store, state, player.discard, player.deck, { cards: [c], sourceCard: self });
+    });
+
     yield store.prompt(
       state,
       new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, chosenCards),
       () => next(),
     );
-
-    chosenCards.forEach((c) => {
-      MOVE_CARDS(store, state, player.discard, player.deck, { cards: [c], sourceCard: self });
-    });
   }
 
   return SHUFFLE_DECK(store, state, player);

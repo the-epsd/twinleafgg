@@ -65,6 +65,7 @@ export class IronThorns extends PokemonCard {
       );
 
       if (futureCards.length > 0) {
+        MOVE_CARDS(store, state, deckTop, player.discard, { cards: futureCards, sourceCard: this });
         state = store.prompt(
           state,
           new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, futureCards),
@@ -73,6 +74,7 @@ export class IronThorns extends PokemonCard {
       }
 
       if (futureCards.length > 0) {
+        
         state = store.prompt(
           state,
           new ShowCardsPrompt(player.id, GameMessage.CARDS_SHOWED_BY_EFFECT, futureCards),
@@ -81,7 +83,7 @@ export class IronThorns extends PokemonCard {
       }
 
       // Move item cards to hand
-      MOVE_CARDS(store, state, deckTop, player.discard, { cards: futureCards, sourceCard: this });
+      
 
       // Move all cards to discard
       MOVE_CARDS(store, state, deckTop, player.deck, { count: deckTop.cards.length, sourceCard: this });

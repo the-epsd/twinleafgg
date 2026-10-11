@@ -82,6 +82,12 @@ export class CapturingAroma extends TrainerCard {
                   cards: [this],
                   sourceCard: this,
                 });
+                cards.forEach((card) => {
+                  MOVE_CARDS(store, state, player.deck, player.hand, {
+                    cards: [card],
+                    sourceCard: this,
+                  });
+                });
                 state = store.prompt(
                   state,
                   new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
@@ -89,12 +95,6 @@ export class CapturingAroma extends TrainerCard {
                 );
               }
 
-              cards.forEach((card) => {
-                MOVE_CARDS(store, state, player.deck, player.hand, {
-                  cards: [card],
-                  sourceCard: this,
-                });
-              });
               return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
                 player.deck.applyOrder(order);
               });
@@ -131,18 +131,19 @@ export class CapturingAroma extends TrainerCard {
                   cards: [this],
                   sourceCard: this,
                 });
+                cards.forEach((card) => {
+                  MOVE_CARDS(store, state, player.deck, player.hand, {
+                    cards: [card],
+                    sourceCard: this,
+                  });
+                });
                 state = store.prompt(
                   state,
                   new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
                   () => state,
                 );
               }
-              cards.forEach((card) => {
-                MOVE_CARDS(store, state, player.deck, player.hand, {
-                  cards: [card],
-                  sourceCard: this,
-                });
-              });
+
               return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
                 player.deck.applyOrder(order);
               });

@@ -90,6 +90,7 @@ export class HisuianLilligantVstar extends PokemonCard {
       });
 
       let cards: Card[] = [];
+      MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this });
       return store.prompt(
         state,
         new ChooseCardsPrompt(
@@ -103,8 +104,8 @@ export class HisuianLilligantVstar extends PokemonCard {
           cards = selected || [];
 
           if (cards.length > 0) {
+
             SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-            MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this });
           }
           SHUFFLE_DECK(store, state, player);
         },

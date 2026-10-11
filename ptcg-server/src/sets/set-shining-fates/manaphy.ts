@@ -83,9 +83,10 @@ export class Manaphy extends PokemonCard {
 
         if (cards.length > 0) {
           // Reveal the chosen Pokemon to the opponent
+          MOVE_CARDS(store, state, topCards, player.hand, { cards: cards, sourceCard: this });
           SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
           // Put chosen Pokemon into hand
-          MOVE_CARDS(store, state, topCards, player.hand, { cards: cards, sourceCard: this });
+          
         }
 
         // Shuffle remaining cards back into deck

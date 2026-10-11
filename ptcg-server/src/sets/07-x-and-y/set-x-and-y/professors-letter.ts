@@ -58,6 +58,8 @@ export class ProfessorsLetter extends TrainerCard {
         (selected) => {
           cards = selected || [];
 
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
+
           if (cards.length > 0) {
             store.prompt(
               state,
@@ -65,8 +67,6 @@ export class ProfessorsLetter extends TrainerCard {
               () => {},
             );
           }
-
-          MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
 
           store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
             player.deck.applyOrder(order);

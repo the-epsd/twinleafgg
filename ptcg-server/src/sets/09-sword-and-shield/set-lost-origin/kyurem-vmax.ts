@@ -151,15 +151,13 @@ export class KyuremVMAX extends PokemonCard {
           }
         });
 
-        temp.cards.slice(0, 1).forEach((card) => {
-          store.prompt(
-            state,
-            [new ShowCardsPrompt(player.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, temp.cards)],
-            () => {
-              MOVE_CARDS(store, state, temp, player.discard, { sourceCard: this });
-            },
-          );
-        });
+        const revealed = [...temp.cards];
+        MOVE_CARDS(store, state, temp, player.discard, { sourceCard: this });
+        store.prompt(
+          state,
+          [new ShowCardsPrompt(player.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, revealed)],
+          () => {},
+        );
       } else {
         // Prompt to attach energy if any were drawn
         return store.prompt(

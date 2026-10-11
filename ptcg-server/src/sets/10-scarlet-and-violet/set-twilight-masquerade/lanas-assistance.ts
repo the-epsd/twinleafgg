@@ -62,8 +62,9 @@ function* playCard(
     },
   );
 
-  SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
   MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: self });
+
+  SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
 }
 
 export class LanasAssistance extends TrainerCard {

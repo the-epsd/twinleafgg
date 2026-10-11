@@ -53,15 +53,16 @@ export class Electrode extends PokemonCard {
       // If no energy cards were drawn, move all cards to deck & shuffle
       if (energyCardsDrawn.length == 0) {
 
-        store.prompt(state, [new ShowCardsPrompt(
+        temp.cards.forEach(card => {
+            MOVE_CARDS(store, state, temp, player.discard, { cards: [card] });
+            return state;
+          });
+          store.prompt(state, [new ShowCardsPrompt(
           player.id,
           GameMessage.CARDS_SHOWED_BY_EFFECT,
           temp.cards
         )], () => {
-          temp.cards.forEach(card => {
-            MOVE_CARDS(store, state, temp, player.discard, { cards: [card] });
-            return state;
-          });
+          
           return state;
         });
       }

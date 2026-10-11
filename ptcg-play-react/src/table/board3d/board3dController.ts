@@ -639,18 +639,28 @@ export class Board3dController {
   }
 
   /**
-   * Silent server WaitPrompts ("Hand to deck animation", "Draw animation") arrive in the same
-   * state as the change they gate. Publish a pending promise now and settle it once that state
-   * has played on the board.
+   * Silent server WaitPrompts ("Hand to deck animation", "Draw animation") and ShowCards
+   * arrive in the same state as the change they gate. Publish a pending promise now and
+   * settle it once that state has played on the board.
    */
   private openGatesForState(props: Board3dControllerProps): (() => void)[] {
     const gates: (() => void)[] = [];
+    const selfPlay = props.gameState?.state?.gameSettings?.selfPlay === true;
     for (const prompt of props.gameState?.state?.prompts ?? []) {
-      if (
-        prompt.type !== 'WaitPrompt' ||
-        prompt.result !== undefined ||
-        this.gatedPromptIds.has(prompt.id)
-      ) {
+      if (prompt.result !== undefined || this.gatedPromptIds.has(prompt.id)) {
+        continue;
+      }
+      if (prompt.type === 'Show cards') {
+        if (prompt.playerId !== props.clientId && !selfPlay) {
+          continue;
+        }
+        this.gatedPromptIds.add(prompt.id);
+        const { promise, settle } = this.openAnimationGate();
+        this.boardInteractionService.setPendingShowCardsAnimationPromise(promise);
+        gates.push(settle);
+        continue;
+      }
+      if (prompt.type !== 'WaitPrompt') {
         continue;
       }
       const message = String((prompt as { message?: string }).message ?? '').toLowerCase();
@@ -695,6 +705,60 @@ export class Board3dController {
     });
   }
 
+  /** Unresolved ShowCardsPrompt cards this client must reveal (incl. self-play opponent). */
+  private collectShowCardsReveals(props: Board3dControllerProps): {
+    ids: number[];
+    byId: Map<number, Card>;
+    destinationHint?: 'deck' | 'hand';
+  } {
+    const ids: number[] = [];
+    const byId = new Map<number, Card>();
+    const selfPlay = props.gameState?.state?.gameSettings?.selfPlay === true;
+    for (const prompt of props.gameState?.state?.prompts ?? []) {
+      if (prompt.type !== 'Show cards' || prompt.result !== undefined) {
+        continue;
+      }
+      if (prompt.playerId !== props.clientId && !selfPlay) {
+        continue;
+      }
+      const cards = (prompt as { cards?: Card[] }).cards ?? [];
+      for (const card of cards) {
+        if (card?.id == null || byId.has(card.id)) {
+          continue;
+        }
+        ids.push(card.id);
+        byId.set(card.id, card);
+      }
+    }
+    return {
+      ids,
+      byId,
+      destinationHint: ids.length > 0 ? this.inferShowCardsDestinationHint(props) : undefined,
+    };
+  }
+
+  /**
+   * Resolve ChooseCardsPrompt messages still on the state (including already-resolved ones)
+   * to learn whether a discard reveal is heading to deck or hand.
+   */
+  private inferShowCardsDestinationHint(
+    props: Board3dControllerProps,
+  ): 'deck' | 'hand' | undefined {
+    let hint: 'deck' | 'hand' | undefined;
+    for (const prompt of props.gameState?.state?.prompts ?? []) {
+      if (prompt.type !== 'Choose cards') {
+        continue;
+      }
+      const msg = String((prompt as { message?: string | number }).message ?? '');
+      if (msg.includes('CHOOSE_CARD_TO_DECK')) {
+        hint = 'deck';
+      } else if (msg.includes('CHOOSE_CARD_TO_HAND')) {
+        hint = 'hand';
+      }
+    }
+    return hint;
+  }
+
   private async processFrame(frame: Board3dFrame, options: ProcessStateOptions): Promise<void> {
     try {
       const { props } = frame;
@@ -712,10 +776,14 @@ export class Board3dController {
       let koGhostSteps: TransitionStep[] = [];
       const upcomingSnapshot = this.captureBoardSnapshot(props);
       if (prevSnapshot && upcomingSnapshot) {
+        const showCards = this.collectShowCardsReveals(props);
         koGhostPlan = planTransition(prevSnapshot, upcomingSnapshot, {
           preFlownCardIds: new Set(this.localTrainerFlights.keys()),
           deckLimboByPlayer: this.deckLimboByPlayer,
+          showCardsRevealIds: showCards.ids,
+          showCardsDestinationHint: showCards.destinationHint,
         });
+        koGhostPlan.showCardsById = showCards.byId;
         koGhostSteps = seatChanged
           ? this.stepsWithoutHandOrigins(koGhostPlan.steps)
           : koGhostPlan.steps;

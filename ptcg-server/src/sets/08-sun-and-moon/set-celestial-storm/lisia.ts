@@ -61,16 +61,15 @@ export class Lisia extends TrainerCard {
 
           if (cards.length > 0) {
             // Reveal chosen cards to opponent
+            cards.forEach((card) => {
+              MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this });
+            });
+
             store.prompt(
               state,
               new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
               () => {},
             );
-
-            // Move chosen cards to hand
-            cards.forEach((card) => {
-              MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this });
-            });
           }
 
           SHUFFLE_DECK(store, state, player);

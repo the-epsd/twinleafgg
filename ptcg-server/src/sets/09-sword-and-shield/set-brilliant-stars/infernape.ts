@@ -47,6 +47,8 @@ export class Infernape extends PokemonCard {
         c instanceof EnergyCard
       );
 
+      MOVE_CARDS(store, state, deckTop, player.discard, { cards: energyCards, sourceCard: this });
+
       if (energyCards.length > 0) {
         state = store.prompt(state, new ShowCardsPrompt(
           opponent.id,
@@ -60,9 +62,6 @@ export class Infernape extends PokemonCard {
           GameMessage.CARDS_SHOWED_BY_EFFECT,
           energyCards), () => state);
       }
-
-      // Move energy cards to discard
-      MOVE_CARDS(store, state, deckTop, player.discard, { cards: energyCards, sourceCard: this });
 
       // Move all cards to discard
       MOVE_CARDS(store, state, deckTop, player.deck, { count: deckTop.cards.length, sourceCard: this });

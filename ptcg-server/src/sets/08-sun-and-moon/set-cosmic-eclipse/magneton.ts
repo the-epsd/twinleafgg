@@ -57,7 +57,10 @@ export class Magneton extends PokemonCard {
       ABILITY_USED(player, this);
 
       let cards: Card[] = [];
-      return store.prompt(state, new ChooseCardsPrompt(
+      cards.forEach((card, index) => {
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this, sourceEffect: this.powers[0] });
+        });
+        return store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
@@ -76,10 +79,6 @@ export class Magneton extends PokemonCard {
           });
           return state;
         }
-
-        cards.forEach((card, index) => {
-          MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this, sourceEffect: this.powers[0] });
-        });
 
         SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
         SHUFFLE_DECK(store, state, player);

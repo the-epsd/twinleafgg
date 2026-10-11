@@ -70,8 +70,9 @@ export class Tropius extends PokemonCard {
         (selected) => {
           const pokemonTaken = selected || [];
           if (pokemonTaken.length > 0) {
-            SHOW_CARDS_TO_PLAYER(store, state, opponent, pokemonTaken);
             MOVE_CARDS(store, state, topCards, player.hand, { cards: pokemonTaken, sourceCard: this });
+            SHOW_CARDS_TO_PLAYER(store, state, opponent, pokemonTaken);
+            
           }
           MOVE_CARDS(store, state, topCards, player.deck, { sourceCard: this });
           SHUFFLE_DECK(store, state, player);

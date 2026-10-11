@@ -1,3 +1,4 @@
+import type { Card } from 'ptcg-server';
 import type { BoardCardLocation, BoardSnapshot, PlayerSnapshot } from './boardSnapshot';
 
 export type PileZone = 'discard' | 'lostzone';
@@ -42,13 +43,28 @@ export type TransitionStep =
       turnBegin: boolean;
       /** Opening deal / mulligan redraw during GamePhase.SETUP. */
       setupDeal?: boolean;
+      /**
+       * ShowCardsPrompt faces to reveal during this draw (upgrade opponent/hidden draws
+       * to the full stage-flip path).
+       */
+      revealCardIds?: number[];
     }
   | {
       kind: 'setupReveal';
       /** Active first, then bench indices ascending; both seats flip each wave together. */
       waves: { slot: 'active' | 'bench'; index: number }[];
     }
-  | { kind: 'trainerToDiscard'; playerId: number; cardId: number; zone: PileZone };
+  | { kind: 'trainerToDiscard'; playerId: number; cardId: number; zone: PileZone }
+  | {
+      kind: 'showCards';
+      /** Card ids not already covered by a reveal draw this frame. */
+      cardIds: number[];
+      /**
+       * When cards have not relocated yet (show-before-move) or sit in a secret zone,
+       * prefer this destination for the stage→dest flight.
+       */
+      destinationHint?: 'deck' | 'hand';
+    };
 
 export interface PlayerTransition {
   playerId: number;
@@ -63,6 +79,10 @@ export interface PlayerTransition {
 export interface TransitionPlan {
   steps: TransitionStep[];
   players: Map<number, PlayerTransition>;
+  /** Union of ShowCardsPrompt card ids for this frame (may be empty). */
+  showCardsRevealIds?: ReadonlySet<number>;
+  /** Card objects from ShowCardsPrompt(s) for scan textures during reveal flights. */
+  showCardsById?: ReadonlyMap<number, Card>;
 }
 
 export interface PlanContext {
@@ -73,6 +93,13 @@ export interface PlanContext {
    * temp lists). Mutable across frames so the resolve tick can still emit a draw.
    */
   deckLimboByPlayer?: Map<number, number>;
+  /** Card ids from unresolved ShowCardsPrompt(s) the local client must reveal. */
+  showCardsRevealIds?: readonly number[];
+  /**
+   * Hint when ShowCards fires before the move lands in state (or cards go to a secret
+   * zone). Derived from a resolved ChooseCardsPrompt message when available.
+   */
+  showCardsDestinationHint?: 'deck' | 'hand';
 }
 
 type ZoneName = 'hand' | 'discard' | 'lostzone' | 'supporter' | 'stadium' | 'board' | 'prize';
@@ -92,6 +119,7 @@ const STEP_ORDER: TransitionStep['kind'][] = [
   'setupReveal',
   'draw',
   'trainerToDiscard',
+  'showCards',
 ];
 
 function indexLocations(snapshot: BoardSnapshot): Map<number, CardLocation> {
@@ -579,7 +607,81 @@ export function planTransition(
     }
   }
 
+  annotateShowCardsReveals(plan, prev, next, ctx.showCardsRevealIds ?? [], ctx.showCardsDestinationHint);
+
   return plan;
+}
+
+/**
+ * Attach ShowCards faces to overlapping draw steps (stage-reveal merge) and emit a
+ * dedicated {@link TransitionStep} for any remaining ids.
+ */
+function annotateShowCardsReveals(
+  plan: TransitionPlan,
+  prev: BoardSnapshot,
+  next: BoardSnapshot,
+  revealIdList: readonly number[],
+  destinationHint?: 'deck' | 'hand',
+): void {
+  if (revealIdList.length === 0) {
+    return;
+  }
+  const revealIds = new Set(revealIdList);
+  plan.showCardsRevealIds = revealIds;
+  const nextLocs = indexLocations(next);
+  const covered = new Set<number>();
+
+  for (const step of plan.steps) {
+    if (step.kind !== 'draw') {
+      continue;
+    }
+    const N = next.players.get(step.playerId);
+    const P = prev.players.get(step.playerId);
+    const revealForStep: number[] = [];
+
+    if (N?.handIds) {
+      for (const c of step.cards) {
+        if (c.cardId != null && revealIds.has(c.cardId) && !covered.has(c.cardId)) {
+          revealForStep.push(c.cardId);
+          covered.add(c.cardId);
+        }
+      }
+      for (const id of revealIds) {
+        if (covered.has(id)) {
+          continue;
+        }
+        if (N.handIds.includes(id) && !(P?.handIds?.includes(id) ?? false)) {
+          revealForStep.push(id);
+          covered.add(id);
+        }
+      }
+    } else {
+      for (const id of revealIds) {
+        if (covered.has(id) || revealForStep.length >= step.cards.length) {
+          continue;
+        }
+        const loc = nextLocs.get(id);
+        if (loc && (loc.zone !== 'hand' || loc.playerId !== step.playerId)) {
+          continue;
+        }
+        revealForStep.push(id);
+        covered.add(id);
+      }
+    }
+
+    if (revealForStep.length > 0) {
+      step.revealCardIds = revealForStep;
+    }
+  }
+
+  const uncovered = [...revealIds].filter((id) => !covered.has(id));
+  if (uncovered.length > 0) {
+    plan.steps.push({
+      kind: 'showCards',
+      cardIds: uncovered,
+      destinationHint,
+    });
+  }
 }
 
 /** Occupied Active then Bench indices across both players (union). */

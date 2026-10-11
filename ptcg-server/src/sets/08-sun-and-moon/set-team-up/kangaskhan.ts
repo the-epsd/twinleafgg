@@ -60,8 +60,9 @@ export class Kangaskhan extends PokemonCard {
         { min: 0, max: 2, allowCancel: true, blocked }
       ), selected => {
         const cards = selected || [];
-        SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
         cards.forEach(card => MOVE_CARD_TO(state, card, player.hand));
+        SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+        
         SHUFFLE_DECK(store, state, player);
       });
     }

@@ -79,6 +79,7 @@ export class Lapras extends PokemonCard {
           ), selected => {
             const cards = selected || [];
             if (cards.length > 0) {
+              MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
               store.prompt(state, [new ShowCardsPrompt(
                 opponent.id,
                 GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
@@ -91,7 +92,6 @@ export class Lapras extends PokemonCard {
                   }
                 });
 
-                MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
               });
             }
             return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

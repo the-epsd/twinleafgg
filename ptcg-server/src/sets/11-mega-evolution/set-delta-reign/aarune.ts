@@ -78,8 +78,9 @@ export class Aarune extends TrainerCard {
           cards = cards || [];
 
           if (cards.length > 0) {
-            SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
             MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this });
+            SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+            
           }
 
           MOVE_CARDS(store, state, player.supporter, player.discard, {

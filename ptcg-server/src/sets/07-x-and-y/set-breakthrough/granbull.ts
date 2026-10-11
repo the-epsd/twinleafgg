@@ -54,11 +54,11 @@ export class Granbull extends PokemonCard {
             handCopy.splice(randomIndex, 1);
           }
 
-          SHOW_CARDS_TO_PLAYER(store, state, player, cardsToShuffle);
-
           cardsToShuffle.forEach(card => {
             MOVE_CARDS(store, state, opponent.hand, opponent.deck, { cards: [card], sourceCard: this });
           });
+
+          SHOW_CARDS_TO_PLAYER(store, state, player, cardsToShuffle);
           SHUFFLE_DECK(store, state, opponent);
         }
       });

@@ -134,6 +134,7 @@ export class Noctowl extends PokemonCard {
                 (selected) => {
                   const cards = selected || [];
 
+                  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
                   store.prompt(
                     state,
                     [
@@ -144,7 +145,7 @@ export class Noctowl extends PokemonCard {
                       ),
                     ],
                     () => {
-                      MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
+                      
                       player.marker.addMarker(this.JEWEL_HUNT_MARKER, this);
                     },
                   );

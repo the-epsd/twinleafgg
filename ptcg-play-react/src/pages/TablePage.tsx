@@ -835,6 +835,7 @@ export function TablePage() {
         boardInteraction={boardInteraction}
         onResolvePrompt={onResolvePrompt}
         suppressChoosePrizePrompt={suppressChoosePrizePrompt}
+        use3dBoard={use3dBoardDefault}
       />
       {showEndGame && endFlowStage === 'splash' ? (
         <MatchResultsSplash

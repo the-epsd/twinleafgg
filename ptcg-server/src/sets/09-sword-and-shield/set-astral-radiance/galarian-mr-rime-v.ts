@@ -63,6 +63,7 @@ export class GalarianMrRimeV extends PokemonCard {
       }
 
       let cards: Card[] = [];
+      MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this });
       return store.prompt(
         state,
         new ChooseCardsPrompt(
@@ -80,7 +81,6 @@ export class GalarianMrRimeV extends PokemonCard {
             return;
           }
 
-          MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this });
           SHOW_CARDS_TO_PLAYER(store, state, StateUtils.getOpponent(state, player), cards);
           SHUFFLE_DECK(store, state, player);
         },

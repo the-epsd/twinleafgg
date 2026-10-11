@@ -74,6 +74,10 @@ function* playCard(
     },
   );
 
+  // Move before ShowCards so the 3D reveal can fly discard → stage → deck
+  // (cards in the deck are unindexed; showing first leaves them in discard visually).
+  MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: self });
+
   if (cards.length > 0) {
     yield store.prompt(
       state,
@@ -81,8 +85,6 @@ function* playCard(
       () => next(),
     );
   }
-
-  MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: self });
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);

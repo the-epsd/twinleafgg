@@ -74,16 +74,13 @@ export class Slugma extends PokemonCard {
         ADD_MARKER(this.ACTIVE_VOLCANO_MARKER, player, this);
         ABILITY_USED(player, this);
 
-        temp.cards.slice(0, 1).forEach(card => {
-
-          store.prompt(state, [new ShowCardsPrompt(
-            player.id,
-            GameMessage.CARDS_SHOWED_BY_EFFECT,
-            temp.cards
-          )], () => {
-            MOVE_CARDS(store, state, temp, player.discard, { sourceCard: this });
-          });
-        });
+        const revealed = [...temp.cards];
+        MOVE_CARDS(store, state, temp, player.discard, { sourceCard: this });
+        store.prompt(state, [new ShowCardsPrompt(
+          player.id,
+          GameMessage.CARDS_SHOWED_BY_EFFECT,
+          revealed
+        )], () => {});
 
       } else {
 
@@ -92,16 +89,16 @@ export class Slugma extends PokemonCard {
         ABILITY_USED(player, this);
 
         const cardList = StateUtils.findCardList(state, this);
+        const revealed = [...temp.cards];
 
+        energyCardsDrawn.forEach(card => {
+          MOVE_CARDS(store, state, temp, cardList, { cards: [card], sourceCard: this });
+        });
         store.prompt(state, [new ShowCardsPrompt(
           player.id,
           GameMessage.CARDS_SHOWED_BY_EFFECT,
-          temp.cards
-        )], () => {
-          energyCardsDrawn.forEach(card => {
-            MOVE_CARDS(store, state, temp, cardList, { cards: [card], sourceCard: this });
-          });
-        });
+          revealed
+        )], () => {});
       }
     }
     return state;

@@ -1232,6 +1232,25 @@ export class BoardInteractionService {
     return this.drawAnimationStartedAt;
   }
 
+  /** ShowCardsPrompt → draw-style 3D reveal (stage flip, then fly to destination). */
+  private pendingShowCardsAnimationPromise: Promise<void> | null = null;
+  private showCardsAnimationStartedAt = 0;
+
+  public setPendingShowCardsAnimationPromise(p: Promise<void> | null): void {
+    this.pendingShowCardsAnimationPromise = p;
+    if (p) {
+      this.showCardsAnimationStartedAt = Date.now();
+    }
+  }
+
+  public getPendingShowCardsAnimationPromise(): Promise<void> | null {
+    return this.pendingShowCardsAnimationPromise;
+  }
+
+  public getShowCardsAnimationStartedAt(): number {
+    return this.showCardsAnimationStartedAt;
+  }
+
   public triggerCoinFlipAnimation(result: boolean, playerId: number) {
     this.coinFlipAnimationSubject.next({ result, playerId });
   }

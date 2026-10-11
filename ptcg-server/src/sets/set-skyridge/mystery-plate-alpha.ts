@@ -105,6 +105,7 @@ export class MysteryPlateAlpha extends TrainerCard {
 
       if (opponent.getPrizeLeft() >= 5) {
         let cards: Card[] = [];
+        MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
         store.prompt(
           state,
           new ChooseCardsPrompt(
@@ -116,7 +117,7 @@ export class MysteryPlateAlpha extends TrainerCard {
           ),
           (selected) => {
             cards = selected || [];
-            MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
+            
             SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
             SHUFFLE_DECK(store, state, player);
           },

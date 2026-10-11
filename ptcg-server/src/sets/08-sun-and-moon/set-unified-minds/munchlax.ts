@@ -57,6 +57,7 @@ export class Munchlax extends PokemonCard {
             deckTop.moveToTopOfDestination(player.deck);
 
             if (cards.length > 0) {
+              MOVE_CARDS(store, state, player.deck, deckTop, { cards: cards, sourceCard: this });
               return store.prompt(state, new ShowCardsPrompt(
                 opponent.id,
                 GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
@@ -66,7 +67,7 @@ export class Munchlax extends PokemonCard {
               });
             }
 
-            MOVE_CARDS(store, state, player.deck, deckTop, { cards: cards, sourceCard: this });
+            
           });
         }
       });

@@ -81,7 +81,12 @@ export class Fearow extends PokemonCard {
       });
 
       let cards: Card[] = [];
-      store.prompt(
+      MOVE_CARDS(store, state, player.deck, player.hand, {
+            cards: cards,
+            sourceCard: this,
+            sourceEffect: this.powers[0],
+          });
+          store.prompt(
         state,
         new ChooseCardsPrompt(
           player,
@@ -94,11 +99,6 @@ export class Fearow extends PokemonCard {
           cards = selected || [];
 
           SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-          MOVE_CARDS(store, state, player.deck, player.hand, {
-            cards: cards,
-            sourceCard: this,
-            sourceEffect: this.powers[0],
-          });
 
           SHUFFLE_DECK(store, state, player);
         },

@@ -66,11 +66,12 @@ export class Relicanth extends PokemonCard {
       ), selected => {
         const cards: Card[] = selected || [];
         if (cards.length > 0) {
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards });
           store.prompt(state, [
             new ShowCardsPrompt(player.id, GameMessage.CARDS_SHOWED_BY_EFFECT, cards),
             new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards)
           ], () => { });
-          MOVE_CARDS(store, state, player.deck, player.hand, { cards });
+          
         }
         SHUFFLE_DECK(store, state, player);
       });

@@ -67,12 +67,13 @@ export class Cilan extends TrainerCard {
 
           if (selectedCards.length > 0) {
             // Show cards to opponent
-            SHOW_CARDS_TO_PLAYER(store, state, opponent, selectedCards);
-            // Move cards to hand
             MOVE_CARDS(store, state, player.deck, player.hand, {
               cards: selectedCards,
               sourceCard: this,
             });
+            SHOW_CARDS_TO_PLAYER(store, state, opponent, selectedCards);
+            // Move cards to hand
+            
           }
 
           return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {

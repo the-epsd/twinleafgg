@@ -50,8 +50,9 @@ export class Skitty2 extends PokemonCard {
         { min: 0, max: 2, allowCancel: false }
       ), selected => {
         if (selected) {
-          SHOW_CARDS_TO_PLAYER(store, state, opponent, selected);
           MOVE_CARDS(store, state, player.deck, player.hand, { cards: selected });
+          SHOW_CARDS_TO_PLAYER(store, state, opponent, selected);
+          
           SHUFFLE_DECK(store, state, player);
         }
       });

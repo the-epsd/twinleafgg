@@ -69,11 +69,12 @@ export class Elesa extends TrainerCard {
         (selected) => {
           selected = selected || [];
           if (selected.length > 0) {
-            SHOW_CARDS_TO_PLAYER(store, state, opponent, selected);
             MOVE_CARDS(store, state, player.deck, player.hand, {
               cards: selected,
               sourceCard: this,
             });
+            SHOW_CARDS_TO_PLAYER(store, state, opponent, selected);
+            
           }
 
           SHUFFLE_DECK(store, state, player);

@@ -48,6 +48,10 @@ function* useStadium(
     (selectedCards) => {
       cards = selectedCards || [];
 
+      cards.forEach((card, index) => {
+        MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: effect.stadium });
+      });
+
       if (cards.length > 0) {
         store.prompt(
           state,
@@ -55,10 +59,6 @@ function* useStadium(
           () => next(),
         );
       }
-
-      cards.forEach((card, index) => {
-        MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: effect.stadium });
-      });
 
       return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
         player.deck.applyOrder(order);

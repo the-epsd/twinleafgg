@@ -85,6 +85,8 @@ export class CedricJuniper extends TrainerCard {
             (choice) => {
               const opponentGuessedRight = choice === 0;
 
+              MOVE_CARDS(store, state, selectedPokemon, player.hand, { sourceCard: this });
+
               store.prompt(
                 state,
                 new ShowCardsPrompt(
@@ -99,7 +101,6 @@ export class CedricJuniper extends TrainerCard {
                     DRAW_CARDS(store, state, player, 3);
                   }
 
-                  MOVE_CARDS(store, state, selectedPokemon, player.hand, { sourceCard: this });
                 },
               );
             },

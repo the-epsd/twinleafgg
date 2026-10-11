@@ -74,14 +74,13 @@ export class ToolBox extends TrainerCard {
 
           if (cards.length > 0) {
             // Reveal selected Tool cards to opponent
+            MOVE_CARDS(store, state, deckTop, player.hand, { cards: cards, sourceCard: this });
+
             store.prompt(
               state,
               new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
               () => {},
             );
-
-            // Move chosen Tool cards to hand
-            MOVE_CARDS(store, state, deckTop, player.hand, { cards: cards, sourceCard: this });
           }
 
           // Shuffle remaining cards back into deck

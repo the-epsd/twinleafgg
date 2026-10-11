@@ -74,8 +74,9 @@ export class MarleysRequest extends TrainerCard {
             { min: 1, max: 1, allowCancel: false, blocked },
           ),
           (cards) => {
-            SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
             cards.forEach((card) => MOVE_CARD_TO(state, card, player.hand));
+            SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+            
             MOVE_CARDS(store, state, player.supporter, player.discard, {
               cards: [this],
               sourceCard: this,

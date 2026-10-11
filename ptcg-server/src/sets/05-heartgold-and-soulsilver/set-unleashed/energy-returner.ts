@@ -59,8 +59,9 @@ function* playCard(
     },
   );
 
-  SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
   MOVE_CARDS(store, state, player.discard, player.deck, { cards, sourceCard: self });
+
+  SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);

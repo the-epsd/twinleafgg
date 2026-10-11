@@ -56,6 +56,8 @@ function* playCard(
     },
   );
 
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
+
   if (cards.length > 0) {
     yield store.prompt(
       state,
@@ -63,8 +65,6 @@ function* playCard(
       () => next(),
     );
   }
-
-  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
   MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [self], sourceCard: self });
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {

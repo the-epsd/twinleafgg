@@ -46,6 +46,7 @@ export class FloatzelGL extends PokemonCard {
       }
 
       let cards: Card[] = [];
+      MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards });
       return store.prompt(
         state,
         new ChooseCardsPrompt(
@@ -61,7 +62,6 @@ export class FloatzelGL extends PokemonCard {
           if (cards.length > 0) {
 
             SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-            MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards });
           }
         },
       );

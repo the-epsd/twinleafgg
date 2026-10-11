@@ -60,6 +60,9 @@ function* playCard(
     },
   );
 
+  // Move before ShowCards so the 3D reveal can fly to hand (not bounce back to discard).
+  MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: self });
+
   if (cards.length > 0) {
     yield store.prompt(
       state,
@@ -67,8 +70,6 @@ function* playCard(
       () => next(),
     );
   }
-
-  MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: self });
 }
 
 export class MaxRod extends TrainerCard {

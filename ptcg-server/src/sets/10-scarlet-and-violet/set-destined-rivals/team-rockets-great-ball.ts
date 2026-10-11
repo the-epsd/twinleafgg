@@ -93,34 +93,19 @@ export class TeamRocketsGreatBall extends TrainerCard {
                 });
               }
 
-              if (cards.length > 0) {
-                state = store.prompt(
-                  state,
-                  new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
-                  () => state,
-                );
-              }
-
-              // Operation canceled by the user
-              if (cards.length === 0) {
-                return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-                  player.deck.applyOrder(order);
-                });
-              }
-
-              if (cards.length > 0) {
-                state = store.prompt(
-                  state,
-                  new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
-                  () => state,
-                );
-              }
               cards.forEach((card) => {
                 MOVE_CARDS(store, state, player.deck, player.hand, {
                   cards: [card],
                   sourceCard: this,
                 });
               });
+              if (cards.length > 0) {
+                state = store.prompt(
+                  state,
+                  new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+                  () => state,
+                );
+              }
               return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
                 player.deck.applyOrder(order);
               });

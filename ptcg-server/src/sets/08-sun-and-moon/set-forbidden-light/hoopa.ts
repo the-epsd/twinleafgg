@@ -55,10 +55,11 @@ export class Hoopa extends PokemonCard {
       ), selected => {
         const cards = selected || [];
         if (cards.length > 0) {
-          SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
           cards.forEach(card => {
             MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this });
           });
+          SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+          
         }
         SHUFFLE_DECK(store, state, player);
       });

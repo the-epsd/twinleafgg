@@ -78,15 +78,16 @@ export class Dratini extends PokemonCard {
             const allCards = [...dratiniCards, ...dragonairCards, ...dragoniteCards];
 
             if (allCards.length > 0) {
+              allCards.forEach(card => {
+                MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this });
+              });
               store.prompt(state, new ShowCardsPrompt(
                 opponent.id,
                 GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
                 allCards
               ), () => { });
 
-              allCards.forEach(card => {
-                MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this });
-              });
+              
             }
 
             SHUFFLE_DECK(store, state, player);

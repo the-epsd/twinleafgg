@@ -71,17 +71,17 @@ export class Azelf extends PokemonCard {
           ), chosenPrize => {
 
             if (chosenPrize.length > 0) {
-              state = store.prompt(state, new ShowCardsPrompt(
-                opponent.id,
-                GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-                chosenPrize
-              ), () => { });
-
               player.prizes.forEach(p => {
                 if (p.cards[0] === chosenPrize[0]) {
                   MOVE_CARDS(store, state, p, player.supporter, { cards: chosenPrize, sourceCard: this });
                 }
               });
+
+              state = store.prompt(state, new ShowCardsPrompt(
+                opponent.id,
+                GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+                chosenPrize
+              ), () => { });
 
               store.prompt(state, new ChooseCardsPrompt(
                 player,
