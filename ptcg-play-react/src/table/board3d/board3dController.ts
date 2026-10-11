@@ -1959,12 +1959,90 @@ export class Board3dController {
       );
       return;
     }
-    const p = this.animationService.playAttackAnimation(boardCard.getGroup()).then(() => {
-      // Paint defender damage as soon as the lunge finishes — before the WaitPrompt
-      // resolves and the server pushes a same-tick KO that never syncs the counter.
-      this.applyPendingAttackDamageVisual();
-    });
+
+    // When the Active attacks, defender get-hit starts on slam impact (75% of clip).
+    // Resolve the defender at impact time — `game:attack` sets pending damage after
+    // `triggerAttackAnimation`, so it is not available synchronously at start.
+    const attackerIsActive = meshId.endsWith('_active');
+    const attackerWorld = boardCard.getGroup().position.clone();
+    const attackerPlayerId = ev.playerId;
+
+    const p = (async () => {
+      let hitPromise: Promise<void> = Promise.resolve();
+      let damageApplied = false;
+      this.stateSync.lockBoardCardPose(meshId);
+      try {
+        await this.animationService.playAttackAnimation(boardCard.getGroup(), {
+          onImpact: () => {
+            if (!attackerIsActive) {
+              if (!damageApplied) {
+                damageApplied = true;
+                this.applyPendingAttackDamageVisual();
+              }
+              return;
+            }
+            // Resolve before painting damage — applyPending clears pendingAttackDamage.
+            const defender = this.resolveAttackDefender(attackerPlayerId);
+            if (!damageApplied) {
+              damageApplied = true;
+              this.applyPendingAttackDamageVisual();
+            }
+            if (!defender) {
+              return;
+            }
+            const defenderMeshId = defender.getGroup().userData.cardId as string | undefined;
+            if (defenderMeshId) {
+              this.stateSync.lockBoardCardPose(defenderMeshId);
+            }
+            hitPromise = this.animationService
+              .playGetHitReaction(defender.getGroup(), { awayFromWorld: attackerWorld })
+              .finally(() => {
+                if (defenderMeshId) {
+                  this.stateSync.unlockBoardCardPose(defenderMeshId);
+                }
+              });
+          },
+        });
+      } finally {
+        this.stateSync.unlockBoardCardPose(meshId);
+      }
+      if (!damageApplied) {
+        this.applyPendingAttackDamageVisual();
+      }
+      await hitPromise;
+    })();
     this.boardInteractionService.setPendingAttackAnimationPromise(p);
+  }
+
+  /** Opponent Active for an attack — prefers pending damage, else the other seat's Active. */
+  private resolveAttackDefender(attackerPlayerId: number): Board3dCard | undefined {
+    const pending = this.boardInteractionService.peekPendingAttackDamage();
+    if (pending != null) {
+      return this.resolveActiveBoardCard(pending.opponentId);
+    }
+    const opponent =
+      this.bottomPlayer?.id === attackerPlayerId
+        ? this.topPlayer
+        : this.topPlayer?.id === attackerPlayerId
+          ? this.bottomPlayer
+          : undefined;
+    if (opponent?.id == null) {
+      return undefined;
+    }
+    return this.resolveActiveBoardCard(opponent.id);
+  }
+
+  private resolveActiveBoardCard(playerId: number): Board3dCard | undefined {
+    const seat =
+      this.bottomPlayer?.id === playerId
+        ? 'bottomPlayer'
+        : this.topPlayer?.id === playerId
+          ? 'topPlayer'
+          : null;
+    if (!seat) {
+      return undefined;
+    }
+    return this.stateSync.getCardById(`${seat}_${playerId}_active`);
   }
 
   /** Apply {@link BoardInteractionService} pending attack damage onto the defender's Active. */

@@ -268,7 +268,7 @@ export function TablePage() {
         damage?: number;
         opponentId?: number;
       }) => {
-        boardInteraction.triggerAttackAnimation(data);
+        // Set pending damage / effect before the attack animation so impact handlers can see it.
         if (data.cardType !== undefined && data.opponentId !== undefined) {
           playAttackSfx(data.cardType as CardType, data.damage ?? 0);
           boardInteraction.triggerAttackEffect({
@@ -281,6 +281,7 @@ export function TablePage() {
             damage: data.damage,
           });
         }
+        boardInteraction.triggerAttackAnimation(data);
       };
       const onAbility = (data: {
         playerId: number;

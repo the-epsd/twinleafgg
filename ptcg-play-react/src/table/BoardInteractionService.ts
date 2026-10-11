@@ -1080,9 +1080,9 @@ export class BoardInteractionService {
   }
 
   /**
-   * Damage from the latest `game:attack` socket. Applied to the defender's counter when the
-   * attack motion finishes — the server often KO's in the same state push, so the board never
-   * syncs lethal damage otherwise.
+   * Damage from the latest `game:attack` socket. Applied to the defender's counter on attack
+   * impact (when the Active slam lands) — the server often KO's in the same state push, so the
+   * board never syncs lethal damage otherwise.
    */
   private pendingAttackDamage: PendingAttackDamage | null = null;
 

@@ -385,8 +385,15 @@ export class Board3dAnimationService {
   /**
    * Attack motion: same keyframe proportions as Angular `board-card.component.scss` `@keyframes attackAnimation`,
    * stretched to {@link BOARD3D_ATTACK_ANIMATION_DURATION_SEC}, `cubic-bezier(0.4, 0, 0.1, 1)`.
+   * Impact (slam lands at 75%) fires {@link opts.onImpact} once — use this to start the defender hit.
    */
-  playAttackAnimation(card: Object3D): Promise<void> {
+  playAttackAnimation(
+    card: Object3D,
+    opts?: {
+      /** Fired once when the slam lands (75% of the clip — Angular impact keyframe). */
+      onImpact?: () => void;
+    },
+  ): Promise<void> {
     return new Promise(resolve => {
       const easeAttack = 'cubic-bezier(0.4, 0, 0.1, 1)';
       const totalDuration = BOARD3D_ATTACK_ANIMATION_DURATION_SEC;
@@ -405,9 +412,26 @@ export class Board3dAnimationService {
       const slamScale = baseScale * 0.92;
       const bounceScale = baseScale * 1.12;
       const prevRenderOrder = card.renderOrder;
+      let impactFired = false;
+      const fireImpact = (): void => {
+        if (impactFired) {
+          return;
+        }
+        impactFired = true;
+        opts?.onImpact?.();
+      };
 
       const timeline = gsap.timeline({
         onComplete: () => {
+          fireImpact();
+          card.position.y = baseY;
+          card.scale.setScalar(baseScale);
+          card.renderOrder = prevRenderOrder;
+          this.removeAnimation(timeline);
+          resolve();
+        },
+        onKill: () => {
+          fireImpact();
           card.position.y = baseY;
           card.scale.setScalar(baseScale);
           card.renderOrder = prevRenderOrder;
@@ -432,7 +456,14 @@ export class Board3dAnimationService {
       timeline.to(card.position, { y: baseY, duration: d23, ease: easeAttack }, t60);
       timeline.to(
         card.scale,
-        { x: slamScale, y: slamScale, z: slamScale, duration: d23, ease: easeAttack },
+        {
+          x: slamScale,
+          y: slamScale,
+          z: slamScale,
+          duration: d23,
+          ease: easeAttack,
+          onComplete: fireImpact,
+        },
         t60,
       );
       timeline.to(
@@ -445,6 +476,137 @@ export class Board3dAnimationService {
         { x: baseScale, y: baseScale, z: baseScale, duration: d45, ease: easeAttack },
         t85,
       );
+
+      this.activeAnimations.push(timeline);
+      this.updateAnimationState();
+    });
+  }
+
+  /**
+   * Defender flinch when an Active Pokémon's attack lands.
+   * Knock away from the attacker, small lift + tilt, then settle.
+   */
+  playGetHitReaction(
+    card: Object3D,
+    opts?: { awayFromWorld?: Vector3 },
+  ): Promise<void> {
+    return new Promise(resolve => {
+      const start = card.position.clone();
+      const startRotX = card.rotation.x;
+      const startRotY = card.rotation.y;
+      const startRotZ = card.rotation.z;
+      const startScale = card.scale.x;
+      const away = new Vector3();
+      if (opts?.awayFromWorld) {
+        away.copy(start).sub(opts.awayFromWorld);
+        away.y = 0;
+      }
+      if (away.lengthSq() < 1e-6) {
+        away.set(0, 0, start.z >= 0 ? 1 : -1);
+      } else {
+        away.normalize();
+      }
+
+      const knock = 0.85;
+      const lift = 0.45;
+      const duration = 0.6;
+      const tPeak = duration * 0.2;
+      const tHold = duration * 0.4;
+      const yawSign = away.x >= 0 ? 1 : -1;
+      const peak = start.clone().add(away.clone().multiplyScalar(knock)).add(new Vector3(0, lift, 0));
+      const hold = start
+        .clone()
+        .add(away.clone().multiplyScalar(knock * 0.7))
+        .add(new Vector3(0, lift * 0.4, 0));
+      const peakScale = startScale * 1.06;
+      const prevRenderOrder = card.renderOrder;
+
+      const timeline = gsap.timeline({
+        onComplete: () => {
+          card.position.copy(start);
+          card.rotation.set(startRotX, startRotY, startRotZ);
+          card.scale.setScalar(startScale);
+          card.renderOrder = prevRenderOrder;
+          this.removeAnimation(timeline);
+          resolve();
+        },
+        onKill: () => {
+          card.position.copy(start);
+          card.rotation.set(startRotX, startRotY, startRotZ);
+          card.scale.setScalar(startScale);
+          card.renderOrder = prevRenderOrder;
+          this.removeAnimation(timeline);
+          resolve();
+        },
+      });
+
+      card.renderOrder = 90;
+
+      timeline
+        .to(
+          card.position,
+          { x: peak.x, y: peak.y, z: peak.z, duration: tPeak, ease: 'power2.out' },
+          0,
+        )
+        .to(
+          card.rotation,
+          {
+            x: startRotX + (10 * Math.PI) / 180,
+            y: startRotY + yawSign * (14 * Math.PI) / 180,
+            z: startRotZ + 0.12,
+            duration: tPeak,
+            ease: 'power2.out',
+          },
+          0,
+        )
+        .to(
+          card.scale,
+          { x: peakScale, y: peakScale, z: peakScale, duration: tPeak, ease: 'power2.out' },
+          0,
+        )
+        .to(
+          card.position,
+          { x: hold.x, y: hold.y, z: hold.z, duration: tHold - tPeak, ease: 'power1.inOut' },
+          tPeak,
+        )
+        .to(
+          card.rotation,
+          {
+            x: startRotX + (4 * Math.PI) / 180,
+            y: startRotY + yawSign * (6 * Math.PI) / 180,
+            z: startRotZ + 0.05,
+            duration: tHold - tPeak,
+            ease: 'power1.inOut',
+          },
+          tPeak,
+        )
+        .to(
+          card.position,
+          { x: start.x, y: start.y, z: start.z, duration: duration - tHold, ease: 'power2.inOut' },
+          tHold,
+        )
+        .to(
+          card.rotation,
+          {
+            x: startRotX,
+            y: startRotY,
+            z: startRotZ,
+            duration: duration - tHold,
+            ease: 'power2.inOut',
+          },
+          tHold,
+        )
+        .to(
+          card.scale,
+          {
+            x: startScale,
+            y: startScale,
+            z: startScale,
+            duration: duration - tHold,
+            ease: 'power2.inOut',
+          },
+          tHold,
+        );
 
       this.activeAnimations.push(timeline);
       this.updateAnimationState();

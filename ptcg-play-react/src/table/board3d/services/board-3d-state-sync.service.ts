@@ -96,6 +96,8 @@ export class Board3dStateSyncService {
   private protectedVisualCardIds: ReadonlySet<string> | null = null;
   /** Imperative protections survive syncState calls until their owning flight releases them. */
   private imperativelyProtectedVisualCardIds = new Set<string>();
+  /** Short-lived transform lock so attack / get-hit GSAP is not snapped by sync. */
+  private animationPoseLockedCardIds = new Set<string>();
 
   /** Cards removed while R3F owns the board subtree; dispose after React detaches primitives. */
   private pendingR3fBoardCardDisposals: Board3dCard[] = [];
@@ -807,13 +809,18 @@ export class Board3dStateSyncService {
 
     if (cardMesh) {
       // Preserve a flight-owned mesh's current rendering until that animation lands.
+      const poseLocked = this.animationPoseLockedCardIds.has(cardId);
       if (!preserveFlightVisual) {
         cardMesh.updateTexture(frontTexture, backTexture, maskTexture);
-        if (cardId !== this.skippedCardIdForSync) {
+        if (!poseLocked && cardId !== this.skippedCardIdForSync) {
           cardMesh.setPosition(position);
           cardMesh.setRotation(rotation);
         }
-        if (cardId !== this.skippedCardIdForSync && !this.skippedScaleCardIdsForSync?.has(cardId)) {
+        if (
+          !poseLocked &&
+          cardId !== this.skippedCardIdForSync &&
+          !this.skippedScaleCardIdsForSync?.has(cardId)
+        ) {
           applyCardScale(cardMesh, scale);
         }
       }
@@ -1139,6 +1146,15 @@ export class Board3dStateSyncService {
     this.removeCard(cardId);
   }
 
+  /** Lock transforms for a short board animation (attack hop / get-hit) without hiding the mesh. */
+  lockBoardCardPose(meshId: string): void {
+    this.animationPoseLockedCardIds.add(meshId);
+  }
+
+  unlockBoardCardPose(meshId: string): void {
+    this.animationPoseLockedCardIds.delete(meshId);
+  }
+
   /** Protect a board mesh immediately while a deck-origin animation takes ownership of it. */
   protectBoardCardVisual(meshId: string): void {
     this.imperativelyProtectedVisualCardIds.add(meshId);
@@ -1415,6 +1431,7 @@ export class Board3dStateSyncService {
     });
     this.cardsMap.clear();
     this.imperativelyProtectedVisualCardIds.clear();
+    this.animationPoseLockedCardIds.clear();
     this.protectedVisualCardIds = null;
   }
 }
