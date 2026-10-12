@@ -6,6 +6,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { IS_ABILITY_BLOCKED, ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT } from '../../../game/store/prefabs/prefabs';
 
 export class Machamp extends PokemonCard {
@@ -41,14 +42,20 @@ export class Machamp extends PokemonCard {
     // Ability: Counterattack (passive - put 3 damage counters on attacker when damaged)
     // Ref: set-flashfire/qwilfish.ts (Counterattack Quills - ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT)
     if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      if (IS_ABILITY_BLOCKED(store, state, targetPlayer, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      // Put 3 damage counters (30 damage) on the attacking Pokemon
-      effect.source.damage += 30;
+      const placeCounters = new PlaceDamageCountersEffect(
+        abilityOwner,
+        effect.source,
+        30,
+        this,
+        this.powers[0],
+      );
+      store.reduceEffect(state, placeCounters);
     }
 
     return state;

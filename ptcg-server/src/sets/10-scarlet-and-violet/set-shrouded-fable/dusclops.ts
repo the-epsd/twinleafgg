@@ -64,10 +64,17 @@ export class Dusclops extends PokemonCard {
         const targets = selected || [];
 
         if (targets.length > 0) {
-          const placeCountersEffect = new PlaceDamageCountersEffect(player, targets[0], 50, this);
+          const placeCountersEffect = new PlaceDamageCountersEffect(
+            player,
+            targets[0],
+            50,
+            this,
+            this.powers[0],
+          );
           state = store.reduceEffect(state, placeCountersEffect);
         }
 
+        // Self-KO still happens even if counters were prevented (e.g. Stealthy Hood)
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
             cardList.damage += 999;

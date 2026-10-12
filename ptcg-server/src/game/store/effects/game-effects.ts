@@ -390,12 +390,21 @@ export class PlaceDamageCountersEffect implements Effect {
   public target: PokemonCardList;
   public damage: number;
   public source?: PokemonCard;
+  /** When set (or inferred from `source`), gameReducer probes EffectOfAbilityEffect before applying. */
+  public sourcePower?: Power;
 
-  constructor(player: Player, target: PokemonCardList, damage: number, source?: PokemonCard) {
+  constructor(
+    player: Player,
+    target: PokemonCardList,
+    damage: number,
+    source?: PokemonCard,
+    sourcePower?: Power,
+  ) {
     this.player = player;
     this.target = target;
     this.damage = damage;
     this.source = source;
+    this.sourcePower = sourcePower;
   }
 }
 

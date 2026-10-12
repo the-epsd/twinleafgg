@@ -4,11 +4,12 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { GamePhase, PowerType, StoreLike, State, StateUtils } from '../../../game';
+import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 
 export class Stoutland extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -42,32 +43,33 @@ export class Stoutland extends PokemonCard {
   public fullName: string = 'Stoutland EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Intimidating Fang
-    // Ref: set-ultra-prism/luxray.ts (same ability name and text - passive DealDamageEffect reduction)
-    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this)) {
-      if (state.phase !== GamePhase.ATTACK) {
+    // Intimidating Fang — Ref: set-30th-celebration/pikachu-28.ts / set-chaos-rising/garbodor.ts
+    if (effect instanceof DealDamageEffect) {
+      const abilityOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
+        return state;
+      }
+      if (abilityOwner.active.getPokemonCard() !== this) {
         return state;
       }
 
-      const pokemonCard = effect.target.getPokemonCard();
-      if (pokemonCard !== this) {
+      const opponent = StateUtils.getOpponent(state, abilityOwner);
+      if (effect.player !== opponent || effect.source !== opponent.active) {
         return state;
       }
 
-      const player = StateUtils.findOwner(state, effect.target);
-      const opponent = StateUtils.findOwner(state, effect.source);
-
-      // Only reduce damage from opponent's attacks
-      if (player === opponent) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      // Only works when this Pokemon is in the Active Spot
-      if (player.active !== effect.target) {
-        return state;
-      }
-
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        effect.source,
+      )) {
         return state;
       }
 

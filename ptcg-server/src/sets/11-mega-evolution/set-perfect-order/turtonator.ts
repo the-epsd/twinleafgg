@@ -1,9 +1,24 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, SuperType, GamePhase } from '../../../game';
-import { PutDamageEffect, DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
+import {
+  PokemonCard,
+  Stage,
+  CardType,
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  ChooseCardsPrompt,
+  GameMessage,
+  SuperType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { PowerEffect, AttackEffect } from '../../../game/store/effects/game-effects';
-import { CoinFlipEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
+import {
+  IS_ABILITY_BLOCKED,
+  MOVE_CARDS,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Turtonator extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -34,81 +49,52 @@ export class Turtonator extends PokemonCard {
   public fullName: string = 'Turtonator M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Thorny Shell ability - discard energy from attacking Pokemon when this takes damage
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
-      const pokemonCard = effect.target.getPokemonCard();
-      const sourceCard = effect.source?.getPokemonCard();
+    // Shell Spikes
+    if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
+      const attackingPokemon = effect.source;
 
-      if (pokemonCard !== this) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      // Check if this Pokemon is in Active Spot
-      const player = StateUtils.findOwner(state, effect.target);
-      if (player.active !== effect.target) {
+      if (!attackingPokemon.energies.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
 
-      // Check if damage was dealt from opponent's attack
-      if (state.phase !== GamePhase.ATTACK) {
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        attackingPokemon,
+      )) {
         return state;
       }
 
-      const sourceOwner = effect.source ? StateUtils.findOwner(state, effect.source) : null;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Only trigger from opponent's attacks
-      if (sourceOwner !== opponent) {
-        return state;
-      }
-
-      // Check if player has DAMAGE_DEALT_MARKER (damage was actually dealt)
-      if (!player.marker.hasMarker(player.DAMAGE_DEALT_MARKER)) {
-        return state;
-      }
-
-      if (sourceCard && effect.source && effect.source.energies.cards.length > 0) {
-        // Try to reduce PowerEffect to check if ability is blocked
-        try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
-          return state;
-        }
-
-        // Discard one energy from attacking Pokemon
-        return store.prompt(state, new ChooseCardsPrompt(
-          opponent,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          effect.source,
-          { superType: SuperType.ENERGY },
-          { min: 1, max: 1, allowCancel: false }
-        ), selected => {
-          const cards = selected || [];
-          if (cards.length > 0) {
-            const discardEffect = new DiscardCardsEffect(effect as any, cards);
-            discardEffect.target = effect.source;
-            store.reduceEffect(state, discardEffect);
-          }
-        });
-      }
-    }
-
-    // Heat Breath - coin flip for +80 damage
-    if (WAS_ATTACK_USED(effect, 0, this) && effect instanceof AttackEffect) {
-      const player = effect.player;
-
-      const coinFlipEffect = new CoinFlipEffect(player, (result: boolean) => {
-        if (result === true) {
-          effect.damage += 80;
+      const attackerOwner = StateUtils.findOwner(state, attackingPokemon);
+      return store.prompt(state, new ChooseCardsPrompt(
+        abilityOwner,
+        GameMessage.CHOOSE_CARD_TO_DISCARD,
+        attackingPokemon,
+        { superType: SuperType.ENERGY },
+        { min: 1, max: 1, allowCancel: false },
+      ), selected => {
+        const cards = selected || [];
+        if (cards.length > 0) {
+          MOVE_CARDS(store, state, attackingPokemon, attackerOwner.discard, {
+            cards,
+            sourceCard: this,
+            sourceEffect: this.powers[0],
+          });
         }
       });
+    }
 
-      return store.reduceEffect(state, coinFlipEffect);
+    // Heat Breath
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      return FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(store, state, effect, 80);
     }
 
     return state;

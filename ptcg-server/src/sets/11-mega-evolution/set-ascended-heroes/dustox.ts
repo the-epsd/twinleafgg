@@ -8,7 +8,14 @@ import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import {COIN_FLIP_PROMPT, WAS_ATTACK_USED, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import {
+  COIN_FLIP_PROMPT,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  MOVE_CARDS,
+  IS_ABILITY_BLOCKED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Dustox extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -56,10 +63,14 @@ export class Dustox extends PokemonCard {
       player.marker.removeMarker(this.RUSTLING_WIND_MARKER, this);
     }
 
-    // Rustling Wind ability
+    // Boisterous Wind ability
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
 
       // Check if ability was already used this turn
       if (player.marker.hasMarker(this.RUSTLING_WIND_MARKER, this)) {
@@ -77,21 +88,37 @@ export class Dustox extends PokemonCard {
 
       // Flip coin
       return COIN_FLIP_PROMPT(store, state, player, (result) => {
-        if (result) {
-          // If heads, select and move energy to opponent's hand
-          store.prompt(state, new ChooseCardsPrompt(
-            player,
-            GameMessage.CHOOSE_CARD_TO_DISCARD,
-            opponent.active,
-            { superType: SuperType.ENERGY },
-            { min: 1, max: 1, allowCancel: false }
-          ), selected => {
-            if (selected && selected.length > 0) {
-              const energyCard = selected[0];
-              MOVE_CARDS(store, state, opponent.active, opponent.hand, { cards: [energyCard], sourceCard: this });
-            }
-          });
+        if (!result) {
+          return;
         }
+
+        if (!CAN_APPLY_ABILITY_TO_TARGET(
+          store,
+          state,
+          player,
+          this.powers[0],
+          this,
+          opponent.active,
+        )) {
+          return;
+        }
+
+        store.prompt(state, new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          opponent.active,
+          { superType: SuperType.ENERGY },
+          { min: 1, max: 1, allowCancel: false }
+        ), selected => {
+          if (selected && selected.length > 0) {
+            const energyCard = selected[0];
+            MOVE_CARDS(store, state, opponent.active, opponent.hand, {
+              cards: [energyCard],
+              sourceCard: this,
+              sourceEffect: this.powers[0],
+            });
+          }
+        });
       });
     }
 

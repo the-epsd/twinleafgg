@@ -1,9 +1,13 @@
-import { GamePhase, PowerType, State, StateUtils, StoreLike } from '../../../game';
+import { PowerType, State, StateUtils, StoreLike } from '../../../game';
 import { CardType, SpecialCondition, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
+import { AddSpecialConditionsPowerEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import {
+  IS_ABILITY_BLOCKED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Numel extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -34,22 +38,34 @@ export class Numel extends PokemonCard {
   public fullName: string = 'Numel M2a';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Incandescent Body — Ref: set-twilight-masquerade/heatran.ts
+    if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-    if (effect instanceof AfterDamageEffect && effect.target.cards.includes(this)) {
-      const player = effect.player;
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
-
-      if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        effect.source,
+      )) {
         return state;
       }
 
-      if (state.phase === GamePhase.ATTACK) {
-        effect.source.addSpecialCondition(SpecialCondition.BURNED);
-      }
+      store.reduceEffect(
+        state,
+        new AddSpecialConditionsPowerEffect(
+          abilityOwner,
+          this,
+          effect.source,
+          [SpecialCondition.BURNED],
+        ),
+      );
     }
 
     return state;

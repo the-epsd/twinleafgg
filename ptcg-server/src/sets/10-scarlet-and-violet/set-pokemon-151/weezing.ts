@@ -2,7 +2,8 @@ import { CardType, GamePhase, PokemonCard, PowerType, Stage, State, StateUtils, 
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
-import { COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED, TAKE_X_PRIZES, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Weezing extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -37,29 +38,42 @@ export class Weezing extends PokemonCard {
   public fullName: string = 'Weezing MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof KnockOutEffect &&
-      effect.target.getPokemonCard() === this &&
+    // Let's Have a Blast — Ref: set-30th-celebration/gengar-ex.ts
+    if (
+      effect instanceof KnockOutEffect &&
+      effect.target.cards.includes(this) &&
       effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)
     ) {
-      const player = StateUtils.findOwner(state, effect.target);
-      const opponent = StateUtils.getOpponent(state, player);
+      const abilityOwner = effect.player;
+      const attackerOwner = StateUtils.getOpponent(state, abilityOwner);
 
-      // Do not activate between turns, or when it's not opponents turn, or if abilities are blocked.
+      // Do not activate between turns, or when it's not opponents turn, or if not Active
       if (state.phase !== GamePhase.ATTACK ||
-        player.active.getPokemonCard() !== this ||
-        state.players[state.activePlayer] !== opponent ||
-        IS_ABILITY_BLOCKED(store, state, player, this)
-      )
+        abilityOwner.active.getPokemonCard() !== this ||
+        state.players[state.activePlayer] !== attackerOwner
+      ) {
         return state;
+      }
 
-      COIN_FLIP_PROMPT(store, state, player, (result) => {
-        if (!result) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      COIN_FLIP_PROMPT(store, state, abilityOwner, flipResult => {
+        if (!flipResult) {
           return;
         }
-        // Ability-triggered KO — not attack-sourced, so KnockOutEffect is used directly
-        const ko = new KnockOutEffect(opponent, opponent.active);
-        store.reduceEffect(state, ko);
-        return TAKE_X_PRIZES(store, state, player, ko.prizeCount);
+        if (!CAN_APPLY_ABILITY_TO_TARGET(
+          store,
+          state,
+          abilityOwner,
+          this.powers[0],
+          this,
+          attackerOwner.active,
+        )) {
+          return;
+        }
+        attackerOwner.active.damage += 999;
       });
     }
 

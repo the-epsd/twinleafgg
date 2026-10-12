@@ -5,8 +5,9 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { CheckPokemonStatsEffect } from '../../../game/store/effects/check-effects';
-import { PlayerType, StateUtils, pokemonHasCardType } from '../../../game';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
+import { Player, PlayerType, pokemonHasCardType } from '../../../game';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 
 export class Dunsparce extends PokemonCard {
@@ -50,47 +51,41 @@ export class Dunsparce extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckPokemonStatsEffect) {
-      const player = StateUtils.findOwner(state, effect.target);
-      const opponent = StateUtils.getOpponent(state, player);
+      let abilityOwner: Player | null = null;
 
-      let hasDunsparceInPlay = false;
-
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) {
-          hasDunsparceInPlay = true;
-        }
-      });
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this) {
-          hasDunsparceInPlay = true;
-        }
+      state.players.forEach(p => {
+        p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+          if (cardList.getPokemonCard() === this) {
+            abilityOwner = p;
+          }
+        });
       });
 
-      if (!hasDunsparceInPlay) {
+      if (!abilityOwner) {
         return state;
       }
 
-      if (hasDunsparceInPlay) {
-        try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          state = store.reduceEffect(state, stub);
-        } catch {
-          return state;
-        }
-
-        [player, opponent].forEach(p => {
-          p.forEachPokemon(p === player ? PlayerType.BOTTOM_PLAYER : PlayerType.TOP_PLAYER, cardList => {
-            const pokemon = cardList.getPokemonCard();
-            if (pokemon && pokemonHasCardType(pokemon, CardType.COLORLESS)) {
-              effect.weakness = [];
-            }
-          });
-        });
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
       }
+
+      const pokemon = effect.target.getPokemonCard();
+      if (!pokemon || !pokemonHasCardType(pokemon, CardType.COLORLESS)) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        effect.target,
+      )) {
+        return state;
+      }
+
+      effect.weakness = [];
     }
     return state;
   }

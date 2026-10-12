@@ -7,7 +7,15 @@ import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
-import {WAS_ATTACK_USED, IS_ABILITY_BLOCKED, ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT, SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { AddSpecialConditionsPowerEffect } from '../../../game/store/effects/check-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+  SHUFFLE_DECK,
+  MOVE_CARDS,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Shiinotic extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -40,21 +48,37 @@ export class Shiinotic extends PokemonCard {
   public fullName: string = 'Shiinotic LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Effect Spore (passive - damaged by opponent's attack)
-    // Ref: set-dragons-majesty/druddigon.ts (Rough Skin)
+    // Ability: Effect Spore
     if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      if (IS_ABILITY_BLOCKED(store, state, targetPlayer, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      // The Attacking Pokemon is now Asleep
-      effect.source.addSpecialCondition(SpecialCondition.ASLEEP);
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        effect.source,
+      )) {
+        return state;
+      }
+
+      store.reduceEffect(
+        state,
+        new AddSpecialConditionsPowerEffect(
+          abilityOwner,
+          this,
+          effect.source,
+          [SpecialCondition.ASLEEP],
+        ),
+      );
     }
 
     // Attack 1: Dream's Touch
-    // Ref: AGENTS-patterns.md (conditional energy handling)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

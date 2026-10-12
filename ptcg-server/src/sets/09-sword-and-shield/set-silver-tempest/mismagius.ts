@@ -4,6 +4,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { PutCountersEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
@@ -56,21 +57,28 @@ export class Mismagius extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
-      const player = StateUtils.findOwner(state, effect.target);
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
       const pokemonCard = effect.target.getPokemonCard();
 
       if (pokemonCard !== this ||
         state.phase !== GamePhase.ATTACK ||
-        IS_ABILITY_BLOCKED(store, state, player, this)
+        IS_ABILITY_BLOCKED(store, state, abilityOwner, this)
       ) {
         return state;
       }
 
-      const checkHpEffect = new CheckHpEffect(player, effect.target);
+      const checkHpEffect = new CheckHpEffect(abilityOwner, effect.target);
       store.reduceEffect(state, checkHpEffect);
 
       if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
-        effect.source.damage += 80;
+        const placeCounters = new PlaceDamageCountersEffect(
+          abilityOwner,
+          effect.source,
+          80,
+          this,
+          this.powers[0],
+        );
+        store.reduceEffect(state, placeCounters);
       }
     }
 

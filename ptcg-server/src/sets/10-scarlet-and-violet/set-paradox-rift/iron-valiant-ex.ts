@@ -11,7 +11,7 @@ import {
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { GameMessage } from '../../../game/game-message';
-import { EffectOfAbilityEffect, MovedToActiveEffect, PowerEffect } from '../../../game/store/effects/game-effects';
+import { MovedToActiveEffect, PlaceDamageCountersEffect, PowerEffect } from '../../../game/store/effects/game-effects';
 import { MOVED_TO_ACTIVE_THIS_TURN, REMOVE_MARKER_AT_END_OF_TURN, THIS_POKEMON_CANNOT_ATTACK_NEXT_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class IronValiantex extends PokemonCard {
@@ -107,16 +107,14 @@ export class IronValiantex extends PokemonCard {
                 }
               });
               if (targets.length > 0) {
-                const damageEffect = new EffectOfAbilityEffect(
+                const placeCounters = new PlaceDamageCountersEffect(
                   player,
-                  this.powers[0],
-                  this,
                   targets[0],
+                  20,
+                  this,
+                  this.powers[0],
                 );
-                store.reduceEffect(state, damageEffect);
-                if (damageEffect.target) {
-                  damageEffect.target.damage += 20;
-                }
+                store.reduceEffect(state, placeCounters);
               }
             },
           );

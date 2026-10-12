@@ -1,12 +1,16 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, GameMessage } from '../../../game';
+import { StoreLike, State, ChooseCardsPrompt, GameMessage, StateUtils } from '../../../game';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { Effect } from '../../../game/store/effects/effect';
-import {WAS_ATTACK_USED, IS_ABILITY_BLOCKED, HEAL_X_DAMAGE_FROM_THIS_POKEMON, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
-import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
-import { StateUtils } from '../../../game/store/state-utils';
-import { GamePhase } from '../../../game/store/state/state';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  HEAL_X_DAMAGE_FROM_THIS_POKEMON,
+  MOVE_CARDS,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Jellicent extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -37,46 +41,44 @@ export class Jellicent extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Cursed Body - discard energy when damaged
-    if (effect instanceof AfterDamageEffect && effect.target.cards.includes(this)) {
-      const player = effect.player;
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
+    if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
+      const attackingPokemon = effect.source;
 
-      // Only works if this is the active Pokémon and was damaged by opponent
-      if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, targetPlayer, this)) {
+      if (!attackingPokemon.energies.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
 
-      // Only during attack phase
-      if (state.phase !== GamePhase.ATTACK) {
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        attackingPokemon,
+      )) {
         return state;
       }
 
-      // Discard energy from attacker
-      const attacker = effect.source;
-      const attackerEnergy = attacker.cards.filter(c => c.superType === SuperType.ENERGY);
-
-      if (attackerEnergy.length === 0) {
-        return state;
-      }
-
-      if (attackerEnergy.length === 1) {
-        MOVE_CARDS(store, state, attacker, player.discard, { cards: [attackerEnergy[0]], sourceCard: this });
-        return state;
-      }
-
+      const attackerOwner = StateUtils.findOwner(state, attackingPokemon);
       return store.prompt(state, new ChooseCardsPrompt(
-        targetPlayer,
+        abilityOwner,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
-        attacker,
+        attackingPokemon,
         { superType: SuperType.ENERGY },
-        { min: 1, max: 1, allowCancel: false }
+        { min: 1, max: 1, allowCancel: false },
       ), selected => {
-        if (selected && selected.length > 0) {
-          MOVE_CARDS(store, state, attacker, player.discard, { cards: [selected[0]], sourceCard: this });
+        const cards = selected || [];
+        if (cards.length > 0) {
+          MOVE_CARDS(store, state, attackingPokemon, attackerOwner.discard, {
+            cards,
+            sourceCard: this,
+            sourceEffect: this.powers[0],
+          });
         }
       });
     }

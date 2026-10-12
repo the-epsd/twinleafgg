@@ -1,7 +1,7 @@
-import { Attack, CardType, ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCard, Power, PowerType, SlotType, Stage, State, StateUtils, StoreLike, Weakness } from '../../../game';
+import { Attack, CardType, PokemonCard, Power, PowerType, Stage, State, StateUtils, StoreLike, Weakness } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, JUST_EVOLVED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Ninetales extends PokemonCard {
 
@@ -35,31 +35,26 @@ export class Ninetales extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+    if (JUST_EVOLVED(effect, this) && !IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const hasBench = opponent.bench.some(b => b.cards.length > 0);
-
-      if (!hasBench || IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (!opponent.bench.some(b => b.cards.length > 0)) {
         return state;
       }
 
-      state = CONFIRMATION_PROMPT(store, state, player, (wantToUse) => {
+      CONFIRMATION_PROMPT(store, state, player, (wantToUse) => {
         if (!wantToUse) {
           return;
         }
-        state = store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-          PlayerType.TOP_PLAYER,
-          [SlotType.BENCH],
-          { allowCancel: false }
-        ), result => {
-          const cardList = result[0];
-          opponent.switchPokemon(cardList);
-        });
-      }, GameMessage.WANT_TO_USE_ABILITY);
+        GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY(
+          store,
+          state,
+          player,
+          this.powers[0],
+          this,
+        );
+      });
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

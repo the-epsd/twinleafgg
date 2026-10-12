@@ -20,7 +20,11 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import {COIN_FLIP_PROMPT,
   IS_POKEMON_POWER_BLOCKED,
   WAS_ATTACK_USED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
-import { HANDLE_ABILITY_BLOCK } from '../../game/store/prefabs/ability-lock';
+import {
+  CAN_APPLY_LOCKER_ABILITY,
+  CAN_APPLY_LOCK_TO_TARGET,
+  HANDLE_ABILITY_BLOCK,
+} from '../../game/store/prefabs/ability-lock';
 
 export class DarkFeraligatr extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -57,7 +61,7 @@ export class DarkFeraligatr extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     HANDLE_ABILITY_BLOCK(
       effect,
-      ({ player, powerEffect }) => {
+      ({ player, card, powerEffect }) => {
         const opponent = StateUtils.getOpponent(state, player);
 
         if (opponent.active.getPokemonCard() !== this) {
@@ -76,7 +80,10 @@ export class DarkFeraligatr extends PokemonCard {
           return false;
         }
 
-        return true;
+        if (!CAN_APPLY_LOCKER_ABILITY(store, state, opponent, this, this.powers[0])) {
+          return false;
+        }
+        return CAN_APPLY_LOCK_TO_TARGET(store, state, opponent, this, this.powers[0], card);
       },
       {
         powerTypes: [PowerType.BABY_RULE],

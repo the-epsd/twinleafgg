@@ -12,11 +12,11 @@ import {
   GameMessage,
   PlayerType,
   SlotType,
-  ChoosePokemonPrompt,
   StateUtils,
-  PokemonCardList,
+  CardTarget,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
+import { GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import {
   WAS_POWER_USED,
   IS_ABILITY_BLOCKED,
@@ -53,7 +53,6 @@ export class OmastarBreak extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Dangerous Tentacle
-    // Ref: AGENTS-patterns.md (once per turn ability), set-ancient-origins/malamar.ts (gust opponent bench)
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -63,46 +62,36 @@ export class OmastarBreak extends PokemonCard {
       }
 
       // Check if opponent has a Benched Pokemon-EX
-      const benchedEX: PokemonCardList[] = [];
-      opponent.bench.forEach((b) => {
-        if (b.cards.length > 0) {
-          const pokemonCard = b.getPokemonCard();
-          if (pokemonCard && pokemonCard.hasTag(CardTag.POKEMON_EX)) {
-            benchedEX.push(b);
-          }
+      const hasBenchedEX = opponent.bench.some((b) => {
+        if (b.cards.length === 0) {
+          return false;
         }
+        const pokemonCard = b.getPokemonCard();
+        return !!pokemonCard && pokemonCard.hasTag(CardTag.POKEMON_EX);
       });
 
-      if (benchedEX.length === 0) {
+      if (!hasBenchedEX) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       USE_ABILITY_ONCE_PER_TURN(player, this.DANGEROUS_TENTACLE_MARKER, this);
       ABILITY_USED(player, this);
 
-      // Player chooses which benched EX to bring up
-      return store.prompt(
-        state,
-        new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON,
-          PlayerType.TOP_PLAYER,
-          [SlotType.BENCH],
-          { allowCancel: false },
-        ),
-        (targets) => {
-          if (!targets || targets.length === 0) {
-            return;
-          }
-          const target = targets[0];
-          const targetCard = target.getPokemonCard();
-          if (!targetCard || !targetCard.hasTag(CardTag.POKEMON_EX)) {
-            return;
-          }
+      const blocked: CardTarget[] = [];
+      opponent.bench.forEach((b, index) => {
+        const pokemonCard = b.getPokemonCard();
+        if (b.cards.length === 0 || !pokemonCard || !pokemonCard.hasTag(CardTag.POKEMON_EX)) {
+          blocked.push({ player: PlayerType.TOP_PLAYER, slot: SlotType.BENCH, index });
+        }
+      });
 
-          // Switch opponent's active with selected benched Pokemon
-          opponent.switchPokemon(target);
-        },
+      return GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY(
+        store,
+        state,
+        player,
+        this.powers[0],
+        this,
+        { blocked },
       );
     }
 

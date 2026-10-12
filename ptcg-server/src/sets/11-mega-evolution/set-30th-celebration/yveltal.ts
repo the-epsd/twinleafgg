@@ -2,7 +2,9 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
+import { HealTargetEffect } from '../../../game/store/effects/attack-effects';
 import { HealEffect } from '../../../game/store/effects/game-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Yveltal extends PokemonCard {
@@ -35,21 +37,34 @@ export class Yveltal extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Life-Locked
-    if (effect instanceof HealEffect) {
-      for (const player of state.players) {
-        if (!StateUtils.isPokemonInPlay(player, this)) {
-          return state;
+    if (effect instanceof HealEffect || effect instanceof HealTargetEffect) {
+      for (const abilityOwner of state.players) {
+        if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
+          continue;
         }
 
-        if (IS_ABILITY_BLOCKED(store, state, player, this)) {
-          return state;
+        if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+          continue;
         }
 
-        const opponent = StateUtils.getOpponent(state, player);
-        if (effect.target === opponent.active) {
-          effect.preventDefault = true;
-          return state;
+        const opponent = StateUtils.getOpponent(state, abilityOwner);
+        if (effect.target !== opponent.active) {
+          continue;
         }
+
+        if (!CAN_APPLY_ABILITY_TO_TARGET(
+          store,
+          state,
+          abilityOwner,
+          this.powers[0],
+          this,
+          opponent.active,
+        )) {
+          continue;
+        }
+
+        effect.preventDefault = true;
+        return state;
       }
     }
 

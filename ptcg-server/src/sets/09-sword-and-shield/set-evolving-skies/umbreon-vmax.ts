@@ -4,17 +4,11 @@ import {
   StoreLike,
   State,
   StateUtils,
-  GameError,
-  GameMessage,
-  PlayerType,
   PowerType,
-  ChoosePokemonPrompt,
-  ConfirmPrompt,
-  SlotType,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, JUST_EVOLVED } from '../../../game/store/prefabs/prefabs';
 
 export class UmbreonVMAX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE];
@@ -65,46 +59,25 @@ export class UmbreonVMAX extends PokemonCard {
   public fullName: string = 'Umbreon VMAX EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+    if (JUST_EVOLVED(effect, this) && !IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (!opponent.bench.some(b => b.cards.length > 0)) {
         return state;
       }
-      state = store.prompt(
-        state,
-        new ConfirmPrompt(effect.player.id, GameMessage.WANT_TO_USE_ABILITY),
-        (wantToUse) => {
-          if (wantToUse) {
-            const player = effect.player;
-            const opponent = StateUtils.getOpponent(state, player);
-            const hasBench = opponent.bench.some((b) => b.cards.length > 0);
 
-            if (!hasBench) {
-              throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-            }
-
-            return store.prompt(
-              state,
-              new ChoosePokemonPrompt(
-                player.id,
-                GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-                PlayerType.TOP_PLAYER,
-                [SlotType.BENCH],
-                { allowCancel: false },
-              ),
-              (result) => {
-                const cardList = result[0];
-                opponent.switchPokemon(cardList);
-                return state;
-              },
-            );
-          } else {
-            return state;
-          }
-        },
-      );
+      CONFIRMATION_PROMPT(store, state, player, (wantToUse) => {
+        if (wantToUse) {
+          GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY(
+            store,
+            state,
+            player,
+            this.powers[0],
+            this,
+          );
+        }
+      });
     }
     return state;
   }

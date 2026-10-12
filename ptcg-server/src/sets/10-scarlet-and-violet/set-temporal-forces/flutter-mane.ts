@@ -8,6 +8,7 @@ import { PowerType } from '../../../game/store/card/pokemon-types';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../../game/store/prefabs/attack-effects';
 import {
+  CAN_APPLY_LOCK_TO_TARGET,
   HANDLE_ABILITY_LOCK,
   LOCKER_ABILITY_APPLIES,
 } from '../../../game/store/prefabs/ability-lock';
@@ -74,7 +75,10 @@ export class FlutterMane extends PokemonCard {
         }
 
         // Check + PowerEffect: Midnight Fluttering must itself be usable (e.g. Path to the Peak).
-        return LOCKER_ABILITY_APPLIES(store, state, owner, this, this.powers[0], card);
+        if (!LOCKER_ABILITY_APPLIES(store, state, owner, this, this.powers[0], card)) {
+          return false;
+        }
+        return CAN_APPLY_LOCK_TO_TARGET(store, state, owner, this, this.powers[0], card);
       },
       {
         exemptPowerNames: ['Midnight Fluttering'],

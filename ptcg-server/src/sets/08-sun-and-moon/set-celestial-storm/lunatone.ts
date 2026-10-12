@@ -5,7 +5,11 @@
 import { PokemonCard, Stage, CardType, PowerType, Player, PlayerType, State, StoreLike, CardTag, StateUtils, PokemonCardList, GameMessage, pokemonHasCardType } from '../../../game';
 import { CheckPokemonTypeEffect } from "../../../game/store/effects/check-effects";
 import { Effect } from "../../../game/store/effects/effect";
-import { HANDLE_ABILITY_LOCK, CAN_APPLY_LOCKER_ABILITY } from "../../../game/store/prefabs/ability-lock";
+import {
+  CAN_APPLY_LOCKER_ABILITY,
+  CAN_APPLY_LOCK_TO_TARGET,
+  HANDLE_ABILITY_LOCK,
+} from "../../../game/store/prefabs/ability-lock";
 import { AFTER_ATTACK, COIN_FLIP_PROMPT, ADD_PARALYZED_TO_PLAYER_ACTIVE } from "../../../game/store/prefabs/prefabs";
 
 export class Lunatone extends PokemonCard {
@@ -88,7 +92,10 @@ export class Lunatone extends PokemonCard {
         }
 
         // Check + PowerEffect: Sol Shade must itself be usable (e.g. Path to the Peak).
-        return CAN_APPLY_LOCKER_ABILITY(store, state, lunatoneOwner, this, this.powers[0]);
+        if (!CAN_APPLY_LOCKER_ABILITY(store, state, lunatoneOwner, this, this.powers[0])) {
+          return false;
+        }
+        return CAN_APPLY_LOCK_TO_TARGET(store, state, lunatoneOwner, this, this.powers[0], card);
       },
       {
         allowUseFromDiscard: true,

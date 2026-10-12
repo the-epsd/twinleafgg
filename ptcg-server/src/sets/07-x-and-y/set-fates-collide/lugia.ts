@@ -7,6 +7,7 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG } from '../../../game/store/prefabs/prefabs';
 
 export class Lugia extends PokemonCard {
@@ -40,25 +41,36 @@ export class Lugia extends PokemonCard {
   public fullName: string = 'Lugia FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Pressure (passive - intercept DealDamageEffect)
-    // Ref: set-plasma-storm/klinklang.ts (Plasma Steel - passive damage interception)
+    // Pressure — Ref: set-30th-celebration/pikachu-28.ts / set-chaos-rising/garbodor.ts
     if (effect instanceof DealDamageEffect) {
-      const targetCard = effect.target.getPokemonCard();
-      if (targetCard !== this) {
+      const abilityOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
+        return state;
+      }
+      if (abilityOwner.active.getPokemonCard() !== this) {
         return state;
       }
 
-      // Verify this Pokemon is the active Pokemon
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
-      if (targetPlayer.active !== effect.target) {
+      const opponent = StateUtils.getOpponent(state, abilityOwner);
+      if (effect.player !== opponent || effect.source !== opponent.active) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, targetPlayer, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      // Reduce damage by 20
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        effect.source,
+      )) {
+        return state;
+      }
+
       effect.damage = Math.max(0, effect.damage - 20);
     }
 

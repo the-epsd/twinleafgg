@@ -4,10 +4,14 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GamePhase } from '../../../game';
-import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
+import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Sigilyph extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -41,35 +45,29 @@ export class Sigilyph extends PokemonCard {
   public fullName: string = 'Sigilyph RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Counterattack (passive - put 3 damage counters on attacker when damaged as Active)
-    // Ref: set-breakpoint/sigilyph.ts (Reflective Shield - AfterDamageEffect + put damage on attacker)
-    if (effect instanceof AfterDamageEffect
-      && effect.target.cards.includes(this)
-      && effect.target.getPokemonCard() === this) {
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
-      const attackingPlayer = effect.player;
+    // Ability: Counterattack
+    if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      if (effect.damage > 0
-        && attackingPlayer !== targetPlayer
-        && targetPlayer.active === effect.target
-        && state.phase === GamePhase.ATTACK) {
-
-        if (IS_ABILITY_BLOCKED(store, state, targetPlayer, this)) {
-          return state;
-        }
-
-        // 3 damage counters = 30 damage
-        effect.source.damage += 30;
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
       }
+
+      const placeCounters = new PlaceDamageCountersEffect(
+        abilityOwner,
+        effect.source,
+        30,
+        this,
+        this.powers[0],
+      );
+      store.reduceEffect(state, placeCounters);
     }
 
     // Attack 1: Psychic Assault
-    // Ref: set-celestial-storm/lunala.ts (Full Moon Ray - count damage on opponent's active)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Each damage counter = 10 damage, so damage counters = opponent.active.damage / 10
       const damageCounters = Math.floor(opponent.active.damage / 10);
       effect.damage += 10 * damageCounters;
     }

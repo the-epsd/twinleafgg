@@ -2,12 +2,14 @@ import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { Effect } from '../../../game/store/effects/effect';
 import { PokemonCard, StoreLike, State, StateUtils } from '../../../game';
-import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
-import { GamePhase } from '../../../game/store/state/state';
+import {
+  IS_ABILITY_BLOCKED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Chesnaught extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -42,33 +44,43 @@ export class Chesnaught extends PokemonCard {
   public fullName: string = 'Chesnaught M4';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AfterDamageEffect && effect.target.cards.includes(this)) {
-      const targetOwner = StateUtils.findOwner(state, effect.target);
-      if (
-        effect.damage > 0 &&
-        targetOwner !== effect.player &&
-        state.phase === GamePhase.ATTACK &&
-        effect.attackEffect
-      ) {
-        const attackingPokemon = effect.source;
-        const checkEnergy = new CheckProvidedEnergyEffect(targetOwner, effect.target);
-        store.reduceEffect(state, checkEnergy);
-        let gCount = 0;
-        checkEnergy.energyMap.forEach((em) => {
-          em.provides.forEach((p) => {
-            if (p === G || p === CardType.ANY) gCount++;
-          });
+    // Needly Armor
+    if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
+
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      const checkEnergy = new CheckProvidedEnergyEffect(abilityOwner, effect.target);
+      store.reduceEffect(state, checkEnergy);
+
+      let gCount = 0;
+      checkEnergy.energyMap.forEach((em) => {
+        em.provides.forEach((p) => {
+          if (p === G || p === CardType.ANY) {
+            gCount++;
+          }
         });
-        if (gCount > 0 && attackingPokemon) {
-          const putCounters = new PutCountersEffect(effect.attackEffect, 30 * gCount);
-          putCounters.target = attackingPokemon;
-          store.reduceEffect(state, putCounters);
-        }
+      });
+
+      if (gCount > 0) {
+        const placeCounters = new PlaceDamageCountersEffect(
+          abilityOwner,
+          effect.source,
+          30 * gCount,
+          this,
+          this.powers[0],
+        );
+        store.reduceEffect(state, placeCounters);
       }
     }
+
+    // Impound
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return BLOCK_RETREAT(store, state, effect, this);
     }
+
     return state;
   }
 }

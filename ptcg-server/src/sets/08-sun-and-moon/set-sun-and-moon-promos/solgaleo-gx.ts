@@ -2,6 +2,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../../game/store/card/card-types';
 import { AttachEnergyPrompt, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../..';
 import { Effect, HealEffect } from '../../../game/store/effects/game-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import {BLOCK_IF_GX_ATTACK_USED, IS_ABILITY_BLOCKED, WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { CheckPokemonStatsEffect } from '../../../game/store/effects/check-effects';
 
@@ -45,10 +46,6 @@ export class SolgaleoGX extends PokemonCard {
     if (effect instanceof CheckPokemonStatsEffect) {
       const player = StateUtils.findOwner(state, effect.target);
 
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
-        return state;
-      }
-
       let isSolgaleoInPlay = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {
@@ -56,9 +53,26 @@ export class SolgaleoGX extends PokemonCard {
         }
       });
 
-      if (isSolgaleoInPlay) {
-        effect.weakness = [];
+      if (!isSolgaleoInPlay) {
+        return state;
       }
+
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        player,
+        this.powers[0],
+        this,
+        effect.target,
+      )) {
+        return state;
+      }
+
+      effect.weakness = [];
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -3,6 +3,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { Effect } from '../../../game/store/effects/effect';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT } from '../../../game/store/prefabs/prefabs';
 import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class Druddigon extends PokemonCard {
@@ -33,18 +34,20 @@ export class Druddigon extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Rough Skin - damage attacker when hit
     if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      // Legacy implementation:
-      // - Checked AfterDamageEffect, damage > 0, active-spot requirement, opponent source, and attack phase.
-      // - Then placed 2 damage counters on the attacker.
-      //
-      // Converted to prefab version (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT).
-      if (IS_ABILITY_BLOCKED(store, state, targetPlayer, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      effect.source.damage += 20;
+      const placeCounters = new PlaceDamageCountersEffect(
+        abilityOwner,
+        effect.source,
+        20,
+        this,
+        this.powers[0],
+      );
+      store.reduceEffect(state, placeCounters);
     }
 
     // Clutch - prevent retreat

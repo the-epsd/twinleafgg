@@ -1,8 +1,9 @@
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { Effect } from '../../../game/store/effects/effect';
-import { PokemonCard, StoreLike, State, StateUtils, PlayerType, PowerType } from '../../../game';
+import { PokemonCard, StoreLike, State, StateUtils, PowerType } from '../../../game';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { GamePhase } from '../../../game/store/state/state';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Garbodor extends PokemonCard {
@@ -37,31 +38,42 @@ export class Garbodor extends PokemonCard {
   public fullName: string = 'Garbodor M4';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Gloomy Garbage
     if (
       effect instanceof DealDamageEffect &&
       effect.damage > 0 &&
       state.phase === GamePhase.ATTACK
     ) {
-      const targetOwner = StateUtils.findOwner(state, effect.target);
-      if (IS_ABILITY_BLOCKED(store, state, targetOwner, this)) {
+      const attackerOwner = effect.player;
+      const abilityOwner = StateUtils.getOpponent(state, attackerOwner);
+
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
         return state;
       }
-      let hasGarbodor = false;
-      targetOwner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) hasGarbodor = true;
-      });
-      StateUtils.getOpponent(state, targetOwner).forEachPokemon(
-        PlayerType.TOP_PLAYER,
-        (cardList, card) => {
-          if (card === this) hasGarbodor = true;
-        },
-      );
-      if (!hasGarbodor) return state;
-      const attackerHasTool = effect.source.tools.length > 0;
-      if (attackerHasTool) {
-        effect.damage = Math.max(0, effect.damage - 20);
+
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
       }
+
+      // Opponent's Active with a Tool
+      if (attackerOwner.active !== effect.source || effect.source.tools.length === 0) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        effect.source,
+      )) {
+        return state;
+      }
+
+      effect.damage = Math.max(0, effect.damage - 20);
     }
+
     return state;
   }
 }

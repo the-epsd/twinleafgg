@@ -1,10 +1,13 @@
 import { CardType, Stage, SpecialCondition } from '../../../game/store/card/card-types';
 import { Effect } from '../../../game/store/effects/effect';
 import { PokemonCard, StoreLike, State, StateUtils, PowerType } from '../../../game';
-import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { ADD_POISON_TO_PLAYER_ACTIVE } from '../../../game/store/prefabs/prefabs';
-import { GamePhase } from '../../../game/store/state/state';
+import { AddSpecialConditionsPowerEffect } from '../../../game/store/effects/check-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import {
+  IS_ABILITY_BLOCKED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Qwilfish extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -39,29 +42,45 @@ export class Qwilfish extends PokemonCard {
   public fullName: string = 'Qwilfish M4';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (
-      effect instanceof PutDamageEffect &&
-      effect.target.cards.includes(this) &&
-      effect.target.getPokemonCard() === this &&
-      state.phase === GamePhase.ATTACK
-    ) {
-      const targetOwner = StateUtils.findOwner(state, effect.target);
-      const opponent = StateUtils.getOpponent(state, targetOwner);
+    // Poison Point
+    if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      if (IS_ABILITY_BLOCKED(store, state, targetOwner, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      if (effect.player === opponent && effect.damage > 0) {
-        ADD_POISON_TO_PLAYER_ACTIVE(store, state, effect.player, this);
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        effect.source,
+      )) {
+        return state;
       }
+
+      // Vileplume pattern: ability owner is effect.player so Stealthy Hood can intercept
+      store.reduceEffect(
+        state,
+        new AddSpecialConditionsPowerEffect(
+          abilityOwner,
+          this,
+          effect.source,
+          [SpecialCondition.POISONED],
+        ),
+      );
     }
+
+    // Venoshock
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
       if (opponent.active.specialConditions.includes(SpecialCondition.POISONED)) {
         effect.damage += 50;
       }
     }
+
     return state;
   }
 }

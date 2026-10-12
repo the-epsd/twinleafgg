@@ -4,6 +4,7 @@ import { PowerType } from '../../../game/store/card/pokemon-types';
 import { StoreLike, State, StateUtils, PokemonCardList } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import {
+  CAN_APPLY_LOCK_TO_TARGET,
   HANDLE_ABILITY_LOCK,
   LOCKER_ABILITY_APPLIES,
 } from '../../../game/store/prefabs/ability-lock';
@@ -60,7 +61,10 @@ export class Slaking extends PokemonCard {
       }
 
       // Check + PowerEffect: Lazy must itself be usable (e.g. Path to the Peak).
-      return LOCKER_ABILITY_APPLIES(store, state, owner, this, this.powers[0], card);
+      if (!LOCKER_ABILITY_APPLIES(store, state, owner, this, this.powers[0], card)) {
+        return false;
+      }
+      return CAN_APPLY_LOCK_TO_TARGET(store, state, owner, this, this.powers[0], card);
     }, {
       exemptPowerNames: ['Lazy'],
       error: GameMessage.BLOCKED_BY_ABILITY,

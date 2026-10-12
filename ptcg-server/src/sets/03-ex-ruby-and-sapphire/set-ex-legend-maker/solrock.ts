@@ -1,7 +1,12 @@
 import { CardTag, CardType, GameMessage, PlayerType, PokemonCard, PokemonCardList, PowerType, Stage, State, StateUtils, StoreLike, pokemonHasCardType } from '../../../game';
 import { CheckPokemonTypeEffect } from "../../../game/store/effects/check-effects";
 import { Effect } from "../../../game/store/effects/effect";
-import { HANDLE_ABILITY_BLOCK, POKEPOWER_TYPES } from "../../../game/store/prefabs/ability-lock";
+import {
+  CAN_APPLY_LOCKER_ABILITY,
+  CAN_APPLY_LOCK_TO_TARGET,
+  HANDLE_ABILITY_BLOCK,
+  POKEPOWER_TYPES,
+} from "../../../game/store/prefabs/ability-lock";
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from "../../../game/store/prefabs/attack-effects";
 import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, COIN_FLIP_PROMPT } from "../../../game/store/prefabs/prefabs";
 
@@ -69,17 +74,27 @@ export class Solrock extends PokemonCard {
           return false;
         }
 
+        let isColorless = false;
         try {
           const cardList = StateUtils.findCardList(state, card);
           if (cardList instanceof PokemonCardList) {
             const checkPokemonType = new CheckPokemonTypeEffect(cardList);
             store.reduceEffect(state, checkPokemonType);
-            return checkPokemonType.cardTypes.includes(CardType.COLORLESS);
+            isColorless = checkPokemonType.cardTypes.includes(CardType.COLORLESS);
+          } else {
+            isColorless = pokemonHasCardType(card, CardType.COLORLESS);
           }
         } catch {
           return false;
         }
-        return pokemonHasCardType(card, CardType.COLORLESS);
+        if (!isColorless) {
+          return false;
+        }
+
+        if (!CAN_APPLY_LOCKER_ABILITY(store, state, owner, this, this.powers[0])) {
+          return false;
+        }
+        return CAN_APPLY_LOCK_TO_TARGET(store, state, owner, this, this.powers[0], card);
       },
       {
         powerTypes: POKEPOWER_TYPES,

@@ -38,6 +38,7 @@ import { GameStatsTracker } from '../game-stats-tracker';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { MOVE_CARDS, COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED } from '../prefabs/prefabs';
 import { OPPONENT_WEAKNESS_AURA_POWER, STAMP_ABILITY_LOCK_ACTIVATION } from '../prefabs/ability-lock';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../prefabs/effect-of-ability-prefabs';
 import { RESOLVE_COIN_FLIP_EFFECT, RUN_COIN_FLIP_SEQUENCE } from '../prefabs/attack-coin-reflip';
 import { CardList } from '../state/card-list';
 import { ConfirmPrompt } from '../prompts/confirm-prompt';
@@ -802,11 +803,38 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
       throw new GameError(GameMessage.ILLEGAL_ACTION);
     }
 
+    // Ability-sourced counters: probe EffectOfAbilityEffect before applying
+    // (same contract as PutDamageCountersEffect). Skip when source is absent
+    // (stadium/tool/attack-adjacent paths are not effects of Abilities).
+    if (effect.source instanceof PokemonCard) {
+      const sourceSlot = StateUtils.findPokemonSlot(state, effect.source);
+      if (sourceSlot && StateUtils.findOwner(state, sourceSlot) === effect.player) {
+        const power =
+          effect.sourcePower
+          ?? effect.source.powers.find(p => p.powerType === PowerType.ABILITY)
+          ?? effect.source.powers[0];
+        if (power) {
+          const canApplyAbility = new EffectOfAbilityEffect(
+            effect.player,
+            power,
+            effect.source,
+            target,
+          );
+          state = store.reduceEffect(state, canApplyAbility);
+          if (!canApplyAbility.target) {
+            effect.preventDefault = true;
+            return state;
+          }
+        }
+      }
+    }
+
     const damage = Math.max(0, effect.damage);
     target.damage += damage;
 
     if (damage > 0) {
-      const effectName = effect.source ? effect.source.name : '';
+      const effectName = effect.sourcePower?.name
+        ?? (effect.source ? effect.source.name : '');
       store.log(state, GameLog.LOG_PLAYER_PLACES_DAMAGE_COUNTERS, {
         name: effect.player.name,
         damage: damage,
@@ -1025,14 +1053,16 @@ function applyWhileInPlayOpponentWeakness(
   if (IS_ABILITY_BLOCKED(store, state, opponent, source)) {
     return;
   }
-  const canApply = new EffectOfAbilityEffect(
-    opponent,
-    OPPONENT_WEAKNESS_AURA_POWER(source.whileInPlayOpponentWeakness),
-    source,
-    effect.target,
-  );
-  store.reduceEffect(state, canApply);
-  if (canApply.target) {
+  if (
+    CAN_APPLY_ABILITY_TO_TARGET(
+      store,
+      state,
+      opponent,
+      OPPONENT_WEAKNESS_AURA_POWER(source.whileInPlayOpponentWeakness),
+      source,
+      effect.target,
+    )
+  ) {
     effect.weakness = [{ type: source.whileInPlayOpponentWeakness }];
   }
 }

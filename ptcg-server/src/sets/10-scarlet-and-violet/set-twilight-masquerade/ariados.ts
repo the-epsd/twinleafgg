@@ -1,6 +1,7 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, PlayerType } from '../../../game';
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Ariados extends PokemonCard {
@@ -35,30 +36,35 @@ export class Ariados extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckRetreatCostEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      const retreatingPlayer = effect.player;
+      const abilityOwner = StateUtils.getOpponent(state, retreatingPlayer);
 
-      let isAriadosInPlay = false;
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isAriadosInPlay = true;
-        }
-      });
-
-      if (!isAriadosInPlay) {
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
         return state;
       }
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
-      const targetCard = player.active.getPokemonCard();
 
-      if (targetCard && targetCard.stage !== Stage.BASIC) {
-        effect.cost.push(CardType.COLORLESS);
+      const targetCard = retreatingPlayer.active.getPokemonCard();
+      if (!targetCard || targetCard.stage === Stage.BASIC) {
         return state;
       }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        retreatingPlayer.active,
+      )) {
+        return state;
+      }
+
+      effect.cost.push(CardType.COLORLESS);
+      return state;
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

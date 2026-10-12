@@ -1,6 +1,7 @@
 import { CardType, GameError, GameMessage, PokemonCard, PowerType, Stage, State, StoreLike } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
-import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, COIN_FLIP_PROMPT, GUST_OPPONENT_BENCHED_POKEMON, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
+import { GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY } from "../../../game/store/prefabs/effect-of-ability-prefabs";
+import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, COIN_FLIP_PROMPT, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
 
 export class Nidoqueen extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -25,7 +26,6 @@ export class Nidoqueen extends PokemonCard {
   }];
 
   public regulationMark: string = 'J';
-
   public set: string = 'M6';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '43';
@@ -48,7 +48,13 @@ export class Nidoqueen extends PokemonCard {
 
       COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
-          GUST_OPPONENT_BENCHED_POKEMON(store, state, player);
+          GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY(
+            store,
+            state,
+            player,
+            this.powers[0],
+            this,
+          );
         }
       });
     }

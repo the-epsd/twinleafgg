@@ -4,10 +4,15 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
-import { ChooseCardsPrompt, GameMessage, PowerType, StoreLike, State } from '../../../game';
-import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
+import { ChooseCardsPrompt, GameMessage, PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT } from '../../../game/store/prefabs/prefabs';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+  MOVE_CARDS,
+} from '../../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS } from '../../../game/store/prefabs/attack-effects';
 
 export class GalarianStunfisk extends PokemonCard {
@@ -42,48 +47,50 @@ export class GalarianStunfisk extends PokemonCard {
   public fullName: string = 'Galarian Stunfisk SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Snap Trap (passive - discard energy from attacker when damaged in active spot)
-    // Ref: set-unbroken-bonds/aggron.ts (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT)
+    // Ability: Snap Trap
     if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
-      const attacker = effect.source;
-      const attackEffect = effect.attackEffect;
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
+      const attackingPokemon = effect.source;
 
-      // Find the owner of this Stunfisk to check ability blocking
-      let stunfiskOwner: any = null;
-      state.players.forEach(p => {
-        if (p.active.cards.includes(this)) {
-          stunfiskOwner = p;
-        }
-      });
-
-      if (!stunfiskOwner || IS_ABILITY_BLOCKED(store, state, stunfiskOwner, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      const energyCards = attacker.cards.filter(c => c.superType === SuperType.ENERGY);
-      if (energyCards.length === 0) {
+      if (!attackingPokemon.energies.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
 
-      // Defensive player chooses which energy to discard from the attacker
-      state = store.prompt(state, new ChooseCardsPrompt(
-        stunfiskOwner,
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        attackingPokemon,
+      )) {
+        return state;
+      }
+
+      const attackerOwner = StateUtils.findOwner(state, attackingPokemon);
+      return store.prompt(state, new ChooseCardsPrompt(
+        abilityOwner,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
-        attacker,
+        attackingPokemon,
         { superType: SuperType.ENERGY },
-        { min: 1, max: 1, allowCancel: false }
+        { min: 1, max: 1, allowCancel: false },
       ), selected => {
         const cards = selected || [];
         if (cards.length > 0) {
-          const discardEnergy = new DiscardCardsEffect(attackEffect, cards);
-          discardEnergy.target = attacker;
-          store.reduceEffect(state, discardEnergy);
+          MOVE_CARDS(store, state, attackingPokemon, attackerOwner.discard, {
+            cards,
+            sourceCard: this,
+            sourceEffect: this.powers[0],
+          });
         }
       });
     }
 
     // Attack 1: Damage Rush
-    // Ref: set-plasma-blast/kingdra.ts (FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS(store, state, effect, 30);
     }

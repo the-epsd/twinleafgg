@@ -12,7 +12,7 @@ import {
 import { CardTag, CardType, Stage, SuperType } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { BREAK_RULE, MOVE_CARDS, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GreninjaBREAK extends PokemonCard {
@@ -74,7 +74,7 @@ export class GreninjaBREAK extends PokemonCard {
           MOVE_CARDS(store, state, player.hand, player.discard, {
             cards,
             sourceCard: this,
-            sourceEffect: this.powers[1],
+            sourceEffect: this.powers[0],
           });
 
           return store.prompt(
@@ -90,16 +90,14 @@ export class GreninjaBREAK extends PokemonCard {
               const targets = selected || [];
 
               if (targets.length > 0) {
-                const damageEffect = new EffectOfAbilityEffect(
+                const placeCounters = new PlaceDamageCountersEffect(
                   player,
-                  this.powers[1],
-                  this,
                   targets[0],
+                  60,
+                  this,
+                  this.powers[0],
                 );
-                store.reduceEffect(state, damageEffect);
-                if (damageEffect.target) {
-                  damageEffect.target.damage += 60;
-                }
+                store.reduceEffect(state, placeCounters);
               }
             },
           );

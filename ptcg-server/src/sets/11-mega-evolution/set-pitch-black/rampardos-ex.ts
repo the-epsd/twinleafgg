@@ -1,9 +1,29 @@
-import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, StateUtils, GameError, GameMessage } from "../../../game";
-import { Effect } from "../../../game/store/effects/effect";
-import { AttackEffect } from "../../../game/store/effects/game-effects";
-import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from "../../../game/store/prefabs/attack-effects";
-import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, COIN_FLIP_PROMPT, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN } from "../../../game/store/prefabs/prefabs";
-import { NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS } from "../../../game/store/prefabs/attack-effects";
+import {
+  PokemonCard,
+  Stage,
+  CardTag,
+  CardType,
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameError,
+  GameMessage,
+  SuperType,
+} from '../../../game';
+import { Effect } from '../../../game/store/effects/effect';
+import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS } from '../../../game/store/prefabs/attack-effects';
+import {
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  COIN_FLIP_PROMPT,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  MOVE_CARDS,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Rampardosex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -41,24 +61,57 @@ export class Rampardosex extends PokemonCard {
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
       if (player.active.getPokemonCard() !== this) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
+
       USE_ABILITY_ONCE_PER_TURN(player, this.DESTRUCTIVE_HEADBUTT_MARKER, this);
+      ABILITY_USED(player, this);
+
       COIN_FLIP_PROMPT(store, state, player, (result) => {
-        if (result && opponent.active.cards.length > 0) {
-          const attackStub = new AttackEffect(player, opponent, this.attacks[0]);
-          DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, attackStub);
+        if (!result) {
+          return;
         }
-        ABILITY_USED(player, this);
+        if (!opponent.active.energies.cards.some(c => c.superType === SuperType.ENERGY)) {
+          return;
+        }
+        if (!CAN_APPLY_ABILITY_TO_TARGET(
+          store,
+          state,
+          player,
+          this.powers[0],
+          this,
+          opponent.active,
+        )) {
+          return;
+        }
+
+        store.prompt(state, new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          opponent.active,
+          { superType: SuperType.ENERGY },
+          { min: 1, max: 1, allowCancel: false },
+        ), selected => {
+          const cards = selected || [];
+          if (cards.length > 0) {
+            MOVE_CARDS(store, state, opponent.active, opponent.discard, {
+              cards,
+              sourceCard: this,
+              sourceEffect: this.powers[0],
+            });
+          }
+        });
       });
     }
+
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.DESTRUCTIVE_HEADBUTT_MARKER, this);
 
-    // Ref: set-fates-collide/serperior.ts (Coil - NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS)
+    // Rowdy Hammer — Ref: set-fates-collide/serperior.ts (Coil)
     NEXT_TURN_ATTACK_BONUS_ALL_ATTACKS(effect, {
       source: this,
       bonusDamage: 150,

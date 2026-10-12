@@ -7,6 +7,7 @@ import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import {
   WAS_ATTACK_USED,
   IS_ABILITY_BLOCKED,
@@ -50,9 +51,9 @@ export class GalarianRunerigus extends PokemonCard {
     // Ability: Spiteful Slate
     // Ref: set-flashfire/qwilfish.ts (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT - retaliatory damage)
     if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      if (IS_ABILITY_BLOCKED(store, state, targetPlayer, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
@@ -62,8 +63,14 @@ export class GalarianRunerigus extends PokemonCard {
         return state;
       }
 
-      // Put damage counters equal to damage done (effect.damage is the actual damage dealt)
-      effect.source.damage += effect.damage;
+      const placeCounters = new PlaceDamageCountersEffect(
+        abilityOwner,
+        effect.source,
+        effect.damage,
+        this,
+        this.powers[0],
+      );
+      store.reduceEffect(state, placeCounters);
     }
 
     // Attack 1: Energy Press

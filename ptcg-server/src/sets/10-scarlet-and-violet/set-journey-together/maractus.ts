@@ -2,6 +2,7 @@ import { CardType, GamePhase, PokemonCard, PowerType, Stage, State, StateUtils, 
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
@@ -35,19 +36,26 @@ export class Maractus extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Explosive Needle
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
-      const player = StateUtils.findOwner(state, effect.target);
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
       const pokemonCard = effect.target.getPokemonCard();
 
-      if (pokemonCard !== this || state.phase !== GamePhase.ATTACK || IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (pokemonCard !== this || state.phase !== GamePhase.ATTACK || IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      const checkHpEffect = new CheckHpEffect(player, effect.target);
+      const checkHpEffect = new CheckHpEffect(abilityOwner, effect.target);
       store.reduceEffect(state, checkHpEffect);
       const currentHp = checkHpEffect.hp - effect.target.damage;
 
       if (effect.damage >= currentHp) {
-        effect.source.damage += 60;
+        const placeCounters = new PlaceDamageCountersEffect(
+          abilityOwner,
+          effect.source,
+          60,
+          this,
+          this.powers[0],
+        );
+        store.reduceEffect(state, placeCounters);
       }
     }
     // Corner

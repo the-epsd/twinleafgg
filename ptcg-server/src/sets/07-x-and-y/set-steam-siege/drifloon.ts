@@ -8,6 +8,7 @@ import { CardTarget, GameMessage, PlayerType, StoreLike, State } from '../../../
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { SlotType } from '../../../game/store/actions/play-card-action';
 import { Effect } from '../../../game/store/effects/effect';
+import { MoveDamageCountersEffect, PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Drifloon extends PokemonCard {
@@ -80,8 +81,23 @@ export class Drifloon extends PokemonCard {
         ), destTargets => {
           if (!destTargets || destTargets.length === 0) { return; }
           const dest = destTargets[0];
-          source.damage -= 10;
-          dest.damage += 10;
+          const damageToMove = 10;
+          const moveEffect = new MoveDamageCountersEffect(player);
+          state = store.reduceEffect(state, moveEffect);
+          if (moveEffect.preventDefault) {
+            return;
+          }
+          const placeCountersEffect = new PlaceDamageCountersEffect(
+            player,
+            dest,
+            damageToMove,
+            this,
+          );
+          state = store.reduceEffect(state, placeCountersEffect);
+          if (placeCountersEffect.preventDefault) {
+            return;
+          }
+          source.damage -= damageToMove;
         });
       });
     }

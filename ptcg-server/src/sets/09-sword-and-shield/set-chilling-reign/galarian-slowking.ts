@@ -72,7 +72,13 @@ export class GalarianSlowking extends PokemonCard {
             const healEffect = new HealEffect(player, target, 90);
             store.reduceEffect(state, healEffect);
           } else {
-            const placeCounters = new PlaceDamageCountersEffect(player, target, 30);
+            const placeCounters = new PlaceDamageCountersEffect(
+              player,
+              target,
+              30,
+              this,
+              this.powers[0],
+            );
             store.reduceEffect(state, placeCounters);
           }
         });

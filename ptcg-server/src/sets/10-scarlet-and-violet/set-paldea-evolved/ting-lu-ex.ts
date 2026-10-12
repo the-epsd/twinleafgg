@@ -15,6 +15,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import {
+  CAN_APPLY_LOCK_TO_TARGET,
   HANDLE_ABILITY_LOCK,
   IS_ABILITY_LOCKER_ACTIVE,
   LOCKER_ABILITY_APPLIES,
@@ -95,7 +96,10 @@ export class TingLuex extends PokemonCard {
         }
 
         // Check + PowerEffect: Cursed Land must itself be usable (e.g. Path to the Peak).
-        return LOCKER_ABILITY_APPLIES(store, state, owner, this, this.powers[0], card);
+        if (!LOCKER_ABILITY_APPLIES(store, state, owner, this, this.powers[0], card)) {
+          return false;
+        }
+        return CAN_APPLY_LOCK_TO_TARGET(store, state, owner, this, this.powers[0], card);
       },
       {
         allowUseFromHand: true,

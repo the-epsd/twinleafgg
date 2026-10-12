@@ -6,7 +6,11 @@ import { Effect } from '../../../game/store/effects/effect';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { GameMessage, PokemonCardList, StateUtils } from '../../../game';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
-import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
+import {
+  CAN_APPLY_LOCK_TO_TARGET,
+  CAN_APPLY_LOCKER_ABILITY,
+  HANDLE_ABILITY_LOCK,
+} from '../../../game/store/prefabs/ability-lock';
 
 export class Gastrodon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -65,7 +69,10 @@ export class Gastrodon extends PokemonCard {
         return false;
       }
 
-      return true;
+      if (!CAN_APPLY_LOCKER_ABILITY(store, state, gastrodonPlayer, this, this.powers[0])) {
+        return false;
+      }
+      return CAN_APPLY_LOCK_TO_TARGET(store, state, gastrodonPlayer, this, this.powers[0], card);
     }, {
       allowUseFromHand: true,
       allowUseFromDiscard: true,

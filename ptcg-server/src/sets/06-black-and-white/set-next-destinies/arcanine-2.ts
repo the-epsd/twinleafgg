@@ -1,10 +1,16 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GamePhase } from '../../../game';
+import { StoreLike, State, StateUtils } from '../../../game';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { Effect } from '../../../game/store/effects/effect';
-import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { AddSpecialConditionsPowerEffect } from '../../../game/store/effects/check-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import {
+  WAS_ATTACK_USED,
+  COIN_FLIP_PROMPT,
+  IS_ABILITY_BLOCKED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+} from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class Arcanine2 extends PokemonCard {
@@ -35,27 +41,34 @@ export class Arcanine2 extends PokemonCard {
   public fullName: string = 'Arcanine NXD 12';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Blazing Mane - burn attacker when hit
-    if (effect instanceof AfterDamageEffect && effect.target.cards.includes(this)) {
-      const player = effect.player;
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
+    // Blazing Mane — Ref: set-ascended-heroes/numel.ts / set-twilight-masquerade/heatran.ts
+    if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      // Only works if this is the active Pokémon and was damaged by opponent
-      if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, targetPlayer, this)) {
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        effect.source,
+      )) {
         return state;
       }
 
-      // Only during attack phase
-      if (state.phase !== GamePhase.ATTACK) {
-        return state;
-      }
-
-      // Burn the attacking Pokémon
-      player.active.addSpecialCondition(SpecialCondition.BURNED);
+      store.reduceEffect(
+        state,
+        new AddSpecialConditionsPowerEffect(
+          abilityOwner,
+          this,
+          effect.source,
+          [SpecialCondition.BURNED],
+        ),
+      );
     }
 
     // Fire Spin - flip, if tails discard 2 energy

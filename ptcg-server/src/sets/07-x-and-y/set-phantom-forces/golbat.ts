@@ -4,7 +4,7 @@ import { PowerType, StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType,
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { GameMessage } from '../../../game/game-message';
-import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
@@ -69,12 +69,14 @@ export class Golbat extends PokemonCard {
         const targets = selected || [];
 
         if (targets.length > 0) {
-          // Check if ability can target selected Pokemon
-          const canApplyAbility = new EffectOfAbilityEffect(player, this.powers[0], this, targets[0]);
-          store.reduceEffect(state, canApplyAbility);
-          if (canApplyAbility.target) {
-            canApplyAbility.target.damage += 20;
-          }
+          const placeCounters = new PlaceDamageCountersEffect(
+            player,
+            targets[0],
+            20,
+            this,
+            this.powers[0],
+          );
+          store.reduceEffect(state, placeCounters);
         }
       });
     }

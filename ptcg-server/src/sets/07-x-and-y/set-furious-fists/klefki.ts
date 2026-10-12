@@ -7,6 +7,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType, PlayerType, StateUtils, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckPokemonStatsEffect, CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class Klefki extends PokemonCard {
@@ -72,13 +73,26 @@ export class Klefki extends PokemonCard {
       const checkType = new CheckPokemonTypeEffect(target);
       store.reduceEffect(state, checkType);
 
-      if (checkType.cardTypes.includes(CardType.FAIRY)) {
-        // Change all resistance values to -40
-        effect.resistance = effect.resistance.map(r => ({
-          type: r.type,
-          value: -40
-        }));
+      if (!checkType.cardTypes.includes(CardType.FAIRY)) {
+        return state;
       }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        klefkiOwner,
+        this.powers[0],
+        this,
+        effect.target,
+      )) {
+        return state;
+      }
+
+      // Change all resistance values to -40
+      effect.resistance = effect.resistance.map(r => ({
+        type: r.type,
+        value: -40
+      }));
     }
 
     // Attack 1: Fairy Lock

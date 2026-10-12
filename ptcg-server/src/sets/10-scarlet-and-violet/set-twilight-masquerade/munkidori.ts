@@ -175,14 +175,19 @@ export class Munkidori extends PokemonCard {
                 if (moveEffect.preventDefault) {
                   continue;
                 }
-                source.damage -= damageToMove;
+                // Place on opponent first so Stealthy Hood / prevent doesn't orphan removed counters
                 const placeCountersEffect = new PlaceDamageCountersEffect(
                   effect.player,
                   target,
                   damageToMove,
-                  this
+                  this,
+                  this.powers[0],
                 );
                 state = store.reduceEffect(state, placeCountersEffect);
+                if (placeCountersEffect.preventDefault) {
+                  continue;
+                }
+                source.damage -= damageToMove;
                 totalDamageMoved += damageToMove;
               }
               if (totalDamageMoved >= 30) break;

@@ -4,10 +4,11 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, PlayerType } from '../../../game';
+import { PowerType, StoreLike, State, PlayerType, StateUtils } from '../../../game';
 import { HealTargetEffect } from '../../../game/store/effects/attack-effects';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Lunatone extends PokemonCard {
@@ -49,33 +50,35 @@ export class Lunatone extends PokemonCard {
   }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Heal Block (passive)
-    // Ref: set-sword-and-shield/toxicroak.ts (More Poison - passive ability pattern)
-    if (effect instanceof HealTargetEffect || effect instanceof HealEffect) {
-      // Find Lunatone's owner
-      let lunatoneOwner: any = null;
-      state.players.forEach(player => {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-          if (card === this) {
-            lunatoneOwner = player;
-          }
-        });
-      });
+    // Heal Block — Ref: set-30th-celebration/yveltal.ts
+    if (effect instanceof HealEffect || effect instanceof HealTargetEffect) {
+      for (const abilityOwner of state.players) {
+        if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
+          continue;
+        }
 
-      if (!lunatoneOwner) {
+        if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+          continue;
+        }
+
+        if (!this.hasSolrockInPlay(state, abilityOwner)) {
+          continue;
+        }
+
+        if (!CAN_APPLY_ABILITY_TO_TARGET(
+          store,
+          state,
+          abilityOwner,
+          this.powers[0],
+          this,
+          effect.target,
+        )) {
+          continue;
+        }
+
+        effect.preventDefault = true;
         return state;
       }
-
-      if (IS_ABILITY_BLOCKED(store, state, lunatoneOwner, this)) {
-        return state;
-      }
-
-      if (!this.hasSolrockInPlay(state, lunatoneOwner)) {
-        return state;
-      }
-
-      // Block the healing
-      effect.preventDefault = true;
     }
 
     return state;

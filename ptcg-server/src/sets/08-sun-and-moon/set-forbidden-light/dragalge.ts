@@ -3,12 +3,17 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
-import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { GamePhase } from '../../../game/store/state/state';
-import { ADD_POISON_TO_PLAYER_ACTIVE, IS_ABILITY_BLOCKED, WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { AddSpecialConditionsPowerEffect } from '../../../game/store/effects/check-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import {
+  IS_ABILITY_BLOCKED,
+  WAS_ATTACK_USED,
+  MULTIPLE_COIN_FLIPS_PROMPT,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+} from '../../../game/store/prefabs/prefabs';
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class Dragalge extends PokemonCard {
@@ -39,24 +44,37 @@ export class Dragalge extends PokemonCard {
   public fullName: string = 'Dragalge FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Poison Point (passive - triggered when damaged by opponent's attack)
-    // Ref: set-boundaries-crossed/scolipede.ts (Poison Point)
-    if (effect instanceof AfterDamageEffect && effect.target.getPokemonCard() === this && state.phase === GamePhase.ATTACK) {
-      const player = StateUtils.findOwner(state, effect.target);
-      const opponent = effect.player;
+    // Ability: Poison Point
+    if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      if (player === opponent || player.active !== effect.target) {
-        return state;
-      }
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        effect.source,
+      )) {
+        return state;
+      }
+
+      store.reduceEffect(
+        state,
+        new AddSpecialConditionsPowerEffect(
+          abilityOwner,
+          this,
+          effect.source,
+          [SpecialCondition.POISONED],
+        ),
+      );
     }
 
     // Attack 1: Twister
-    // Ref: AGENTS-patterns.md (multiple coin flips)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 2, results => {
         const heads = results.filter(r => r).length;

@@ -11,6 +11,7 @@ import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { DamageMap, MoveDamagePrompt, PlayerType, PowerType, SlotType, State, StoreLike } from '../../../game';
+import { MoveDamageCountersEffect, PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 export class Chandelure extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Lampent';
@@ -109,8 +110,24 @@ export class Chandelure extends PokemonCard {
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);
           if (source.damage >= 10) {
-            source.damage -= 10;
-            target.damage += 10;
+            const damageToMove = 10;
+            const moveEffect = new MoveDamageCountersEffect(player);
+            state = store.reduceEffect(state, moveEffect);
+            if (moveEffect.preventDefault) {
+              continue;
+            }
+            const placeCountersEffect = new PlaceDamageCountersEffect(
+              player,
+              target,
+              damageToMove,
+              this,
+              this.powers[0],
+            );
+            state = store.reduceEffect(state, placeCountersEffect);
+            if (placeCountersEffect.preventDefault) {
+              continue;
+            }
+            source.damage -= damageToMove;
           }
         }
       });

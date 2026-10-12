@@ -6,6 +6,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import {
   WAS_ATTACK_USED,
   IS_ABILITY_BLOCKED,
@@ -50,13 +51,20 @@ export class HawluchaEx extends PokemonCard {
     // Ability: Counterattack
     // Ref: set-noble-victories/druddigon.ts (Rough Skin)
     if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      if (IS_ABILITY_BLOCKED(store, state, targetPlayer, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      effect.source.damage += 20;
+      const placeCounters = new PlaceDamageCountersEffect(
+        abilityOwner,
+        effect.source,
+        20,
+        this,
+        this.powers[0],
+      );
+      store.reduceEffect(state, placeCounters);
     }
 
     // Attack 1: Moonsault Stomp

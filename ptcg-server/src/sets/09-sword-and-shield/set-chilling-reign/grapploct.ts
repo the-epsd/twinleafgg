@@ -7,6 +7,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Grapploct extends PokemonCard {
@@ -41,24 +42,32 @@ export class Grapploct extends PokemonCard {
   public fullName: string = 'Grapploct CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Stranglehold Master (passive - increase opponent's retreat cost)
-    // Ref: set-team-up/absol.ts (Dark Ambition - CheckRetreatCostEffect intercept)
+    // Ability: Stranglehold Master
     if (effect instanceof CheckRetreatCostEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      const retreatingPlayer = effect.player;
+      const abilityOwner = StateUtils.getOpponent(state, retreatingPlayer);
 
-      // Only apply when this Pokemon is in the opponent's active slot from our perspective
-      // (effect.player is the one trying to retreat, so we check if the opponent of effect.player has this card)
-      if (!StateUtils.isPokemonInPlay(opponent, this)) {
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
         return state;
       }
 
       // Check that this Pokemon is active
-      if (opponent.active.getPokemonCard() !== this) {
+      if (abilityOwner.active.getPokemonCard() !== this) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, opponent, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        retreatingPlayer.active,
+      )) {
         return state;
       }
 
@@ -67,7 +76,6 @@ export class Grapploct extends PokemonCard {
     }
 
     // Attack 1: Synchro Buster
-    // Ref: AGENTS-patterns.md (check hand count vs opponent hand count)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

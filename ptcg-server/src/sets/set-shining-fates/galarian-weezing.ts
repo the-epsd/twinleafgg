@@ -13,6 +13,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import {
+  CAN_APPLY_LOCK_TO_TARGET,
   HANDLE_ABILITY_LOCK,
   IS_ABILITY_LOCKER_ACTIVE,
   LOCKER_ABILITY_APPLIES,
@@ -86,7 +87,10 @@ export class GalarianWeezing extends PokemonCard {
       }
 
       // Check + PowerEffect: Neutralizing Gas must itself be usable (e.g. Path to the Peak).
-      return LOCKER_ABILITY_APPLIES(store, state, owner, this, this.powers[0], card);
+      if (!LOCKER_ABILITY_APPLIES(store, state, owner, this, this.powers[0], card)) {
+        return false;
+      }
+      return CAN_APPLY_LOCK_TO_TARGET(store, state, owner, this, this.powers[0], card);
     }, {
       exemptPowerNames: ['Neutralizing Gas'],
       allowUseFromHand: true,

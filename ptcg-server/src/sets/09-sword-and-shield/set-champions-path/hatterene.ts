@@ -6,9 +6,14 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { AddSpecialConditionsPowerEffect } from '../../../game/store/effects/check-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import {
+  WAS_ATTACK_USED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+  IS_ABILITY_BLOCKED,
+} from '../../../game/store/prefabs/prefabs';
 import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/attack-effects';
-import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
 
 export class Hatterene extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -43,23 +48,36 @@ export class Hatterene extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Hazard Sensor
-    // Ref: set-darkness-ablaze/galarian-stunfisk-v.ts (Trapping Bite - ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT)
-    // Ref: set-darkness-ablaze/copperajah.ts (AddSpecialConditionsEffect pattern)
     if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
-      const owner = StateUtils.findOwner(state, effect.target);
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      if (IS_ABILITY_BLOCKED(store, state, owner, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      // Apply Confused to the attacking Pokemon (effect.source is the attacker's PokemonCardList)
-      const specialConditionEffect = new AddSpecialConditionsEffect(effect.attackEffect, [SpecialCondition.CONFUSED]);
-      specialConditionEffect.target = effect.source;
-      store.reduceEffect(state, specialConditionEffect);
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        effect.source,
+      )) {
+        return state;
+      }
+
+      store.reduceEffect(
+        state,
+        new AddSpecialConditionsPowerEffect(
+          abilityOwner,
+          this,
+          effect.source,
+          [SpecialCondition.CONFUSED],
+        ),
+      );
     }
 
     // Attack 1: Life Sucker
-    // Ref: set-darkness-ablaze/feebas.ts (Nap - HEAL_X_DAMAGE_FROM_THIS_POKEMON)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       HEAL_X_DAMAGE_FROM_THIS_POKEMON(30, effect, store, state);
     }

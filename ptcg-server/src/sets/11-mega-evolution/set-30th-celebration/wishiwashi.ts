@@ -1,7 +1,7 @@
 import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, GamePhase, StateUtils } from "../../../game";
 import { AfterDamageEffect } from "../../../game/store/effects/attack-effects";
 import { Effect } from "../../../game/store/effects/effect";
-import { EffectOfAbilityEffect } from "../../../game/store/effects/game-effects";
+import { PlaceDamageCountersEffect } from "../../../game/store/effects/game-effects";
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from "../../../game/store/prefabs/prefabs";
 
 export class Wishiwashi extends PokemonCard {
@@ -33,7 +33,7 @@ export class Wishiwashi extends PokemonCard {
   public fullName: string = 'Wishiwashi 30C';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Counterattack Grouping
+    // Counterattack Grouping — triggers for any in-play Wishiwashi when Active Wishiwashi/ex is hit
     if (effect instanceof AfterDamageEffect && state.phase === GamePhase.ATTACK) {
       const owner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
 
@@ -54,11 +54,14 @@ export class Wishiwashi extends PokemonCard {
         return state;
       }
 
-      const damageEffect = new EffectOfAbilityEffect(owner, this.powers[0], this, effect.source);
-      store.reduceEffect(state, damageEffect);
-      if (damageEffect.target) {
-        damageEffect.target.damage += 30;
-      }
+      const placeCounters = new PlaceDamageCountersEffect(
+        owner,
+        effect.source,
+        30,
+        this,
+        this.powers[0],
+      );
+      store.reduceEffect(state, placeCounters);
     }
 
     // Surprise Attack

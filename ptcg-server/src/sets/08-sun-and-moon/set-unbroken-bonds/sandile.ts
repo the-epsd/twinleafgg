@@ -7,6 +7,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Sandile extends PokemonCard {
@@ -39,19 +40,33 @@ export class Sandile extends PokemonCard {
   public fullName: string = 'Sandile UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Intimidating Fang (passive - damage reduction while active)
-    // Ref: set-unbroken-bonds/wartortle.ts (Solid Shell - passive damage reduction)
-    if (effect instanceof DealDamageEffect
-      && effect.target.cards.includes(this)
-      && effect.target.getPokemonCard() === this) {
-      const player = StateUtils.findOwner(state, effect.target);
-
-      // Only works when this is the Active Pokemon
-      if (player.active !== effect.target) {
+    // Intimidating Fang — Ref: set-30th-celebration/pikachu-28.ts / set-chaos-rising/garbodor.ts
+    if (effect instanceof DealDamageEffect) {
+      const abilityOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
+        return state;
+      }
+      if (abilityOwner.active.getPokemonCard() !== this) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      const opponent = StateUtils.getOpponent(state, abilityOwner);
+      if (effect.player !== opponent || effect.source !== opponent.active) {
+        return state;
+      }
+
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        effect.source,
+      )) {
         return state;
       }
 

@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, PowerType, StateUtils, GamePhase } from '../../../game';
+import { StoreLike, State, PowerType, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Entei extends PokemonCard {
@@ -64,17 +65,33 @@ export class Entei extends PokemonCard {
       effect.damage += energyCount * 20;
     }
 
-    // Reduce damage by 20
-    if (effect instanceof PutDamageEffect && StateUtils.getOpponent(state, effect.player).active.cards.includes(this)) {
-      // It's not an attack
-      if (state.phase !== GamePhase.ATTACK) {
+    // Pressure — Ref: set-30th-celebration/pikachu-28.ts / set-chaos-rising/garbodor.ts
+    if (effect instanceof DealDamageEffect) {
+      const abilityOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
+        return state;
+      }
+      if (abilityOwner.active.getPokemonCard() !== this) {
         return state;
       }
 
-      const player = StateUtils.findOwner(state, effect.target);
+      const opponent = StateUtils.getOpponent(state, abilityOwner);
+      if (effect.player !== opponent || effect.source !== opponent.active) {
+        return state;
+      }
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        effect.source,
+      )) {
         return state;
       }
 

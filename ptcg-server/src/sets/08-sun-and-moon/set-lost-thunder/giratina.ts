@@ -3,9 +3,9 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { StoreLike, State, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, PokemonCardList, GameError, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
-import {WAS_ATTACK_USED, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Giratina extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -74,12 +74,14 @@ export class Giratina extends PokemonCard {
         const targets = selected || [];
 
         targets.forEach(target => {
-          // Check if ability can target selected Pokemon
-          const canApplyAbility = new EffectOfAbilityEffect(player, this.powers[0], this, target);
-          store.reduceEffect(state, canApplyAbility);
-          if (canApplyAbility.target) {
-            canApplyAbility.target.damage += 10;
-          }
+          const placeCounters = new PlaceDamageCountersEffect(
+            player,
+            target,
+            10,
+            this,
+            this.powers[0],
+          );
+          store.reduceEffect(state, placeCounters);
         });
 
       });

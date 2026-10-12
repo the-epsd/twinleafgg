@@ -1,12 +1,15 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GamePhase } from '../../../game';
-import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
+import { PowerType, StoreLike, State, StateUtils, SlotType } from '../../../game';
 import { AddSpecialConditionsPowerEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+} from '../../../game/store/prefabs/prefabs';
 import { DISCARD_UP_TO_X_ENERGY_FROM_YOUR_POKEMON } from '../../../game/store/prefabs/costs';
-import { SlotType } from '../../../game';
 
 export class Magmortar extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -39,41 +42,34 @@ export class Magmortar extends PokemonCard {
   public fullName: string = 'Magmortar UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Incandescent Body (passive - burn attacker when damaged)
-    // Ref: set-sun-and-moon/poison-barb.ts (Poison Barb - AfterDamageEffect damage retaliation)
-    if (effect instanceof AfterDamageEffect && effect.target.cards.includes(this)) {
-      const pokemonCard = effect.target.getPokemonCard();
-      if (pokemonCard !== this) {
+    // Incandescent Body — Ref: set-ascended-heroes/numel.ts / set-twilight-masquerade/heatran.ts
+    if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
+
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      const player = StateUtils.findOwner(state, effect.target);
-      const opponent = StateUtils.findOwner(state, effect.source);
-
-      // Only trigger from opponent's attack
-      if (player === opponent) {
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        effect.source,
+      )) {
         return state;
       }
 
-      // Must be active
-      if (player.active !== effect.target) {
-        return state;
-      }
-
-      // Must have taken damage
-      if (effect.damage <= 0) {
-        return state;
-      }
-
-      // Check if ability is blocked
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
-        return state;
-      }
-
-      if (state.phase === GamePhase.ATTACK) {
-        const burnEffect = new AddSpecialConditionsPowerEffect(opponent, this, effect.source, [SpecialCondition.BURNED]);
-        store.reduceEffect(state, burnEffect);
-      }
+      store.reduceEffect(
+        state,
+        new AddSpecialConditionsPowerEffect(
+          abilityOwner,
+          this,
+          effect.source,
+          [SpecialCondition.BURNED],
+        ),
+      );
     }
 
     // Attack 1: Fire Blaster

@@ -11,7 +11,7 @@ import {
   StateUtils,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { GameMessage } from '../../../game/game-message';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import {
@@ -36,7 +36,7 @@ export class Kingdra extends PokemonCard {
       name: 'Spray Splash',
       useWhenInPlay: true,
       powerType: PowerType.POKEPOWER,
-      text: "Once during your turn (before your attack), you may put 1 damage counter on 1 of your opponent's Pokémon.This power can't be used if Kingdra is affected by a Special Condition.",
+      text: "Once during your turn (before your attack), you may put 1 damage counter on 1 of your opponent's Pokémon. This power can't be used if Kingdra is affected by a Special Condition.",
     },
   ];
 
@@ -87,16 +87,14 @@ export class Kingdra extends PokemonCard {
           const targets = selected || [];
 
           if (targets.length > 0) {
-            const damageEffect = new EffectOfAbilityEffect(
+            const placeCounters = new PlaceDamageCountersEffect(
               player,
-              this.powers[0],
-              this,
               targets[0],
+              10,
+              this,
+              this.powers[0],
             );
-            store.reduceEffect(state, damageEffect);
-            if (damageEffect.target) {
-              damageEffect.target.damage += 10;
-            }
+            store.reduceEffect(state, placeCounters);
           }
           player.marker.addMarker(this.SPRAY_SPLASH_MARKER, this);
           player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {

@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils } from "../../../game";
 import { Effect } from "../../../game/store/effects/effect";
 import { KnockOutEffect } from "../../../game/store/effects/game-effects";
+import { CAN_APPLY_ABILITY_TO_TARGET } from "../../../game/store/prefabs/effect-of-ability-prefabs";
 import { IS_ABILITY_BLOCKED, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
 import { BLOCK_RETREAT } from "../../../game/store/prefabs/effect-of-attack-prefabs";
 
@@ -35,22 +36,35 @@ export class GalarianCursola extends PokemonCard {
   public fullName: string = 'Galarian Cursola RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Perish Body
-    if (effect instanceof KnockOutEffect
-      && effect.target.cards.includes(this)
-      && effect.player.active === effect.target
-      && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+    // Perish Body — Ref: set-30th-celebration/gengar-ex.ts
+    if (
+      effect instanceof KnockOutEffect &&
+      effect.target.cards.includes(this) &&
+      effect.player.active === effect.target &&
+      effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)
+    ) {
+      const abilityOwner = effect.player;
+      const attackerOwner = StateUtils.getOpponent(state, abilityOwner);
 
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      COIN_FLIP_PROMPT(store, state, player, flipResult => {
-        if (flipResult) {
-          opponent.active.damage += 999;
+      COIN_FLIP_PROMPT(store, state, abilityOwner, flipResult => {
+        if (!flipResult) {
+          return;
         }
+        if (!CAN_APPLY_ABILITY_TO_TARGET(
+          store,
+          state,
+          abilityOwner,
+          this.powers[0],
+          this,
+          attackerOwner.active,
+        )) {
+          return;
+        }
+        attackerOwner.active.damage += 999;
       });
     }
 

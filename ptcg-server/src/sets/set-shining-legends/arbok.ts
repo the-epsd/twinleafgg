@@ -10,6 +10,8 @@ import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerType, State, StoreLike } from '../../game';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../game/store/prefabs/effect-of-ability-prefabs';
+
 export class Arbok extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Ekans';
@@ -40,22 +42,33 @@ export class Arbok extends PokemonCard {
   public fullName: string = 'Arbok SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Intimidating Pattern (passive - reduce damage when active)
-    // Ref: set-burning-shadows/azumarill.ts (Thick Fat)
-    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this)) {
-      const pokemonCard = effect.target.getPokemonCard();
-      if (pokemonCard !== this) {
+    // Intimidating Pattern — Ref: set-30th-celebration/pikachu-28.ts / set-chaos-rising/garbodor.ts
+    if (effect instanceof DealDamageEffect) {
+      const abilityOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
+        return state;
+      }
+      if (abilityOwner.active.getPokemonCard() !== this) {
         return state;
       }
 
-      const player = StateUtils.findOwner(state, effect.target);
-
-      // Only works when this Pokemon is active
-      if (player.active !== effect.target) {
+      const opponent = StateUtils.getOpponent(state, abilityOwner);
+      if (effect.player !== opponent || effect.source !== opponent.active) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        effect.source,
+      )) {
         return state;
       }
 

@@ -20,6 +20,7 @@ import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
+import { MoveDamageCountersEffect, PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { BoardEffect, PowerType, State, StoreLike } from '../../../game';
 export class HattereneVmax extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VMAX];
@@ -123,8 +124,24 @@ export class HattereneVmax extends PokemonCard {
             const source = StateUtils.getTarget(state, player, transfer.from);
             const target = StateUtils.getTarget(state, player, transfer.to);
             if (source.damage >= 10) {
-              source.damage -= 10;
-              target.damage += 10;
+              const damageToMove = 10;
+              const moveEffect = new MoveDamageCountersEffect(player);
+              state = store.reduceEffect(state, moveEffect);
+              if (moveEffect.preventDefault) {
+                continue;
+              }
+              const placeCountersEffect = new PlaceDamageCountersEffect(
+                player,
+                target,
+                damageToMove,
+                this,
+                this.powers[0],
+              );
+              state = store.reduceEffect(state, placeCountersEffect);
+              if (placeCountersEffect.preventDefault) {
+                continue;
+              }
+              source.damage -= damageToMove;
             }
           }
 

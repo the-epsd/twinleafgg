@@ -4,8 +4,9 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StateUtils } from '../../game';
+import { Player, StateUtils } from '../../game';
 import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_POKEBODY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../game/store/prefabs/effect-of-ability-prefabs';
 import { CheckPokemonStatsEffect } from '../../game/store/effects/check-effects';
 
 export class Gloom extends PokemonCard {
@@ -38,20 +39,35 @@ export class Gloom extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckPokemonStatsEffect) {
-      const player = StateUtils.findOwner(state, effect.target);
-      const opponent = StateUtils.getOpponent(state, player);
+      const targetOwner = StateUtils.findOwner(state, effect.target);
+      const opponent = StateUtils.getOpponent(state, targetOwner);
 
-      // Gloom is not active Pokemon
-      if (player.active.getPokemonCard() !== this
-        && opponent.active.getPokemonCard() !== this) {
+      // Gloom must be Active; find its owner
+      let abilityOwner: Player | undefined;
+      if (targetOwner.active.getPokemonCard() === this) {
+        abilityOwner = targetOwner;
+      } else if (opponent.active.getPokemonCard() === this) {
+        abilityOwner = opponent;
+      } else {
         return state;
       }
 
-      if (effect.target !== player.active && effect.target !== opponent.active) {
+      if (effect.target !== targetOwner.active && effect.target !== opponent.active) {
         return state;
       }
 
-      if (IS_POKEBODY_BLOCKED(store, state, player, this)) {
+      if (IS_POKEBODY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        effect.target,
+      )) {
         return state;
       }
 

@@ -6,7 +6,8 @@ import { PokemonCard } from '../card/pokemon-card';
 import { Power, PowerType } from '../card/pokemon-types';
 import { CheckPokemonPowersEffect } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
-import { EffectOfAbilityEffect, PowerEffect } from '../effects/game-effects';
+import { PowerEffect } from '../effects/game-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from './effect-of-ability-prefabs';
 import { EndTurnEffect } from '../effects/game-phase-effects';
 import { StateUtils } from '../state-utils';
 import { Player } from '../state/player';
@@ -575,8 +576,8 @@ export function LOCKER_ABILITY_APPLIES(
 }
 
 /**
- * Probe EffectOfAbilityEffect against the target card list.
- * Returns false if the lock cannot be applied to that Pokemon.
+ * Probe whether the locker's Ability can apply to the target card.
+ * Returns false if a blocker (e.g. Stealthy Hood) prevents the effect.
  * If the card is not on a PokemonCardList (hand/discard), returns true.
  */
 export function CAN_APPLY_LOCK_TO_TARGET(
@@ -592,10 +593,14 @@ export function CAN_APPLY_LOCK_TO_TARGET(
     if (!(cardList instanceof PokemonCardList)) {
       return true;
     }
-    const canApplyAbility = new EffectOfAbilityEffect(abilityOwner, lockerPower, lockerCard, cardList);
-    canApplyAbility.target = cardList;
-    store.reduceEffect(state, canApplyAbility);
-    return !!canApplyAbility.target;
+    return CAN_APPLY_ABILITY_TO_TARGET(
+      store,
+      state,
+      abilityOwner,
+      lockerPower,
+      lockerCard,
+      cardList,
+    );
   } catch {
     return false;
   }

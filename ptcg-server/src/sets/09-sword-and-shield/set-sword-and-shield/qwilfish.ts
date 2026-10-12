@@ -6,9 +6,13 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
-import { GamePhase } from '../../../game/store/state/state';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, ADD_POISON_TO_PLAYER_ACTIVE } from '../../../game/store/prefabs/prefabs';
+import { AddSpecialConditionsPowerEffect } from '../../../game/store/effects/check-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Qwilfish extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -41,24 +45,37 @@ export class Qwilfish extends PokemonCard {
   public fullName: string = 'Qwilfish SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Poison Point (passive - triggered when damaged by opponent's attack)
-    // Ref: set-forbidden-light/dragalge.ts (Poison Point - AfterDamageEffect pattern)
-    if (effect instanceof AfterDamageEffect && effect.target.getPokemonCard() === this && state.phase === GamePhase.ATTACK) {
-      const player = StateUtils.findOwner(state, effect.target);
-      const opponent = effect.player;
+    // Ability: Poison Point
+    if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      if (player === opponent || player.active !== effect.target) {
-        return state;
-      }
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        effect.source,
+      )) {
+        return state;
+      }
+
+      store.reduceEffect(
+        state,
+        new AddSpecialConditionsPowerEffect(
+          abilityOwner,
+          this,
+          effect.source,
+          [SpecialCondition.POISONED],
+        ),
+      );
     }
 
     // Attack 1: Venoshock
-    // Ref: set-unified-minds/komala.ts (SpecialCondition check for bonus damage)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
