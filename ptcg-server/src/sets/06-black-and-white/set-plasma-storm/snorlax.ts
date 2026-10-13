@@ -15,6 +15,7 @@ import {
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { RetreatEffect } from '../../../game/store/effects/game-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Snorlax extends PokemonCard {
@@ -53,20 +54,29 @@ export class Snorlax extends PokemonCard {
     // Ability: Block (passive - intercept retreat)
     // Ref: set-wotc-promos/snorlax.ts (Guard retreat block)
     if (effect instanceof RetreatEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      const retreatingPlayer = effect.player;
+      const abilityOwner = StateUtils.getOpponent(state, retreatingPlayer);
 
-      // Snorlax must be opponent's active
-      if (opponent.active.getPokemonCard() !== this) {
+      if (abilityOwner.active.getPokemonCard() !== this) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, opponent, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      // Block retreat entirely
-      throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        retreatingPlayer.active,
+      )) {
+        return state;
+      }
+
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
     // Attack 1: Teampact

@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
 import { PowerType, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { ABILITY_USED, ADD_BURN_TO_PLAYER_ACTIVE, BLOCK_IF_HAS_SPECIAL_CONDITION, COIN_FLIP_PROMPT, REMOVE_MARKER_AT_END_OF_TURN, USE_ABILITY_ONCE_PER_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { APPLY_SPECIAL_CONDITIONS_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { ABILITY_USED, BLOCK_IF_HAS_SPECIAL_CONDITION, COIN_FLIP_PROMPT, REMOVE_MARKER_AT_END_OF_TURN, USE_ABILITY_ONCE_PER_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class Houndoom extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -54,7 +55,15 @@ export class Houndoom extends PokemonCard {
 
       COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
-          ADD_BURN_TO_PLAYER_ACTIVE(store, state, opponent, this);
+          APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+            store,
+            state,
+            player,
+            this.powers[0],
+            this,
+            opponent.active,
+            [SpecialCondition.BURNED],
+          );
         }
       });
     }

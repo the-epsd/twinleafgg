@@ -1,5 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
+import { APPLY_SPECIAL_CONDITIONS_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
@@ -62,9 +63,25 @@ export class Munna extends PokemonCard {
 
       return COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
-          opponent.active.addSpecialCondition(SpecialCondition.ASLEEP);
+          APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+            store,
+            state,
+            player,
+            this.powers[0],
+            this,
+            opponent.active,
+            [SpecialCondition.ASLEEP],
+          );
         } else {
-          player.active.addSpecialCondition(SpecialCondition.ASLEEP);
+          APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+            store,
+            state,
+            player,
+            this.powers[0],
+            this,
+            player.active,
+            [SpecialCondition.ASLEEP],
+          );
         }
       });
     }

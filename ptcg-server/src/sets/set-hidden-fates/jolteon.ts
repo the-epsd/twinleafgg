@@ -6,6 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { PlaceDamageCountersEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, DISCARD_ALL_ENERGY_FROM_POKEMON } from '../../game/store/prefabs/prefabs';
 
@@ -43,20 +44,31 @@ export class Jolteon extends PokemonCard {
     // Ability: Electromagnetic Wall (passive - trigger on opponent's energy attachment)
     // Ref: set-crimson-invasion/gengar.ts (Gnawing Curse)
     if (effect instanceof AttachEnergyEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      const attachingPlayer = effect.player;
+      const abilityOwner = StateUtils.getOpponent(state, attachingPlayer);
 
-      // Check if this Jolteon is the opponent's active Pokemon
-      if (opponent.active.getPokemonCard() !== this || !opponent.active.cards.includes(this)) {
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this) || !abilityOwner.active.cards.includes(this)) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, opponent, this)) {
+      if (!attachingPlayer.hand.cards.includes(effect.energyCard)) {
         return state;
       }
 
-      // Put 2 damage counters (20 damage) on the Pokemon that received the energy
-      effect.target.damage += 20;
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      store.reduceEffect(
+        state,
+        new PlaceDamageCountersEffect(
+          abilityOwner,
+          effect.target,
+          20,
+          this,
+          this.powers[0],
+        ),
+      );
     }
 
     // Attack 1: Thunderbolt

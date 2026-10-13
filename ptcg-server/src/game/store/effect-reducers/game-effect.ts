@@ -723,6 +723,9 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
   }
 
   if (effect instanceof AddSpecialConditionsPowerEffect) {
+    if (effect.preventDefault) {
+      return state;
+    }
     const target = effect.target;
     effect.specialConditions.forEach(sp => {
       target.addSpecialCondition(sp);

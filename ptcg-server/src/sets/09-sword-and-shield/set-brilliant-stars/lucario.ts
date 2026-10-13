@@ -3,6 +3,7 @@ import { Stage, CardType, SuperType, EnergyType } from '../../../game/store/card
 import { StoreLike, State, PowerType, GameError, GameMessage, PlayerType, Card, ChooseCardsPrompt } from '../../../game';
 
 import { Effect } from '../../../game/store/effects/effect';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
@@ -65,7 +66,16 @@ export class Lucario extends PokemonCard {
           }
 
           cardList.marker.addMarker(this.ROARING_RESOLVE_MARKER, this);
-          cardList.damage += 20;
+          store.reduceEffect(
+            state,
+            new PlaceDamageCountersEffect(
+              player,
+              cardList,
+              20,
+              this,
+              this.powers[0],
+            ),
+          );
 
           let cards: Card[] = [];
           store.prompt(state, new ChooseCardsPrompt(

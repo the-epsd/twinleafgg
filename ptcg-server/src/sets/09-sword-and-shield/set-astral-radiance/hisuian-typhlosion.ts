@@ -3,12 +3,14 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, EnergyType } from '../../../game/store/card/card-types';
+import { Stage, CardType, SuperType, EnergyType, SpecialCondition } from '../../../game/store/card/card-types';
+import { AddSpecialConditionsPowerEffect } from '../../../game/store/effects/check-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { PowerType, StoreLike, State, GameMessage, GameError, StateUtils } from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import {WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, ABILITY_USED, USE_ABILITY_ONCE_PER_TURN, REMOVE_MARKER_AT_END_OF_TURN, ADD_BURN_TO_PLAYER_ACTIVE, ADD_CONFUSION_TO_PLAYER_ACTIVE, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, ABILITY_USED, USE_ABILITY_ONCE_PER_TURN, REMOVE_MARKER_AT_END_OF_TURN, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 export class HisuianTyphlosion extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -87,9 +89,18 @@ export class HisuianTyphlosion extends PokemonCard {
           MOVE_CARDS(store, state, player.hand, player.discard, { cards: [card], sourceCard: this });
         });
 
-        // Make opponent's Active Pokémon Burned and Confused
-        ADD_BURN_TO_PLAYER_ACTIVE(store, state, opponent, this);
-        ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, opponent, this);
+        if (!CAN_APPLY_ABILITY_TO_TARGET(store, state, player, this.powers[0], this, opponent.active)) {
+          return;
+        }
+        store.reduceEffect(
+          state,
+          new AddSpecialConditionsPowerEffect(
+            player,
+            this,
+            opponent.active,
+            [SpecialCondition.BURNED, SpecialCondition.CONFUSED],
+          ),
+        );
       });
     }
 

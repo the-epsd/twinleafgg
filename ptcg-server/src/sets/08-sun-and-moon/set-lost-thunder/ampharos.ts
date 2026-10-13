@@ -1,7 +1,8 @@
-import { CardType, PokemonCard, Stage, StoreLike, State, StateUtils, GameMessage, EnergyCard, GameError, ChooseCardsPrompt, SuperType, SlotType } from '../../../game';
+import { CardType, PokemonCard, Stage, StoreLike, State, StateUtils, GameMessage, EnergyCard, GameError, ChooseCardsPrompt, SuperType, SlotType, SpecialCondition } from '../../../game';
 import { PowerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import {ABILITY_USED, ADD_MARKER, ADD_PARALYZED_TO_PLAYER_ACTIVE, HAS_MARKER, THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON, WAS_ATTACK_USED, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { APPLY_SPECIAL_CONDITIONS_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import {ABILITY_USED, ADD_MARKER, HAS_MARKER, THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON, WAS_ATTACK_USED, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Ampharos extends PokemonCard {
   public stage = Stage.STAGE_2;
@@ -60,7 +61,15 @@ export class Ampharos extends PokemonCard {
       ), cards => {
         cards = cards || [];
 
-        ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, opponent, this);
+        APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+          store,
+          state,
+          player,
+          this.powers[0],
+          this,
+          opponent.active,
+          [SpecialCondition.PARALYZED],
+        );
         ADD_MARKER(this.UNSEEN_FLASH_MARKER, player, this);
         ABILITY_USED(player, this);
 

@@ -13,6 +13,7 @@ import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { CardTarget, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, StateUtils, pokemonHasCardType, pokemonHasCardTypeOptional } from '../../../game';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { CheckTableStateEffect } from '../../../game/store/effects/check-effects';
+import { APPLY_SPECIAL_CONDITIONS_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 function* useChainsOfControl(
@@ -77,7 +78,15 @@ function* useChainsOfControl(
   if (target.length > 0) {
     player.active.clearEffects();
     player.switchPokemon(target[0]);
-    player.active.addSpecialCondition(SpecialCondition.POISONED);
+    APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+      store,
+      state,
+      player,
+      effect.power,
+      effect.card,
+      player.active,
+      [SpecialCondition.POISONED],
+    );
     player.chainsOfControlUsed = true;
   }
 }

@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, BoardEffect } from '../../../game/store/card/card-types';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 import {
   PowerType, StoreLike, State, GameError, GameMessage,
   PlayerType, SlotType,
@@ -9,6 +9,7 @@ import {
   CardList
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import {REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { ADD_MARKER, REMOVE_MARKER, HAS_MARKER } from '../../../game/store/prefabs/prefabs';
@@ -86,15 +87,16 @@ export class UnownP extends PokemonCard {
 
         ADD_MARKER(this.PUT_MARKER, player, this);
 
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-          }
-        });
-
-        targets.forEach(target => {
-          target.damage += 10;
-        });
+        store.reduceEffect(
+          state,
+          new PlaceDamageCountersEffect(
+            player,
+            targets[0],
+            10,
+            this,
+            this.powers[0],
+          ),
+        );
       });
     }
 

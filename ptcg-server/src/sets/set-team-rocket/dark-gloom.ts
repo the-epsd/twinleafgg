@@ -1,6 +1,5 @@
 import {
   ABILITY_USED,
-  ADD_CONFUSION_TO_PLAYER_ACTIVE,
   ADD_MARKER,
   ADD_POISON_TO_PLAYER_ACTIVE,
   AFTER_ATTACK,
@@ -10,7 +9,8 @@ import {
   REMOVE_MARKER_AT_END_OF_TURN,
   WAS_POWER_USED,
 } from '../../game/store/prefabs/prefabs';
-import { CardType, CardTag, Stage } from '../../game/store/card/card-types';
+import { APPLY_SPECIAL_CONDITIONS_FROM_ABILITY } from '../../game/store/prefabs/effect-of-ability-prefabs';
+import { CardType, CardTag, SpecialCondition, Stage } from '../../game/store/card/card-types';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { StateUtils } from '../../game/store/state-utils';
@@ -67,9 +67,25 @@ export class DarkGloom extends PokemonCard {
 
       COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (result) {
-          ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, opponent, this);
+          APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+            store,
+            state,
+            player,
+            this.powers[0],
+            this,
+            opponent.active,
+            [SpecialCondition.CONFUSED],
+          );
         } else {
-          ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, player, this);
+          APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+            store,
+            state,
+            player,
+            this.powers[0],
+            this,
+            player.active,
+            [SpecialCondition.CONFUSED],
+          );
         }
       });
     }

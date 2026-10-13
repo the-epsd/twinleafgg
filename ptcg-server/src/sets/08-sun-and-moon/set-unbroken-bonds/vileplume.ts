@@ -4,9 +4,9 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameMessage, GameError, SelectPrompt } from '../../../game';
+import { PowerType, StoreLike, State, StateUtils, GameMessage, GameError } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { AddSpecialConditionsPowerEffect } from '../../../game/store/effects/check-effects';
+import { CHOOSE_SPECIAL_CONDITION_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, COIN_FLIP_PROMPT, HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/prefabs';
 
 export class Vileplume extends PokemonCard {
@@ -55,25 +55,15 @@ export class Vileplume extends PokemonCard {
 
       COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
-          const options: { message: GameMessage, value: SpecialCondition }[] = [
-            { message: GameMessage.SPECIAL_CONDITION_ASLEEP, value: SpecialCondition.ASLEEP },
-            { message: GameMessage.SPECIAL_CONDITION_BURNED, value: SpecialCondition.BURNED },
-            { message: GameMessage.SPECIAL_CONDITION_CONFUSED, value: SpecialCondition.CONFUSED },
-            { message: GameMessage.SPECIAL_CONDITION_POISONED, value: SpecialCondition.POISONED }
-          ];
-
-          store.prompt(state, new SelectPrompt(
-            player.id,
-            GameMessage.CHOOSE_SPECIAL_CONDITION,
-            options.map(c => c.message),
-            { allowCancel: false }
-          ), choice => {
-            const option = options[choice];
-            if (option !== undefined) {
-              const specialConditionEffect = new AddSpecialConditionsPowerEffect(player, this, opponent.active, [option.value]);
-              store.reduceEffect(state, specialConditionEffect);
-            }
-          });
+          CHOOSE_SPECIAL_CONDITION_FROM_ABILITY(
+            store,
+            state,
+            player,
+            this.powers[0],
+            this,
+            opponent.active,
+            [SpecialCondition.ASLEEP, SpecialCondition.BURNED, SpecialCondition.CONFUSED, SpecialCondition.POISONED],
+          );
         }
       });
     }

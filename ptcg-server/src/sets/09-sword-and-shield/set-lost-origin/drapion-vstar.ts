@@ -16,8 +16,9 @@ import {
   StoreLike,
 } from '../../../game';
 import { CardTag } from '../../../game/store/card/card-types';
+import { AddSpecialConditionsPowerEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class DrapionVSTAR extends PokemonCard {
@@ -82,9 +83,19 @@ export class DrapionVSTAR extends PokemonCard {
           cardList.addBoardEffect(BoardEffect.ABILITY_USED);
         }
       });
-      opponent.active.addSpecialCondition(SpecialCondition.POISONED);
-      opponent.active.addSpecialCondition(SpecialCondition.PARALYZED);
-      opponent.active.poisonDamage = 60;
+      if (!CAN_APPLY_ABILITY_TO_TARGET(store, state, player, this.powers[0], this, opponent.active)) {
+        return state;
+      }
+      store.reduceEffect(
+        state,
+        new AddSpecialConditionsPowerEffect(
+          player,
+          this,
+          opponent.active,
+          [SpecialCondition.PARALYZED, SpecialCondition.POISONED],
+          60,
+        ),
+      );
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

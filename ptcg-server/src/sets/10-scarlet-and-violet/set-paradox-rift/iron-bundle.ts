@@ -1,10 +1,7 @@
 import {
-  ChoosePokemonPrompt,
   GameError,
-  PlayerType,
   PokemonCardList,
   PowerType,
-  SlotType,
   State,
   StateUtils,
   StoreLike,
@@ -13,6 +10,7 @@ import { GameMessage } from '../../../game/game-message';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
+import { SWITCH_OUT_OPPONENT_ACTIVE_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { MOVE_POKEMON_OFF_BOARD, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
@@ -50,16 +48,17 @@ export class IronBundle extends PokemonCard {
   public fullName: string = 'Iron Bundle PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Hyper Blower
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const cardList = StateUtils.findCardList(state, this);
+      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
 
-      if (player.active.cards[0] === this) {
+      if (player.active.getPokemonCard() === this) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      const benchIndex = player.bench.indexOf(cardList as PokemonCardList);
+      const benchIndex = player.bench.indexOf(cardList);
       if (benchIndex === -1) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
@@ -68,24 +67,20 @@ export class IronBundle extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      return store.prompt(
+      return SWITCH_OUT_OPPONENT_ACTIVE_FROM_ABILITY(
+        store,
         state,
-        new ChoosePokemonPrompt(
-          opponent.id,
-          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH],
-          { allowCancel: false },
-        ),
-        (targets) => {
-          if (targets && targets.length > 0) {
-            opponent.active.clearEffects();
-            opponent.switchPokemon(targets[0]);
+        player,
+        this.powers[0],
+        this,
+        {
+          allowCancel: false,
+          onSwitched: () => {
             MOVE_POKEMON_OFF_BOARD(store, state, player.bench[benchIndex], {
               pokemonDestination: player.discard,
               sourceCard: this,
             });
-          }
+          },
         },
       );
     }

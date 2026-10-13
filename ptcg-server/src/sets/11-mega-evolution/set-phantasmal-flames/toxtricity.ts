@@ -4,6 +4,7 @@ import { PowerType, GameMessage, PlayerType, SlotType, AttachEnergyPrompt, State
 
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { Effect } from '../../../game/store/effects/effect';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import {ABILITY_USED, SHUFFLE_DECK, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
@@ -81,7 +82,16 @@ export class Toxtricity extends PokemonCard {
           const target = StateUtils.getTarget(state, player, transfer.to);
           MOVE_CARDS(store, state, player.deck, target, { cards: [transfer.card], sourceCard: this });
           SHUFFLE_DECK(store, state, player);
-          target.damage += 20;
+          store.reduceEffect(
+            state,
+            new PlaceDamageCountersEffect(
+              player,
+              target,
+              20,
+              this,
+              this.powers[0],
+            ),
+          );
         }
       });
       return state;

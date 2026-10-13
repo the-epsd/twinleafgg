@@ -7,6 +7,7 @@ import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { GameMessage } from '../../../game/game-message';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
+import { APPLY_SPECIAL_CONDITIONS_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Hypno extends PokemonCard {
@@ -67,7 +68,15 @@ export class Hypno extends PokemonCard {
 
       state = COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
-          opponent.active.addSpecialCondition(SpecialCondition.ASLEEP);
+          APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+            store,
+            state,
+            player,
+            this.powers[0],
+            this,
+            opponent.active,
+            [SpecialCondition.ASLEEP],
+          );
         }
       });
 

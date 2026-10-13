@@ -1,8 +1,17 @@
-import { CardType, AttachEnergyPrompt, Card, EnergyType, GameError, GameMessage, PlayerType, PokemonCard, PowerType, ShuffleDeckPrompt, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../../game';
+import { CardType, AttachEnergyPrompt, Card, EnergyType, GameError, GameMessage, PlayerType, PokemonCard, PokemonCardList, PowerType, ShuffleDeckPrompt, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../../game';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import {HAS_MARKER, IS_ABILITY_BLOCKED, WAS_ATTACK_USED, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
+import {
+  ABILITY_USED,
+  IS_ABILITY_BLOCKED,
+  MOVE_CARDS,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  USE_ABILITY_ONCE_PER_TURN,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { CardTarget } from '../../../game/store/actions/play-card-action';
 
 export class Charizard extends PokemonCard {
@@ -40,24 +49,30 @@ export class Charizard extends PokemonCard {
   public readonly ROARING_RESEOLVE_MARKER = 'ROARING_RESEOLVE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.ROARING_RESEOLVE_MARKER, this);
 
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-
-      //Once per turn
-      if (HAS_MARKER(this.ROARING_RESEOLVE_MARKER, player, this)) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
-      }
 
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         throw new GameError(GameMessage.ABILITY_BLOCKED);
       }
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.getPokemonCard() === this) {
-          cardList.damage += 20;
-        }
-      });
+      USE_ABILITY_ONCE_PER_TURN(player, this.ROARING_RESEOLVE_MARKER, this);
+      ABILITY_USED(player, this);
+
+      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
+      const placeCounters = new PlaceDamageCountersEffect(
+        player,
+        cardList,
+        20,
+        this,
+        this.powers[0],
+      );
+      store.reduceEffect(state, placeCounters);
+      if (placeCounters.preventDefault) {
+        return state;
+      }
 
       const blockedTo: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {

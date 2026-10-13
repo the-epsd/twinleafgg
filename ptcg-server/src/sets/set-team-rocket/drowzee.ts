@@ -1,6 +1,7 @@
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { APPLY_SPECIAL_CONDITIONS_FROM_ABILITY } from '../../game/store/prefabs/effect-of-ability-prefabs';
 import { ADD_MARKER, ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, BLOCK_IF_ASLEEP_CONFUSED_PARALYZED, COIN_FLIP_PROMPT, HAS_MARKER, REMOVE_MARKER, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
-import { CardType, Stage } from '../../game/store/card/card-types';
+import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
@@ -55,9 +56,25 @@ export class Drowzee extends PokemonCard {
 
       COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
-          ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, opponent, this);
+          APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+            store,
+            state,
+            player,
+            this.powers[0],
+            this,
+            opponent.active,
+            [SpecialCondition.ASLEEP],
+          );
         } else {
-          ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, player, this);
+          APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+            store,
+            state,
+            player,
+            this.powers[0],
+            this,
+            player.active,
+            [SpecialCondition.ASLEEP],
+          );
         }
       });
 

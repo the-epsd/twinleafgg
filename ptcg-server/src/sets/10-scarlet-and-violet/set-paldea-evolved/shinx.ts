@@ -1,11 +1,15 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { CardType, Stage, BoardEffect } from '../../../game/store/card/card-types';
-import { GameError, GameMessage, PlayerType, PowerType, State, StoreLike } from '../../../game';
+import { CardType, Stage } from '../../../game/store/card/card-types';
+import { GameError, GameMessage, PowerType, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { SWITCH_OUT_OPPONENT_ACTIVE_POKEMON, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { SWITCH_OUT_OPPONENT_ACTIVE_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import {
+  WAS_POWER_USED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Shinx extends PokemonCard {
   public stage = Stage.BASIC;
@@ -40,40 +44,30 @@ export class Shinx extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.BIG_ROAR_MARKER, this);
+      effect.player.marker.removeMarker(this.BIG_ROAR_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      player.marker.removeMarker(this.BIG_ROAR_MARKER, this);
-    }
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.BIG_ROAR_MARKER, this);
 
+    // Big Roar — Ref: set-paradox-rift/iron-bundle.ts (SWITCH_OUT_OPPONENT_ACTIVE_FROM_ABILITY)
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
-      if (player.active.cards[0] !== this) {
+      if (player.active.getPokemonCard() !== this) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      if (player.marker.hasMarker(this.BIG_ROAR_MARKER, this)) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
-      }
+      USE_ABILITY_ONCE_PER_TURN(player, this.BIG_ROAR_MARKER, this);
+      ABILITY_USED(player, this);
 
-      effect.player.marker.addMarker(this.BIG_ROAR_MARKER, this);
-
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.getPokemonCard() === this) {
-          cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-        }
-      });
-
-      // Legacy implementation:
-      // - Used a custom ChoosePokemonPrompt where the opponent chose their replacement Active.
-      // - Switched opponent Active to the selected Benched Pokémon.
-      //
-      // Converted to prefab version (SWITCH_OUT_OPPONENT_ACTIVE_POKEMON).
-      return SWITCH_OUT_OPPONENT_ACTIVE_POKEMON(store, state, player, { allowCancel: false });
+      return SWITCH_OUT_OPPONENT_ACTIVE_FROM_ABILITY(
+        store,
+        state,
+        player,
+        this.powers[0],
+        this,
+        { allowCancel: false },
+      );
     }
     return state;
   }

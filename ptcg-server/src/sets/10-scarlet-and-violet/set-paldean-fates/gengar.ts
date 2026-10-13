@@ -1,42 +1,19 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition, BoardEffect } from '../../../game/store/card/card-types';
+import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType } from '../../..';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
-import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
+import { GameError, GameMessage, PowerType } from '../../..';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
-
-function* useNightGate(next: Function, store: StoreLike, state: State,
-  effect: PowerEffect): IterableIterator<State> {
-  const player = effect.player;
-  const hasBench = player.bench.some(b => b.cards.length > 0);
-
-  if (hasBench === false) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
-  let targets: PokemonCardList[] = [];
-  yield store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.BENCH],
-    { allowCancel: false }
-  ), results => {
-    targets = results || [];
-    next();
-  });
-
-  if (targets.length > 0) {
-    player.active.clearEffects();
-    player.switchPokemon(targets[0]);
-
-  }
-}
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../../game/store/prefabs/attack-effects';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  SWITCH_ACTIVE_WITH_BENCHED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Gengar extends PokemonCard {
 
@@ -83,39 +60,30 @@ export class Gengar extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.NIGHT_GATE_MARKER, this);
+      effect.player.marker.removeMarker(this.NIGHT_GATE_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      player.marker.removeMarker(this.NIGHT_GATE_MARKER, this);
-    }
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.NIGHT_GATE_MARKER, this);
 
+    // Night Gate
     if (WAS_POWER_USED(effect, 0, this)) {
-      const generator = useNightGate(() => generator.next(), store, state, effect);
       const player = effect.player;
-      if (player.marker.hasMarker(this.NIGHT_GATE_MARKER, this)) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      const hasBench = player.bench.some(b => b.cards.length > 0);
+
+      if (!hasBench) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      effect.player.marker.addMarker(this.NIGHT_GATE_MARKER, this);
-
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.getPokemonCard() === this) {
-          cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-        }
-      });
-
-      return generator.next().value;
+      USE_ABILITY_ONCE_PER_TURN(player, this.NIGHT_GATE_MARKER, this);
+      ABILITY_USED(player, this);
+      SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
     }
 
+    // Nightmare
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
-      const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
-      store.reduceEffect(state, specialCondition);
-      return state;
+      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
     }
+
     return state;
   }
 }

@@ -14,7 +14,7 @@ import {
   ShuffleDeckPrompt,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { EvolveEffect } from '../../../game/store/effects/game-effects';
+import { EvolveEffect, PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import {AFTER_ATTACK,
   BLOCK_IF_GX_ATTACK_USED,
@@ -110,7 +110,10 @@ export class GreninjaGX extends PokemonCard {
                 });
 
                 targets.forEach((target) => {
-                  target.damage += 30;
+                  store.reduceEffect(
+                    state,
+                    new PlaceDamageCountersEffect(player, target, 30, this, this.powers[0]),
+                  );
                 });
               },
             );

@@ -3,10 +3,11 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
 import { GameError, GameMessage, PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, COIN_FLIP_PROMPT, ADD_PARALYZED_TO_PLAYER_ACTIVE } from '../../../game/store/prefabs/prefabs';
+import { APPLY_SPECIAL_CONDITIONS_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class Vanilluxe extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -61,7 +62,15 @@ export class Vanilluxe extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
-          ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, opponent, this);
+          APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+            store,
+            state,
+            player,
+            this.powers[0],
+            this,
+            opponent.active,
+            [SpecialCondition.PARALYZED],
+          );
         }
       });
     }

@@ -33,6 +33,8 @@ export enum PlayCardEffects {
 export class AttachEnergyEffect implements Effect {
   readonly type: string = PlayCardEffects.ATTACH_ENERGY_EFFECT;
   public preventDefault = false;
+  /** Set when Buddy Pulse (Minun) has already applied for this attachment (doesn't stack). */
+  public buddyPulseSV?: boolean;
   public player: Player;
   public energyCard: EnergyCard;
   public target: PokemonCardList;

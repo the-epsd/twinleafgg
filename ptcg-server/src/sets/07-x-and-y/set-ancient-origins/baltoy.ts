@@ -2,8 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, GameError, CardList, OrderCardsPrompt, SelectPrompt, PowerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import {WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
-import { EffectOfAbilityEffect, PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
+import { PREVENT_EFFECTS_OF_OPPONENTS_ABILITIES } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Baltoy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -32,19 +32,10 @@ export class Baltoy extends PokemonCard {
   public setNumber: string = '32';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof EffectOfAbilityEffect && effect.target && effect.target?.cards?.includes(this)) {
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      const targetCard = effect.target.getPokemonCard();
-
-      if (targetCard && targetCard === this && opponent.getPokemonInPlay().includes(effect.target)) {
-        effect.target = undefined;
-      }
-    }
-
-    if (effect instanceof PlaceDamageCountersEffect && effect.target.cards.includes(this)) {
-      effect.preventDefault = true;
-    }
+    // θ Stop — Ancient Trait (not an Ability; no IS_ABILITY_BLOCKED)
+    PREVENT_EFFECTS_OF_OPPONENTS_ABILITIES(state, effect, (target) => {
+      return target.getPokemonCard() === this;
+    });
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;

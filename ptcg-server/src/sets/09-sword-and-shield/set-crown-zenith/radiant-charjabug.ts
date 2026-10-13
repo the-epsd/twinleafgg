@@ -49,14 +49,18 @@ export class RadiantCharjabug extends PokemonCard {
     //      set-vivid-voltage/eelektross.ts (PlaceDamageCountersEffect)
     if (effect instanceof AttachEnergyEffect) {
       const attachingPlayer = effect.player;
-      const targetCard = effect.target.getPokemonCard();
+      const cardList = StateUtils.findCardList(state, this);
+      const abilityOwner = StateUtils.findOwner(state, cardList);
 
-      // Only trigger if attaching from hand
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
+        return state;
+      }
+
       if (!attachingPlayer.hand.cards.includes(effect.energyCard)) {
         return state;
       }
 
-      // Only trigger if attached to a Pokemon V (includes V, VMAX, VSTAR)
+      const targetCard = effect.target.getPokemonCard();
       if (
         !targetCard ||
         (!targetCard.hasTag(CardTag.POKEMON_V) &&
@@ -66,21 +70,20 @@ export class RadiantCharjabug extends PokemonCard {
         return state;
       }
 
-      // Find the owner of this ability
-      const cardList = StateUtils.findCardList(state, this);
-      const owner = StateUtils.findOwner(state, cardList);
-
-      if (!StateUtils.isPokemonInPlay(owner, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, owner, this)) {
-        return state;
-      }
-
-      // Put 2 damage counters on the Pokemon that had energy attached to it
-      const damageEffect = new PlaceDamageCountersEffect(attachingPlayer, effect.target, 20);
-      store.reduceEffect(state, damageEffect);
+      store.reduceEffect(
+        state,
+        new PlaceDamageCountersEffect(
+          abilityOwner,
+          effect.target,
+          20,
+          this,
+          this.powers[0],
+        ),
+      );
     }
 
     // Attack 1: Linear Attack

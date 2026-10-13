@@ -1,10 +1,11 @@
 import { Effect } from '../../../game/store/effects/effect';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { PowerType, StoreLike, State, StateUtils, GameError } from '../../../game';
-import { Stage, CardType } from '../../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { GameMessage } from '../../../game/game-message';
-import { ABILITY_USED, ADD_MARKER, ADD_POISON_TO_PLAYER_ACTIVE, HAS_MARKER, REMOVE_MARKER, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { APPLY_SPECIAL_CONDITIONS_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
@@ -58,11 +59,27 @@ export class Ariados extends PokemonCard {
       const isGrassPokemonOpponent = checkPokemonTypeEffectOpponent.cardTypes.includes(CardType.GRASS);
 
       if (!isGrassPokemonPlayer) {
-        ADD_POISON_TO_PLAYER_ACTIVE(store, state, player, this);
+        APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+          store,
+          state,
+          player,
+          this.powers[0],
+          this,
+          player.active,
+          [SpecialCondition.POISONED],
+        );
       }
 
       if (!isGrassPokemonOpponent) {
-        ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
+        APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+          store,
+          state,
+          player,
+          this.powers[0],
+          this,
+          opponent.active,
+          [SpecialCondition.POISONED],
+        );
       }
 
       ADD_MARKER(this.POISONOUS_NEST_MARKER, player, this);

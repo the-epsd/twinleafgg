@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, PlayerType } from '../../../game';
+import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Huntail extends PokemonCard {
@@ -41,38 +42,41 @@ export class Huntail extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Single Strike Jammer
     if (effect instanceof CheckAttackCostEffect) {
-      const player = effect.player;
-      const attackingPokemon = player.active.getPokemonCard();
+      const attackingPlayer = effect.player;
+      const attackingPokemon = attackingPlayer.active.getPokemonCard();
 
       if (!attackingPokemon || !attackingPokemon.hasTag(CardTag.SINGLE_STRIKE)) {
         return state;
       }
 
-      let huntailInPlay = false;
+      const cardList = StateUtils.findCardList(state, this);
+      const abilityOwner = StateUtils.findOwner(state, cardList);
 
-      state.players.forEach((p) => {
-        if (p !== player) {
-          p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-            if (card === this) {
-              huntailInPlay = true;
-            }
-          });
-        }
-      });
-
-      if (!huntailInPlay) {
+      if (attackingPlayer === abilityOwner) {
         return state;
       }
 
-      let huntailOwner = state.players.find((p) => p !== player);
-      if (!huntailOwner) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, huntailOwner, this)) {
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        attackingPlayer.active,
+      )) {
         return state;
       }
-      effect.cost.push(CardType.COLORLESS);
+
+      const index = effect.cost.indexOf(CardType.COLORLESS);
+      if (index > -1) {
+        effect.cost.splice(index, 0, CardType.COLORLESS);
+      } else {
+        effect.cost.push(CardType.COLORLESS);
+      }
     }
 
     return state;

@@ -1,11 +1,10 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, BoardEffect } from '../../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import {
   PowerType,
   StoreLike,
   State,
   StateUtils,
-  GameError,
   GameMessage,
   PlayerType,
   SlotType,
@@ -13,13 +12,17 @@ import {
   ChoosePokemonPrompt,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import {BLOCK_IF_DISCARD_EMPTY,
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
+import {
+  ABILITY_USED,
+  BLOCK_IF_DISCARD_EMPTY,
   BLOCK_IF_GX_ATTACK_USED,
+  MOVE_CARDS,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  USE_ABILITY_ONCE_PER_TURN,
   WAS_ATTACK_USED,
-  WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class DecidueyeGX extends PokemonCard {
   protected _tags = [CardTag.POKEMON_GX];
@@ -75,20 +78,15 @@ export class DecidueyeGX extends PokemonCard {
   public readonly FEATHER_ARROW_MARKER = 'FEATHER_ARROW_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.FEATHER_ARROW_MARKER, this);
-    }
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.FEATHER_ARROW_MARKER, this);
 
     // Feather Arrow
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Check marker
-      if (player.marker.hasMarker(this.FEATHER_ARROW_MARKER, this)) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
-      }
+      USE_ABILITY_ONCE_PER_TURN(player, this.FEATHER_ARROW_MARKER, this);
+      ABILITY_USED(player, this);
 
       const hasBenched = opponent.bench.some((b) => b.cards.length > 0);
       if (!hasBenched) {
@@ -109,17 +107,16 @@ export class DecidueyeGX extends PokemonCard {
             return;
           }
 
-          player.marker.addMarker(this.FEATHER_ARROW_MARKER, this);
-
-          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-            if (cardList.getPokemonCard() === this) {
-              cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-            }
-          });
-
-          targets.forEach((target) => {
-            target.damage += 20;
-          });
+          store.reduceEffect(
+            state,
+            new PlaceDamageCountersEffect(
+              player,
+              targets[0],
+              20,
+              this,
+              this.powers[0],
+            ),
+          );
         },
       );
     }
@@ -155,9 +152,6 @@ export class DecidueyeGX extends PokemonCard {
       );
     }
 
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.FEATHER_ARROW_MARKER, this);
-    }
     return state;
   }
 }

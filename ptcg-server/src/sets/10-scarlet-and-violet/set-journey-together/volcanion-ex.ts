@@ -20,9 +20,17 @@ import {
 
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { AddSpecialConditionsPowerEffect } from '../../../game/store/effects/check-effects';
-import {WAS_ATTACK_USED, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  MOVE_CARDS,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Volcanionex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
@@ -64,30 +72,45 @@ export class Volcanionex extends PokemonCard {
       effect.player.marker.removeMarker(this.SCORCHING_STEAM, this);
     }
 
-    // Scorching Steam
+    // Scorching Steam — Ref: set-unbroken-bonds/vileplume.ts + numel Incandescent Body
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
 
       if (player.active.getPokemonCard() !== this) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      if (player.marker.hasMarker(this.SCORCHING_STEAM, this)) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
+      USE_ABILITY_ONCE_PER_TURN(player, this.SCORCHING_STEAM, this);
+      ABILITY_USED(player, this);
 
-      const specialCondition = new AddSpecialConditionsPowerEffect(
-        opponent,
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        player,
+        this.powers[0],
         this,
         opponent.active,
-        [SpecialCondition.BURNED],
-      );
-      store.reduceEffect(state, specialCondition);
+      )) {
+        return state;
+      }
 
-      player.marker.addMarker(this.SCORCHING_STEAM, this);
-      return store.reduceEffect(state, specialCondition);
+      store.reduceEffect(
+        state,
+        new AddSpecialConditionsPowerEffect(
+          player,
+          this,
+          opponent.active,
+          [SpecialCondition.BURNED],
+        ),
+      );
     }
+
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.SCORCHING_STEAM, this);
 
     // Heat Cyclone
     if (WAS_ATTACK_USED(effect, 0, this)) {
@@ -104,7 +127,7 @@ export class Volcanionex extends PokemonCard {
           player.id,
           GameMessage.ATTACH_ENERGY_TO_BENCH,
           player.active,
-          PlayerType.TOP_PLAYER,
+          PlayerType.BOTTOM_PLAYER,
           [SlotType.BENCH],
           { superType: SuperType.ENERGY },
           { allowCancel: false, min: 1, max: 1 },
@@ -117,10 +140,6 @@ export class Volcanionex extends PokemonCard {
           }
         },
       );
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.SCORCHING_STEAM, this);
     }
 
     return state;
