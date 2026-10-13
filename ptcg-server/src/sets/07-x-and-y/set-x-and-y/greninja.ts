@@ -1,54 +1,52 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
 import {
-  PowerType,
-  StoreLike,
-  State,
+  ChooseCardsPrompt,
+  ChoosePokemonPrompt,
+  GameError,
   GameMessage,
   PlayerType,
+  PowerType,
   SlotType,
-  GameError,
-  ChoosePokemonPrompt,
+  Stage,
   StateUtils,
+  StoreLike,
+  State,
+  SuperType,
 } from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
+import { CardType } from '../../../game/store/card/card-types';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { AfterDamageEffect, ApplyWeaknessEffect } from '../../../game/store/effects/attack-effects';
-import {WAS_ATTACK_USED, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { Effect } from '../../../game/store/effects/effect';
+import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
+import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Greninja extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
-  public evolvesFrom = 'Frogadier';
-  public cardType: CardType[] = [W];
+  public evolvesFrom: string = 'Frogadier';
   public hp: number = 130;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public powers = [
-    {
-      name: 'Water Shuriken',
-      useWhenInPlay: true,
-      powerType: PowerType.ABILITY,
-      text: "Once during your turn (before your attack), you may discard a [W] Energy card from your hand. If you do, put 3 damage counters on 1 of your opponent's Pokémon.",
-    },
-  ];
+  public powers = [{
+    name: 'Water Shuriken',
+    useWhenInPlay: true,
+    powerType: PowerType.ABILITY,
+    text: "Once during your turn (before your attack), you may discard a [W] Energy card from your hand. If you do, put 3 damage counters on 1 of your opponent's Pokémon.",
+  }];
 
-  public attacks = [
-    {
-      name: 'Mist Slash',
-      cost: [W],
-      damage: 50,
-      shredAttack: true,
-      text: "This attack's damage isn't affected by Weakness, Resistance, or any other effects on your opponent's Active Pokémon. ",
-    },
-  ];
+  public attacks = [{
+    name: 'Mist Slash',
+    cost: [W],
+    damage: 50,
+    shredAttack: true,
+    text: "This attack's damage isn't affected by Weakness, Resistance, or any other effects on your opponent's Active Pokémon. ",
+  }];
 
   public set: string = 'XY';
-  public setNumber = '41';
-  public cardImage = 'assets/cardback.png';
+  public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '41';
   public name: string = 'Greninja';
   public fullName: string = 'Greninja XY';
 
@@ -56,15 +54,13 @@ export class Greninja extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.WATER_SHURIKEN_MARKER, this);
+      effect.player.marker.removeMarker(this.WATER_SHURIKEN_MARKER, this);
     }
 
     // Water Shuriken
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
-      // Check marker
       if (player.marker.hasMarker(this.WATER_SHURIKEN_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
@@ -104,7 +100,10 @@ export class Greninja extends PokemonCard {
             ),
             (result) => {
               const target = result[0];
-              target.damage += 30;
+              store.reduceEffect(
+                state,
+                new PlaceDamageCountersEffect(player, target, 30, this, this.powers[0]),
+              );
               return state;
             },
           );
@@ -115,7 +114,7 @@ export class Greninja extends PokemonCard {
     }
 
     // Mist Slash
-    if (WAS_ATTACK_USED(effect, 1, this)) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

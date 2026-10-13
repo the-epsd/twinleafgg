@@ -1,53 +1,50 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, CardTag } from '../../../game/store/card/card-types';
 import {
-  PowerType,
-  StoreLike,
-  State,
-  StateUtils,
+  CardTag,
+  ChooseCardsPrompt,
   GameError,
   GameMessage,
   PlayerType,
-  ChooseCardsPrompt,
-  ChoosePokemonPrompt,
-  SlotType,
+  PowerType,
+  Stage,
+  StateUtils,
+  StoreLike,
+  State,
+  SuperType,
 } from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-
+import { CardType } from '../../../game/store/card/card-types';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import {WAS_ATTACK_USED, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { SWITCH_OUT_OPPONENT_ACTIVE_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class VolcanionPrismStar extends PokemonCard {
   protected _tags = [CardTag.PRISM_STAR];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType[] = [W];
   public hp: number = 160;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: L }];
   public retreat = [C, C, C];
 
-  public powers = [
-    {
-      name: 'Jet Geyser',
-      useWhenInPlay: true,
-      powerType: PowerType.ABILITY,
-      text: 'Once during your turn (before your attack), you may discard a [W] Energy card from your hand. If you do, your opponent switches their Active Pokémon with 1 of their Benched Pokémon.',
-    },
-  ];
+  public powers = [{
+    name: 'Jet Geyser',
+    useWhenInPlay: true,
+    powerType: PowerType.ABILITY,
+    text: 'Once during your turn (before your attack), you may discard a [W] Energy card from your hand. If you do, your opponent switches their Active Pokémon with 1 of their Benched Pokémon.',
+  }];
 
-  public attacks = [
-    {
-      name: 'Sauna Blast',
-      cost: [CardType.WATER, CardType.WATER, CardType.WATER],
-      damage: 100,
-      text: "This attack does 20 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
-    },
-  ];
+  public attacks = [{
+    name: 'Sauna Blast',
+    cost: [W, W, W],
+    damage: 100,
+    text: "This attack does 20 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+  }];
 
   public set: string = 'FLI';
-  public setNumber = '31';
-  public cardImage = 'assets/cardback.png';
+  public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '31';
   public name: string = 'Volcanion Prism Star';
   public fullName: string = 'Volcanion Prism Star FLI';
 
@@ -55,10 +52,10 @@ export class VolcanionPrismStar extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.JET_GEYSER_MARKER, this);
+      effect.player.marker.removeMarker(this.JET_GEYSER_MARKER, this);
     }
 
+    // Jet Geyser
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -85,19 +82,17 @@ export class VolcanionPrismStar extends PokemonCard {
           player.marker.addMarker(this.JET_GEYSER_MARKER, this);
           MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
 
-          return store.prompt(
+          if (!opponent.bench.some((b) => b.cards.length > 0)) {
+            return;
+          }
+
+          SWITCH_OUT_OPPONENT_ACTIVE_FROM_ABILITY(
+            store,
             state,
-            new ChoosePokemonPrompt(
-              opponent.id,
-              GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-              PlayerType.BOTTOM_PLAYER,
-              [SlotType.BENCH],
-              { allowCancel: false },
-            ),
-            (result) => {
-              const cardList = result[0];
-              opponent.switchPokemon(cardList);
-            },
+            player,
+            this.powers[0],
+            this,
+            { allowCancel: false },
           );
         },
       );
@@ -105,6 +100,7 @@ export class VolcanionPrismStar extends PokemonCard {
       return state;
     }
 
+    // Sauna Blast
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

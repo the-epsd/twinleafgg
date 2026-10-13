@@ -1,17 +1,26 @@
-import { CardList, ChooseCardsPrompt, ConfirmPrompt, EnergyCard, GameError, GameMessage, PlayerType, ShowCardsPrompt, State, StateUtils, StoreLike, OrderCardsPrompt } from '../../../game';
+import { CardList, ChooseCardsPrompt, ConfirmPrompt, EnergyCard, GameError, GameMessage, OrderCardsPrompt, PlayerType, PokemonCard, PokemonCardList, PowerType, ShowCardsPrompt, StateUtils, StoreLike } from '../../../game';
 import { BoardEffect, CardType, EnergyType, Stage, SuperType } from '../../../game/store/card/card-types';
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { PowerType } from '../../../game/store/card/pokemon-types';
-import { AttackEffect } from '../../../game/store/effects/game-effects';
+import { Effect } from '../../../game/store/effects/effect';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/attack-effects';
-import {ADD_MARKER, HAS_MARKER, IS_POKEPOWER_BLOCKED, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import {
+  ABILITY_USED,
+  ADD_MARKER,
+  HAS_MARKER,
+  IS_POKEPOWER_BLOCKED,
+  MOVE_CARDS,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
+import { State } from '../../../game/store/state/state';
 
 export class Delcatty extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Skitty';
   public cardType: CardType[] = [C];
   public hp: number = 90;
-  public weakness = [{ type: CardType.FIGHTING, value: +20 }];
+  public weakness = [{ type: F, value: +20 }];
   public retreat = [C];
 
   public powers = [{
@@ -21,21 +30,19 @@ export class Delcatty extends PokemonCard {
     text: 'Once during your turn (before your attack), you may search your discard pile for up to 2 basic Energy cards, show them to your opponent, and put those cards on top of your deck in any order. If you do, put 2 damage counters on Delcatty. This power can\'t be used if Delcatty is affected by a Special Condition.'
   }];
 
-  public attacks = [
-    {
-      name: 'Power Heal',
-      cost: [C],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'Does 10 damage plus 10 more damage for each damage counter on Delcatty. Then, remove 2 damage counters from Delcatty.'
-    },
-    {
-      name: 'Rear Kick',
-      cost: [C, C, C],
-      damage: 60,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Power Heal',
+    cost: [C],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'Does 10 damage plus 10 more damage for each damage counter on Delcatty. Then, remove 2 damage counters from Delcatty.'
+  },
+  {
+    name: 'Rear Kick',
+    cost: [C, C, C],
+    damage: 60,
+    text: ''
+  }];
 
   public set: string = 'PL';
   public cardImage: string = 'assets/cardback.png';
@@ -45,27 +52,29 @@ export class Delcatty extends PokemonCard {
 
   public readonly POWER_CIRCULATION_MARKER = 'POWER_CIRCULATION_MARKER';
 
-  public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.POWER_CIRCULATION_MARKER, this);
 
+    // Power Circulation
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
+      if (IS_POKEPOWER_BLOCKED(store, state, player, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
 
       if (HAS_MARKER(this.POWER_CIRCULATION_MARKER, player, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
-      if (player.active.cards[0] === this && player.active.specialConditions.length > 0) {
+      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
+      if (cardList.specialConditions.length > 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       if (!player.discard.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
-      if (IS_POKEPOWER_BLOCKED(store, state, player, this)) {
-        return state;
       }
 
       state = store.prompt(state, new ConfirmPrompt(
@@ -105,17 +114,21 @@ export class Delcatty extends PokemonCard {
                 selected
               ), () => { });
 
-              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-                if (cardList.getPokemonCard() === this) {
-                  cardList.damage += 20;
+              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, list => {
+                if (list.getPokemonCard() === this) {
+                  store.reduceEffect(
+                    state,
+                    new PlaceDamageCountersEffect(player, list, 20, this, this.powers[0]),
+                  );
                 }
               });
 
               ADD_MARKER(this.POWER_CIRCULATION_MARKER, player, this);
+              ABILITY_USED(player, this);
 
-              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-                if (cardList.getPokemonCard() === this) {
-                  cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, list => {
+                if (list.getPokemonCard() === this) {
+                  list.addBoardEffect(BoardEffect.ABILITY_USED);
                 }
               });
             });
@@ -125,12 +138,14 @@ export class Delcatty extends PokemonCard {
       return state;
     }
 
+    // Power Heal
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const delcattyDamage = effect.player.active.damage;
       effect.damage += (delcattyDamage * 10 / 10);
       HEAL_X_DAMAGE_FROM_THIS_POKEMON(20, effect, store, state);
       return state;
     }
+
     return state;
   }
 }

@@ -1,60 +1,35 @@
+import { AttachEnergyPrompt, ChooseCardsPrompt, EnergyCard, GameError, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../../game';
+import { CardTag, CardType, EnergyType, Stage, SuperType } from '../../../game/store/card/card-types';
+import { PowerType } from '../../../game/store/card/pokemon-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import {
-  Stage,
-  CardType,
-  EnergyType,
-  SuperType,
-  CardTag,
-} from '../../../game/store/card/card-types';
-import {
-  PowerType,
-  StoreLike,
-  State,
-  StateUtils,
-  GameError,
-  GameMessage,
-  EnergyCard,
-  PlayerType,
-  SlotType,
-  ChooseCardsPrompt,
-} from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-prompt';
-import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  BLOCK_IF_HAS_SPECIAL_CONDITION,
-  FLIP_UNTIL_TAILS_AND_COUNT_HEADS,
-  WAS_POWER_USED,
-  WAS_ATTACK_USED,
-} from '../../../game/store/prefabs/prefabs';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
+import { Effect } from '../../../game/store/effects/effect';
+import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
+import { BLOCK_IF_HAS_SPECIAL_CONDITION, FLIP_UNTIL_TAILS_AND_COUNT_HEADS, IS_POKEPOWER_BLOCKED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Blastoiseex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Wartortle';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType[] = [W];
   public hp: number = 150;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: L }];
   public retreat = [C, C, C];
 
-  public powers = [
-    {
-      name: 'Energy Rain',
-      useWhenInPlay: true,
-      powerType: PowerType.POKEPOWER,
-      text: "As often as you like during your turn (before your attack), you may attach a [W] Energy card from your hand to 1 of your Pokémon. Put 1 damage counter on that Pokémon. This power can't be used if Blastoise ex is affected by a Special Condition.",
-    },
-  ];
+  public powers = [{
+    name: 'Energy Rain',
+    useWhenInPlay: true,
+    powerType: PowerType.POKEPOWER,
+    text: "As often as you like during your turn (before your attack), you may attach a [W] Energy card from your hand to 1 of your Pokémon. Put 1 damage counter on that Pokémon. This power can't be used if Blastoise ex is affected by a Special Condition.",
+  }];
 
-  public attacks = [
-    {
-      name: 'Hyper Whirlpool',
-      cost: [W, W, W, C],
-      damage: 80,
-      text: 'Flip a coin until you get tails. For each heads, your opponent discards an Energy card attached to the Defending Pokémon.',
-    },
-  ];
+  public attacks = [{
+    name: 'Hyper Whirlpool',
+    cost: [W, W, W, C],
+    damage: 80,
+    text: 'Flip a coin until you get tails. For each heads, your opponent discards an Energy card attached to the Defending Pokémon.',
+  }];
 
   public set: string = 'RG';
   public cardImage: string = 'assets/cardback.png';
@@ -63,8 +38,13 @@ export class Blastoiseex extends PokemonCard {
   public fullName: string = 'Blastoise ex RG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Energy Rain
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
+
+      if (IS_POKEPOWER_BLOCKED(store, state, player, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
 
       const hasEnergyInHand = player.hand.cards.some((c) => {
         return (
@@ -98,27 +78,25 @@ export class Blastoiseex extends PokemonCard {
             const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
             store.reduceEffect(state, attachEnergyEffect);
 
-            target.damage += 10;
+            store.reduceEffect(
+              state,
+              new PlaceDamageCountersEffect(player, target, 10, this, this.powers[0]),
+            );
           }
         },
       );
     }
 
+    // Hyper Whirlpool
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const active = opponent.active;
 
-      // Check for energy cards early
       if (!active.cards.some((c) => c.superType === SuperType.ENERGY)) {
         return state;
       }
 
-      // Legacy implementation:
-      // - Recursively flipped coins until tails and tracked head count.
-      // - Then prompted exact Energy discard from Defending based on that count.
-      //
-      // Converted to prefab version (FLIP_UNTIL_TAILS_AND_COUNT_HEADS).
       return FLIP_UNTIL_TAILS_AND_COUNT_HEADS(store, state, player, (heads) => {
         const currentOpponent = StateUtils.getOpponent(state, player);
         const currentActive = currentOpponent.active;
@@ -151,6 +129,7 @@ export class Blastoiseex extends PokemonCard {
         );
       });
     }
+
     return state;
   }
 }

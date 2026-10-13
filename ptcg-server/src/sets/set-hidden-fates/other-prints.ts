@@ -34,6 +34,7 @@ import { ElectrodeGX } from '../08-sun-and-moon/set-celestial-storm/electrode-gx
 import { MewtwoGX as MewtwoGXSLG39 } from '../set-shining-legends/mewtwo-gx';
 import { EspeonGX } from '../08-sun-and-moon/set-sun-and-moon/espeon-gx';
 import { BanetteGX } from '../08-sun-and-moon/set-celestial-storm/banette-gx';
+import { NihilegoGx } from '../08-sun-and-moon/set-crimson-invasion/nihilego-gx';
 import { NaganadelGX } from '../08-sun-and-moon/set-forbidden-light/naganadel-gx';
 import { LucarioGX } from '../08-sun-and-moon/set-sun-and-moon-promos/lucario-gx';
 import { LycanrocGX } from '../08-sun-and-moon/set-guardians-rising/lycanroc-gx';
@@ -319,6 +320,12 @@ export class EspeonGXHIF extends EspeonGX {
 export class BanetteGXHIF extends BanetteGX {
   public setNumber = 'SV61';
   public fullName: string = 'Banette-GX HIF';
+  public set = 'HIF';
+}
+
+export class NihilegoGxHIF extends NihilegoGx {
+  public setNumber = 'SV62';
+  public fullName: string = 'Nihilego-GX HIF';
   public set = 'HIF';
 }
 

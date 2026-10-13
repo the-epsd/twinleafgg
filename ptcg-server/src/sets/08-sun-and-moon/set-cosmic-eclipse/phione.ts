@@ -1,17 +1,16 @@
+import { CardList, GameError, GameMessage, PowerType, PokemonCardList, StateUtils, StoreLike, State } from '../../../game';
+import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../../game/store/card/card-types';
-import { PowerType } from '../../../game/store/card/pokemon-types';
-import { StoreLike, State, StateUtils, GameError, GameMessage, PokemonCardList, ChoosePokemonPrompt, PlayerType, SlotType, CardList } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-
 import { MOVE_CARDS, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { SWITCH_OUT_OPPONENT_ACTIVE_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 
 export class Phione extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType[] = [CardType.WATER];
   public hp: number = 70;
-  public retreat = [CardType.COLORLESS];
-  public weakness = [{ type: CardType.GRASS }];
+  public cardType: CardType[] = [W];
+  public weakness = [{ type: G }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Whirlpool Suction',
@@ -22,27 +21,26 @@ export class Phione extends PokemonCard {
 
   public attacks = [{
     name: 'Rain Splash',
-    cost: [CardType.WATER],
+    cost: [W],
     damage: 10,
     text: ''
   }];
 
   public set: string = 'CEC';
-  public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '57';
   public name: string = 'Phione';
   public fullName: string = 'Phione CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Whirlpool Suction
     if (WAS_POWER_USED(effect, 0, this)) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const hasBench = opponent.bench.some(b => b.cards.length > 0);
       const cardList = StateUtils.findCardList(state, this);
 
-      if (player.active.cards[0] == this) {
+      if (player.active.getPokemonCard() === this) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
@@ -55,58 +53,53 @@ export class Phione extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        opponent.id,
-        GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: false }
-      ), targets => {
-        if (targets && targets.length > 0) {
-          const deckBottom = new CardList();
-          const phioneList = player.bench[benchIndex];
-          const phioneCard = phioneList.getPokemonCard();
+      const phioneList = player.bench[benchIndex];
 
-          if (!phioneCard) {
-            return state;
-          }
+      return SWITCH_OUT_OPPONENT_ACTIVE_FROM_ABILITY(
+        store,
+        state,
+        player,
+        this.powers[0],
+        this,
+        {
+          allowCancel: false,
+          onSwitched: () => {
+            const deckBottom = new CardList();
+            const phioneCard = phioneList.getPokemonCard();
 
-          opponent.active.clearEffects();
-          opponent.switchPokemon(targets[0]);
-
-          // Get attached cards (energy, tools, etc.)
-          const otherCards = phioneList.cards.filter(card =>
-            !(card instanceof PokemonCard) &&
-            !phioneList.getPokemons().includes(card as PokemonCard) &&
-            (!phioneList.tools || !phioneList.tools.includes(card))
-          );
-          const tools = [...phioneList.tools];
-
-          // Move tools to discard first
-          if (tools.length > 0) {
-            for (const tool of tools) {
-              MOVE_CARDS(store, state, phioneList, player.discard, { cards: [tool], sourceCard: this });
+            if (!phioneCard) {
+              return;
             }
-          }
 
-          // Move other attached cards to discard
-          if (otherCards.length > 0) {
-            MOVE_CARDS(store, state, phioneList, player.discard, { cards: otherCards });
-          }
+            const otherCards = phioneList.cards.filter(card =>
+              !(card instanceof PokemonCard) &&
+              !phioneList.getPokemons().includes(card as PokemonCard) &&
+              (!phioneList.tools || !phioneList.tools.includes(card))
+            );
+            const tools = [...phioneList.tools];
 
-          // Move Phione to bottom of deck
-          MOVE_CARDS(store, state, phioneList, deckBottom, {
-            cards: [phioneCard],
-            skipCleanup: false
-          });
-          MOVE_CARDS(store, state, deckBottom, player.deck, {
-            toBottom: true
-          });
+            if (tools.length > 0) {
+              for (const tool of tools) {
+                MOVE_CARDS(store, state, phioneList, player.discard, { cards: [tool], sourceCard: this });
+              }
+            }
 
-          phioneList.clearEffects();
-          return state;
-        }
-      });
+            if (otherCards.length > 0) {
+              MOVE_CARDS(store, state, phioneList, player.discard, { cards: otherCards });
+            }
+
+            MOVE_CARDS(store, state, phioneList, deckBottom, {
+              cards: [phioneCard],
+              skipCleanup: false,
+            });
+            MOVE_CARDS(store, state, deckBottom, player.deck, {
+              toBottom: true,
+            });
+
+            phioneList.clearEffects();
+          },
+        },
+      );
     }
 
     return state;

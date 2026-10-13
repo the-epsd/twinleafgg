@@ -1,43 +1,42 @@
-import { ChoosePokemonPrompt, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../../game';
-import { GameLog, GameMessage } from '../../../game/game-message';
-import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { CardType, Stage } from '../../../game/store/card/card-types';
+import { ChoosePokemonPrompt, GameLog, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class GalarianZigzagoon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType[] = [D];
   public hp: number = 70;
+  public cardType: CardType[] = [D];
   public weakness = [{ type: G }];
   public retreat = [C];
 
   public powers = [{
     name: 'Headbutt Tantrum',
     powerType: PowerType.ABILITY,
-    text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may put 1 damage counter on 1 of your opponent\'s Pokémon.'
+    text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may put 1 damage counter on 1 of your opponent\'s Pokémon.',
   }];
 
   public attacks = [{
     name: 'Surprise Attack',
     cost: [D, C],
     damage: 30,
-    text: 'Flip a coin. If tails, this attack does nothing.'
+    text: 'Flip a coin. If tails, this attack does nothing.',
   }];
 
   public set: string = 'SSH';
-  public name: string = 'Galarian Zigzagoon';
-  public fullName: string = 'Galarian Zigzagoon SSH';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '117';
+  public name: string = 'Galarian Zigzagoon';
+  public fullName: string = 'Galarian Zigzagoon SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Headbutt Tantrum
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = StateUtils.findOwner(state, effect.target);
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
@@ -51,15 +50,24 @@ export class GalarianZigzagoon extends PokemonCard {
       ), selected => {
         const targets = selected || [];
         targets.forEach(target => {
-          target.damage += 10;
-          store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, damage: 10, target: target.getPokemonCard()!.name, effect: this.powers[0].name });
+          store.reduceEffect(
+            state,
+            new PlaceDamageCountersEffect(player, target, 10, this, this.powers[0]),
+          );
+          store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, {
+            name: player.name,
+            damage: 10,
+            target: target.getPokemonCard()!.name,
+            effect: this.powers[0].name,
+          });
         });
       });
     }
 
+    // Surprise Attack
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      return COIN_FLIP_PROMPT(store, state, effect.player, heads => {
-        if (heads) {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (!result) {
           effect.damage = 0;
         }
       });
@@ -67,5 +75,4 @@ export class GalarianZigzagoon extends PokemonCard {
 
     return state;
   }
-
 }

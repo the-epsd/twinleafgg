@@ -1,19 +1,29 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { ChooseCardsPrompt, GameError, GameMessage, PokemonCard, PokemonCardList, PowerType, StateUtils } from '../../../game';
 import { CardType, Stage } from '../../../game/store/card/card-types';
+import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
+import { Effect } from '../../../game/store/effects/effect';
+import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/store/prefabs/attack-effects';
+import { SWITCH_OUT_OPPONENT_ACTIVE_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import {
+  ABILITY_USED,
+  ADD_MARKER,
+  HAS_MARKER,
+  IS_POKEPOWER_BLOCKED,
+  MOVE_CARDS,
+  REMOVE_MARKER,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
-import { Effect } from '../../../game/store/effects/effect';
-import { ChooseCardsPrompt, GameError, GameMessage, PowerType, StateUtils } from '../../../game';
-import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import {ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/store/prefabs/attack-effects';
-import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 
 export class Regice extends PokemonCard {
-
-  public stage = Stage.BASIC;
+  public stage: Stage = Stage.BASIC;
   public cardType: CardType[] = [W];
-  public hp = 90;
+  public hp: number = 90;
   public weakness = [{ type: M }];
   public retreat = [C, C, C];
 
@@ -24,18 +34,16 @@ export class Regice extends PokemonCard {
     text: 'Once during your turn (before your attack), you may use this power. Discard 2 cards from your hand and choose 1 of your opponent\'s Active Pokémon that isn\'t an Evolved Pokémon. Then, your opponent switches that Pokémon with 1 of his or her Benched Pokémon. This power can\'t be used if Regice is affected by a Special Condition.'
   }];
 
-  public attacks = [
-    {
-      name: 'Ice Reflect',
-      cost: [W, W, C],
-      damage: 50,
-      text: 'If Regice was damaged by an attack during your opponent\'s last turn, the Defending Pokémon is now Paralyzed.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ice Reflect',
+    cost: [W, W, C],
+    damage: 50,
+    text: 'If Regice was damaged by an attack during your opponent\'s last turn, the Defending Pokémon is now Paralyzed.'
+  }];
 
   public set: string = 'LA';
-  public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '36';
   public name: string = 'Regice';
   public fullName: string = 'Regice LA';
 
@@ -43,7 +51,6 @@ export class Regice extends PokemonCard {
   public readonly ICE_REFLECT_MARKER = 'ICE_REFLECT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       REMOVE_MARKER(this.REGI_MOVE_MARKER, effect.player, this);
     }
@@ -51,14 +58,20 @@ export class Regice extends PokemonCard {
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.REGI_MOVE_MARKER, this);
     REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, this.ICE_REFLECT_MARKER, this);
 
+    // Regi Move
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
+
+      if (IS_POKEPOWER_BLOCKED(store, state, player, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
 
       if (player.marker.hasMarker(this.REGI_MOVE_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
-      if (player.active.cards[0] === this && player.active.specialConditions.length > 0) {
+      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
+      if (cardList.specialConditions.length > 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
@@ -79,21 +92,25 @@ export class Regice extends PokemonCard {
         }
         const opponent = StateUtils.getOpponent(state, player);
 
-        MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this });
 
         ADD_MARKER(this.REGI_MOVE_MARKER, player, this);
         ABILITY_USED(player, this);
 
         if (opponent.active.getPokemons().length < 2) {
-          SWITCH_ACTIVE_WITH_BENCHED(store, state, opponent);
-        } else {
-          // Rulings state that you can discard cards even if the opponent's active is evolved
-          return state;
+          SWITCH_OUT_OPPONENT_ACTIVE_FROM_ABILITY(
+            store,
+            state,
+            player,
+            this.powers[0],
+            this,
+            { allowCancel: false },
+          );
         }
       });
     }
 
-    // Not sure how to manage the markers on this
+    // Ice Reflect
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       if (HAS_MARKER(this.ICE_REFLECT_MARKER, player, this)) {
@@ -101,7 +118,8 @@ export class Regice extends PokemonCard {
       }
     }
 
-    if (effect instanceof AfterDamageEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof AfterDamageEffect && effect.target.cards.includes(this)
+      && effect.target.getPokemonCard() === this) {
       const targetPlayer = StateUtils.findOwner(state, effect.target);
       const player = effect.player;
 
@@ -110,7 +128,6 @@ export class Regice extends PokemonCard {
       }
 
       ADD_MARKER(this.ICE_REFLECT_MARKER, targetPlayer, this);
-      console.log('added ice marker');
     }
 
     return state;

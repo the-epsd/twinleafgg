@@ -3,6 +3,13 @@ import { Pikachu } from '../../07-x-and-y/set-evolutions/pikachu';
 import { HereComesTeamRocket } from '../../set-team-rocket/here-comes-team-rocket';
 import { Mew } from './mew';
 import { RocketsAdmin } from '../../03-ex-ruby-and-sapphire/set-ex-team-rocket-returns/rockets-admin';
+import { LuxrayGLLVX } from '../../04-diamond-pearl-platinum/set-rising-rivals/luxray-gl-lv-x';
+
+export class LuxrayGLLVXCEL extends LuxrayGLLVX {
+  public set: string = 'CEL';
+  public setNumber: string = '109A';
+  public fullName: string = 'Luxray GL LV.X CEL';
+}
 
 export class ProfessorsResearchCEL extends ProfessorsResearch {
   public fullName = 'Professor\'s Research CEL';

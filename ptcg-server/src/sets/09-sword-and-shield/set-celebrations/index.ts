@@ -17,7 +17,6 @@ import { HoOh } from './ho-oh';
 import { Kyogre } from './kyogre';
 import { Lugia } from './lugia';
 import { Lunala } from './lunala';
-import { LuxrayGlLvX } from './luxray-gl-lvx';
 import { MRayquazaEx } from './m-rayquaza-ex';
 import { Mew } from './mew';
 import { MewEx } from './mew-ex';
@@ -44,6 +43,7 @@ import { Zekrom } from './zekrom';
 import { ImposterProfessorOak } from './imposter-professor-oak';
 
 import {
+  LuxrayGLLVXCEL,
   ProfessorsResearchCEL,
   ProfessorsResearchCELFA,
   PikachuCEL,
@@ -72,7 +72,6 @@ export const setCelebrations: Card[] = [
   new Kyogre(),
   new Lugia(),
   new Lunala(),
-  new LuxrayGlLvX(),
   new MRayquazaEx(),
   new Mew(),
   new MewEx(),
@@ -101,6 +100,7 @@ export const setCelebrations: Card[] = [
   new ImposterProfessorOak(),
 
   // Other Prints (Reprints & Alt Arts)
+  new LuxrayGLLVXCEL(),
   new ProfessorsResearchCEL(),
   new ProfessorsResearchCELFA(),
   new PikachuCEL(),

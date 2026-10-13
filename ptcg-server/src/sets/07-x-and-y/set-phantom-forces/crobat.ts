@@ -1,61 +1,44 @@
-import { Effect } from '../../../game/store/effects/effect';
+import { GameMessage, PlayerType, PowerType, SlotType, Stage, StoreLike, State } from '../../../game';
+import { CardType } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { PowerType, StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, StateUtils } from '../../../game';
-import { Stage, CardType } from '../../../game/store/card/card-types';
-import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { GameMessage } from '../../../game/game-message';
-import { DAMAGE_OPPONENT_POKEMON, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-
+import { Effect } from '../../../game/store/effects/effect';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
+import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
+import { DAMAGE_OPPONENT_POKEMON, IS_ABILITY_BLOCKED, JUST_EVOLVED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Crobat extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
-
-  public evolvesFrom = 'Golbat';
-
-  public cardType: CardType[] = [CardType.PSYCHIC];
-
+  public evolvesFrom: string = 'Golbat';
   public hp: number = 130;
-
-  public weakness = [{ type: CardType.LIGHTNING }];
-
-  public resistance = [{ type: CardType.FIGHTING, value: -20 }];
-
+  public cardType: CardType[] = [P];
+  public weakness = [{ type: L }];
+  public resistance = [{ type: F, value: -20 }];
   public retreat = [];
 
   public powers = [{
     name: 'Surprise Bite',
     powerType: PowerType.ABILITY,
-    text: 'When you play this Pokemon from your hand to evolve 1 of your ' +
-      'Pokemon, you may put 3 damage counters on 1 of your opponent\'s Pokemon.'
+    text: 'When you play this Pokemon from your hand to evolve 1 of your Pokemon, you may put 3 damage counters on 1 of your opponent\'s Pokemon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Skill Dive',
-      cost: [CardType.COLORLESS],
-      damage: 0,
-      text: 'This attack does 30 damage to 1 of your opponent\'s Pokemon. ' +
-        '(Don\'t apply Weakness and Resistance for Benched Pokemon.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Skill Dive',
+    cost: [C],
+    damage: 0,
+    text: 'This attack does 30 damage to 1 of your opponent\'s Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+  }];
 
   public set: string = 'PHF';
-
+  public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '33';
   public name: string = 'Crobat';
-
   public fullName: string = 'Crobat PHF';
 
-  public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '33';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Surprise Bite
+    if (JUST_EVOLVED(effect, this)) {
+      const player = effect.player;
 
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = StateUtils.findOwner(state, effect.target);
-
-      // Try to reduce PowerEffect, to check if something is blocking our ability
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
@@ -69,11 +52,15 @@ export class Crobat extends PokemonCard {
       ), selected => {
         const targets = selected || [];
         targets.forEach(target => {
-          target.damage += 30;
+          store.reduceEffect(
+            state,
+            new PlaceDamageCountersEffect(player, target, 30, this, this.powers[0]),
+          );
         });
       });
     }
 
+    // Skill Dive
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -91,5 +78,4 @@ export class Crobat extends PokemonCard {
 
     return state;
   }
-
 }

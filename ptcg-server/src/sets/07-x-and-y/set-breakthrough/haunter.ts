@@ -1,18 +1,17 @@
+import { PowerType, StateUtils, StoreLike, State } from '../../../game';
+import { CardType, SpecialCondition, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { PowerType } from '../../../game/store/card/pokemon-types';
-import { StateUtils } from '../../../game';
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, JUST_EVOLVED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../../game/store/prefabs/attack-effects';
+import { APPLY_SPECIAL_CONDITIONS_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
+import { CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, JUST_EVOLVED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+
 export class Haunter extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Gastly';
-  public cardType: CardType[] = [P];
   public hp: number = 70;
+  public cardType: CardType[] = [P];
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
@@ -36,26 +35,44 @@ export class Haunter extends PokemonCard {
   public name: string = 'Haunter';
   public fullName: string = 'Haunter BKT';
 
-  public readonly POISON_RING_MARKER: string = 'POISON_RING_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Gothic Fear
     if (JUST_EVOLVED(effect, this) && !IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       CONFIRMATION_PROMPT(store, state, player, result => {
-        if (!result) { return state; }
+        if (!result) {
+          return state;
+        }
 
-        ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, player, this);
-        ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, opponent, this);
+        APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+          store,
+          state,
+          player,
+          this.powers[0],
+          this,
+          player.active,
+          [SpecialCondition.CONFUSED],
+        );
+        APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+          store,
+          state,
+          player,
+          this.powers[0],
+          this,
+          opponent.active,
+          [SpecialCondition.CONFUSED],
+        );
       });
     }
 
+    // Poison Ring
     if (WAS_ATTACK_USED(effect, 0, this)) {
       YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect);
       return BLOCK_RETREAT(store, state, effect, this);
     }
+
     return state;
   }
 }

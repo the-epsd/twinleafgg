@@ -1,11 +1,12 @@
+import { GameMessage, StateUtils, StoreLike } from '../../../game';
+import { CardType, SpecialCondition, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage } from '../../../game';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { Effect } from '../../../game/store/effects/effect';
-import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { APPLY_SPECIAL_CONDITIONS_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED, JUST_EVOLVED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { ConfirmPrompt } from '../../../game/store/prompts/confirm-prompt';
+import { State } from '../../../game/store/state/state';
 
 export class Amoonguss extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -30,37 +31,42 @@ export class Amoonguss extends PokemonCard {
   }];
 
   public set: string = 'NXD';
-  public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '9';
   public name: string = 'Amoonguss';
   public fullName: string = 'Amoonguss NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Sporprise - when evolved, may confuse and poison opponent's active
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+    // Sporprise
+    if (JUST_EVOLVED(effect, this)) {
       const player = effect.player;
 
-      // Check if ability is blocked
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 
-      // Prompt player to use ability
       state = store.prompt(state, new ConfirmPrompt(
         player.id,
         GameMessage.WANT_TO_USE_ABILITY
       ), wantToUse => {
         if (wantToUse) {
           const opponent = StateUtils.getOpponent(state, player);
-          opponent.active.addSpecialCondition(SpecialCondition.CONFUSED);
-          opponent.active.addSpecialCondition(SpecialCondition.POISONED);
+          APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+            store,
+            state,
+            player,
+            this.powers[0],
+            this,
+            opponent.active,
+            [SpecialCondition.CONFUSED, SpecialCondition.POISONED],
+          );
         }
       });
 
       return state;
     }
 
-    // Rising Lunge - flip for more damage
+    // Rising Lunge
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {

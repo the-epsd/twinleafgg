@@ -1,10 +1,14 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, PlayerType } from "../../../game";
-import { PutCountersEffect } from "../../../game/store/effects/attack-effects";
-import { CheckPokemonPowersEffect } from "../../../game/store/effects/check-effects";
-import { Effect } from "../../../game/store/effects/effect";
-import { BetweenTurnsEffect } from "../../../game/store/effects/game-phase-effects";
-import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
-import { THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN } from "../../../game/store/prefabs/effect-of-attack-prefabs";
+import { PlayerType, PokemonCard, PowerType, StateUtils } from '../../../game';
+import { CardType, Stage } from '../../../game/store/card/card-types';
+import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
+import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
+import { Effect } from '../../../game/store/effects/effect';
+import { BetweenTurnsEffect } from '../../../game/store/effects/game-phase-effects';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
+import { THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/effect-of-attack-prefabs';
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { State } from '../../../game/store/state/state';
+import { StoreLike } from '../../../game/store/store-like';
 
 export class Bronzong extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -16,7 +20,7 @@ export class Bronzong extends PokemonCard {
   public retreat = [C, C, C];
 
   public powers = [{
-    name: 'Pain Amplifier',
+    name: 'Cursed Alloy',
     powerType: PowerType.POKEBODY,
     text: 'As long as Bronzong is your Active Pokémon, put 1 damage counter on each of your opponent\'s Pokémon that has any Poké-Powers between turns.'
   }];
@@ -41,7 +45,7 @@ export class Bronzong extends PokemonCard {
   public fullName: string = 'Bronzong MD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Cursed Alloy
     if (effect instanceof BetweenTurnsEffect && effect.player.active.getPokemonCard() === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -57,15 +61,18 @@ export class Bronzong extends PokemonCard {
           const powersEffect = new CheckPokemonPowersEffect(opponent, card);
           state = store.reduceEffect(state, powersEffect);
           if (powersEffect.powers.some(p => p.powerType === PowerType.POKEPOWER)) {
-            cardList.damage += 10;
+            store.reduceEffect(
+              state,
+              new PlaceDamageCountersEffect(player, cardList, 10, this, this.powers[0]),
+            );
           }
         }
       });
     }
 
+    // Pain Amplifier
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      const opponent = StateUtils.getOpponent(state, effect.player);
 
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         if (cardList.damage === 0) {
@@ -77,6 +84,7 @@ export class Bronzong extends PokemonCard {
       });
     }
 
+    // Coating
     if (WAS_ATTACK_USED(effect, 1, this)) {
       return THIS_POKEMON_TAKES_LESS_DAMAGE_FROM_ATTACKS_DURING_OPPONENTS_NEXT_TURN(store, state, effect, 20);
     }
