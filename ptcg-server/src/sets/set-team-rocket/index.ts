@@ -8,6 +8,7 @@ import { DarkDragonair } from './dark-dragonair';
 import { DarkDragonite } from './dark-dragonite';
 import { DarkDragoniteTR22 } from './other-prints';
 import { DarkGloom } from './dark-gloom';
+import { DarkGyarados } from './dark-gyarados';
 import { DarkGolduck } from './dark-golduck';
 import { DarkKadabra } from './dark-kadabra';
 import { DarkVileplume } from './dark-vileplume';
@@ -44,6 +45,7 @@ export const setTeamRocket: Card[] = [
   new DarkDragonite(),
   new DarkDragoniteTR22(),
   new DarkGloom(),
+  new DarkGyarados(),
   new DarkGolduck(),
   new DarkKadabra(),
   new DarkVileplume(),
