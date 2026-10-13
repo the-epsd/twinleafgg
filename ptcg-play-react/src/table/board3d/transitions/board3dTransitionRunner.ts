@@ -688,7 +688,7 @@ export class Board3dTransitionRunner {
     const isBottom = playerId === this.host.bottomPlayer()?.id;
     const hs = this.host.handService;
     const base = this.deckCount.get(playerId) ?? 0;
-    const flights: { group: Object3D; dispose: () => void }[] = [];
+    const flights: { group: Object3D; dispose: () => void; board3d?: Board3dCard }[] = [];
 
     if (isBottom) {
       this.result.bottomHandTouched = true;
@@ -696,8 +696,26 @@ export class Board3dTransitionRunner {
       for (const id of ids) {
         const detached = hs.detachHandCardForDiscardFlight(id, this.host.worldRoot);
         if (detached) {
-          flights.push({ group: detached.getGroup(), dispose: () => detached.dispose() });
+          flights.push({
+            group: detached.getGroup(),
+            dispose: () => detached.dispose(),
+            board3d: detached,
+          });
         }
+      }
+    } else if (this.host.isTopHandFaceUp()) {
+      this.result.topHandTouched = true;
+      const detached = hs.detachOpponentHandCardsForDeckFlight(
+        count,
+        this.host.worldRoot,
+        step.cardIds ?? undefined,
+      );
+      for (const card of detached) {
+        flights.push({
+          group: card.getGroup(),
+          dispose: () => card.dispose(),
+          board3d: card,
+        });
       }
     } else {
       this.result.topHandTouched = true;
@@ -707,9 +725,14 @@ export class Board3dTransitionRunner {
           faceDown: true,
           scale: 1.1,
         });
-        flights.push({ group: mesh.getGroup(), dispose: () => mesh.dispose() });
+        flights.push({ group: mesh.getGroup(), dispose: () => mesh.dispose(), board3d: mesh });
       }
     }
+
+    const [cardBack, mask] = await Promise.all([
+      this.backTexture(this.playerOf(playerId)),
+      this.host.assetLoader.loadCardMaskTexture(),
+    ]);
 
     await Promise.all(
       flights.map(async (flight, i) => {
@@ -717,7 +740,22 @@ export class Board3dTransitionRunner {
           await sleep(i * HAND_TO_DECK_STAGGER_SEC * 1000);
         }
         flight.group.renderOrder = FLIGHT_RENDER_ORDER;
-        await this.host.animationService.playHandToDeck(flight.group, this.deckTopWorld(playerId, base + i + 1));
+        const alreadyFaceDown = Math.abs(flight.group.rotation.z) > Math.PI / 2;
+        await this.host.animationService.playHandToDeck(
+          flight.group,
+          this.deckTopWorld(playerId, base + i + 1),
+          alreadyFaceDown
+            ? undefined
+            : {
+                flipFaceDownDuringTravel: {
+                  onHideFace: () => {
+                    flight.board3d?.updateTexture(cardBack, cardBack, mask);
+                    flight.board3d?.setHolo(null);
+                    flight.group.userData.isFaceDown = true;
+                  },
+                },
+              },
+        );
       }),
     );
     this.deckCount.set(playerId, base + count);
@@ -1009,6 +1047,7 @@ export class Board3dTransitionRunner {
       group: Object3D;
       dest: Vector3;
       endScale: number;
+      toDeck: boolean;
     };
     const flights: Flight[] = [];
     const deckCursor = new Map<number, number>();
@@ -1050,15 +1089,18 @@ export class Board3dTransitionRunner {
       // card entered a secret zone), use the ChooseCards destination hint / deck fallback
       // so we do not bounce Super Rod-style reveals back into the discard.
       let dest: Vector3;
+      let toDeck = false;
       const endScale = 1.1;
       if (nextLoc && !unmoved) {
         dest = this.zoneWorld(nextLoc.playerId, nextLoc.zone, nextLoc.loc, nextLoc.grid, deckCursor);
+        toDeck = nextLoc.zone === 'deck';
       } else if (step.destinationHint === 'hand') {
         dest = this.zoneWorld(ownerId, 'hand', undefined, undefined, deckCursor);
       } else {
         // Secret zone (deck) or show-before-move with deck hint / default.
         const deck = deckCursor.get(ownerId) ?? 0;
         dest = this.deckTopWorld(ownerId, deck);
+        toDeck = true;
       }
 
       const mesh = await this.createFlightCard(ownerId, card, origin, {
@@ -1086,7 +1128,7 @@ export class Board3dTransitionRunner {
       group.userData.drawBoard3dCard = mesh;
       group.rotation.set(0, 0, 0);
       group.quaternion.identity();
-      flights.push({ mesh, group, dest, endScale });
+      flights.push({ mesh, group, dest, endScale, toDeck });
     }
 
     if (flights.length === 0) {
@@ -1097,12 +1139,22 @@ export class Board3dTransitionRunner {
     const aspect = this.host.aspect();
     const stage = getDrawFlightStageCenterWorld(aspect, this.host.isUpsideDown());
     const reveal = (group: Object3D) => this.host.handService.revealDrawFlightFace(group);
+    const hideForDeck = (group: Object3D) => this.host.handService.hideDrawFlightFace(group);
+    const prepareDeckFlip = (group: Object3D) => this.host.handService.normalizeDrawFlightFaceUp(group);
 
     if (flights.length === 1) {
       const f = flights[0];
       await anim.playDrawFromDeckToHand(f.group, stage, f.dest, {
         handScale: f.endScale,
         onRevealFace: () => reveal(f.group),
+        ...(f.toDeck
+          ? {
+              beforeStageToHand: () => prepareDeckFlip(f.group),
+              flipFaceDownDuringTravel: {
+                onHideFace: () => hideForDeck(f.group),
+              },
+            }
+          : {}),
       });
     } else {
       const maxRowWidth = getMaxDrawStageRowWidthWorld(aspect, this.host.isUpsideDown());
@@ -1121,12 +1173,24 @@ export class Board3dTransitionRunner {
         });
       }
       await sleep(getMultiDrawSharedHoldSec('default') * 1000);
+      for (const f of flights) {
+        if (f.toDeck) {
+          prepareDeckFlip(f.group);
+        }
+      }
       await Promise.all(
         flights.map((f, i) =>
           anim.playDrawStageToHand(f.group, f.dest, {
             handScale: f.endScale,
             burst: true,
             delay: i * MULTI_DRAW_STAGE_TO_HAND_STAGGER_SEC,
+            ...(f.toDeck
+              ? {
+                  flipFaceDownDuringTravel: {
+                    onHideFace: () => hideForDeck(f.group),
+                  },
+                }
+              : {}),
           }),
         ),
       );

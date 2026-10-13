@@ -489,21 +489,7 @@ export class Board3dHandService {
     count: number,
     preferIds?: readonly number[],
   ): { position: Vector3; rotationY: number }[] {
-    const entries = [...this.opponentHandCards.entries()].sort((a, b) => a[0] - b[0]);
-    const taken: [number, Board3dCard][] = [];
-    for (const id of preferIds ?? []) {
-      const hit = entries.find(
-        (e) => !taken.includes(e) && e[1].getGroup().userData.cardData?.id === id,
-      );
-      if (hit && taken.length < count) {
-        taken.push(hit);
-      }
-    }
-    for (let i = entries.length - 1; i >= 0 && taken.length < count; i--) {
-      if (!taken.includes(entries[i])) {
-        taken.push(entries[i]);
-      }
-    }
+    const taken = this.selectOpponentHandCards(count, preferIds);
     const out: { position: Vector3; rotationY: number }[] = [];
     for (const [index, card] of taken) {
       const group = card.getGroup();
@@ -521,6 +507,55 @@ export class Board3dHandService {
     }
     this.repositionOpponentRow();
     return out;
+  }
+
+  /**
+   * Detach far-hand cards into `attachRoot` for a deck-return flight (revealed opponent hand).
+   * Caller must dispose each Board3dCard after the animation.
+   */
+  detachOpponentHandCardsForDeckFlight(
+    count: number,
+    attachRoot: Object3D,
+    preferIds?: readonly number[],
+  ): Board3dCard[] {
+    const taken = this.selectOpponentHandCards(count, preferIds);
+    const detached: Board3dCard[] = [];
+    for (const [index, board3d] of taken) {
+      const cardGroup = board3d.getGroup();
+      gsap.killTweensOf(cardGroup.position);
+      gsap.killTweensOf(cardGroup.rotation);
+      gsap.killTweensOf(cardGroup.scale);
+      attachRoot.attach(cardGroup);
+      cardGroup.userData.isOpponentHandCard = false;
+      cardGroup.userData.discardingFromHand = true;
+      delete cardGroup.userData.handIndex;
+      this.opponentHandCards.delete(index);
+      detached.push(board3d);
+    }
+    this.repositionOpponentRow();
+    return detached;
+  }
+
+  private selectOpponentHandCards(
+    count: number,
+    preferIds?: readonly number[],
+  ): [number, Board3dCard][] {
+    const entries = [...this.opponentHandCards.entries()].sort((a, b) => a[0] - b[0]);
+    const taken: [number, Board3dCard][] = [];
+    for (const id of preferIds ?? []) {
+      const hit = entries.find(
+        (e) => !taken.includes(e) && e[1].getGroup().userData.cardData?.id === id,
+      );
+      if (hit && taken.length < count) {
+        taken.push(hit);
+      }
+    }
+    for (let i = entries.length - 1; i >= 0 && taken.length < count; i--) {
+      if (!taken.includes(entries[i])) {
+        taken.push(entries[i]);
+      }
+    }
+    return taken;
   }
 
   private repositionOpponentRow(): void {
@@ -600,6 +635,37 @@ export class Board3dHandService {
       bc.updateTexture(cardBack, scan, mask);
       bc.setHolo(null);
     }
+  }
+
+  /**
+   * Inverse of {@link revealDrawFlightFace}: at the midpoint of a face-down flip, show only the card back
+   * (used when a revealed ShowCards flight returns to the deck).
+   */
+  hideDrawFlightFace(cardGroup: Object3D): void {
+    const bc = cardGroup.userData.drawBoard3dCard as Board3dCard | undefined;
+    const cardBack = cardGroup.userData.drawRevealBackTexture;
+    const mask = cardGroup.userData.drawRevealMaskTexture;
+    if (bc && cardBack !== undefined && mask !== undefined) {
+      bc.updateTexture(cardBack, cardBack, mask);
+      bc.setHolo(null);
+      cardGroup.userData.isFaceDown = true;
+    }
+  }
+
+  /**
+   * After a stage reveal (quaternion Z=π + swapped materials), restore conventional face-up
+   * (scan on front, z=0) so a subsequent face-down travel flip can animate.
+   */
+  normalizeDrawFlightFaceUp(cardGroup: Object3D): void {
+    const bc = cardGroup.userData.drawBoard3dCard as Board3dCard | undefined;
+    const scan = cardGroup.userData.drawRevealFrontTexture;
+    const cardBack = cardGroup.userData.drawRevealBackTexture;
+    const mask = cardGroup.userData.drawRevealMaskTexture;
+    if (bc && scan && cardBack !== undefined && mask !== undefined) {
+      bc.updateTexture(scan, cardBack, mask);
+    }
+    cardGroup.rotation.set(0, 0, 0);
+    cardGroup.quaternion.identity();
   }
 
   /**

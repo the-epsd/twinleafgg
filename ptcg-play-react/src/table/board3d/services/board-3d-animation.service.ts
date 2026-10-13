@@ -955,6 +955,7 @@ export class Board3dAnimationService {
 
   /**
    * Stage → hand slot + hand scale. Call after {@link playDrawDeckToStage}. Rotation stays until finishDrawFlight.
+   * When {@link flipFaceDownDuringTravel} is set (ShowCards → deck), the card flips face-down mid-flight.
    */
   playDrawStageToHand(
     card: Object3D,
@@ -965,12 +966,18 @@ export class Board3dAnimationService {
       visualPreset?: DrawFlightVisualPreset;
       /** Seconds before position/scale tweens begin (e.g. multi-draw stagger). */
       delay?: number;
+      /** Deck-bound second leg: flip face-down while traveling. */
+      flipFaceDownDuringTravel?: {
+        onHideFace?: () => void;
+      };
     }
   ): Promise<void> {
     const handScale = options?.handScale ?? HAND_DRAW_SCALE;
     const burst = options?.burst === true;
     const { pos: posDur, scale: scaleDur } = stageToHandTiming(options?.visualPreset, burst);
     const delay = options?.delay ?? 0;
+    const flipDown = options?.flipFaceDownDuringTravel;
+    let hideApplied = false;
 
     return new Promise(resolve => {
       const timeline = gsap.timeline({
@@ -1001,6 +1008,28 @@ export class Board3dAnimationService {
           '<'
         );
 
+      if (flipDown) {
+        timeline.to(
+          card.rotation,
+          {
+            z: Math.PI,
+            duration: posDur,
+            ease: 'power2.out',
+            onUpdate: () => {
+              if (hideApplied) {
+                return;
+              }
+              const progress = Math.abs(card.rotation.z) / Math.PI;
+              if (progress >= 0.5) {
+                hideApplied = true;
+                flipDown.onHideFace?.();
+              }
+            },
+          },
+          '<',
+        );
+      }
+
       this.activeAnimations.push(timeline);
       this.updateAnimationState();
     });
@@ -1017,6 +1046,12 @@ export class Board3dAnimationService {
       handScale?: number;
       onRevealFace?: () => void;
       visualPreset?: DrawFlightVisualPreset;
+      /** When set, second leg flips face-down (ShowCards → deck). */
+      flipFaceDownDuringTravel?: {
+        onHideFace?: () => void;
+      };
+      /** Called after stage reveal, before the second leg (e.g. normalize face-up for a deck flip). */
+      beforeStageToHand?: () => void;
     }
   ): Promise<void> {
     const preset = options?.visualPreset;
@@ -1024,9 +1059,11 @@ export class Board3dAnimationService {
       onRevealFace: options?.onRevealFace,
       visualPreset: preset
     });
+    options?.beforeStageToHand?.();
     await this.playDrawStageToHand(card, handWorld, {
       handScale: options?.handScale,
-      visualPreset: preset
+      visualPreset: preset,
+      flipFaceDownDuringTravel: options?.flipFaceDownDuringTravel,
     });
   }
 
@@ -1685,9 +1722,21 @@ export class Board3dAnimationService {
 
   /**
    * Hand card returning to deck (shuffle-hand-into-deck effects).
+   * When {@link flipFaceDownDuringTravel} is set, the card flips face-down mid-flight.
    */
-  playHandToDeck(card: Object3D, targetWorld: Vector3): Promise<void> {
+  playHandToDeck(
+    card: Object3D,
+    targetWorld: Vector3,
+    options?: {
+      flipFaceDownDuringTravel?: {
+        onHideFace?: () => void;
+      };
+    },
+  ): Promise<void> {
     return new Promise(resolve => {
+      const flipDown = options?.flipFaceDownDuringTravel;
+      let hideApplied = false;
+
       const timeline = gsap.timeline({
         onComplete: () => {
           this.removeAnimation(timeline);
@@ -1714,6 +1763,28 @@ export class Board3dAnimationService {
           },
           0,
         );
+
+      if (flipDown) {
+        timeline.to(
+          card.rotation,
+          {
+            z: Math.PI,
+            duration: HAND_TO_DECK_TRAVEL_DURATION_SEC,
+            ease: 'power2.out',
+            onUpdate: () => {
+              if (hideApplied) {
+                return;
+              }
+              const progress = Math.abs(card.rotation.z) / Math.PI;
+              if (progress >= 0.5) {
+                hideApplied = true;
+                flipDown.onHideFace?.();
+              }
+            },
+          },
+          0,
+        );
+      }
 
       this.activeAnimations.push(timeline);
       this.updateAnimationState();
