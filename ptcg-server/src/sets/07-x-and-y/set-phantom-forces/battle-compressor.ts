@@ -1,72 +1,48 @@
-import { Card } from '../../../game/store/card/card';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
-import { Effect } from '../../../game/store/effects/effect';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
+import { GameError, GameMessage, Player, State, StoreLike } from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { TrainerCard } from '../../../game/store/card/trainer-card';
+import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
-
-function* playCard(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  effect: TrainerEffect,
-): IterableIterator<State> {
-  const player = effect.player;
-  let cards: Card[] = [];
-
-  if (player.deck.cards.length === 0) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
-  effect.preventDefault = true;
-  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
-
-  yield store.prompt(
-    state,
-    new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_DISCARD,
-      player.deck,
-      {},
-      { min: 1, max: 3, allowCancel: false },
-    ),
-    (selected) => {
-      cards = selected || [];
-      next();
-    },
-  );
-
-  MOVE_CARDS(store, state, player.deck, player.discard, {
-    cards,
-    sourceCard: effect.trainerCard,
-  });
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-    player.deck.applyOrder(order);
-  });
-}
+import { MOVE_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class BattleCompressor extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'PHF';
-  public name: string = 'Battle Compressor';
-  public fullName: string = 'Battle Compressor PHF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '92';
-
+  public name: string = 'Battle Compressor';
+  public fullName: string = 'Battle Compressor PHF';
   public text: string =
     'Search your deck for up to 3 cards and discard them. Shuffle your deck afterward.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    return player.deck.cards.length > 0;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, effect);
-      return generator.next().value;
+    if (WAS_TRAINER_USED(effect, this)) {
+      const player = effect.player;
+
+      if (!this.canPlay(store, state, player)) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.deck,
+          {},
+          { min: 0, max: 3, allowCancel: false },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          MOVE_CARDS(store, state, player.deck, player.discard, { cards, sourceCard: this });
+          SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     return state;

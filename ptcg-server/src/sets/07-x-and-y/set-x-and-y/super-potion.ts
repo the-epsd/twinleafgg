@@ -1,22 +1,11 @@
+import { Card, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, Player, PlayerType, PokemonCardList, SlotType, State, StoreLike } from '../../../game';
+import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { TrainerType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  PlayerType,
-  SlotType,
-  CardTarget,
-  GameError,
-  GameMessage,
-  PokemonCardList,
-  Card,
-  ChooseCardsPrompt,
-} from '../../../game';
 import { HealEffect } from '../../../game/store/effects/game-effects';
+import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -84,7 +73,10 @@ function* playCard(
     return state;
   }
 
-  MOVE_CARDS(store, state, target, player.discard, { cards: cards, sourceCard: effect.trainerCard });
+  MOVE_CARDS(store, state, target, player.discard, {
+    cards: cards,
+    sourceCard: effect.trainerCard,
+  });
 
   // Heal Pokemon
   const healEffect = new HealEffect(player, target, 60);
@@ -95,23 +87,25 @@ function* playCard(
 
 export class SuperPotion extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'XY';
-
-  public name: string = 'Super Potion';
-
-  public fullName: string = 'Super Potion XY';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '128';
+  public name: string = 'Super Potion';
+  public fullName: string = 'Super Potion XY';
+  public text: string = 'Heal 60 damage from 1 of your Pokemon. If you do, discard an Energy attached to that Pokemon.';
 
-  public text: string =
-    'Heal 60 damage from 1 of your Pokemon. If you do, discard an Energy ' +
-    'attached to that Pokemon.';
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    let hasPokemonWithDamage = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+      if (cardList.damage > 0 && cardList.cards.some((c) => c.superType === SuperType.ENERGY)) {
+        hasPokemonWithDamage = true;
+      }
+    });
+    return hasPokemonWithDamage;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

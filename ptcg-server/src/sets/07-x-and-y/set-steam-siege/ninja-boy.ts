@@ -4,43 +4,57 @@ import {
   ChooseCardsPrompt,
   ChoosePokemonPrompt,
   GameError,
+  GameLog,
+  GameMessage,
+  Player,
   PlayerType,
-  ShuffleDeckPrompt,
+  PokemonCard,
   SlotType,
+  State,
+  StoreLike,
 } from '../../../game';
-import { GameLog, GameMessage } from '../../../game/game-message';
 import { Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class NinjaBoy extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'STS';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '103';
-
   public name: string = 'Ninja Boy';
-
   public fullName: string = 'Ninja Boy STS';
-
   public text: string =
     'Choose 1 of your Basic Pokémon in play. Search your deck for a Basic Pokémon and switch it with that Pokémon. (Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokémon.) Shuffle the first Pokémon into your deck.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    let hasBasicInPlay = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (_list, card) => {
+      if (card.stage === Stage.BASIC) {
+        hasBasicInPlay = true;
+      }
+    });
+    if (!hasBasicInPlay) {
+      return false;
+    }
+    return player.deck.cards.some((c) => c instanceof PokemonCard && c.stage === Stage.BASIC);
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
-      const supporterTurn = player.supporterTurn;
-
-      if (supporterTurn > 0) {
+      if (player.supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      if (!this.canPlay(store, state, player)) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
       MOVE_CARDS(store, state, player.hand, player.supporter, {
@@ -107,9 +121,7 @@ export class NinjaBoy extends TrainerCard {
                 secondCard: cards[0].name,
               });
 
-              return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-                player.deck.applyOrder(order);
-              });
+              return SHUFFLE_DECK(store, state, player);
             },
           );
         },

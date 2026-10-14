@@ -1,15 +1,9 @@
-import { EnergyCard } from '../../..';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
-import { Card } from '../../../game/store/card/card';
 import { EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import {DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
-import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
+import { State, StoreLike, TrainerCard, GameError, GameMessage, Player, Card, EnergyCard, ChooseCardsPrompt } from '../../../game';
+import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -39,7 +33,10 @@ function* playCard(
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
+  MOVE_CARDS(store, state, player.hand, player.supporter, {
+    cards: [effect.trainerCard],
+    sourceCard: self,
+  });
 
   yield store.prompt(
     state,
@@ -74,12 +71,22 @@ export class FieryTorch extends TrainerCard {
   public setNumber: string = '89';
   public name: string = 'Fiery Torch';
   public fullName: string = 'Fiery Torch FLF';
-
   public text: string =
     "Discard a [R] Energy card from your hand. (If you can't discard a [R] Energy card, you can't play this card.) Draw 2 cards.";
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const hasFireEnergy = player.hand.cards.some(
+      (c) =>
+        c !== this &&
+        c instanceof EnergyCard &&
+        c.energyType === EnergyType.BASIC &&
+        c.name === 'Fire Energy',
+    );
+    return hasFireEnergy && player.deck.cards.length > 0;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }

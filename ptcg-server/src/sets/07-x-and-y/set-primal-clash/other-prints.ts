@@ -7,7 +7,7 @@ import { GroudonEx as GroudonExPRC85 } from './groudon-ex';
 import { PrimalGroudonEx as PrimalGroudonExPRC86 } from './primal-groudon-ex';
 import { GardevoirEx as GardevoirExPRC105 } from './gardevoir-ex';
 import { MGardevoirEx2 as MGardevoirExPRC106 } from './m-gardevoir-ex-2';
-import { ArchiesAceInTheHole as ArchiesAceInTheHolePRC124 } from './archies-ace-in-the hole';
+import { ArchiesAceInTheHole as ArchiesAceInTheHolePRC124 } from './archies-ace-in-the-hole';
 import { MaxiesHiddenBallTrick as MaxiesHiddenBallTrickPRC133 } from './maxies-hidden-ball-trick';
 import { Teammates as TeammatesPRC141 } from './teammates';
 import { DiveBall as DiveBallPRC125 } from './dive-ball';

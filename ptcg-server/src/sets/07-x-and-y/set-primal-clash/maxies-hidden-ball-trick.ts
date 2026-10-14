@@ -1,43 +1,41 @@
-import { pokemonHasCardType } from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardType, SuperType } from '../../../game/store/card/card-types';
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { Effect } from '../../../game/store/effects/effect';
+import { State, StoreLike, TrainerCard, GameError, GameMessage, Player, PokemonCard, ChooseCardsPrompt, pokemonHasCardType } from '../../../game';
+import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class MaxiesHiddenBallTrick extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'PRC';
-
-  public name: string = "Maxie's Hidden Ball Trick";
-
-  public fullName: string = "Maxie's Hidden Ball Trick PRC";
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '133';
-
+  public name: string = "Maxie's Hidden Ball Trick";
+  public fullName: string = "Maxie's Hidden Ball Trick PRC";
   public text: string =
-    'You can play this card only when it is the last card in your hand. ' +
-    'Put a [F] Pokemon from your discard pile onto your Bench. ' +
-    'Then, draw 5 cards.';
+    'You can play this card only when it is the last card in your hand. Put a [F] Pokemon from your discard pile onto your Bench. Then, draw 5 cards.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.hand.cards.some((c) => c !== this)) {
+      return false;
+    }
+    const hasPokemon = player.discard.cards.some(
+      (c) => c instanceof PokemonCard && pokemonHasCardType(c, CardType.FIGHTING),
+    );
+    const hasSlot = player.bench.some((b) => b.cards.length === 0);
+    return (hasPokemon && hasSlot) || player.deck.cards.length > 0;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const cards = player.hand.cards.filter((c) => c !== this);
 
-      const hasPokemon = player.discard.cards.some((c) => {
-        return c instanceof PokemonCard && pokemonHasCardType(c, CardType.FIGHTING);
-      });
-
+      const hasPokemon = player.discard.cards.some(
+        (c) => c instanceof PokemonCard && pokemonHasCardType(c, CardType.FIGHTING),
+      );
       const slot = player.bench.find((b) => b.cards.length === 0);
       const hasEffect = (hasPokemon && slot) || player.deck.cards.length > 0;
 
@@ -45,10 +43,9 @@ export class MaxiesHiddenBallTrick extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      // It is not possible to recover Water Pokemon,
-      // but we can still draw 5 cards
+      // It is not possible to recover a Fighting Pokemon, but we can still draw 5 cards
       if (!hasPokemon || slot === undefined) {
-        MOVE_CARDS(store, state, player.deck, player.hand, { count: 5, sourceCard: this });
+        DRAW_CARDS(store, state, player, 5);
         return state;
       }
 
@@ -65,7 +62,7 @@ export class MaxiesHiddenBallTrick extends TrainerCard {
           const cards = selected || [];
           MOVE_CARDS(store, state, player.discard, slot, { cards: cards, sourceCard: this });
           slot.pokemonPlayedTurn = state.turn;
-          MOVE_CARDS(store, state, player.deck, player.hand, { count: 5, sourceCard: this });
+          DRAW_CARDS(store, state, player, 5);
         },
       );
     }

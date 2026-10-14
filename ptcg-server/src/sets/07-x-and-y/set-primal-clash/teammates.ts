@@ -1,73 +1,14 @@
-import { ChooseCardsPrompt } from '../../../game';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
-import { Card } from '../../../game/store/card/card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
+import { State, StoreLike, TrainerCard, GameError, GameMessage, Player, StateUtils } from '../../../game';
+import { GamePhase } from '../../../game/store/state/state';
 import {
-  REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN,
   MOVE_CARDS,
+  REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN,
+  SEARCH_DECK_FOR_CARDS_TO_HAND,
 } from '../../../game/store/prefabs/prefabs';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import { StateUtils } from '../../../game/store/state-utils';
-import { GamePhase, State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
-
-function* playCard(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  self: Teammates,
-  effect: TrainerEffect,
-): IterableIterator<State> {
-  const player = effect.player;
-
-  const supporterTurn = player.supporterTurn;
-
-  if (supporterTurn > 0) {
-    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
-  }
-
-  // No Pokemon KO last turn
-  if (!player.marker.hasMarker(self.TEAMMATES_MARKER)) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
-  if (player.deck.cards.length === 0) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
-  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [self], sourceCard: self });
-
-  // We will discard this card after prompt confirmation
-  // This will prevent unblocked supporter to appear in the discard pile
-  effect.preventDefault = true;
-
-  let cards: Card[] = [];
-  return store.prompt(
-    state,
-    new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_HAND,
-      player.deck,
-      {},
-      { min: 1, max: Math.min(2, player.deck.cards.length), allowCancel: false },
-    ),
-    (selected) => {
-      cards = selected || [];
-      next();
-
-      MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
-
-      return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-        player.deck.applyOrder(order);
-      });
-    },
-  );
-}
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Teammates extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -76,17 +17,55 @@ export class Teammates extends TrainerCard {
   public setNumber: string = '141';
   public name: string = 'Teammates';
   public fullName: string = 'Teammates PRC';
-
   public text: string = `You can play this card only if 1 of your Pokémon was Knocked Out during your opponent's last turn.
 
 Search your deck for up to 2 cards and put them into your hand. Shuffle your deck afterward.`;
 
   public readonly TEAMMATES_MARKER = 'TEAMMATES_MARKER';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (!player.marker.hasMarker(this.TEAMMATES_MARKER)) {
+      return false;
+    }
+    return player.deck.cards.length > 0;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, this, effect);
-      return generator.next().value;
+    if (WAS_TRAINER_USED(effect, this)) {
+      const player = effect.player;
+
+      if (player.supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      // No Pokemon KO last turn
+      if (!player.marker.hasMarker(this.TEAMMATES_MARKER)) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [this], sourceCard: this });
+
+      // We will discard this card after prompt confirmation
+      // This will prevent unblocked supporter to appear in the discard pile
+      effect.preventDefault = true;
+
+      SEARCH_DECK_FOR_CARDS_TO_HAND(
+        store,
+        state,
+        player,
+        this,
+        {},
+        { min: 1, max: Math.min(2, player.deck.cards.length), allowCancel: false },
+      );
+
+      return state;
     }
 
     if (effect instanceof KnockOutEffect) {

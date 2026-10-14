@@ -1,66 +1,12 @@
-import { PokemonCardList, StateUtils } from '../../../game';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
-import { Card } from '../../../game/store/card/card';
+import { GameError, GameMessage, Player, State, StateUtils, StoreLike } from '../../../game';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
-function* playCard(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  effect: TrainerEffect,
-): IterableIterator<State> {
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-  const slots: PokemonCardList[] = opponent.bench.filter((b) => b.cards.length === 0);
-
-  if (opponent.discard.cards.length === 0) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-  // Check if bench has open slots
-  const openSlots = opponent.bench.filter((b) => b.cards.length === 0);
-
-  if (openSlots.length === 0) {
-    // No open slots, throw error
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
-  // We will discard this card after prompt confirmation
-  effect.preventDefault = true;
-
-  let cards: Card[] = [];
-  yield store.prompt(
-    state,
-    new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_HAND,
-      opponent.discard,
-      { superType: SuperType.POKEMON, stage: Stage.BASIC },
-      { min: 1, max: 1, allowCancel: true },
-    ),
-    (selected) => {
-      cards = selected || [];
-      next();
-    },
-  );
-
-  // Operation canceled by the user
-  if (cards.length === 0) {
-    return state;
-  }
-
-  cards.forEach((card, index) => {
-    MOVE_CARDS(store, state, opponent.discard, slots[index], { cards: [card], sourceCard: effect.trainerCard });
-    slots[index].pokemonPlayedTurn = state.turn;
-  });
-}
 export class TargetWhistle extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'PHF';
@@ -68,14 +14,54 @@ export class TargetWhistle extends TrainerCard {
   public setNumber: string = '106';
   public name: string = 'Target Whistle';
   public fullName: string = 'Target Whistle PHF';
-
   public text: string =
     "Put a Basic Pokémon from your opponent's discard pile onto his or her Bench.";
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const opponent = StateUtils.getOpponent(state, player);
+
+    if (opponent.bench.every((b) => b.cards.length > 0)) {
+      return false;
+    }
+
+    return opponent.discard.cards.some(
+      (c) => c instanceof PokemonCard && c.stage === Stage.BASIC,
+    );
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, effect);
-      return generator.next().value;
+    if (WAS_TRAINER_USED(effect, this)) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      if (!this.canPlay(store, state, player)) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      const slot = opponent.bench.find((b) => b.cards.length === 0);
+      if (slot === undefined) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+          opponent.discard,
+          { superType: SuperType.POKEMON, stage: Stage.BASIC },
+          { min: 1, max: 1, allowCancel: false },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          if (cards.length === 0) {
+            return;
+          }
+
+          MOVE_CARDS(store, state, opponent.discard, slot, { cards, sourceCard: this });
+          slot.pokemonPlayedTurn = state.turn;
+        },
+      );
     }
 
     return state;

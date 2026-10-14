@@ -1,44 +1,52 @@
-import { Effect } from '../../../game/store/effects/effect';
-import { GameMessage } from '../../../game/game-message';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
+import {
+  ChoosePokemonPrompt,
+  GameError,
+  GameMessage,
+  Player,
+  PlayerType,
+  SlotType,
+  State,
+  StoreLike,
+} from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
-import { PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
-import { GameError } from '../../../game';
+import { TrainerCard } from '../../../game/store/card/trainer-card';
+import { Effect } from '../../../game/store/effects/effect';
 import { MOVE_CARDS, MOVE_POKEMON_OFF_BOARD } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class AZ extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'PHF';
-
-  public name: string = 'AZ';
-
-  public fullName: string = 'AZ PHF';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '91';
-
+  public name: string = 'AZ';
+  public fullName: string = 'AZ PHF';
   public text: string =
-    'Put 1 of your Pokemon into your hand. (Discard all cards attached ' + 'to that Pokemon.)';
+    'Put 1 of your Pokemon into your hand. (Discard all cards attached to that Pokemon.)';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    let hasPokemon = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, () => {
+      hasPokemon = true;
+    });
+    return hasPokemon;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
       if (player.supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      // Move to supporter pile
-      state = MOVE_CARDS(store, state, player.hand, player.supporter, {
+      MOVE_CARDS(store, state, player.hand, player.supporter, {
         cards: [effect.trainerCard],
+        sourceCard: this,
       });
-      effect.preventDefault = true;
 
       return store.prompt(
         state,

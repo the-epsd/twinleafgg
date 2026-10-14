@@ -1,15 +1,15 @@
-import { ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../../game';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
-import { Card } from '../../../game/store/card/card';
+import { Card, GameError, GameMessage, Player, State, StateUtils, StoreLike } from '../../../game';
 import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import {
+  MOVE_CARDS,
+  SHOW_CARDS_TO_PLAYER,
+  SHUFFLE_DECK,
+} from '../../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -20,15 +20,14 @@ function* playCard(
 ): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
-  const toolCards = player.discard.cards.filter((c) => {
-    return c instanceof TrainerCard && c.trainerType === TrainerType.TOOL;
-  }).length;
+  const toolCards = player.discard.cards.filter(
+    (c) => c instanceof TrainerCard && c.trainerType === TrainerType.TOOL,
+  ).length;
 
   if (toolCards === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  // We will discard this card after prompt confirmation
   effect.preventDefault = true;
   MOVE_CARDS(store, state, player.hand, player.supporter, {
     cards: [effect.trainerCard],
@@ -54,37 +53,32 @@ function* playCard(
   );
 
   if (cards.length > 0) {
-    MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: self });
-    if (cards.length > 0) {
-      state = store.prompt(
-        state,
-        new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
-        () => state,
-      );
-    }
+    MOVE_CARDS(store, state, player.discard, player.deck, { cards, sourceCard: self });
+    SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
   }
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-    player.deck.applyOrder(order);
-  });
+
+  SHUFFLE_DECK(store, state, player);
+  CLEAN_UP_SUPPORTER(store, effect, player);
+  return state;
 }
 
 export class EcoArm extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'AOR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '71';
-
   public name: string = 'Eco Arm';
-
   public fullName: string = 'Eco Arm AOR';
-
   public text: string = 'Shuffle 3 Pokémon Tool cards from your discard pile into your deck.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    return player.discard.cards.some(
+      (c) => c instanceof TrainerCard && c.trainerType === TrainerType.TOOL,
+    );
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
