@@ -1,21 +1,34 @@
-import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { TrainerType, EnergyType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
-import { Effect } from '../../../game/store/effects/effect';
-import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import {
-  PlayerType,
-  SlotType,
-  StateUtils,
   CardTarget,
+  ChooseCardsPrompt,
+  ChoosePokemonPrompt,
+  EnergyCard,
   GameError,
   GameMessage,
+  Player,
+  PlayerType,
   PokemonCardList,
-  ChooseCardsPrompt,
+  SlotType,
+  State,
+  StateUtils,
+  StoreLike,
+  TrainerCard,
 } from '../../../game';
-import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+import { EnergyType, TrainerType } from '../../../game/store/card/card-types';
+import { Effect } from '../../../game/store/effects/effect';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+
+function opponentHasSpecialEnergy(state: State, player: Player): boolean {
+  const opponent = StateUtils.getOpponent(state, player);
+  let found = false;
+  opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+    if (cardList.energies.cards.some((c) => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
+      found = true;
+    }
+  });
+  return found;
+}
 
 export class LostRemover extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
@@ -24,34 +37,32 @@ export class LostRemover extends TrainerCard {
   public setNumber: string = '80';
   public name: string = 'Lost Remover';
   public fullName: string = 'Lost Remover CL';
-
   public text: string =
     "Put 1 Special Energy card attached to 1 of your opponent's Pokémon in the Lost Zone.";
+
+  public canPlay(_store: StoreLike, state: State, player: Player): boolean {
+    return opponentHasSpecialEnergy(state, player);
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let hasPokemonWithEnergy = false;
+      if (!opponentHasSpecialEnergy(state, player)) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
       const blocked: CardTarget[] = [];
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.energies.cards.some((c) => c.energyType === EnergyType.SPECIAL)) {
-          hasPokemonWithEnergy = true;
-        } else {
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, _card, target) => {
+        if (!cardList.energies.cards.some((c) => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
           blocked.push(target);
         }
       });
 
-      if (!hasPokemonWithEnergy) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      }
-
-      // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      let targets: PokemonCardList[] = [];
-      store.prompt(
+      return store.prompt(
         state,
         new ChoosePokemonPrompt(
           player.id,
@@ -61,13 +72,12 @@ export class LostRemover extends TrainerCard {
           { allowCancel: false, blocked },
         ),
         (results) => {
-          targets = results || [];
-
+          const targets = results || [];
           if (targets.length === 0) {
-            return state;
+            return;
           }
 
-          const target = targets[0];
+          const target = targets[0] as PokemonCardList;
           store.prompt(
             state,
             new ChooseCardsPrompt(
@@ -78,7 +88,7 @@ export class LostRemover extends TrainerCard {
               { min: 1, max: 1, allowCancel: false },
             ),
             (selected) => {
-              MOVE_CARDS(store, state, target, opponent.lostzone, {
+              MOVE_CARDS(store, state, target.energies, opponent.lostzone, {
                 cards: selected,
                 sourceCard: this,
               });
@@ -87,6 +97,7 @@ export class LostRemover extends TrainerCard {
         },
       );
     }
+
     return state;
   }
 }

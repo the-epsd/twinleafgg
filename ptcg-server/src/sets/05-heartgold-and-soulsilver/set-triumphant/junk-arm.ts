@@ -1,16 +1,9 @@
-import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
+import { Card, CardList, GameError, GameMessage, Player, State, StoreLike, TrainerCard, TrainerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
-import { Card } from '../../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { CardList } from '../../../game/store/state/card-list';
-import { Player } from '../../../game/store/state/player';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 const ITEM_TYPES = [TrainerType.ITEM, TrainerType.TOOL];
 
@@ -20,10 +13,9 @@ function canPlayJunkArm(player: Player, self: JunkArm): boolean {
     return false;
   }
 
-  const hasRecoverableTrainer = player.discard.cards.some(
+  return player.discard.cards.some(
     (c) => c instanceof TrainerCard && ITEM_TYPES.includes(c.trainerType) && c.name !== self.name,
   );
-  return hasRecoverableTrainer;
 }
 
 function* playCard(
@@ -40,10 +32,8 @@ function* playCard(
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
-  // prepare card list without Junk Arm
   const handTemp = new CardList();
   handTemp.cards = player.hand.cards.filter((c) => c !== self);
 
@@ -62,7 +52,6 @@ function* playCard(
     },
   );
 
-  // Operation canceled by the user
   if (cards.length === 0) {
     return state;
   }
@@ -75,7 +64,6 @@ function* playCard(
     }
     if (!ITEM_TYPES.includes(c.trainerType) || c.name === self.name) {
       blocked.push(index);
-      return;
     }
   });
 
@@ -95,7 +83,6 @@ function* playCard(
     },
   );
 
-  // Operation canceled by the user
   if (recovered.length === 0) {
     return state;
   }
@@ -109,17 +96,11 @@ function* playCard(
 
 export class JunkArm extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'TM';
-
-  public name: string = 'Junk Arm';
-
-  public fullName: string = 'Junk Arm TM';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '87';
-
+  public name: string = 'Junk Arm';
+  public fullName: string = 'Junk Arm TM';
   public text: string =
     'Discard 2 cards from your hand. Search your discard pile for a Trainer ' +
     "card, show it to your opponent, and put it into your hand. You can't " +
@@ -130,7 +111,7 @@ export class JunkArm extends TrainerCard {
   }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }

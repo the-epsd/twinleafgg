@@ -1,13 +1,8 @@
-import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
+import { Card, GameError, GameMessage, Player, State, StoreLike, TrainerCard, TrainerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
-import { Card } from '../../../game/store/card/card';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -23,12 +18,10 @@ function* playCard(
     p.cards.forEach((c) => cards.push(c));
   });
 
-  // All prizes are face-up
   if (cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  // Make prizes no more secret, before displaying prompt
   prizes.forEach((p) => {
     p.isSecret = false;
   });
@@ -41,7 +34,6 @@ function* playCard(
     },
   );
 
-  // Prizes are secret once again.
   prizes.forEach((p) => {
     p.isSecret = true;
   });
@@ -51,21 +43,24 @@ function* playCard(
 
 export class AlphLithograph extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'TM';
-
-  public name: string = 'Alph Lithograph';
-
-  public fullName: string = 'Alph Lithograph TM';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = 'FOUR';
-
+  public name: string = 'Alph Lithograph';
+  public fullName: string = 'Alph Lithograph TM';
   public text: string = 'LOOK AT ALL OF YOUR FACE DOWN PRIZE CARDS!';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    return player.prizes.some((p) => p.isSecret);
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
+      const player = effect.player;
+      if (!player.prizes.some((p) => p.isSecret)) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

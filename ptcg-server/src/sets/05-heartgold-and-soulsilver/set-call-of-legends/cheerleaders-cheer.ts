@@ -1,11 +1,8 @@
-import { Effect } from '../../../game/store/effects/effect';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import { GameError, GameMessage, StateUtils } from '../../../game';
+import { Effect } from '../../../game/store/effects/effect';
+import { GameError, GameMessage, Player, State, StateUtils, StoreLike, TrainerCard } from '../../../game';
 import { CONFIRMATION_PROMPT, DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class CheerleadersCheer extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -14,8 +11,17 @@ export class CheerleadersCheer extends TrainerCard {
   public fullName: string = "Cheerleader's Cheer CL";
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '76';
-
   public text: string = 'Draw 3 cards. Your opponent may draw a card.';
+
+  public canPlay(_store: StoreLike, _state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_TRAINER_USED(effect, this)) {
