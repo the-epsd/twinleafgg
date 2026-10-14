@@ -1,36 +1,54 @@
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardType, Stage, TrainerType } from '../../../game/store/card/card-types';
+import { Effect } from '../../../game/store/effects/effect';
+import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import {
   Card,
   ChooseEnergyPrompt,
   GameError,
   GameMessage,
-  StoreLike,
+  Player,
   State,
   StateUtils,
+  StoreLike,
+  TrainerCard,
 } from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { TRAINER_TARGET_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Nita extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'TEU';
-  public setNumber: string = '151';
   public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '151';
   public name: string = 'Nita';
   public fullName: string = 'Nita TEU';
   public text: string =
     "You can play this card only if your opponent's Active Pokémon is a Basic Pokémon. Put an Energy from your opponent's Active Pokémon on top of their deck.";
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    const opponent = StateUtils.getOpponent(state, player);
+
+    // Opponent's Active Pokémon must be a Basic Pokémon
+    const opponentActive = opponent.active.getPokemonCard();
+    if (!opponentActive || opponentActive.stage !== Stage.BASIC) {
+      return false;
+    }
+
+    // Opponent's Active Pokémon must have an Energy attached
+    const checkEnergy = new CheckProvidedEnergyEffect(opponent, opponent.active);
+    store.reduceEffect(state, checkEnergy);
+    return checkEnergy.energyMap.length > 0;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const supporterTurn = player.supporterTurn;
-      if (supporterTurn > 0) {
+      if (player.supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
@@ -65,12 +83,11 @@ export class Nita extends TrainerCard {
         (energy) => {
           const cards: Card[] = (energy || []).map((e) => e.card);
           if (cards.length > 0) {
-            // Put on top of opponent's deck (unshift = top)
             MOVE_CARDS(store, state, opponent.active, opponent.deck, {
               cards: cards,
               sourceCard: this,
             });
-            // Move card to top (index 0)
+            // Move cards to the top of the deck (index 0)
             cards.forEach((c) => {
               const idx = opponent.deck.cards.indexOf(c);
               if (idx > 0) {

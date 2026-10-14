@@ -4,39 +4,55 @@ import {
   GameError,
   GameLog,
   GameMessage,
+  Player,
   PlayerType,
   SelectOptionPrompt,
   SlotType,
+  State,
   StateUtils,
+  StoreLike,
+  TrainerCard,
 } from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
 import { CardList } from '../../../game/store/state/card-list';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class FieldBlower extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'GRI';
-
-  public name: string = 'Field Blower';
-
-  public fullName: string = 'Field Blower GRI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '125';
-
+  public name: string = 'Field Blower';
+  public fullName: string = 'Field Blower GRI';
   public text: string =
     "Choose up to 2 in any combination of Pokémon Tool cards and Stadium cards in play (yours or your opponent's) and discard them.";
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const opponent = StateUtils.getOpponent(state, player);
+
+    // Need a Stadium in play or a Pokémon with a Tool attached
+    if (StateUtils.getStadiumCard(state) !== undefined) {
+      return true;
+    }
+    let hasTool = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+      if (cardList.tools.length > 0) {
+        hasTool = true;
+      }
+    });
+    opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+      if (cardList.tools.length > 0) {
+        hasTool = true;
+      }
+    });
+    return hasTool;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -138,7 +154,7 @@ export class FieldBlower extends TrainerCard {
   private handlePokemonToolDiscard(
     store: StoreLike,
     state: State,
-    player: any,
+    player: Player,
     blocked: CardTarget[],
     maxTools: number,
   ): State {
@@ -179,7 +195,7 @@ export class FieldBlower extends TrainerCard {
   private processToolDiscards(
     store: StoreLike,
     state: State,
-    player: any,
+    player: Player,
     targets: any[],
     index: number,
     onComplete: () => void,

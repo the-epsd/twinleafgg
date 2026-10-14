@@ -1,23 +1,23 @@
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../../game/store/card/card-types';
-import {
-  StoreLike,
-  State,
-  StateUtils,
-  GameMessage,
-  GameError,
-  ChooseCardsPrompt,
-  Player,
-} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import {
+  ChooseCardsPrompt,
+  GameError,
+  GameMessage,
+  Player,
+  State,
+  StateUtils,
+  StoreLike,
+  TrainerCard,
+} from '../../../game';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class SabrinasSuggestion extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'TEU';
-  public setNumber: string = '154';
   public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '154';
   public name: string = "Sabrina's Suggestion";
   public fullName: string = "Sabrina's Suggestion TEU";
   public text: string =

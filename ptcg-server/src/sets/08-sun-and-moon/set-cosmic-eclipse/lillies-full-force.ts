@@ -1,9 +1,8 @@
-import { ChooseCardsPrompt, GameMessage } from '../../../game';
+import { ChooseCardsPrompt, GameMessage, Player } from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import {
   ADD_MARKER,
   DRAW_CARDS,
@@ -12,6 +11,7 @@ import {
   REMOVE_MARKER_AT_END_OF_TURN,
   SHUFFLE_DECK,
 } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
@@ -25,11 +25,17 @@ export class LilliesFullForce extends TrainerCard {
   public text: string = `Draw 4 cards.
 
 At the end of this turn, if you have 3 or more cards in your hand, shuffle cards from your hand into your deck until you have 2 cards in your hand. `;
-
   public readonly LILLIES_FORCE_MARKER = 'LILLIES_FORCE_MARKER';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       DRAW_CARDS(store, state, effect.player, 4);
       ADD_MARKER(this.LILLIES_FORCE_MARKER, effect.player, this);
     }

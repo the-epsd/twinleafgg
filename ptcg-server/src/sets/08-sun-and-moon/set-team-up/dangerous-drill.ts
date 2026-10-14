@@ -5,28 +5,22 @@ import {
   ChoosePokemonPrompt,
   GameError,
   GameMessage,
+  Player,
   PlayerType,
   PokemonCard,
   PokemonCardList,
-  SelectPrompt,
   SlotType,
+  State,
   StateUtils,
+  StoreLike,
+  TrainerCard,
   pokemonHasCardType,
 } from '../../../game';
-import {
-  CardType,
-  EnergyType,
-  Stage,
-  SuperType,
-  TrainerType,
-} from '../../../game/store/card/card-types';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
+import { CardType, EnergyType, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { Effect } from '../../../game/store/effects/effect';
 import { SupporterEffect } from '../../../game/store/effects/play-card-effects';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SELECT_PROMPT_WITH_OPTIONS } from '../../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
 
 export class DangerousDrill extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
@@ -35,9 +29,34 @@ export class DangerousDrill extends TrainerCard {
   public setNumber: string = '138';
   public name: string = 'Dangerous Drill';
   public fullName: string = 'Dangerous Drill TEU';
-
   public text: string =
     "You can play this card only if you discard a [D] Pokémon from your hand.\n\nDiscard a Pokémon Tool or Special Energy card from 1 of your opponent's Pokémon, or discard any Stadium card in play.";
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const opponent = StateUtils.getOpponent(state, player);
+
+    // Need a [D] Pokémon in hand to discard
+    const hasDarkPokemon = player.hand.cards.some(
+      (c) => c instanceof PokemonCard && pokemonHasCardType(c, CardType.DARK),
+    );
+    if (!hasDarkPokemon) {
+      return false;
+    }
+
+    // Need a Tool, Special Energy, or Stadium to discard
+    let hasTarget = StateUtils.getStadiumCard(state) !== undefined;
+    opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+      if (
+        cardList.tools.length > 0 ||
+        cardList.energies.cards.some(
+          (c) => c.superType === SuperType.ENERGY && c.energyType === EnergyType.SPECIAL,
+        )
+      ) {
+        hasTarget = true;
+      }
+    });
+    return hasTarget;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_TRAINER_USED(effect, this)) {
@@ -82,6 +101,7 @@ export class DangerousDrill extends TrainerCard {
       });
 
       let specialEnergy = 0;
+      const specialEnergyBlocked: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
         if (
           cardList.energies.cards.some(
@@ -89,6 +109,8 @@ export class DangerousDrill extends TrainerCard {
           )
         ) {
           specialEnergy += 1;
+        } else {
+          specialEnergyBlocked.push(target);
         }
       });
 
@@ -145,18 +167,8 @@ export class DangerousDrill extends TrainerCard {
                   });
                   target.tools = [];
                 }
-
-                MOVE_CARDS(store, state, player.supporter, player.discard, {
-                  cards: [this],
-                  sourceCard: this,
-                });
-                return state;
               });
 
-              MOVE_CARDS(store, state, player.supporter, player.discard, {
-                cards: [this],
-                sourceCard: this,
-              });
               return state;
             },
           );
@@ -175,27 +187,8 @@ export class DangerousDrill extends TrainerCard {
           const cardList = StateUtils.findCardList(state, stadiumCard);
           const owner = StateUtils.findOwner(state, cardList);
           MOVE_CARDS(store, state, cardList, owner.discard, { sourceCard: this });
-
-          MOVE_CARDS(store, state, player.supporter, player.discard, {
-            cards: [this],
-            sourceCard: this,
-          });
-          return state;
         },
       };
-
-      const specialEnergyBlocked: CardTarget[] = [];
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (
-          cardList.energies.cards.some(
-            (c) => c.superType === SuperType.ENERGY && c.energyType === EnergyType.SPECIAL,
-          )
-        ) {
-          return;
-        } else {
-          specialEnergyBlocked.push(target);
-        }
-      });
 
       const specialEnergyOption = {
         message: GameMessage.CHOICE_SPECIAL_ENERGY,
@@ -257,29 +250,25 @@ export class DangerousDrill extends TrainerCard {
         options.push(stadiumOption);
       }
 
-      return store.prompt(
+      return SELECT_PROMPT_WITH_OPTIONS(
+        store,
         state,
-        new SelectPrompt(
-          player.id,
-          GameMessage.DISCARD_STADIUM_OR_TOOL_OR_SPECIAL_ENERGY,
-          options.map((c) => c.message),
-          { allowCancel: false },
-        ),
-        (choice) => {
-          const option = options[choice];
-
-          if (option.action) {
+        player,
+        GameMessage.DISCARD_STADIUM_OR_TOOL_OR_SPECIAL_ENERGY,
+        options.map((option) => ({
+          message: option.message,
+          action: () => {
             option.action();
-          }
 
-          MOVE_CARDS(store, state, player.supporter, player.discard, {
-            cards: [this],
-            sourceCard: this,
-          });
-          return state;
-        },
+            MOVE_CARDS(store, state, player.supporter, player.discard, {
+              cards: [this],
+              sourceCard: this,
+            });
+          },
+        })),
       );
     }
+
     return state;
   }
 }

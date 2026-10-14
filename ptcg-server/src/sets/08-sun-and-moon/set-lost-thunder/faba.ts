@@ -5,38 +5,54 @@ import {
   ChoosePokemonPrompt,
   GameError,
   GameMessage,
+  Player,
   PlayerType,
   PokemonCardList,
   SelectPrompt,
   SlotType,
+  State,
   StateUtils,
+  StoreLike,
+  TrainerCard,
 } from '../../../game';
 import { EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Faba extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'LOT';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '173';
-
   public name: string = 'Faba';
-
   public fullName: string = 'Faba LOT';
-
   public text: string =
     "Choose a Pokémon Tool or Special Energy card attached to 1 of your opponent's Pokémon, or any Stadium card in play, and put it in the Lost Zone.";
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+
+    const opponent = StateUtils.getOpponent(state, player);
+    let hasTargets = StateUtils.getStadiumCard(state) !== undefined;
+    opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+      if (cardList.tools.length > 0 || this.hasSpecialEnergy(cardList)) {
+        hasTargets = true;
+      }
+    });
+    return hasTargets;
+  }
+
+  private hasSpecialEnergy(cardList: PokemonCardList): boolean {
+    return cardList.energies.cards.some(
+      (c) => c.superType === SuperType.ENERGY && c.energyType === EnergyType.SPECIAL,
+    );
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -44,44 +60,33 @@ export class Faba extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
+      if (!this.canPlay(store, state, player)) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
       let pokemonsWithTool = 0;
-      const blocked: CardTarget[] = [];
+      let specialEnergy = 0;
+      const toolBlocked: CardTarget[] = [];
+      const specialEnergyBlocked: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
         if (cardList.tools.length > 0) {
           pokemonsWithTool += 1;
         } else {
-          blocked.push(target);
+          toolBlocked.push(target);
         }
-      });
 
-      let specialEnergy = 0;
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (
-          cardList.energies.cards.some(
-            (c) => c.superType === SuperType.ENERGY && c.energyType === EnergyType.SPECIAL,
-          )
-        ) {
+        if (this.hasSpecialEnergy(cardList)) {
           specialEnergy += 1;
+        } else {
+          specialEnergyBlocked.push(target);
         }
       });
 
       const stadiumCard = StateUtils.getStadiumCard(state);
 
-      if (pokemonsWithTool === 0 && stadiumCard == undefined && specialEnergy === 0) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      }
-
-      // We will discard this card after prompt confirmation
-      effect.preventDefault = true;
-      MOVE_CARDS(store, state, player.hand, player.supporter, {
-        cards: [effect.trainerCard],
-        sourceCard: this,
-      });
-
       const toolOption = {
         message: GameMessage.CHOICE_TOOL,
         action: () => {
-          let targets: PokemonCardList[] = [];
           return store.prompt(
             state,
             new ChoosePokemonPrompt(
@@ -89,53 +94,44 @@ export class Faba extends TrainerCard {
               GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
               PlayerType.TOP_PLAYER,
               [SlotType.ACTIVE, SlotType.BENCH],
-              { min: 1, max: 1, allowCancel: false, blocked },
+              { min: 1, max: 1, allowCancel: false, blocked: toolBlocked },
             ),
             (results) => {
-              targets = results || [];
-
+              const targets = results || [];
               if (targets.length === 0) {
                 return state;
               }
 
               const cardList = targets[0];
               const owner = StateUtils.findOwner(state, cardList);
-              if (cardList.tools.length > 0) {
-                if (cardList.tools.length > 1) {
-                  return store.prompt(
-                    state,
-                    new ChooseCardsPrompt(
-                      player,
-                      GameMessage.CHOOSE_CARD_TO_DISCARD,
-                      cardList,
-                      { superType: SuperType.TRAINER, trainerType: TrainerType.TOOL },
-                      { min: 1, max: 1, allowCancel: false },
-                    ),
-                    (selected) => {
-                      if (selected && selected.length > 0) {
-                        MOVE_CARDS(store, state, cardList, owner.lostzone, {
-                          cards: [selected[0]],
-                          sourceCard: this,
-                        });
-                      }
-                      MOVE_CARDS(store, state, player.supporter, player.discard, {
-                        cards: [this],
+              if (cardList.tools.length > 1) {
+                return store.prompt(
+                  state,
+                  new ChooseCardsPrompt(
+                    player,
+                    GameMessage.CHOOSE_CARD_TO_DISCARD,
+                    cardList,
+                    { superType: SuperType.TRAINER, trainerType: TrainerType.TOOL },
+                    { min: 1, max: 1, allowCancel: false },
+                  ),
+                  (selected) => {
+                    if (selected && selected.length > 0) {
+                      MOVE_CARDS(store, state, cardList, owner.lostzone, {
+                        cards: [selected[0]],
                         sourceCard: this,
                       });
-                      return state;
-                    },
-                  );
-                } else {
-                  MOVE_CARDS(store, state, cardList, owner.lostzone, {
-                    cards: [cardList.tools[0]],
-                    sourceCard: this,
-                  });
-                }
+                    }
+                    return state;
+                  },
+                );
               }
-              MOVE_CARDS(store, state, player.supporter, player.discard, {
-                cards: [this],
-                sourceCard: this,
-              });
+
+              if (cardList.tools.length > 0) {
+                MOVE_CARDS(store, state, cardList, owner.lostzone, {
+                  cards: [cardList.tools[0]],
+                  sourceCard: this,
+                });
+              }
               return state;
             },
           );
@@ -145,36 +141,16 @@ export class Faba extends TrainerCard {
       const stadiumOption = {
         message: GameMessage.CHOICE_STADIUM,
         action: () => {
-          const stadiumCard = StateUtils.getStadiumCard(state);
-          if (stadiumCard == undefined) {
+          if (stadiumCard === undefined) {
             throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
           }
 
-          // Discard Stadium
           const cardList = StateUtils.findCardList(state, stadiumCard);
           const owner = StateUtils.findOwner(state, cardList);
           MOVE_CARDS(store, state, cardList, owner.lostzone, { sourceCard: this });
-
-          MOVE_CARDS(store, state, player.supporter, player.discard, {
-            cards: [this],
-            sourceCard: this,
-          });
           return state;
         },
       };
-
-      const specialEnergyBlocked: CardTarget[] = [];
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (
-          cardList.energies.cards.some(
-            (c) => c.superType === SuperType.ENERGY && c.energyType === EnergyType.SPECIAL,
-          )
-        ) {
-          return;
-        } else {
-          specialEnergyBlocked.push(target);
-        }
-      });
 
       const specialEnergyOption = {
         message: GameMessage.CHOICE_SPECIAL_ENERGY,
@@ -189,14 +165,12 @@ export class Faba extends TrainerCard {
               { allowCancel: false, blocked: specialEnergyBlocked },
             ),
             (results) => {
-              if (results.length === 0) {
+              if (!results || results.length === 0) {
                 return state;
               }
 
               const target = results[0];
-              let cards: Card[] = [];
-
-              state = store.prompt(
+              return store.prompt(
                 state,
                 new ChooseCardsPrompt(
                   player,
@@ -206,14 +180,13 @@ export class Faba extends TrainerCard {
                   { min: 1, max: 1, allowCancel: false },
                 ),
                 (selected) => {
-                  cards = selected || [];
+                  const cards: Card[] = selected || [];
                   if (cards.length > 0) {
                     MOVE_CARDS(store, state, target, opponent.lostzone, {
-                      cards: cards,
+                      cards,
                       sourceCard: this,
                     });
                   }
-
                   return state;
                 },
               );
@@ -246,19 +219,14 @@ export class Faba extends TrainerCard {
         ),
         (choice) => {
           const option = options[choice];
-
           if (option.action) {
             option.action();
           }
-
-          MOVE_CARDS(store, state, player.supporter, player.discard, {
-            cards: [this],
-            sourceCard: this,
-          });
           return state;
         },
       );
     }
+
     return state;
   }
 }

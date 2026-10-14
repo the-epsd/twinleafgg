@@ -4,6 +4,7 @@ import {
   ChoosePokemonPrompt,
   ConfirmPrompt,
   GameError,
+  Player,
   PlayerType,
   SlotType,
   StateUtils,
@@ -12,32 +13,40 @@ import { GameLog, GameMessage } from '../../../game/game-message';
 import { CardTag, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class BellelbaAndBrycenMan extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-  public set: string = 'CEC';
   protected _tags = [CardTag.TAG_TEAM];
+  public set: string = 'CEC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '186';
   public name: string = 'Bellelba & Brycen-Man';
   public fullName: string = 'Bellelba & Brycen-Man CEC';
-
   public text: string = `Discard 3 cards from the top of each player's deck.
 
 When you play this card, you may discard 3 other cards from your hand. If you do, each player discards their Benched Pokémon until they have 3 Benched Pokémon. Your opponent discards first.`;
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    const opponent = StateUtils.getOpponent(state, player);
+    if (player.deck.cards.length === 0 && opponent.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
 
-      const supporterTurn = player.supporterTurn;
-
-      if (supporterTurn > 0) {
+      if (player.supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
@@ -51,7 +60,10 @@ When you play this card, you may discard 3 other cards from your hand. If you do
       const cannotDiscardFromHand =
         (benchedPokemon <= 3 && opponentsBenchedPokemon <= 3) || player.hand.cards.length <= 2;
 
-      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
+      MOVE_CARDS(store, state, player.hand, player.supporter, {
+        cards: [effect.trainerCard],
+        sourceCard: this,
+      });
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -60,7 +72,7 @@ When you play this card, you may discard 3 other cards from your hand. If you do
       const deckTop = new CardList();
       MOVE_CARDS(store, state, player.deck, deckTop, { count: cardsToDiscard, sourceCard: this });
 
-      deckTop.cards.forEach((card, index) => {
+      deckTop.cards.forEach((card) => {
         store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, {
           name: player.name,
           card: card.name,
@@ -68,14 +80,20 @@ When you play this card, you may discard 3 other cards from your hand. If you do
         });
       });
 
-      MOVE_CARDS(store, state, deckTop, player.discard, { count: deckTop.cards.length, sourceCard: this });
+      MOVE_CARDS(store, state, deckTop, player.discard, {
+        count: deckTop.cards.length,
+        sourceCard: this,
+      });
 
       // discard opponent cards
       const opponentCardsToDiscard = Math.min(opponent.deck.cards.length, 3);
       const opponentDeckTop = new CardList();
-      MOVE_CARDS(store, state, opponent.deck, opponentDeckTop, { count: opponentCardsToDiscard, sourceCard: this });
+      MOVE_CARDS(store, state, opponent.deck, opponentDeckTop, {
+        count: opponentCardsToDiscard,
+        sourceCard: this,
+      });
 
-      opponentDeckTop.cards.forEach((card, index) => {
+      opponentDeckTop.cards.forEach((card) => {
         store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, {
           name: opponent.name,
           card: card.name,
@@ -83,7 +101,10 @@ When you play this card, you may discard 3 other cards from your hand. If you do
         });
       });
 
-      MOVE_CARDS(store, state, opponentDeckTop, opponent.discard, { count: opponentDeckTop.cards.length, sourceCard: this });
+      MOVE_CARDS(store, state, opponentDeckTop, opponent.discard, {
+        count: opponentDeckTop.cards.length,
+        sourceCard: this,
+      });
 
       if (cannotDiscardFromHand) {
         return state;

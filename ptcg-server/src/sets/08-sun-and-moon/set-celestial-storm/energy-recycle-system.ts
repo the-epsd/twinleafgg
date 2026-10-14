@@ -1,17 +1,20 @@
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { SelectOptionPrompt } from '../../../game/store/prompts/select-option-prompt';
-import { MOVE_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { State, StoreLike, TrainerCard, GameMessage, Player } from '../../../game';
+import {
+  MOVE_CARDS,
+  SHUFFLE_DECK,
+  SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND,
+} from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class EnergyRecycleSystem extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'CES';
-  public setNumber: string = '128';
   public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '128';
   public name: string = 'Energy Recycle System';
   public fullName: string = 'Energy Recycle System CES';
   public text: string = `Choose 1: 
@@ -19,8 +22,15 @@ export class EnergyRecycleSystem extends TrainerCard {
   • Put a basic Energy card from your discard pile into your hand.
   • Shuffle 3 basic Energy cards from your discard pile into your deck.`;
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    // Need at least 1 basic Energy card in the discard pile
+    return player.discard.cards.some(
+      (c) => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC,
+    );
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       // Find all basic Energy cards in discard
       const basicEnergies = player.discard.cards.filter(
@@ -30,8 +40,8 @@ export class EnergyRecycleSystem extends TrainerCard {
         // No valid targets
         return state;
       }
-      // Show the options prompt
-      state = store.prompt(
+
+      return store.prompt(
         state,
         new SelectOptionPrompt(
           player.id,
@@ -45,24 +55,13 @@ export class EnergyRecycleSystem extends TrainerCard {
         (choice) => {
           if (choice === 0) {
             // Option 1: Put 1 basic Energy into hand
-            state = store.prompt(
+            SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND(
+              store,
               state,
-              new ChooseCardsPrompt(
-                player,
-                GameMessage.CHOOSE_CARD_TO_HAND,
-                player.discard,
-                { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-                { min: 1, max: 1, allowCancel: false },
-              ),
-              (selected) => {
-                if (selected && selected.length > 0) {
-                  MOVE_CARDS(store, state, player.discard, player.hand, {
-                    cards: selected,
-                    sourceCard: this,
-                    sourceEffect: this.attacks[0],
-                  });
-                }
-              },
+              player,
+              this,
+              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+              { min: 1, max: 1, allowCancel: false },
             );
           } else if (choice === 1) {
             // Option 2: Shuffle 3 basic Energy into deck
@@ -70,7 +69,7 @@ export class EnergyRecycleSystem extends TrainerCard {
               // Not enough to choose 3
               return;
             }
-            state = store.prompt(
+            store.prompt(
               state,
               new ChooseCardsPrompt(
                 player,
@@ -84,7 +83,6 @@ export class EnergyRecycleSystem extends TrainerCard {
                   MOVE_CARDS(store, state, player.discard, player.deck, {
                     cards: selected,
                     sourceCard: this,
-                    sourceEffect: this.attacks[1],
                   });
                   SHUFFLE_DECK(store, state, player);
                 }
@@ -93,8 +91,8 @@ export class EnergyRecycleSystem extends TrainerCard {
           }
         },
       );
-      return state;
     }
+
     return state;
   }
 }

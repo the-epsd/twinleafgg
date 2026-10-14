@@ -3,17 +3,18 @@ import {
   CardTarget,
   GameError,
   GameMessage,
+  Player,
   PlayerType,
   SlotType,
+  State,
   StateUtils,
+  StoreLike,
+  TrainerCard,
 } from '../../../game';
 import { CardTag, EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class BeastRing extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
@@ -22,38 +23,38 @@ export class BeastRing extends TrainerCard {
   public setNumber: string = '102';
   public name: string = 'Beast Ring';
   public fullName: string = 'Beast Ring FLI';
-
   public text: string =
     'You can play this card only if your opponent has exactly 3 or 4 Prize cards remaining.\n\n' +
     'Search your deck for up to 2 basic Energy cards and attach them to 1 of your Ultra Beasts. Then, shuffle your deck.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const opponent = StateUtils.getOpponent(state, player);
+    const prizesLeft = opponent.getPrizeLeft();
+    if (prizesLeft !== 3 && prizesLeft !== 4) {
+      return false;
+    }
+
+    let ultraBeastInPlay = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
+      if (card.hasTag(CardTag.ULTRA_BEAST)) {
+        ultraBeastInPlay = true;
+      }
+    });
+    return ultraBeastInPlay;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
-      if (opponent.getPrizeLeft() !== 3 && opponent.getPrizeLeft() !== 4) {
+      if (!this.canPlay(store, state, player)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      effect.preventDefault = true;
-
-      let ultraBeastInPlay = false;
-
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
-        if (card.hasTag(CardTag.ULTRA_BEAST)) {
-          ultraBeastInPlay = true;
-        }
-      });
-
-      if (!ultraBeastInPlay) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      }
-
-      const blocked2: CardTarget[] = [];
+      const blocked: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
         if (!card.hasTag(CardTag.ULTRA_BEAST)) {
-          blocked2.push(target);
+          blocked.push(target);
         }
       });
 
@@ -66,7 +67,7 @@ export class BeastRing extends TrainerCard {
           PlayerType.BOTTOM_PLAYER,
           [SlotType.ACTIVE, SlotType.BENCH],
           { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-          { allowCancel: false, min: 0, max: 2, blockedTo: blocked2, sameTarget: true },
+          { allowCancel: false, min: 0, max: 2, blockedTo: blocked, sameTarget: true },
         ),
         (transfers) => {
           transfers = transfers || [];
@@ -75,7 +76,7 @@ export class BeastRing extends TrainerCard {
             MOVE_CARDS(store, state, player.deck, target, { cards: [transfer.card], sourceCard: this });
           }
 
-          return state;
+          return SHUFFLE_DECK(store, state, player);
         },
       );
     }

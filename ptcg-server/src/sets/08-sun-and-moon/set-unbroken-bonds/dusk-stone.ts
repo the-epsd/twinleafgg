@@ -6,6 +6,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, Stage, SuperType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
+import { Player } from '../../../game/store/state/player';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
@@ -13,7 +14,43 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardManager } from '../../../game/cards/card-manager';
 import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import {SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+
+const VALID_EVOLUTIONS = [
+  'Mismagius',
+  'Honchkrow',
+  'Chandelure',
+  'Aegislash',
+  'Mismagius-GX',
+  'Honchkrow-GX',
+  'Chandelure-GX',
+  'Aegislash-GX',
+];
+
+// Names of the valid evolution cards that evolve from one of the player's Pokémon in play
+function getEvolutionNames(state: State, player: Player): string[] {
+  // Look through all known cards to find out if Pokemon can evolve
+  const cm = CardManager.getInstance();
+  const evolutions = cm.getAllCards().filter((c) => {
+    return c instanceof PokemonCard && c.stage !== Stage.BASIC && VALID_EVOLUTIONS.includes(c.name);
+  }) as PokemonCard[];
+
+  const evolutionNames: string[] = [];
+  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
+    if (list.pokemonPlayedTurn - 1 >= state.turn) {
+      return;
+    }
+
+    const valid = evolutions.filter((e) => e.evolvesFrom === card.name);
+    valid.forEach((c) => {
+      if (!evolutionNames.includes(c.name)) {
+        evolutionNames.push(c.name);
+      }
+    });
+  });
+  return evolutionNames;
+}
 
 function* playCard(
   next: Function,
@@ -27,37 +64,7 @@ function* playCard(
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  const validEvolutions = [
-    'Mismagius',
-    'Honchkrow',
-    'Chandelure',
-    'Aegislash',
-    'Mismagius-GX',
-    'Honchkrow-GX',
-    'Chandelure-GX',
-    'Aegislash-GX',
-  ];
-
-  // Look through all known cards to find out if Pokemon can evolve
-  const cm = CardManager.getInstance();
-  const evolutions = cm.getAllCards().filter((c) => {
-    return c instanceof PokemonCard && c.stage !== Stage.BASIC && validEvolutions.includes(c.name);
-  }) as PokemonCard[];
-
-  // Build possible evolution card names
-  const evolutionNames: string[] = [];
-  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-    if (list.pokemonPlayedTurn - 1 >= state.turn) {
-      return;
-    }
-
-    const valid = evolutions.filter((e) => e.evolvesFrom === card.name);
-    valid.forEach((c) => {
-      if (!evolutionNames.includes(c.name)) {
-        evolutionNames.push(c.name);
-      }
-    });
-  });
+  const evolutionNames = getEvolutionNames(state, player);
 
   // There is nothing that can evolve
   if (evolutionNames.length === 0) {
@@ -119,14 +126,10 @@ function* playCard(
     },
   );
 
-  if (targets.length === 0) {
+  // canceled by user or invalid target
+  if (targets.length === 0 || targets[0].getPokemonCard() === undefined) {
     SHUFFLE_DECK(store, state, player);
-    return state; // canceled by user
-  }
-  const pokemonCard = targets[0].getPokemonCard();
-  if (pokemonCard === undefined) {
-    SHUFFLE_DECK(store, state, player);
-    return state; // invalid target?
+    return state;
   }
 
   // Evolve Pokemon
@@ -135,20 +138,32 @@ function* playCard(
   targets[0].pokemonPlayedTurn = state.turn;
 
   SHUFFLE_DECK(store, state, player);
+  return state;
 }
 
 export class DuskStone extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'UNB';
-  public name: string = 'Dusk Stone';
-  public fullName: string = 'Dusk Stone UNB';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '167';
+  public name: string = 'Dusk Stone';
+  public fullName: string = 'Dusk Stone UNB';
   public text: string =
     'Search your deck for a Mismagius, Honchkrow, Chandelure, or Aegislash, including Pokémon-GX, that evolves from 1 of your Pokémon in play, and put it onto that Pokémon to evolve it. Then, shuffle your deck. You can use this card during your first turn or on a Pokémon that was put into play this turn.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    // There must be a Pokémon in play that can evolve
+    if (getEvolutionNames(state, player).length === 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
