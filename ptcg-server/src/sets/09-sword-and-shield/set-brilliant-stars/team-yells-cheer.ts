@@ -8,8 +8,9 @@ import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { Card } from '../../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { PokemonCard } from '../../../game';
+import { PokemonCard, Player } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -26,7 +27,10 @@ function* playCard(
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
-  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
+  MOVE_CARDS(store, state, player.hand, player.supporter, {
+    cards: [effect.trainerCard],
+    sourceCard: self,
+  });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
@@ -67,30 +71,45 @@ function* playCard(
     },
   );
   MOVE_CARDS(store, state, player.discard, player.deck, { cards, sourceCard: self });
+  CLEAN_UP_SUPPORTER(store, effect, player);
 
   return state;
 }
 
 export class TeamYellsCheer extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public regulationMark = 'F';
-
   public set: string = 'BRS';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '149';
-
   public name: string = "Team Yell's Cheer";
-
   public fullName: string = "Team Yell's Cheer BRS";
-
   public text: string =
     "Shuffle up to 3 in any combination of Pokémon and Supporter cards, except for Team Yell's Cheer, from your discard pile into your deck.";
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+
+    let pokemonOrSupporterInDiscard = 0;
+    player.discard.cards.forEach((c) => {
+      const isPokemon = c instanceof PokemonCard;
+      const isSupporter = c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER;
+      if (isPokemon || isSupporter) {
+        pokemonOrSupporterInDiscard += 1;
+      }
+    });
+
+    if (pokemonOrSupporterInDiscard === 0) {
+      return false;
+    }
+
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
       // Check if TrainerToDeckEffect is prevented
@@ -99,7 +118,6 @@ export class TeamYellsCheer extends TrainerCard {
 
       if (discardEffect.preventDefault) {
         // If prevented, just discard the card and return
-
         return state;
       }
 

@@ -1,23 +1,38 @@
-import { Effect } from '../../../game/store/effects/effect';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import { GameError, GameMessage, SelectPrompt, StateUtils } from '../../../game';
+import { Effect } from '../../../game/store/effects/effect';
+import {
+  State,
+  StoreLike,
+  TrainerCard,
+  GameError,
+  GameMessage,
+  Player,
+  SelectPrompt,
+  StateUtils,
+} from '../../../game';
 import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Dan extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-  public set: string = 'RCL';
-  public name: string = 'Dan';
-  public fullName: string = 'Dan RCL';
   public regulationMark = 'D';
+  public set: string = 'RCL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '158';
-
+  public name: string = 'Dan';
+  public fullName: string = 'Dan RCL';
   public text: string =
     'Draw 2 cards. You and your opponent play Rock-Paper-Scissors until someone wins. If you win, draw 2 more cards.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_TRAINER_USED(effect, this)) {

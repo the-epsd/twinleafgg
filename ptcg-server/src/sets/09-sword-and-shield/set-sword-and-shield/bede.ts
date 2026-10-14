@@ -1,28 +1,45 @@
-import { AttachEnergyPrompt, PlayerType, SlotType } from '../../../game';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
 import { EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { EnergyCard } from '../../../game/store/card/energy-card';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { StateUtils } from '../../../game/store/state-utils';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
+import {
+  AttachEnergyPrompt,
+  Player,
+  PlayerType,
+  SlotType,
+  GameError,
+  GameMessage,
+  EnergyCard,
+  TrainerCard,
+  StateUtils,
+  State,
+  StoreLike,
+} from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Bede extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
+  public regulationMark = 'D';
   public set: string = 'SSH';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '157';
-  public regulationMark = 'D';
   public name: string = 'Bede';
   public fullName: string = 'Bede SSH';
   public text: string = 'Attach a basic Energy card from your hand to 1 of your Benched Pokémon.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (
+      !player.hand.cards.some((c) => c instanceof EnergyCard && c.energyType === EnergyType.BASIC)
+    ) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const supporterTurn = player.supporterTurn;
 

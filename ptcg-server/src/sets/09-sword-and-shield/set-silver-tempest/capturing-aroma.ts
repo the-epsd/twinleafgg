@@ -1,41 +1,42 @@
-import { Effect } from '../../../game/store/effects/effect';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
+import { Effect } from '../../../game/store/effects/effect';
 import {
-  Card,
-  ChooseCardsPrompt,
+  GameError,
+  GameMessage,
+  State,
+  StoreLike,
+  TrainerCard,
+  Player,
   PokemonCard,
-  ShowCardsPrompt,
-  ShuffleDeckPrompt,
-  StateUtils,
 } from '../../../game';
-
-import { COIN_FLIP_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import {
+  COIN_FLIP_PROMPT,
+  SEARCH_DECK_FOR_CARDS_TO_HAND,
+  SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND,
+} from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class CapturingAroma extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
+  public regulationMark = 'F';
   public set: string = 'SIT';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '153';
-
-  public regulationMark = 'F';
-
   public name: string = 'Capturing Aroma';
   public fullName: string = 'Capturing Aroma SIT';
-
   public text: string =
     'Flip a coin. If heads, search your deck for an Evolution Pokémon, reveal it, and put it into your hand. If tails, search your deck for a Basic Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.';
 
+  public canPlay(_store: StoreLike, _state: State, player: Player): boolean {
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -48,111 +49,30 @@ export class CapturingAroma extends TrainerCard {
         }
       });
 
-      // We will discard this card after prompt confirmation
-      effect.preventDefault = true;
-
       return COIN_FLIP_PROMPT(store, state, player, (flipResult) => {
         if (flipResult) {
-          let cards: Card[] = [];
-          return store.prompt(
+          // Heads: Evolution Pokémon
+          SEARCH_DECK_FOR_CARDS_TO_HAND(
+            store,
             state,
-            new ChooseCardsPrompt(
-              player,
-              GameMessage.CHOOSE_CARD_TO_HAND,
-              player.deck,
-              { superType: SuperType.POKEMON },
-              { min: 0, max: 1, allowCancel: false, blocked },
-            ),
-            (selectedCards) => {
-              cards = selectedCards || [];
-
-              // Operation canceled by the user
-              if (cards.length === 0) {
-                MOVE_CARDS(store, state, player.supporter, player.discard, {
-                  cards: [this],
-                  sourceCard: this,
-                });
-                return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-                  player.deck.applyOrder(order);
-                });
-              }
-
-              if (cards.length > 0) {
-                MOVE_CARDS(store, state, player.supporter, player.discard, {
-                  cards: [this],
-                  sourceCard: this,
-                });
-                cards.forEach((card) => {
-                  MOVE_CARDS(store, state, player.deck, player.hand, {
-                    cards: [card],
-                    sourceCard: this,
-                  });
-                });
-                state = store.prompt(
-                  state,
-                  new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
-                  () => state,
-                );
-              }
-
-              return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-                player.deck.applyOrder(order);
-              });
-            },
+            player,
+            this,
+            { superType: SuperType.POKEMON },
+            { min: 0, max: 1, allowCancel: false, blocked },
+          );
+        } else {
+          // Tails: Basic Pokémon
+          SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(
+            store,
+            state,
+            player,
+            { stage: Stage.BASIC },
+            { min: 0, max: 1, allowCancel: false },
           );
         }
-        if (!flipResult) {
-          let cards: Card[] = [];
-          return store.prompt(
-            state,
-            new ChooseCardsPrompt(
-              player,
-              GameMessage.CHOOSE_CARD_TO_HAND,
-              player.deck,
-              { superType: SuperType.POKEMON, stage: Stage.BASIC },
-              { min: 0, max: 1, allowCancel: false },
-            ),
-            (selectedCards) => {
-              cards = selectedCards || [];
-
-              // Operation canceled by the user
-              if (cards.length === 0) {
-                MOVE_CARDS(store, state, player.supporter, player.discard, {
-                  cards: [this],
-                  sourceCard: this,
-                });
-                return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-                  player.deck.applyOrder(order);
-                });
-              }
-
-              if (cards.length > 0) {
-                MOVE_CARDS(store, state, player.supporter, player.discard, {
-                  cards: [this],
-                  sourceCard: this,
-                });
-                cards.forEach((card) => {
-                  MOVE_CARDS(store, state, player.deck, player.hand, {
-                    cards: [card],
-                    sourceCard: this,
-                  });
-                });
-                state = store.prompt(
-                  state,
-                  new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
-                  () => state,
-                );
-              }
-
-              return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-                player.deck.applyOrder(order);
-              });
-            },
-          );
-        }
-        return state;
       });
     }
+
     return state;
   }
 }

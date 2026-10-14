@@ -3,7 +3,6 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import {
   ChoosePokemonPrompt,
   GameError,
@@ -11,35 +10,31 @@ import {
   PlayerType,
   SlotType,
   StateUtils,
+  Player,
 } from '../../../game';
-import {
-  DRAW_CARDS,
-  MOVE_CARDS,
-  MOVE_POKEMON_OFF_BOARD,
-} from '../../../game/store/prefabs/prefabs';
-
-//Avery is not done yet!! have to add the "remove from bench" logic
+import { DRAW_CARDS, MOVE_CARDS, MOVE_POKEMON_OFF_BOARD } from '../../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Avery extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
-  public set: string = 'CRE';
-
-  public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '130';
-
   public regulationMark = 'E';
-
+  public set: string = 'CRE';
+  public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '130';
   public name: string = 'Avery';
-
   public fullName: string = 'Avery CRE';
-
   public text: string =
     'Draw 3 cards. If you drew any cards in this way, your opponent discards Pokémon from their Bench until they have 3.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
       const supporterTurn = player.supporterTurn;
@@ -88,12 +83,13 @@ export class Avery extends TrainerCard {
                 sourceCard: this,
               });
             });
+            CLEAN_UP_SUPPORTER(store, effect, player);
             return state;
           },
         );
       }
 
-      MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [effect.trainerCard] });
+      CLEAN_UP_SUPPORTER(store, effect, player);
 
       return state;
     }

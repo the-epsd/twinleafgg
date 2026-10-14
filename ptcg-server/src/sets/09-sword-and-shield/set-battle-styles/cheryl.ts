@@ -3,31 +3,31 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { PlayerType } from '../../..';
+import { Player, PlayerType } from '../../../game';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Cheryl extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
-  public set: string = 'BST';
-
-  public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '123';
-
   public regulationMark = 'E';
-
+  public set: string = 'BST';
+  public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '123';
   public name: string = 'Cheryl';
-
   public fullName: string = 'Cheryl BST';
-
   public text: string =
     'Heal all damage from each of your Evolution Pokémon. If you do, discard all Energy from the Pokémon that were healed in this way.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       let anyHealed = false;
 

@@ -3,7 +3,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect, TrainerToDeckEffect } from '../../../game/store/effects/play-card-effects';
+import { TrainerToDeckEffect } from '../../../game/store/effects/play-card-effects';
 import {
   StateUtils,
   GameError,
@@ -12,27 +12,39 @@ import {
   Card,
   CardList,
   OrderCardsPrompt,
-  ShowCardsPrompt,
+  Player,
 } from '../../../game';
-import { MOVE_CARDS, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
+import {
+  MOVE_CARDS,
+  MULTIPLE_COIN_FLIPS_PROMPT,
+  SHOW_CARDS_TO_PLAYER,
+} from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 import { MoveCardsEffect } from '../../../game/store/effects/game-effects';
 
 export class Cyllene extends TrainerCard {
-  public regulationMark = 'F';
-
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
+  public regulationMark = 'F';
   public set: string = 'ASR';
-  public setNumber: string = '138';
   public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '138';
   public name: string = 'Cyllene';
   public fullName: string = 'Cyllene ASR';
-
   public text: string =
     'Flip 2 coins. Put a number of cards up to the number of heads from your discard pile on top of your deck in any order.';
 
+  public canPlay(_store: StoreLike, _state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -121,19 +133,7 @@ export class Cyllene extends TrainerCard {
                   deckTop.applyOrder(order);
                   deckTop.moveToTopOfDestination(player.deck);
 
-                  if (cardsToMove.length > 0) {
-                    return store.prompt(
-                      state,
-                      new ShowCardsPrompt(
-                        opponent.id,
-                        GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-                        cardsToMove,
-                      ),
-                      () => state,
-                    );
-                  }
-
-                  return state;
+                  return SHOW_CARDS_TO_PLAYER(store, state, opponent, cardsToMove);
                 },
               );
             }

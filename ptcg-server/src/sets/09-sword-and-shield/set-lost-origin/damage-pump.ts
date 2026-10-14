@@ -1,10 +1,10 @@
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import {
+  TrainerCard,
+  StoreLike,
+  State,
   DamageMap,
   GameError,
   GameMessage,
@@ -12,30 +12,38 @@ import {
   PlayerType,
   SlotType,
   StateUtils,
+  Player,
 } from '../../../game';
-import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class DamagePump extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
-  public set: string = 'LOR';
-
-  public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '156';
-
   public regulationMark = 'F';
-
+  public set: string = 'LOR';
+  public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '156';
   public name: string = 'Damage Pump';
-
   public fullName: string = 'Damage Pump LOR';
-
   public text: string =
     'Move up to 2 damage counters from 1 of your Pokémon to your other Pokémon in any way you like.';
 
+  public canPlay(_store: StoreLike, _state: State, player: Player): boolean {
+    let hasDamagedPokemon = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+      if (cardList.damage > 0) {
+        hasDamagedPokemon = true;
+      }
+    });
+
+    if (!hasDamagedPokemon) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
       // Check if any Pokémon have damage

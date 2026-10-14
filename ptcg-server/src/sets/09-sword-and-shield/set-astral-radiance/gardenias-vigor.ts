@@ -4,18 +4,19 @@ import { EnergyType, SuperType, TrainerType } from '../../../game/store/card/car
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
-import { AttachEnergyEffect, TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
 import { GameMessage } from '../../../game/game-message';
 import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-prompt';
 import { PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
 import { StateUtils } from '../../../game/store/state-utils';
-import { GameError } from '../../../game';
-import {DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { GameError, Player } from '../../../game';
+import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class GardeniasVigor extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-  public set: string = 'ASR';
   public regulationMark = 'F';
+  public set: string = 'ASR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '143';
   public name: string = "Gardenia's Vigor";
@@ -23,8 +24,22 @@ export class GardeniasVigor extends TrainerCard {
   public text: string =
     'Draw 2 cards. If you drew any cards in this way, attach up to 2 [G] Energy cards from your hand to 1 of your Benched Pokémon.';
 
+  public canPlay(_store: StoreLike, _state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    const hasBenched = player.bench.some((b) => b.cards.length > 0);
+    if (!hasBenched) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
       const hasBenched = player.bench.some((b) => b.cards.length > 0);
@@ -67,7 +82,6 @@ export class GardeniasVigor extends TrainerCard {
             const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
             store.reduceEffect(state, attachEnergyEffect);
           }
-          // Clean up supporter once, after all transfers are done
         },
       );
     }

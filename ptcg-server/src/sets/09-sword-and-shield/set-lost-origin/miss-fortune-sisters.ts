@@ -1,39 +1,39 @@
-import { Effect } from '../../../game/store/effects/effect';
-import { GameMessage } from '../../../game/game-message';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../../game/store/card/card-types';
+import { Effect } from '../../../game/store/effects/effect';
 import {
+  GameMessage,
+  State,
+  StoreLike,
+  TrainerCard,
   CardList,
   ChooseCardsPrompt,
   GameError,
-  ShuffleDeckPrompt,
   StateUtils,
+  Player,
 } from '../../../game';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class MissFortuneSisters extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
-  public set: string = 'LOR';
-
   public regulationMark = 'F';
-
+  public set: string = 'LOR';
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '164';
-
   public name: string = 'Miss Fortune Sisters';
-
   public fullName: string = 'Miss Fortune Sisters LOR';
-
   public text: string =
     "Look at the top 5 cards of your opponent's deck and discard any number of Item cards you find there. Your opponent shuffles the other cards back into their deck.";
 
+  public canPlay(_store: StoreLike, _state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -69,9 +69,7 @@ export class MissFortuneSisters extends TrainerCard {
           });
           MOVE_CARDS(store, state, deckTop, opponent.deck, { sourceCard: this });
 
-          store.prompt(state, new ShuffleDeckPrompt(opponent.id), (order) => {
-            opponent.deck.applyOrder(order);
-          });
+          SHUFFLE_DECK(store, state, opponent);
 
           return state;
         },

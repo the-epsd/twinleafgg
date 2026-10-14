@@ -1,3 +1,6 @@
+import { Effect } from '../../../game/store/effects/effect';
+import { RetreatEffect } from '../../../game/store/effects/game-effects';
+import { PlayItemEffect, PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import {
   TrainerCard,
   TrainerType,
@@ -12,23 +15,23 @@ import {
   StateUtils,
   GameError,
   GameMessage,
+  Player,
   PokemonCard,
 } from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-import { RetreatEffect } from '../../../game/store/effects/game-effects';
-import { PlayItemEffect, PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import {WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class UnidentifiedFossil extends TrainerCard {
   protected _trainerType = TrainerType.ITEM;
-
+  public regulationMark = 'F';
+  public set: string = 'SIT';
+  public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '165';
+  public name: string = 'Unidentified Fossil';
+  public fullName: string = 'Unidentified Fossil SIT';
   public stage: Stage = Stage.BASIC;
-
   public cardType: CardType[] = [CardType.COLORLESS];
   public cardTypez: CardType = CardType.COLORLESS;
-
   public movedToActiveThisTurn = false;
-
   public pokemonType = PokemonType.NORMAL;
   public evolvesFrom = '';
   public cardTag = [];
@@ -41,12 +44,6 @@ export class UnidentifiedFossil extends TrainerCard {
   public retreat = [];
   public resistance = [];
   public attacks = [];
-  public set: string = 'SIT';
-  public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '165';
-  public name: string = 'Unidentified Fossil';
-  public fullName: string = 'Unidentified Fossil SIT';
-  public regulationMark = 'F';
   public maxTools: number = 1;
   public evolvesFromBase: string[] = [];
 
@@ -63,10 +60,13 @@ This card can't retreat.`,
     },
   ];
 
-  // public text =
-  //   'Play this card as if it were a 60-HP [C] Basic Pokémon.' +
-  //   '' +
-  //   'This card can\'t retreat.';
+  public canPlay(_store: StoreLike, _state: State, player: Player): boolean {
+    const emptySlots = player.bench.filter((b) => b.cards.length === 0);
+    if (emptySlots.length === 0) {
+      return false;
+    }
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_POWER_USED(effect, 0, this)) {

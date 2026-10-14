@@ -5,35 +5,43 @@ import { CardTag, SuperType, TrainerType } from '../../../game/store/card/card-t
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+import { Player } from '../../../game';
 
 export class SingleStrikeStyleMustard extends TrainerCard {
-  public regulationMark = 'E';
-
-  protected _tags = [CardTag.SINGLE_STRIKE];
-
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
+  protected _tags = [CardTag.SINGLE_STRIKE];
+  public regulationMark = 'E';
   public set: string = 'BST';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '134';
-
   public name: string = 'Single Strike Style Mustard';
-
   public fullName: string = 'Single Strike Style Mustard BST';
-
   public text: string = `You can play this card only when it is the last card in your hand.
 
 Search your deck for a Single Strike Pokémon and put it onto your Bench. Then, shuffle your deck. If you searched your deck in this way, draw 5 cards.`;
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+
+    const cards = player.hand.cards.filter((c) => c !== this);
+    const slot = player.bench.find((b) => b.cards.length === 0);
+    const hasEffect = slot || player.deck.cards.length > 0;
+
+    if (cards.length !== 0 || !hasEffect) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
       const supporterTurn = player.supporterTurn;
@@ -76,10 +84,11 @@ Search your deck for a Single Strike Pokémon and put it onto your Bench. Then, 
           MOVE_CARDS(store, state, player.deck, slot!, { cards: cards, sourceCard: this });
           slot!.pokemonPlayedTurn = state.turn;
 
+          // The draw must happen after the shuffle resolves, so the shuffle prompt stays inline
           return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
             player.deck.applyOrder(order);
 
-            MOVE_CARDS(store, state, player.deck, player.hand, { count: 5, sourceCard: this });
+            DRAW_CARDS(store, state, player, 5);
           });
         },
       );

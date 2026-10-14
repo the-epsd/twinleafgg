@@ -1,7 +1,6 @@
-import { AttachEnergyPrompt, ChooseCardsPrompt, PlayerType, SlotType } from '../../../game';
+import { AttachEnergyPrompt, PlayerType, SlotType, Player } from '../../../game';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
-import { Card } from '../../../game/store/card/card';
 import { EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -11,19 +10,14 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import {
   MOVE_CARDS,
   REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN,
+  SEARCH_DECK_FOR_CARDS_TO_HAND,
 } from '../../../game/store/prefabs/prefabs';
-import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { StateUtils } from '../../../game/store/state-utils';
 import { GamePhase, State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
-function* playCard(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  self: Raihan,
-  effect: TrainerEffect,
-): IterableIterator<State> {
+function playCard(store: StoreLike, state: State, self: Raihan, effect: TrainerEffect): State {
   const player = effect.player;
   const supporterTurn = player.supporterTurn;
 
@@ -84,30 +78,13 @@ function* playCard(
           });
         }
 
-        let cards: Card[] = [];
-        return store.prompt(
+        SEARCH_DECK_FOR_CARDS_TO_HAND(
+          store,
           state,
-          new ChooseCardsPrompt(
-            player,
-            GameMessage.CHOOSE_CARD_TO_HAND,
-            player.deck,
-            {},
-            { min: 1, max: 1, allowCancel: false },
-          ),
-          (selected) => {
-            cards = selected || [];
-            next();
-
-            MOVE_CARDS(store, state, player.hand, player.supporter, {
-              cards: [self],
-              sourceCard: self,
-            });
-            MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
-
-            return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-              player.deck.applyOrder(order);
-            });
-          },
+          player,
+          self,
+          {},
+          { min: 1, max: 1, allowCancel: false },
         );
       }
       return state;
@@ -117,23 +94,43 @@ function* playCard(
 
 export class Raihan extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
+  public regulationMark = 'E';
   public set: string = 'EVS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '152';
-  public regulationMark = 'E';
   public name: string = 'Raihan';
   public fullName: string = 'Raihan EVS';
-
   public text: string = `You can play this card only if any of your Pokémon were Knocked Out during your opponent's last turn.
 
 Attach a basic Energy card from your discard pile to 1 of your Pokémon. If you do, search your deck for a card and put it into your hand. Then, shuffle your deck.`;
-
   public readonly RAIHAN_MARKER = 'RAIHAN_MARKER';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+
+    if (!player.marker.hasMarker(this.RAIHAN_MARKER, this)) {
+      return false;
+    }
+
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+
+    const hasEnergyInDiscard = player.discard.cards.some((c) => {
+      return c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC;
+    });
+    if (!hasEnergyInDiscard) {
+      return false;
+    }
+
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, this, effect);
-      return generator.next().value;
+    if (WAS_TRAINER_USED(effect, this)) {
+      return playCard(store, state, this, effect);
     }
 
     if (effect instanceof KnockOutEffect) {

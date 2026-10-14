@@ -2,7 +2,7 @@ import { Card } from '../../../game/store/card/card';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { Effect } from '../../../game/store/effects/effect';
-import { PokemonCardList, StateUtils } from '../../../game';
+import { Player, PokemonCardList, StateUtils } from '../../../game';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Stage, TrainerType, SuperType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
@@ -10,6 +10,7 @@ import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -66,27 +67,34 @@ function* playCard(
     slots[index].pokemonPlayedTurn = state.turn;
   });
 }
-export class EchoingHorn extends TrainerCard {
-  public regulationMark = 'E';
 
+export class EchoingHorn extends TrainerCard {
+  protected _trainerType: TrainerType = TrainerType.ITEM;
+  public regulationMark = 'E';
+  public set: string = 'CRE';
+  public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '136';
+  public name: string = 'Echoing Horn';
+  public fullName: string = 'Echoing Horn CRE';
+  public text: string = "Put a Basic Pokémon from your opponent's discard pile onto their Bench.";
   protected _tags = [CardTag.RAPID_STRIKE];
 
-  protected _trainerType: TrainerType = TrainerType.ITEM;
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const opponent = StateUtils.getOpponent(state, player);
 
-  public set: string = 'CRE';
+    if (opponent.discard.cards.length === 0) {
+      return false;
+    }
 
-  public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '136';
-
-  public name: string = 'Echoing Horn';
-
-  public fullName: string = 'Echoing Horn CRE';
-
-  public text: string = "Put a Basic Pokémon from your opponent's discard pile onto their Bench.";
+    const openSlots = opponent.bench.filter((b) => b.cards.length === 0);
+    if (openSlots.length === 0) {
+      return false;
+    }
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, effect, this);
       return generator.next().value;
     }

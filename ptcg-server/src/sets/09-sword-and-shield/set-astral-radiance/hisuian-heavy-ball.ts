@@ -3,7 +3,6 @@ import {
   ChooseCardsPrompt,
   GameError,
   GameMessage,
-  ShowCardsPrompt,
   Stage,
   State,
   StateUtils,
@@ -11,31 +10,38 @@ import {
   SuperType,
   TrainerCard,
   TrainerType,
+  Player,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class HisuianHeavyBall extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
   public regulationMark = 'F';
-
   public set: string = 'ASR';
-
-  public name: string = 'Hisuian Heavy Ball';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '146';
-
+  public name: string = 'Hisuian Heavy Ball';
   public fullName: string = 'Hisuian Heavy Ball ASR';
-
   public text: string =
     "Look at your face-down Prize cards. You may reveal a Basic Pokémon you find there, put it into your hand, and put this Hisuian Heavy Ball in its place as a face-down Prize card. (If you don't reveal a Basic Pokémon, put this card in the discard pile.) Then, shuffle your face-down Prize cards.";
 
+  public canPlay(_store: StoreLike, _state: State, player: Player): boolean {
+    let faceDownCheck = 0;
+    player.prizes.forEach((card) => {
+      if (card.isSecret) {
+        faceDownCheck++;
+      }
+    });
+    if (!faceDownCheck) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const prizes = player.prizes.filter((p) => p.isSecret);
@@ -102,17 +108,7 @@ export class HisuianHeavyBall extends TrainerCard {
           );
 
           // Show the chosen Pokémon to the opponent
-          if (chosenPrize.length > 0) {
-            state = store.prompt(
-              state,
-              new ShowCardsPrompt(
-                opponent.id,
-                GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-                chosenPrize,
-              ),
-              () => {},
-            );
-          }
+          SHOW_CARDS_TO_PLAYER(store, state, opponent, chosenPrize);
 
           // Move the chosen Pokémon to the player's hand & move the Hisuian Heavy Ball to the prize cards
           if (chosenPrizeList) {

@@ -5,23 +5,28 @@ import {
   StoreLike,
   TrainerCard,
   TrainerType,
+  Player,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { TRAINER_TARGET_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class YellHorn extends TrainerCard {
-  public name: string = 'Yell Horn';
   protected _trainerType: TrainerType = TrainerType.ITEM;
-  public fullName: string = 'Yell Horn DAA';
-  public set: string = 'DAA';
-  public setNumber: string = '173';
   public regulationMark = 'D';
+  public set: string = 'DAA';
   public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '173';
+  public name: string = 'Yell Horn';
+  public fullName: string = 'Yell Horn DAA';
   public text: string = 'Both Active Pokémon are now Confused.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

@@ -9,12 +9,13 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import {SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
+import { StoreLike, Player } from '../../../game';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -117,7 +118,10 @@ function* playCard(
   }
 
   // Evolve Pokemon
-  MOVE_CARDS(store, state, player.deck, targets[0], { cards: [evolution], sourceCard: effect.trainerCard });
+  MOVE_CARDS(store, state, player.deck, targets[0], {
+    cards: [evolution],
+    sourceCard: effect.trainerCard,
+  });
   targets[0].clearEffects();
   targets[0].pokemonPlayedTurn = state.turn;
 
@@ -129,15 +133,42 @@ function* playCard(
 export class BoostShake extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'EVS';
-  public name: string = 'Boost Shake';
-  public fullName: string = 'Boost Shake EVS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '142';
+  public name: string = 'Boost Shake';
+  public fullName: string = 'Boost Shake EVS';
   public text: string =
     'Search your deck for a card that evolves from 1 of your Pokémon and put it onto that Pokémon to evolve it. Then, shuffle your deck. You can use this card during your first turn or on a Pokémon that was put into play this turn. Your turn ends.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+
+    const cm = CardManager.getInstance();
+    const evolutions = cm.getAllCards().filter((c) => {
+      return c instanceof PokemonCard && c.stage !== Stage.BASIC;
+    }) as PokemonCard[];
+
+    const evolutionNames: string[] = [];
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
+      const valid = evolutions.filter((e) => e.evolvesFrom === card.name);
+      valid.forEach((c) => {
+        if (!evolutionNames.includes(c.name)) {
+          evolutionNames.push(c.name);
+        }
+      });
+    });
+
+    if (evolutionNames.length === 0) {
+      return false;
+    }
+
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

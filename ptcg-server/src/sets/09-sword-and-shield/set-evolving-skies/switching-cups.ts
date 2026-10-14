@@ -8,7 +8,9 @@ import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { CardList } from '../../..';
-import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { Player } from '../../../game';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -40,29 +42,30 @@ function* playCard(
     },
   );
 
-  cards.forEach((c) => c.cards.moveToTopOfDestination(player.deck));
-  DRAW_CARDS(store, state, player, 1);
+  MOVE_CARDS(store, state, player.hand, player.deck, {
+    cards,
+    toTop: true,
+    sourceCard: effect.trainerCard,
+  });
+  MOVE_CARDS(store, state, deckTop, player.hand, { sourceCard: effect.trainerCard });
 }
 
 export class SwitchingCups extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
-  public set: string = 'EVS';
-
   public regulationMark = 'E';
-
+  public set: string = 'EVS';
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '162';
-
   public name: string = 'Switching Cups';
-
   public fullName: string = 'Switching Cups EVS';
-
   public text: string = 'Switch a card from your hand with the top card of your deck.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

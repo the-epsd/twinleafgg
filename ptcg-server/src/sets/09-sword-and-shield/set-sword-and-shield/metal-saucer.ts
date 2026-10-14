@@ -1,38 +1,67 @@
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
-import { CardTarget, PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
 import { CardType, EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { EnergyCard } from '../../../game/store/card/energy-card';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-prompt';
-import { StateUtils } from '../../../game/store/state-utils';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
+import {
+  GameError,
+  GameMessage,
+  CardTarget,
+  PlayerType,
+  SlotType,
+  EnergyCard,
+  TrainerCard,
+  AttachEnergyPrompt,
+  StateUtils,
+  Player,
+  State,
+  StoreLike,
+} from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class MetalSaucer extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
   public regulationMark = 'D';
-
   public set: string = 'SSH';
-
-  public name: string = 'Metal Saucer';
-
-  public fullName: string = 'Metal Saucer SSH';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '170';
-
+  public name: string = 'Metal Saucer';
+  public fullName: string = 'Metal Saucer SSH';
   public text: string =
     'Attach a [M] Energy card from your discard pile to 1 of your Benched [M] Pokémon.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const hasEnergyInDiscard = player.discard.cards.some((c) => {
+      return (
+        c instanceof EnergyCard &&
+        c.energyType === EnergyType.BASIC &&
+        c.provides.includes(CardType.METAL)
+      );
+    });
+    if (!hasEnergyInDiscard) {
+      return false;
+    }
+
+    let hasMetalPokemonOnBench = false;
+    player.bench.forEach((bench) => {
+      if (bench.cards.length === 0) {
+        return;
+      }
+      const checkPokemonTypeEffect = new CheckPokemonTypeEffect(bench);
+      store.reduceEffect(state, checkPokemonTypeEffect);
+
+      if (checkPokemonTypeEffect.cardTypes.includes(CardType.METAL)) {
+        hasMetalPokemonOnBench = true;
+      }
+    });
+
+    if (!hasMetalPokemonOnBench) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
       const hasEnergyInDiscard = player.discard.cards.some((c) => {

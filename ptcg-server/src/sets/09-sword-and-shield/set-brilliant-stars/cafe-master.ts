@@ -5,10 +5,10 @@ import { EnergyType, SuperType, TrainerType } from '../../../game/store/card/car
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { AttachEnergyPrompt, GameError, StateUtils } from '../../../game';
+import { AttachEnergyPrompt, GameError, StateUtils, Player } from '../../../game';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { IS_ABILITY_BLOCKED, SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class CafeMaster extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -18,12 +18,18 @@ export class CafeMaster extends TrainerCard {
   public setNumber: string = '133';
   public name: string = 'Café Master';
   public fullName: string = 'Café Master BRS';
-
   public text: string =
     'Choose up to 3 of your Benched Pokémon. For each of those Pokémon, search your deck for a different type of basic Energy card and attach it to that Pokémon. Then, shuffle your deck. Your turn ends.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
       // Check if supporter was already played this turn
@@ -77,8 +83,6 @@ export class CafeMaster extends TrainerCard {
           SHUFFLE_DECK(store, state, player);
         },
       );
-
-      // Move supporter card to discard pile
 
       // Check if we should end turn based on active Pokemon
       const playerActive = player.active.getPokemonCard();
