@@ -1,10 +1,8 @@
-import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../../game';
+import { GameError, GameMessage, Player, State, StateUtils, StoreLike, TrainerCard, TrainerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Iris extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -18,13 +16,19 @@ export class Iris extends TrainerCard {
 
   public readonly IRIS_MARKER = 'IRIS_MARKER';
 
+  public canPlay(_store: StoreLike, _state: State, player: Player): boolean {
+    return player.supporterTurn === 0;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
+      if (player.supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
       player.marker.addMarker(this.IRIS_MARKER, this);
     }
 
-    // Intercept DealDamageEffect to add bonus damage
     if (effect instanceof DealDamageEffect) {
       const player = effect.player;
 
@@ -45,7 +49,6 @@ export class Iris extends TrainerCard {
       }
     }
 
-    // Clean up at end of turn
     if (effect instanceof EndTurnEffect) {
       effect.player.marker.removeMarker(this.IRIS_MARKER, this);
     }

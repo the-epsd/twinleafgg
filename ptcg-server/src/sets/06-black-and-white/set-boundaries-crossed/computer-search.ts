@@ -1,16 +1,9 @@
-import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { TrainerType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
+import { Card, CardList, ChooseCardsPrompt, GameError, GameMessage, Player, State, StoreLike, TrainerCard } from '../../../game';
+import { CardTag, TrainerType } from '../../../game/store/card/card-types';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
-import { Card } from '../../../game/store/card/card';
-import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { CardList } from '../../../game/store/state/card-list';
-import { ShuffleDeckPrompt } from '../../../game';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -22,19 +15,12 @@ function* playCard(
   const player = effect.player;
   let cards: Card[] = [];
 
-  cards = player.hand.cards.filter((c) => c !== self);
-  if (cards.length < 2) {
+  if (!self.canPlay(store, state, player)) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  if (player.deck.cards.length === 0) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
-  // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
-  // prepare card list without Junk Arm
   const handTemp = new CardList();
   handTemp.cards = player.hand.cards.filter((c) => c !== self);
 
@@ -53,11 +39,11 @@ function* playCard(
     },
   );
 
-  // Operation canceled by the user
   if (cards.length === 0) {
     return state;
   }
 
+  MOVE_CARDS(store, state, player.hand, player.discard, { cards: [self], sourceCard: self });
   MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: self });
 
   yield store.prompt(
@@ -76,34 +62,35 @@ function* playCard(
   );
 
   MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: self });
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-    player.deck.applyOrder(order);
-  });
+  return SHUFFLE_DECK(store, state, player);
 }
 
 export class ComputerSearch extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
   protected _tags = [CardTag.ACE_SPEC];
-
   public set: string = 'BCR';
-
-  public name: string = 'Computer Search';
-
-  public fullName: string = 'Computer Search BCR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '137';
-
+  public name: string = 'Computer Search';
+  public fullName: string = 'Computer Search BCR';
   public text: string =
     "Discard 2 cards from your hand. (If you can't discard 2 cards, " +
     "you can't play this card.) Search your deck for a card and put it into " +
     'your hand. Shuffle your deck afterward.';
 
+  public canPlay(_store: StoreLike, _state: State, player: Player): boolean {
+    const otherCards = player.hand.cards.filter((c) => c !== this);
+    if (otherCards.length < 2) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }

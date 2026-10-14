@@ -1,31 +1,34 @@
-import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { TrainerType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
+import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { Effect } from '../../../game/store/effects/effect';
-import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { HealEffect } from '../../../game/store/effects/game-effects';
 import {
-  PlayerType,
-  SlotType,
   CardTarget,
+  ChoosePokemonPrompt,
   GameError,
   GameMessage,
+  Player,
+  PlayerType,
   PokemonCardList,
+  SlotType,
+  State,
+  StoreLike,
+  TrainerCard,
 } from '../../../game';
-import { HealEffect } from '../../../game/store/effects/game-effects';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
   store: StoreLike,
   state: State,
+  self: MaxPotion,
   effect: TrainerEffect,
 ): IterableIterator<State> {
   const player = effect.player;
 
   const blocked: CardTarget[] = [];
-  let hasPokemonWithDamage: boolean = false;
+  let hasPokemonWithDamage = false;
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
     if (cardList.damage === 0) {
       blocked.push(target);
@@ -34,11 +37,10 @@ function* playCard(
     }
   });
 
-  if (hasPokemonWithDamage === false) {
+  if (!hasPokemonWithDamage) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  // Do not discard the card yet
   effect.preventDefault = true;
 
   let targets: PokemonCardList[] = [];
@@ -61,18 +63,14 @@ function* playCard(
     return state;
   }
 
-  // Discard trainer only when user selected a Pokemon
+  const target = targets[0];
+  const healEffect = new HealEffect(player, target, target.damage);
+  store.reduceEffect(state, healEffect);
 
-  targets.forEach((target) => {
-    // Heal Pokemon
-    const healEffect = new HealEffect(player, target, target.damage);
-    store.reduceEffect(state, healEffect);
-    // Discard its energy cards
-    const cards = target.cards.filter((c) => c.superType === SuperType.ENERGY);
-    MOVE_CARDS(store, state, target, player.discard, {
-      cards: cards,
-      sourceCard: effect.trainerCard,
-    });
+  const cards = target.cards.filter((c) => c.superType === SuperType.ENERGY);
+  MOVE_CARDS(store, state, target, player.discard, {
+    cards,
+    sourceCard: self,
   });
 
   return state;
@@ -80,26 +78,44 @@ function* playCard(
 
 export class MaxPotion extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'EPO';
-
-  public name: string = 'Max Potion';
-
-  public fullName: string = 'Max Potion EPO';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '94';
-
+  public name: string = 'Max Potion';
+  public fullName: string = 'Max Potion EPO';
   public text: string =
     'Heal all damage from 1 of your Pokemon. Then, discard all Energy ' +
     'attached to that Pokemon.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    let hasPokemonWithDamage = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+      if (cardList.damage > 0) {
+        hasPokemonWithDamage = true;
+      }
+    });
+    return hasPokemonWithDamage;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, effect);
+    if (WAS_TRAINER_USED(effect, this)) {
+      const player = effect.player;
+
+      let hasPokemonWithDamage = false;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        if (cardList.damage > 0) {
+          hasPokemonWithDamage = true;
+        }
+      });
+
+      if (!hasPokemonWithDamage) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
+
     return state;
   }
 }

@@ -1,15 +1,11 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardTag, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
+import { StoreLike, State, GameError, GameMessage, Player, Card, ChooseCardsPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { DiscardToHandEffect, TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
-import { Card } from '../../../game/store/card/card';
-import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { CardList } from '../../../game/store/state/card-list';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -21,26 +17,9 @@ function* playCard(
   const player = effect.player;
   let cards: Card[] = [];
 
-  cards = player.hand.cards.filter((c) => c !== self);
-  if (cards.length < 2) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
-  let trainersInDiscard = 0;
-  player.discard.cards.forEach((c) => {
-    if (c instanceof TrainerCard) {
-      trainersInDiscard += 1;
-    }
-  });
-  if (trainersInDiscard === 0) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
   MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
-  // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
-  // prepare card list without Junk Arm
   const handTemp = new CardList();
   handTemp.cards = player.hand.cards.filter((c) => c !== self);
 
@@ -60,7 +39,6 @@ function* playCard(
     },
   );
 
-  // Operation canceled by the user
   if (cards.length === 0) {
     return state;
   }
@@ -81,7 +59,6 @@ function* playCard(
     },
   );
 
-  // Operation cancelled by the user
   if (recovered.length === 0) {
     return state;
   }
@@ -95,36 +72,45 @@ function* playCard(
 
 export class DowsingMachine extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
   protected _tags = [CardTag.ACE_SPEC];
-
   public set: string = 'PLS';
-
-  public name: string = 'Dowsing Machine';
-
-  public fullName: string = 'Dowsing Machine PLS';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '128';
-
+  public name: string = 'Dowsing Machine';
+  public fullName: string = 'Dowsing Machine PLS';
   public text: string =
     "Discard 2 cards from your hand. (If you can't discard 2 cards, " +
     "you can't play this card.) Put a Trainer card from your discard " +
     'pile into your hand.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const cardsInHand = player.hand.cards.filter((c) => c !== this);
+    if (cardsInHand.length < 2) {
+      return false;
+    }
+    const hasTrainerInDiscard = player.discard.cards.some((c) => c instanceof TrainerCard);
+    return hasTrainerInDiscard;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
-      // Check if DiscardToHandEffect is prevented
       const discardEffect = new DiscardToHandEffect(player, this);
       store.reduceEffect(state, discardEffect);
 
       if (discardEffect.preventDefault) {
-        // If prevented, just discard the card and return
-
         return state;
+      }
+
+      const cardsInHand = player.hand.cards.filter((c) => c !== this);
+      if (cardsInHand.length < 2) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      const hasTrainerInDiscard = player.discard.cards.some((c) => c instanceof TrainerCard);
+      if (!hasTrainerInDiscard) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
       const generator = playCard(() => generator.next(), store, state, this, effect);

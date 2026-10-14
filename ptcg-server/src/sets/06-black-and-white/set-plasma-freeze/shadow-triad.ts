@@ -1,12 +1,9 @@
-import { GameMessage } from '../../../game/game-message';
 import { CardTag, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { BLOCK_IF_DISCARD_EMPTY, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
-import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
+import { GameError, GameMessage, Player, State, StoreLike } from '../../../game';
+import { MOVE_CARDS, SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class ShadowTriad extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -18,10 +15,29 @@ export class ShadowTriad extends TrainerCard {
   public setNumber: string = '102';
   public text: string = 'Put a Team Plasma card from your discard pile into your hand.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return player.discard.cards.some((c) => c.hasTag(CardTag.TEAM_PLASMA));
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
-      BLOCK_IF_DISCARD_EMPTY(player);
+
+      if (player.supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      if (!this.canPlay(store, state, player)) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      MOVE_CARDS(store, state, player.hand, player.supporter, {
+        cards: [effect.trainerCard],
+        sourceCard: this,
+      });
 
       const blocked: number[] = [];
       player.discard.cards.forEach((card, index) => {
@@ -30,27 +46,16 @@ export class ShadowTriad extends TrainerCard {
         }
       });
 
-      effect.preventDefault = true;
-      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
-
-      store.prompt(
+      SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND(
+        store,
         state,
-        new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          player.discard,
-          {},
-          { min: 0, max: 1, allowCancel: false, blocked },
-        ),
-        (selected) => {
-          const cards = selected || [];
-          if (cards.length === 0) {
-            return state;
-          }
-          state = MOVE_CARDS(store, state, player.discard, player.hand, { cards });
-        },
+        player,
+        this,
+        {},
+        { min: 1, max: 1, allowCancel: false, blocked },
       );
     }
+
     return state;
   }
 }

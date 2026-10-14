@@ -1,80 +1,85 @@
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { TrainerType, SuperType, Stage } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
+import { Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { Effect } from '../../../game/store/effects/effect';
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
+import {
+  Card,
+  ChooseCardsPrompt,
+  GameError,
+  GameMessage,
+  Player,
+  PokemonCard,
+  State,
+  StoreLike,
+  TrainerCard,
+} from '../../../game';
+import { PlayPokemonFromDiscardEffect } from '../../../game/store/effects/play-card-effects';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
-
-function* playCard(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  effect: TrainerEffect,
-): IterableIterator<State> {
-  const player = effect.player;
-  const slots: PokemonCardList[] = player.bench.filter((b) => b.cards.length === 0);
-
-  // Player has no empty bench slot
-  if (slots.length === 0) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
-  // Player has no basic Pokemons in the discard pile
-  if (!player.discard.cards.some((c) => c instanceof PokemonCard && c.stage === Stage.BASIC)) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
-  // We will discard this card after prompt confirmation
-  effect.preventDefault = true;
-  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
-
-  return store.prompt(
-    state,
-    new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-      player.discard,
-      { superType: SuperType.POKEMON, stage: Stage.BASIC },
-      { min: 1, max: 1, allowCancel: true },
-    ),
-    (selected) => {
-      if (selected && selected.length > 0) {
-        // Discard trainer only when user selected a Pokemon
-        // Recover discarded Pokemon
-        state = MOVE_CARDS(store, state, player.discard, slots[0], {
-          cards: selected,
-          sourceCard: effect.trainerCard,
-        });
-      }
-    },
-  );
-}
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Revive extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'BLW';
-
-  public name: string = 'Revive';
-
-  public fullName: string = 'Revive BLW';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '102';
-
+  public name: string = 'Revive';
+  public fullName: string = 'Revive BLW';
   public text: string = 'Put a Basic Pokemon from your discard pile onto your Bench.';
 
+  public canPlay(_store: StoreLike, _state: State, player: Player): boolean {
+    const openSlots = player.bench.filter((b) => b.cards.length === 0);
+    if (openSlots.length === 0) {
+      return false;
+    }
+    return player.discard.cards.some(
+      (c) => c instanceof PokemonCard && c.stage === Stage.BASIC,
+    );
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, effect);
-      return generator.next().value;
+    if (WAS_TRAINER_USED(effect, this)) {
+      const player = effect.player;
+      const openSlots = player.bench.filter((b) => b.cards.length === 0);
+
+      if (openSlots.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      if (
+        !player.discard.cards.some(
+          (c) => c instanceof PokemonCard && c.stage === Stage.BASIC,
+        )
+      ) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      MOVE_CARDS(store, state, player.hand, player.supporter, {
+        cards: [effect.trainerCard],
+        sourceCard: this,
+      });
+
+      let cards: Card[] = [];
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+          player.discard,
+          { superType: SuperType.POKEMON, stage: Stage.BASIC },
+          { min: 1, max: 1, allowCancel: true },
+        ),
+        (selected) => {
+          cards = selected || [];
+          cards.forEach((card, index) => {
+            store.reduceEffect(
+              state,
+              new PlayPokemonFromDiscardEffect(
+                player,
+                card as PokemonCard,
+                openSlots[index],
+              ),
+            );
+          });
+        },
+      );
     }
 
     return state;

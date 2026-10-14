@@ -1,17 +1,19 @@
 import { Card } from '../../../game/store/card/card';
+import { EnergyCard } from '../../../game/store/card/energy-card';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { TrainerType, EnergyType } from '../../../game/store/card/card-types';
+import { TrainerCard } from '../../../game/store/card/trainer-card';
+import { Effect } from '../../../game/store/effects/effect';
+import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { TrainerType, EnergyType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
-import { Effect } from '../../../game/store/effects/effect';
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { EnergyCard } from '../../../game/store/card/energy-card';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
+import { Player } from '../../../game';
+import { State } from '../../../game/store/state/state';
+import { StoreLike } from '../../../game/store/store-like';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -22,40 +24,35 @@ function* playCard(
 ): IterableIterator<State> {
   const player = effect.player;
 
-  // Find eligible cards (Pokémon or Basic Energy) and their indices
-  const eligibleIndices: number[] = [];
+  let eligibleCount = 0;
   const blocked: number[] = [];
   player.discard.cards.forEach((c, index) => {
     const isPokemon = c instanceof PokemonCard;
     const isBasicEnergy = c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
     if (isPokemon || isBasicEnergy) {
-      eligibleIndices.push(index);
+      eligibleCount += 1;
     } else {
       blocked.push(index);
     }
   });
 
-  // Player does not have correct cards in discard
-  if (eligibleIndices.length === 0) {
+  if (eligibleCount === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
-  let cards: Card[] = [];
-
-  // Dynamically set min and max for the prompt
   let min: number;
   let max: number;
-  if (eligibleIndices.length <= 3) {
-    min = eligibleIndices.length;
-    max = eligibleIndices.length;
+  if (eligibleCount <= 3) {
+    min = eligibleCount;
+    max = eligibleCount;
   } else {
     min = 3;
     max = 3;
   }
 
+  let cards: Card[] = [];
   yield store.prompt(
     state,
     new ChooseCardsPrompt(
@@ -71,7 +68,7 @@ function* playCard(
     },
   );
 
-  MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: self });
+  MOVE_CARDS(store, state, player.discard, player.deck, { cards, sourceCard: self });
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
@@ -80,23 +77,24 @@ function* playCard(
 
 export class SuperRod extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'NVI';
-
   public name: string = 'Super Rod';
-
   public fullName: string = 'Super Rod NVI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '95';
-
   public text: string =
     'Shuffle 3 in any combination of Pokemon and basic Energy cards from ' +
     'your discard pile back into your deck.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    return player.discard.cards.some(
+      (c) =>
+        c instanceof PokemonCard || (c instanceof EnergyCard && c.energyType === EnergyType.BASIC),
+    );
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
