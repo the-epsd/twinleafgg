@@ -1,17 +1,21 @@
 import { getPrefabById } from '../prefabs/catalog';
-import { MissingPrefabError, matchEffectText, matchedToSelected } from '../prefabs/matcher';
-import { findServerEffect } from '../serverEffects';
+import { resolveEffectHybrid } from '../serverEffects';
 import type {
   AttackDraft,
   CardDraft,
   EnergyShort,
   EffectKind,
+  HybridEffectResolution,
   PowerDraft,
   SelectedPrefab,
+  ServerEffect,
 } from '../types';
 
+/** "Hop's Phantump" → "HopsPhantump" (possessive 's stays with the name). */
 function toPascalClassName(name: string): string {
   return name
+    .replace(/[''\u2019]s\b/gi, 's')
+    .replace(/[''\u2019]/g, '')
     .replace(/[^a-zA-Z0-9 ]/g, ' ')
     .split(/\s+/)
     .filter(Boolean)
@@ -57,17 +61,27 @@ function mergeNamedImports(lines: string[]): string[] {
   const named = new Map<string, Set<string>>();
   const other: string[] = [];
   for (const line of lines) {
-    const match = line.match(/^import \{ ([^}]+) \} from '([^']+)';$/);
+    // Skip already-empty named imports (e.g. `import { } from '...'`)
+    if (/^import \{\s*\} from/.test(line)) {
+      continue;
+    }
+    const match = line.match(/^import \{ ([^}]*) \} from '([^']+)';$/);
     if (!match) {
-      other.push(line);
+      if (line.trim()) other.push(line);
+      continue;
+    }
+    const parsedNames = match[1].split(',').map(name => name.trim()).filter(Boolean);
+    if (parsedNames.length === 0) {
       continue;
     }
     const names = named.get(match[2]) ?? new Set<string>();
-    match[1].split(',').map(name => name.trim()).filter(Boolean).forEach(name => names.add(name));
+    parsedNames.forEach(name => names.add(name));
     named.set(match[2], names);
   }
   return [
-    ...[...named.entries()].map(([from, names]) => `import { ${[...names].sort().join(', ')} } from '${from}';`),
+    ...[...named.entries()]
+      .filter(([, names]) => names.size > 0)
+      .map(([from, names]) => `import { ${[...names].sort().join(', ')} } from '${from}';`),
     ...other,
   ];
 }
@@ -85,13 +99,26 @@ function classNameFor(draft: CardDraft): string {
   return toPascalClassName(draft.name) || 'NewCard';
 }
 
+function ensureGuard(prefabImports: Map<string, Set<string>>, kind: EffectKind): void {
+  if (kind === 'attack' || kind === 'power') {
+    const set = prefabImports.get('../../game/store/prefabs/prefabs') ?? new Set();
+    set.add(kind === 'attack' ? 'WAS_ATTACK_USED' : 'WAS_POWER_USED');
+    prefabImports.set('../../game/store/prefabs/prefabs', set);
+  } else if (kind === 'trainer') {
+    const set = prefabImports.get('../../game/store/prefabs/trainer-prefabs') ?? new Set();
+    set.add('WAS_TRAINER_USED');
+    prefabImports.set('../../game/store/prefabs/trainer-prefabs', set);
+  }
+}
+
 function collectImports(
   attacks: AttackDraft[],
   powers: PowerDraft[],
   hasPowers: boolean,
   hasAttacks: boolean,
   hasEffects: boolean,
-  trainerPrefabs: SelectedPrefab[] = []
+  trainerPrefabs: SelectedPrefab[] = [],
+  trainerHasServerEffects = false
 ): { fromGame: Set<string>; lines: string[]; markers: Set<string>; flags: Set<string> } {
   const fromGame = new Set<string>(hasEffects ? ['StoreLike', 'State'] : []);
   const prefabImports = new Map<string, Set<string>>();
@@ -117,31 +144,36 @@ function collectImports(
       if (prefab.id === 'SWITCH_ACTIVE_WITH_BENCHED_SELF') {
         flags.add(`usedSwitchAttack${index}`);
       }
-      if (kind === 'attack') {
-        const set = prefabImports.get('../../game/store/prefabs/prefabs') ?? new Set();
-        set.add('WAS_ATTACK_USED');
-        prefabImports.set('../../game/store/prefabs/prefabs', set);
-      }
-      if (kind === 'power') {
-        const set = prefabImports.get('../../game/store/prefabs/prefabs') ?? new Set();
-        set.add('WAS_POWER_USED');
-        prefabImports.set('../../game/store/prefabs/prefabs', set);
-      }
-      if (kind === 'trainer') {
-        const set = prefabImports.get('../../game/store/prefabs/trainer-prefabs') ?? new Set();
-        set.add('WAS_TRAINER_USED');
-        prefabImports.set('../../game/store/prefabs/trainer-prefabs', set);
-      }
+      ensureGuard(prefabImports, kind);
     }
   };
 
   if (hasAttacks) {
-    attacks.forEach((a, i) => addSelected(a.selectedPrefabs, 'attack', i));
+    attacks.forEach((a, i) => {
+      addSelected(a.selectedPrefabs, 'attack', i);
+      if (
+        a.selectedPrefabs.length === 0 &&
+        (a.serverEffect || (a.serverSnippets?.length ?? 0) > 0 || (a.unmatchedClauses?.length ?? 0) > 0)
+      ) {
+        ensureGuard(prefabImports, 'attack');
+      }
+    });
   }
   if (hasPowers) {
-    powers.forEach((p, i) => addSelected(p.selectedPrefabs, 'power', i));
+    powers.forEach((p, i) => {
+      addSelected(p.selectedPrefabs, 'power', i);
+      if (
+        p.selectedPrefabs.length === 0 &&
+        (p.serverEffect || (p.serverSnippets?.length ?? 0) > 0 || (p.unmatchedClauses?.length ?? 0) > 0)
+      ) {
+        ensureGuard(prefabImports, 'power');
+      }
+    });
   }
   addSelected(trainerPrefabs, 'trainer', 0);
+  if (trainerPrefabs.length === 0 && trainerHasServerEffects) {
+    ensureGuard(prefabImports, 'trainer');
+  }
 
   if (hasPowers) {
     fromGame.add('PowerType');
@@ -201,6 +233,124 @@ function formatPower(power: PowerDraft): string {
   return `{\n${body.join('\n')}\n  }`;
 }
 
+function effectHasReduceBody(
+  prefabs: SelectedPrefab[],
+  serverEffect?: ServerEffect,
+  serverSnippets?: ServerEffect[],
+  unmatchedClauses?: string[]
+): boolean {
+  return (
+    prefabs.length > 0 ||
+    Boolean(serverEffect) ||
+    (serverSnippets?.length ?? 0) > 0 ||
+    (unmatchedClauses?.length ?? 0) > 0
+  );
+}
+
+function collectServerMeta(
+  serverImports: Set<string>,
+  helpers: Set<string>,
+  effects: Array<ServerEffect | undefined>
+): void {
+  for (const effect of effects) {
+    if (!effect) continue;
+    for (const line of effect.imports) serverImports.add(line);
+    for (const helper of effect.helpers ?? []) helpers.add(helper);
+  }
+}
+
+/**
+ * Emit prefab calls, then residual server snippets, then TODO comments for
+ * unmatched clauses. Dedupes `const player = effect.player`.
+ */
+function emitHybridBlockBody(options: {
+  kind: EffectKind;
+  index: number;
+  name?: string;
+  selectedPrefabs: SelectedPrefab[];
+  serverEffect?: ServerEffect;
+  serverSnippets?: ServerEffect[];
+  unmatchedClauses?: string[];
+  companions: string[];
+  /** Powers/trainers typically return state; attacks often fall through. */
+  defaultReturn: boolean;
+}): { lines: string[]; returns: boolean } {
+  const {
+    kind,
+    index,
+    name,
+    selectedPrefabs,
+    serverEffect,
+    serverSnippets = [],
+    unmatchedClauses = [],
+    companions,
+    defaultReturn,
+  } = options;
+
+  // Exclusive full-effect copy when no prefabs were kept
+  if (serverEffect && selectedPrefabs.length === 0 && serverSnippets.length === 0) {
+    return {
+      lines: serverEffect.body.map(line => (line.startsWith('      ') ? line.trimStart() : line)),
+      returns: true,
+    };
+  }
+
+  let returns = false;
+  const generatedLines: string[] = [];
+
+  for (const sel of selectedPrefabs) {
+    const prefab = getPrefabById(sel.prefabId);
+    if (!prefab) continue;
+    const result = prefab.generateCall(sel.params, {
+      kind,
+      index,
+      attackName: kind === 'attack' ? name : undefined,
+      powerName: kind !== 'attack' ? name : undefined,
+    });
+    generatedLines.push(...result.lines);
+    if (result.returns) returns = true;
+    if (prefab.generateCompanions) {
+      companions.push(
+        ...prefab.generateCompanions(sel.params, {
+          kind,
+          index,
+          attackName: kind === 'attack' ? name : undefined,
+          powerName: kind !== 'attack' ? name : undefined,
+        })
+      );
+    }
+  }
+
+  for (const snippet of serverSnippets) {
+    for (const line of snippet.body) {
+      const trimmed = line.replace(/^\s*const player = effect\.player;\s*$/, '').trim();
+      if (!trimmed) continue;
+      // Skip leftover attribution / TODO comments from source cards
+      if (/^\s*\/\//.test(trimmed) && /\bfrom\b|\bTODO unmatched\b/i.test(trimmed)) continue;
+      generatedLines.push(trimmed);
+    }
+  }
+
+  for (const clause of unmatchedClauses) {
+    generatedLines.push(`// TODO unmatched: "${clause.replace(/"/g, '\\"')}"`);
+  }
+
+  // Bare `player` identifier only — ignore `effect.player`
+  const needsPlayer = generatedLines.some(line => /(^|[^.\w])player\b/.test(line));
+  const lines: string[] = [];
+  if (needsPlayer) {
+    lines.push('const player = effect.player;');
+  }
+  lines.push(...generatedLines);
+
+  if (defaultReturn && !returns) {
+    lines.push('return state;');
+    returns = true;
+  }
+
+  return { lines, returns };
+}
+
 function generateReduceEffect(
   draft: CardDraft,
   markers: Set<string>,
@@ -210,6 +360,8 @@ function generateReduceEffect(
   const powers = draft.hasPowers ? draft.powers : [];
   const trainerPrefabs = draft.extends === 'TrainerCard' ? draft.trainerPrefabs : [];
   const trainerServerEffect = draft.extends === 'TrainerCard' ? draft.trainerServerEffect : undefined;
+  const trainerServerSnippets = draft.extends === 'TrainerCard' ? draft.trainerServerSnippets ?? [] : [];
+  const trainerUnmatched = draft.extends === 'TrainerCard' ? draft.trainerUnmatchedClauses ?? [] : [];
 
   const body: string[] = [];
   const companions: string[] = [];
@@ -217,116 +369,88 @@ function generateReduceEffect(
   const helpers = new Set<string>();
 
   powers.forEach((power, index) => {
-    if (power.selectedPrefabs.length === 0 && !power.serverEffect) return;
-    body.push(`    // ${power.name || `Power ${index + 1}`}`);
-    body.push(`    if (WAS_POWER_USED(effect, ${index}, this)) {`);
-    if (power.serverEffect) {
-      for (const line of power.serverEffect.imports) serverImports.add(line);
-      for (const helper of power.serverEffect.helpers ?? []) helpers.add(helper);
-      body.push(...power.serverEffect.body.map(line => `      ${line}`));
-      body.push(`    }`);
-      body.push('');
+    if (
+      !effectHasReduceBody(
+        power.selectedPrefabs,
+        power.serverEffect,
+        power.serverSnippets,
+        power.unmatchedClauses
+      )
+    ) {
       return;
     }
-    let returns = false;
-    const generatedLines: string[] = [];
-    for (const sel of power.selectedPrefabs) {
-      const prefab = getPrefabById(sel.prefabId);
-      if (!prefab) continue;
-      const result = prefab.generateCall(sel.params, {
-        kind: 'power',
-        index,
-        powerName: power.name,
-      });
-      for (const line of result.lines) {
-        generatedLines.push(line);
-      }
-      if (result.returns) returns = true;
-      if (prefab.generateCompanions) {
-        companions.push(...prefab.generateCompanions(sel.params, { kind: 'power', index, powerName: power.name }));
-      }
-    }
-    if (generatedLines.some(line => /\bplayer\b/.test(line))) {
-      body.push(`      const player = effect.player;`);
-    }
-    body.push(...generatedLines.map(line => `      ${line}`));
-    if (!returns) {
-      body.push(`      return state;`);
-    }
+    collectServerMeta(serverImports, helpers, [
+      power.serverEffect,
+      ...(power.serverSnippets ?? []),
+    ]);
+    body.push(`    // ${power.name || `Power ${index + 1}`}`);
+    body.push(`    if (WAS_POWER_USED(effect, ${index}, this)) {`);
+    const { lines } = emitHybridBlockBody({
+      kind: 'power',
+      index,
+      name: power.name,
+      selectedPrefabs: power.selectedPrefabs,
+      serverEffect: power.serverEffect,
+      serverSnippets: power.serverSnippets,
+      unmatchedClauses: power.unmatchedClauses,
+      companions,
+      defaultReturn: true,
+    });
+    body.push(...lines.map(line => `      ${line}`));
     body.push(`    }`);
     body.push('');
   });
 
   attacks.forEach((attack, index) => {
-    if (attack.selectedPrefabs.length === 0 && !attack.serverEffect) return;
-    body.push(`    // ${attack.name || `Attack ${index + 1}`}`);
-    body.push(`    if (WAS_ATTACK_USED(effect, ${index}, this)) {`);
-    if (attack.serverEffect) {
-      for (const line of attack.serverEffect.imports) serverImports.add(line);
-      for (const helper of attack.serverEffect.helpers ?? []) helpers.add(helper);
-      body.push(...attack.serverEffect.body.map(line => `      ${line}`));
-      body.push(`    }`);
-      body.push('');
+    if (
+      !effectHasReduceBody(
+        attack.selectedPrefabs,
+        attack.serverEffect,
+        attack.serverSnippets,
+        attack.unmatchedClauses
+      )
+    ) {
       return;
     }
-    let returns = false;
-    const generatedLines: string[] = [];
-    for (const sel of attack.selectedPrefabs) {
-      const prefab = getPrefabById(sel.prefabId);
-      if (!prefab) continue;
-      const result = prefab.generateCall(sel.params, {
-        kind: 'attack',
-        index,
-        attackName: attack.name,
-      });
-      for (const line of result.lines) {
-        generatedLines.push(line);
-      }
-      if (result.returns) returns = true;
-      if (prefab.generateCompanions) {
-        companions.push(...prefab.generateCompanions(sel.params, { kind: 'attack', index, attackName: attack.name }));
-      }
-    }
-    if (generatedLines.some(line => /\bplayer\b/.test(line))) {
-      body.push(`      const player = effect.player;`);
-    }
-    body.push(...generatedLines.map(line => `      ${line}`));
-    if (!returns) {
-      // no-op — fall through
-    }
+    collectServerMeta(serverImports, helpers, [
+      attack.serverEffect,
+      ...(attack.serverSnippets ?? []),
+    ]);
+    body.push(`    // ${attack.name || `Attack ${index + 1}`}`);
+    body.push(`    if (WAS_ATTACK_USED(effect, ${index}, this)) {`);
+    const { lines } = emitHybridBlockBody({
+      kind: 'attack',
+      index,
+      name: attack.name,
+      selectedPrefabs: attack.selectedPrefabs,
+      serverEffect: attack.serverEffect,
+      serverSnippets: attack.serverSnippets,
+      unmatchedClauses: attack.unmatchedClauses,
+      companions,
+      defaultReturn: false,
+    });
+    body.push(...lines.map(line => `      ${line}`));
     body.push(`    }`);
     body.push('');
   });
 
-  if (trainerPrefabs.length > 0 || trainerServerEffect) {
+  if (
+    effectHasReduceBody(trainerPrefabs, trainerServerEffect, trainerServerSnippets, trainerUnmatched)
+  ) {
+    collectServerMeta(serverImports, helpers, [trainerServerEffect, ...trainerServerSnippets]);
     body.push(`    if (WAS_TRAINER_USED(effect, this)) {`);
-    if (trainerServerEffect) {
-      for (const line of trainerServerEffect.imports) serverImports.add(line);
-      for (const helper of trainerServerEffect.helpers ?? []) helpers.add(helper);
-      body.push(...trainerServerEffect.body.map(line => `      ${line}`));
-    } else {
-      let returns = false;
-      const generatedLines: string[] = [];
-      for (const sel of trainerPrefabs) {
-        const prefab = getPrefabById(sel.prefabId);
-        if (!prefab) continue;
-        const result = prefab.generateCall(sel.params, {
-          kind: 'trainer',
-          index: 0,
-          powerName: draft.name,
-        });
-        generatedLines.push(...result.lines);
-        if (result.returns) returns = true;
-        if (prefab.generateCompanions) {
-          companions.push(...prefab.generateCompanions(sel.params, { kind: 'trainer', index: 0, powerName: draft.name }));
-        }
-      }
-      if (generatedLines.some(line => /\bplayer\b/.test(line))) {
-        body.push(`      const player = effect.player;`);
-      }
-      body.push(...generatedLines.map(line => `      ${line}`));
-      if (!returns) body.push(`      return state;`);
-    }
+    const { lines } = emitHybridBlockBody({
+      kind: 'trainer',
+      index: 0,
+      name: draft.name,
+      selectedPrefabs: trainerPrefabs,
+      serverEffect: trainerServerEffect,
+      serverSnippets: trainerServerSnippets,
+      unmatchedClauses: trainerUnmatched,
+      companions,
+      defaultReturn: true,
+    });
+    body.push(...lines.map(line => `      ${line}`));
     body.push(`    }`);
     body.push('');
   }
@@ -359,10 +483,53 @@ ${body.join('\n')}
   };
 }
 
+function applyHybridToAttack(attack: AttackDraft, result: HybridEffectResolution): void {
+  attack.selectedPrefabs = result.selectedPrefabs;
+  attack.serverEffect = result.serverEffect;
+  attack.serverSnippets = result.serverSnippets.length > 0 ? result.serverSnippets : undefined;
+  attack.unmatchedClauses = result.unmatchedClauses.length > 0 ? result.unmatchedClauses : undefined;
+  attack.matchError = undefined;
+}
+
+function applyHybridToPower(power: PowerDraft, result: HybridEffectResolution): void {
+  power.selectedPrefabs = result.selectedPrefabs;
+  power.serverEffect = result.serverEffect;
+  power.serverSnippets = result.serverSnippets.length > 0 ? result.serverSnippets : undefined;
+  power.unmatchedClauses = result.unmatchedClauses.length > 0 ? result.unmatchedClauses : undefined;
+  power.matchError = undefined;
+}
+
+function attackNeedsAutoResolve(attack: AttackDraft): boolean {
+  return (
+    attack.selectedPrefabs.length === 0 &&
+    !attack.serverEffect &&
+    !(attack.serverSnippets?.length) &&
+    !(attack.unmatchedClauses?.length)
+  );
+}
+
+function powerNeedsAutoResolve(power: PowerDraft): boolean {
+  return (
+    power.selectedPrefabs.length === 0 &&
+    !power.serverEffect &&
+    !(power.serverSnippets?.length) &&
+    !(power.unmatchedClauses?.length)
+  );
+}
+
+function trainerNeedsAutoResolve(draft: CardDraft): boolean {
+  return (
+    draft.trainerPrefabs.length === 0 &&
+    !draft.trainerServerEffect &&
+    !(draft.trainerServerSnippets?.length) &&
+    !(draft.trainerUnmatchedClauses?.length)
+  );
+}
+
 /**
- * Auto-fill selectedPrefabs from effect text when empty.
- * Unmatched effect text is preserved in the card metadata, but does not emit
- * a reduceEffect prefab block.
+ * Auto-fill selectedPrefabs / server snippets from effect text when empty.
+ * Uses hybrid clause matching: prefabs where possible, server snippets for gaps.
+ * Skips effects that already have Match / manual selections so Generate stays in sync.
  */
 export async function resolvePrefabs(draft: CardDraft): Promise<CardDraft> {
   const next: CardDraft = structuredClone(draft);
@@ -374,24 +541,12 @@ export async function resolvePrefabs(draft: CardDraft): Promise<CardDraft> {
         attack.matchError = undefined;
         continue;
       }
-      if (attack.selectedPrefabs.length > 0) {
+      if (!attackNeedsAutoResolve(attack)) {
         attack.matchError = undefined;
-        attack.serverEffect = undefined;
         continue;
       }
-      try {
-        const matched = matchEffectText(text, 'attack');
-        attack.selectedPrefabs = matchedToSelected(matched);
-        attack.matchError = undefined;
-      } catch (e) {
-        if (e instanceof MissingPrefabError) {
-          attack.selectedPrefabs = [];
-          attack.matchError = undefined;
-          attack.serverEffect = await findServerEffect(text, 'attack');
-          continue;
-        }
-        throw e;
-      }
+      const result = await resolveEffectHybrid(text, 'attack');
+      applyHybridToAttack(attack, result);
     }
   }
 
@@ -402,49 +557,39 @@ export async function resolvePrefabs(draft: CardDraft): Promise<CardDraft> {
         power.matchError = undefined;
         continue;
       }
-      if (power.selectedPrefabs.length > 0) {
+      if (!powerNeedsAutoResolve(power)) {
         power.matchError = undefined;
-        power.serverEffect = undefined;
         continue;
       }
-      try {
-        const matched = matchEffectText(text, 'power');
-        power.selectedPrefabs = matchedToSelected(matched);
-        power.matchError = undefined;
-      } catch (e) {
-        if (e instanceof MissingPrefabError) {
-          power.selectedPrefabs = [];
-          power.matchError = undefined;
-          power.serverEffect = await findServerEffect(text, 'power');
-          continue;
-        }
-        throw e;
-      }
+      const result = await resolveEffectHybrid(text, 'power');
+      applyHybridToPower(power, result);
     }
   }
 
   if (next.extends === 'TrainerCard') {
     const text = next.trainerText.trim();
-    if (next.trainerPrefabs.length > 0) {
-      next.trainerServerEffect = undefined;
-    }
-    if (text && next.trainerPrefabs.length === 0) {
-      try {
-        const matched = matchEffectText(text, 'trainer');
-        next.trainerPrefabs = matchedToSelected(matched);
-      } catch (e) {
-        if (!(e instanceof MissingPrefabError)) throw e;
-        next.trainerServerEffect = await findServerEffect(text, 'trainer');
-      }
+    if (text && trainerNeedsAutoResolve(next)) {
+      const result = await resolveEffectHybrid(text, 'trainer');
+      next.trainerPrefabs = result.selectedPrefabs;
+      next.trainerServerEffect = result.serverEffect;
+      next.trainerServerSnippets =
+        result.serverSnippets.length > 0 ? result.serverSnippets : undefined;
+      next.trainerUnmatchedClauses =
+        result.unmatchedClauses.length > 0 ? result.unmatchedClauses : undefined;
     }
   }
 
-  if (next.extends === 'EnergyCard' && next.energyText.trim()) {
-    next.energyServerEffect = await findServerEffect(next.energyText.trim(), 'energy');
+  if (next.extends === 'EnergyCard' && next.energyText.trim() && !next.energyServerEffect) {
+    const result = await resolveEffectHybrid(next.energyText.trim(), 'energy');
+    next.energyServerEffect = result.serverEffect;
   }
 
   return next;
 }
+
+/** Apply a hybrid resolution onto an attack/power/trainer for Match-from-text. */
+export { resolveEffectHybrid, describeHybridResolution } from '../serverEffects';
+export type { HybridEffectResolution };
 
 export async function generateCardSource(draft: CardDraft): Promise<string> {
   const resolved = await resolvePrefabs(draft);
@@ -462,8 +607,24 @@ export async function generateCardSource(draft: CardDraft): Promise<string> {
 
 function generatePokemon(draft: CardDraft, className: string, fullName: string): string {
   const hasEffects =
-    (draft.hasPowers && draft.powers.some(power => power.selectedPrefabs.length > 0 || Boolean(power.serverEffect))) ||
-    (draft.hasAttacks && draft.attacks.some(attack => attack.selectedPrefabs.length > 0 || Boolean(attack.serverEffect)));
+    (draft.hasPowers &&
+      draft.powers.some(power =>
+        effectHasReduceBody(
+          power.selectedPrefabs,
+          power.serverEffect,
+          power.serverSnippets,
+          power.unmatchedClauses
+        )
+      )) ||
+    (draft.hasAttacks &&
+      draft.attacks.some(attack =>
+        effectHasReduceBody(
+          attack.selectedPrefabs,
+          attack.serverEffect,
+          attack.serverSnippets,
+          attack.unmatchedClauses
+        )
+      ));
   const { fromGame, lines: prefabLines, markers, flags } = collectImports(
     draft.attacks,
     draft.powers,
@@ -480,7 +641,9 @@ function generatePokemon(draft: CardDraft, className: string, fullName: string):
     // PowerType comes from pokemon-types via game barrel or card
   }
   if (hasEffects) {
-    imports.push(`import { ${gameImports.join(', ')} } from '../../game';`);
+    if (gameImports.length > 0) {
+      imports.push(`import { ${gameImports.join(', ')} } from '../../game';`);
+    }
     imports.push(`import { Effect } from '../../game/store/effects/effect';`);
   }
   imports.push(...prefabLines);
@@ -506,7 +669,10 @@ function generatePokemon(draft: CardDraft, className: string, fullName: string):
     props.push(`  public evolvesFrom: string = '${escapeString(draft.evolvesFrom.trim())}';`);
   }
   props.push(`  public hp: number = ${Number(draft.hp) || 0};`);
-  props.push(`  public cardType: CardType = ${formatEnergyType(draft.cardType)};`);
+  const cardTypes = parseEnergyCost(draft.cardType);
+  props.push(
+    `  public cardType: CardType[] = ${formatEnergyArray(cardTypes.length > 0 ? cardTypes : ['C'])};`
+  );
 
   if (draft.weaknessType) {
     if (draft.weaknessValue === 'x2') {
@@ -561,9 +727,10 @@ function generatePokemon(draft: CardDraft, className: string, fullName: string):
 
   const reduce = generateReduceEffect(draft, markers, flags);
   uniqueImports.push(...reduce.imports);
+  const mergedImports = mergeNamedImports([...new Set(uniqueImports)]);
 
   // Ensure PowerType import when powers exist
-  let importBlock = uniqueImports.join('\n');
+  let importBlock = mergedImports.join('\n');
   if (draft.hasPowers && draft.powers.length > 0 && !importBlock.includes('PowerType')) {
     importBlock += `\nimport { PowerType } from '../../game/store/card/pokemon-types';`;
   }
@@ -581,8 +748,17 @@ ${propertyBlock}${reduceBlock}
 }
 
 function generateTrainer(draft: CardDraft, className: string, fullName: string): string {
-  const hasEffects = draft.trainerPrefabs.length > 0 || Boolean(draft.trainerServerEffect);
-  const collected = collectImports([], [], false, false, hasEffects, draft.trainerPrefabs);
+  const hasEffects = effectHasReduceBody(
+    draft.trainerPrefabs,
+    draft.trainerServerEffect,
+    draft.trainerServerSnippets,
+    draft.trainerUnmatchedClauses
+  );
+  const trainerHasServer =
+    Boolean(draft.trainerServerEffect) ||
+    (draft.trainerServerSnippets?.length ?? 0) > 0 ||
+    (draft.trainerUnmatchedClauses?.length ?? 0) > 0;
+  const collected = collectImports([], [], false, false, hasEffects, draft.trainerPrefabs, trainerHasServer);
   const reduce = generateReduceEffect(draft, collected.markers, collected.flags);
   const imports: string[] = [
     `import { TrainerCard } from '../../game/store/card/trainer-card';`,
@@ -595,7 +771,7 @@ function generateTrainer(draft: CardDraft, className: string, fullName: string):
   imports.push(...collected.lines, ...reduce.imports);
 
   const props = [
-    `  public trainerType: TrainerType = TrainerType.${draft.trainerType};`,
+    `  protected _trainerType: TrainerType = TrainerType.${draft.trainerType};`,
   ];
   if (draft.tags.trim()) {
     props.push(`  public tags = [${formatTags(draft.tags)}];`);

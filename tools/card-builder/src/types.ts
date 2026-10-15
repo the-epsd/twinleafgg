@@ -135,6 +135,11 @@ export interface MatchedPrefab {
   matchedText: string;
 }
 
+export interface PartialMatchResult {
+  matched: MatchedPrefab[];
+  unmatched: string[];
+}
+
 export interface SelectedPrefab {
   id: string;
   prefabId: string;
@@ -152,7 +157,12 @@ export interface AttackDraft {
   damageCalculation: '' | '+' | 'x' | '-';
   text: string;
   selectedPrefabs: SelectedPrefab[];
+  /** Full-effect server fallback when no prefabs matched (or weak hybrid). */
   serverEffect?: ServerEffect;
+  /** Per-clause server snippets used alongside prefabs. */
+  serverSnippets?: ServerEffect[];
+  /** Clauses that matched neither prefab nor snippet. */
+  unmatchedClauses?: string[];
   matchError?: string;
 }
 
@@ -173,6 +183,8 @@ export interface PowerDraft {
   isFossil: boolean;
   selectedPrefabs: SelectedPrefab[];
   serverEffect?: ServerEffect;
+  serverSnippets?: ServerEffect[];
+  unmatchedClauses?: string[];
   matchError?: string;
 }
 
@@ -187,6 +199,15 @@ export interface ServerEffect {
   similarity: number;
   bodyMode?: 'branch' | 'full';
   helpers?: string[];
+  /** Clause text this snippet was matched against (hybrid resolution). */
+  matchedClause?: string;
+}
+
+export interface HybridEffectResolution {
+  selectedPrefabs: SelectedPrefab[];
+  serverSnippets: ServerEffect[];
+  serverEffect?: ServerEffect;
+  unmatchedClauses: string[];
 }
 
 export interface ReprintCandidate {
@@ -206,7 +227,8 @@ export interface CardDraft {
   evolvesFrom: string;
   tags: string;
   hp: string;
-  cardType: EnergyShort;
+  /** Energy short codes, e.g. `"R"` or `"FM"` for dual-type. Emitted as `CardType[]`. */
+  cardType: string;
   weaknessType: '' | EnergyShort;
   weaknessValue: WeaknessValue;
   resistanceType: '' | EnergyShort;
@@ -226,6 +248,8 @@ export interface CardDraft {
   trainerText: string;
   trainerPrefabs: SelectedPrefab[];
   trainerServerEffect?: ServerEffect;
+  trainerServerSnippets?: ServerEffect[];
+  trainerUnmatchedClauses?: string[];
   // Energy
   energyType: 'BASIC' | 'SPECIAL';
   provides: string;

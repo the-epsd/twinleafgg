@@ -100,7 +100,11 @@ function readRequestBody(req: IncomingMessage): Promise<string> {
 }
 
 function toFileName(className: string): string {
-  return className
+  // Normalize possessives first so "Hop'sPhantump" / "HopSPhantump" → hops-phantump
+  const normalized = className
+    .replace(/[''\u2019]s(?=[A-Z])/g, 's')
+    .replace(/([A-Z])S([A-Z])/g, '$1s$2'); // HopSPhantump → HopsPhantump
+  return normalized
     .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
     .replace(/[^a-zA-Z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
@@ -219,23 +223,35 @@ function serveReprintCandidates(req: IncomingMessage, res: ServerResponse, next:
   });
 }
 
+function normalizeGameModulePath(module: string, importBase: string): string {
+  if (!module.includes('/game')) return module;
+  return `${importBase}${module.slice(module.indexOf('/game') + '/game'.length)}`;
+}
+
 function normalizeSavedSource(source: string, cardDirectory: string): string {
   const gameDirectory = join(serverSetsRoot, '../game');
   const gameImportBase = relative(cardDirectory, gameDirectory).replaceAll(sep, '/');
   const importBase = gameImportBase.startsWith('.') ? gameImportBase : `./${gameImportBase}`;
   const imports = new Map<string, Set<string>>();
   const otherImports: string[] = [];
-  const body = source.replace(/^import \{ ([^}]+) \} from ['"]([^'"]+)['"];?\s*$/gm, (_line, names: string, module: string) => {
-    const normalizedModule = module.includes('/game')
-      ? `${importBase}${module.slice(module.indexOf('/game') + '/game'.length)}`
-      : module;
+  // Allow empty `{ }` so we can drop those lines instead of leaving them behind.
+  const body = source.replace(/^import \{ ([^}]*) \} from ['"]([^'"]+)['"];?\s*$/gm, (_line, names: string, module: string) => {
+    const parsed = names.split(',').map(name => name.trim()).filter(Boolean);
+    if (parsed.length === 0) {
+      return '';
+    }
+    const normalizedModule = normalizeGameModulePath(module, importBase);
     const current = imports.get(normalizedModule) ?? new Set<string>();
-    names.split(',').map(name => name.trim()).filter(Boolean).forEach(name => current.add(name));
+    parsed.forEach(name => current.add(name));
     imports.set(normalizedModule, current);
     return '';
   });
   const remaining = body.match(/^import .+$/gm) ?? [];
-  otherImports.push(...remaining);
+  for (const line of remaining) {
+    // Drop empty named imports that didn't match / were left over
+    if (/^import \{\s*\} from/.test(line)) continue;
+    otherImports.push(line);
+  }
   const code = body.replace(/^import .+$/gm, '');
   const generatedImports = [...imports.entries()]
     .map(([module, names]) => {
@@ -669,7 +685,7 @@ function buildEffectImports(source: string, body: string, kind: ServerEffect['ki
         .filter(name => sourceUsesName(body, name));
       return names.length > 0 ? line.replace(importMatch[1], names.join(', ')) : '';
     })
-    .filter(line => Boolean(line) && !/^import \{\s*\}?\s*;?$/.test(line));
+    .filter(line => Boolean(line) && !/^import \{\s*\}(\s+from\s+['"][^'"]+['"])?\s*;?\s*$/.test(line));
   const markerImport = kind === 'attack'
     ? `import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';`
     : kind === 'power'
@@ -718,10 +734,29 @@ function buildServerEffects(): ServerEffect[] {
 
     if (source.includes('extends PokemonCard')) {
       const attackTexts = extractArrayTexts(source, 'public attacks', reducerStart);
+      const seenAttackBranches = new Set<string>();
+
+      const addAttackBranch = (index: number, body: string[] | undefined, guardLabel: string) => {
+        if (!body) return;
+        const key = `${index}:${guardLabel}:${body.join('\n')}`;
+        if (seenAttackBranches.has(key)) return;
+        seenAttackBranches.add(key);
+        addServerEffect(results, file, source, attackTexts[index] || '', body, 'attack', 'branch', helpers);
+      };
+
       for (const match of reducer.matchAll(/if\s*\(\s*WAS_ATTACK_USED\(effect,\s*(\d+),\s*this\)\s*\)\s*\{/g)) {
         const body = extractBranchBody(reducer.slice(match.index ?? 0), /^if\s*\(/);
-        const index = Number(match[1]);
-        if (body) addServerEffect(results, file, source, attackTexts[index] || '', body, 'attack', 'branch', helpers);
+        addAttackBranch(Number(match[1]), body, 'WAS_ATTACK_USED');
+      }
+
+      // Also index AFTER_ATTACK / BEFORE_DAMAGE branches for clause-level snippet lookup
+      for (const match of reducer.matchAll(/if\s*\(\s*AFTER_ATTACK\(effect,\s*(\d+),\s*this\)\s*\)\s*\{/g)) {
+        const body = extractBranchBody(reducer.slice(match.index ?? 0), /^if\s*\(/);
+        addAttackBranch(Number(match[1]), body, 'AFTER_ATTACK');
+      }
+      for (const match of reducer.matchAll(/if\s*\(\s*BEFORE_DAMAGE\(effect,\s*(\d+),\s*this\)\s*\)\s*\{/g)) {
+        const body = extractBranchBody(reducer.slice(match.index ?? 0), /^if\s*\(/);
+        addAttackBranch(Number(match[1]), body, 'BEFORE_DAMAGE');
       }
 
       const powerTexts = extractArrayTexts(source, 'public powers', reducerStart);

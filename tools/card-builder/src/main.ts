@@ -5,6 +5,7 @@ import type {
   PowerDraft,
   PowerTypeName,
   ReprintCandidate,
+  ServerEffect,
   StageName,
   WeaknessValue,
 } from './types';
@@ -15,13 +16,13 @@ import {
   STAGES,
 } from './types';
 import { getPrefabById, prefabsForScope } from './prefabs/catalog';
+import { createManualSelected } from './prefabs/matcher';
 import {
-  MissingPrefabError,
-  createManualSelected,
-  matchEffectText,
-  matchedToSelected,
-} from './prefabs/matcher';
-import { generateCardSource, parseEnergyCost } from './generator/generateCard';
+  describeHybridResolution,
+  generateCardSource,
+  parseEnergyCost,
+  resolveEffectHybrid,
+} from './generator/generateCard';
 import {
   createBrowseState,
   ensureImplementedLoaded,
@@ -242,10 +243,54 @@ function energyOptions(selected: string, includeEmpty = false): string {
   return opts.join('');
 }
 
+function renderHybridSources(options: {
+  serverEffect?: ServerEffect;
+  serverSnippets?: ServerEffect[];
+  unmatchedClauses?: string[];
+}): string {
+  const parts: string[] = [];
+  if (options.serverEffect) {
+    parts.push(
+      `<div class="hybrid-source">
+        <strong>Full server match</strong>
+        <span class="badge">${Math.round(options.serverEffect.similarity * 100)}%</span>
+        <p class="muted">${escapeHtml(options.serverEffect.source)}</p>
+        <p class="muted">${escapeHtml(options.serverEffect.effectText || options.serverEffect.attackText || '')}</p>
+      </div>`
+    );
+  }
+  for (const snippet of options.serverSnippets ?? []) {
+    const clause = snippet.matchedClause || snippet.effectText;
+    parts.push(
+      `<div class="hybrid-source">
+        <strong>Server snippet</strong>
+        <span class="badge">${Math.round(snippet.similarity * 100)}%</span>
+        <p class="muted">${escapeHtml(snippet.source)}</p>
+        <p class="muted">Clause: ${escapeHtml(clause)}</p>
+      </div>`
+    );
+  }
+  for (const clause of options.unmatchedClauses ?? []) {
+    parts.push(
+      `<div class="hybrid-unmatched">
+        <strong>Unmatched</strong>
+        <p class="muted">${escapeHtml(clause)}</p>
+      </div>`
+    );
+  }
+  if (parts.length === 0) return '';
+  return `<div class="hybrid-panel">${parts.join('')}</div>`;
+}
+
 function renderPrefabPicker(
   kind: 'attack' | 'power' | 'trainer',
   itemId: string,
-  selected: AttackDraft['selectedPrefabs']
+  selected: AttackDraft['selectedPrefabs'],
+  hybrid?: {
+    serverEffect?: ServerEffect;
+    serverSnippets?: ServerEffect[];
+    unmatchedClauses?: string[];
+  }
 ): string {
   const catalog = prefabsForScope(kind);
   const options = catalog
@@ -277,8 +322,9 @@ function renderPrefabPicker(
     .join('');
 
   return `<div class="prefab-panel">
-    <h4>reduceEffect prefabs</h4>
+    <h4>reduceEffect (prefabs + snippets)</h4>
     ${rows || '<p class="muted">No prefabs selected yet. Match from text or add manually.</p>'}
+    ${hybrid ? renderHybridSources(hybrid) : ''}
     <div class="row">
       <select data-role="prefab-select" data-kind="${kind}" data-item="${itemId}">
         <option value="">Add prefab…</option>
@@ -318,7 +364,11 @@ function renderAttack(attack: AttackDraft, index: number): string {
       <textarea data-field="attack" data-id="${attack.id}" data-key="text" rows="3" placeholder="Flip a coin. If heads, the Defending Pokemon is now Paralyzed.">${escapeHtml(attack.text)}</textarea>
     </label>
     ${attack.matchError ? `<div class="error-box">${escapeHtml(attack.matchError)}</div>` : ''}
-    ${renderPrefabPicker('attack', attack.id, attack.selectedPrefabs)}
+    ${renderPrefabPicker('attack', attack.id, attack.selectedPrefabs, {
+      serverEffect: attack.serverEffect,
+      serverSnippets: attack.serverSnippets,
+      unmatchedClauses: attack.unmatchedClauses,
+    })}
   </section>`;
 }
 
@@ -361,7 +411,11 @@ function renderPower(power: PowerDraft, index: number): string {
       <textarea data-field="power" data-id="${power.id}" data-key="text" rows="3">${escapeHtml(power.text)}</textarea>
     </label>
     ${power.matchError ? `<div class="error-box">${escapeHtml(power.matchError)}</div>` : ''}
-    ${renderPrefabPicker('power', power.id, power.selectedPrefabs)}
+    ${renderPrefabPicker('power', power.id, power.selectedPrefabs, {
+      serverEffect: power.serverEffect,
+      serverSnippets: power.serverSnippets,
+      unmatchedClauses: power.unmatchedClauses,
+    })}
   </section>`;
 }
 
@@ -373,7 +427,7 @@ function renderPokemonFields(): string {
   return `
     <div class="grid-3">
       <label>Stage<select data-root="stage">${stageOpts}</select></label>
-      <label>Card type<select data-root="cardType">${energyOptions(draft.cardType)}</select></label>
+      <label>Card type (e.g. R or FM)<input data-root="cardType" value="${escapeAttr(draft.cardType)}" placeholder="R" /></label>
       <label>HP<input type="number" data-root="hp" value="${escapeAttr(draft.hp)}" /></label>
     </div>
     <div class="grid-2">
@@ -443,9 +497,12 @@ function renderTrainerFields(): string {
       <label>Tags (comma CardTag names)<input data-root="tags" value="${escapeAttr(draft.tags)}" placeholder="ACE_SPEC" /></label>
     </div>
     <label>Text<textarea data-root="trainerText" rows="4">${escapeHtml(draft.trainerText)}</textarea></label>
-    ${renderPrefabPicker('trainer', 'trainer-effect', draft.trainerPrefabs)}
-    ${draft.trainerServerEffect ? `<p class="muted">Fallback matched ${escapeHtml(draft.trainerServerEffect.source)} (${Math.round(draft.trainerServerEffect.similarity * 100)}% text similarity).</p>` : ''}
-    <p class="muted">Trainer effects try shared prefabs first, then reuse a similar Trainer reducer from the server codebase.</p>
+    ${renderPrefabPicker('trainer', 'trainer-effect', draft.trainerPrefabs, {
+      serverEffect: draft.trainerServerEffect,
+      serverSnippets: draft.trainerServerSnippets,
+      unmatchedClauses: draft.trainerUnmatchedClauses,
+    })}
+    <p class="muted">Trainer effects match prefabs clause-by-clause, then fill gaps from similar Trainer reducers.</p>
   `;
 }
 
@@ -1101,32 +1158,45 @@ async function handleAction(action: string | null, btn: HTMLButtonElement) {
       break;
     }
     case 'match-prefabs': {
+      syncAllInputs();
       const kind = btn.getAttribute('data-kind') as 'attack' | 'power' | 'trainer';
       const itemId = btn.getAttribute('data-item')!;
       const item = kind === 'attack' ? findAttack(itemId) : kind === 'power' ? findPower(itemId) : undefined;
       const text = kind === 'trainer' ? draft.trainerText : item?.text;
-      if (!text) return;
+      if (!text?.trim()) return;
       try {
-        const matched = matchEffectText(text, kind);
+        const result = await resolveEffectHybrid(text, kind);
         if (kind === 'trainer') {
-          draft.trainerPrefabs = matchedToSelected(matched);
-          draft.trainerServerEffect = undefined;
+          draft.trainerPrefabs = result.selectedPrefabs;
+          draft.trainerServerEffect = result.serverEffect;
+          draft.trainerServerSnippets =
+            result.serverSnippets.length > 0 ? result.serverSnippets : undefined;
+          draft.trainerUnmatchedClauses =
+            result.unmatchedClauses.length > 0 ? result.unmatchedClauses : undefined;
         } else if (item) {
-          item.selectedPrefabs = matchedToSelected(matched);
+          item.selectedPrefabs = result.selectedPrefabs;
+          item.serverEffect = result.serverEffect;
+          item.serverSnippets =
+            result.serverSnippets.length > 0 ? result.serverSnippets : undefined;
+          item.unmatchedClauses =
+            result.unmatchedClauses.length > 0 ? result.unmatchedClauses : undefined;
           item.matchError = undefined;
-          item.serverEffect = undefined;
         }
-        statusMessage = matched.length
-          ? `Matched ${matched.length} prefab(s).`
-          : 'No effect text — nothing to match (plain damage attack is OK).';
+        statusMessage = describeHybridResolution(result);
         outputError = '';
       } catch (err) {
         const msg = err instanceof Error ? err.message : String(err);
         if (kind === 'trainer') {
           draft.trainerPrefabs = [];
+          draft.trainerServerEffect = undefined;
+          draft.trainerServerSnippets = undefined;
+          draft.trainerUnmatchedClauses = undefined;
         } else if (item) {
           item.matchError = msg;
           item.selectedPrefabs = [];
+          item.serverEffect = undefined;
+          item.serverSnippets = undefined;
+          item.unmatchedClauses = undefined;
         }
         statusMessage = '';
         outputError = msg;
@@ -1143,11 +1213,7 @@ async function handleAction(action: string | null, btn: HTMLButtonElement) {
         statusMessage = 'Generated successfully.';
       } catch (err) {
         outputCode = '';
-        outputError = err instanceof MissingPrefabError
-          ? err.message
-          : err instanceof Error
-            ? err.message
-            : String(err);
+        outputError = err instanceof Error ? err.message : String(err);
         statusMessage = '';
       }
       render();

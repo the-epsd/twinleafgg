@@ -1,5 +1,12 @@
 import { PREFAB_CATALOG, getPrefabById, prefabsForScope } from './catalog';
-import type { EffectKind, MatchedPrefab, PrefabDefinition, PrefabScope, SelectedPrefab } from '../types';
+import type {
+  EffectKind,
+  MatchedPrefab,
+  PartialMatchResult,
+  PrefabDefinition,
+  PrefabScope,
+  SelectedPrefab,
+} from '../types';
 
 export class MissingPrefabError extends Error {
   constructor(text: string) {
@@ -24,8 +31,7 @@ export function normalizeEffectText(text: string): string {
  * Split effect text into matchable clauses.
  * Prefers full-text compound matches first; falls back to sentence segments.
  */
-function splitClauses(normalized: string): string[] {
-  // Keep common compound openers together — matcher tries full text first.
+export function splitClauses(normalized: string): string[] {
   const parts = normalized
     .split(/(?<=\.)\s+/)
     .map(s => s.trim())
@@ -72,18 +78,25 @@ function catalogForScope(scope: EffectKind): PrefabDefinition[] {
   return prefabsForScope(scope);
 }
 
+function matchClause(clause: string, catalog: PrefabDefinition[]): MatchedPrefab | null {
+  for (const prefab of catalog) {
+    const hit = tryMatchPrefab(clause, prefab);
+    if (hit) return hit;
+  }
+  return null;
+}
+
 /**
- * Match effect text against the prefab catalog.
+ * Match effect text against the prefab catalog without failing on unmatched clauses.
  * Empty / whitespace-only text is treated as "no effect" (OK).
- * Throws MissingPrefabError if any clause cannot be matched.
  */
-export function matchEffectText(
+export function matchEffectTextPartial(
   text: string,
   scope: EffectKind
-): MatchedPrefab[] {
+): PartialMatchResult {
   let normalized = normalizeEffectText(text);
   if (!normalized) {
-    return [];
+    return { matched: [], unmatched: [] };
   }
 
   const catalog = catalogForScope(scope);
@@ -103,41 +116,79 @@ export function matchEffectText(
       }
       normalized = (once[1] || '').replace(/^[.,:;]+\s*/, '').trim();
       if (!normalized) {
-        return results;
+        return { matched: results, unmatched: [] };
       }
     }
   }
 
   // 1) Try full-text match against longer/compound patterns first
-  for (const prefab of catalog) {
-    const hit = tryMatchPrefab(normalized, prefab);
-    if (hit) {
-      return [...results, hit];
-    }
+  const fullHit = matchClause(normalized, catalog);
+  if (fullHit) {
+    return { matched: [...results, fullHit], unmatched: [] };
   }
 
-  // 2) Split into clauses and match each
+  // 2) Split into clauses and match each; gather unmatched
   const clauses = splitClauses(normalized);
-  if (clauses.length === 1 && results.length === 0) {
-    throw new MissingPrefabError(text.trim());
-  }
-  if (clauses.length === 1 && results.length > 0) {
-    // Had "once during your turn" prefix but remainder unmatched
-    throw new MissingPrefabError(normalized);
-  }
+  const unmatched: string[] = [];
 
   for (const clause of clauses) {
-    let found: MatchedPrefab | null = null;
-    for (const prefab of catalog) {
-      found = tryMatchPrefab(clause, prefab);
-      if (found) break;
+    const found = matchClause(clause, catalog);
+    if (found) {
+      results.push(found);
+    } else {
+      unmatched.push(clause);
     }
-    if (!found) {
-      throw new MissingPrefabError(clause);
-    }
-    results.push(found);
   }
-  return results;
+
+  // 3) If multiple unmatched remain, try matching them as a joined blob
+  //    (covers compound patterns that span consecutive unmatched sentences).
+  if (unmatched.length >= 2) {
+    const joined = unmatched.join(' ');
+    const blobHit = matchClause(joined, catalog);
+    if (blobHit) {
+      return { matched: [...results, blobHit], unmatched: [] };
+    }
+
+    // Greedy: try longest contiguous unmatched runs
+    const remaining: string[] = [];
+    let i = 0;
+    while (i < unmatched.length) {
+      let consumed = false;
+      for (let len = unmatched.length - i; len >= 2; len--) {
+        const run = unmatched.slice(i, i + len).join(' ');
+        const runHit = matchClause(run, catalog);
+        if (runHit) {
+          results.push(runHit);
+          i += len;
+          consumed = true;
+          break;
+        }
+      }
+      if (!consumed) {
+        remaining.push(unmatched[i]);
+        i += 1;
+      }
+    }
+    return { matched: results, unmatched: remaining };
+  }
+
+  return { matched: results, unmatched };
+}
+
+/**
+ * Match effect text against the prefab catalog.
+ * Empty / whitespace-only text is treated as "no effect" (OK).
+ * Throws MissingPrefabError if any clause cannot be matched.
+ */
+export function matchEffectText(
+  text: string,
+  scope: EffectKind
+): MatchedPrefab[] {
+  const { matched, unmatched } = matchEffectTextPartial(text, scope);
+  if (unmatched.length > 0) {
+    throw new MissingPrefabError(unmatched[0]);
+  }
+  return matched;
 }
 
 export function matchedToSelected(matched: MatchedPrefab[]): SelectedPrefab[] {

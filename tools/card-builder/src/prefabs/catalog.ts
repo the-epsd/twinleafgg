@@ -2,12 +2,45 @@ import type { PrefabDefinition } from '../types';
 
 const PREFABS = '../../game/store/prefabs/prefabs';
 const ATTACK_EFFECTS = '../../game/store/prefabs/attack-effects';
+const EFFECT_OF_ATTACK = '../../game/store/prefabs/effect-of-attack-prefabs';
 const COSTS = '../../game/store/prefabs/costs';
 
 function num(params: Record<string, string>, key: string, fallback = '0'): string {
   const raw = params[key];
   if (raw === undefined || raw === '') return fallback;
   return String(Number(raw));
+}
+
+/** Map common energy type words / letters to CardType expressions used in generated code. */
+function energyTypeExpr(raw: string | undefined): string {
+  const key = (raw || 'colorless').toLowerCase().trim();
+  const map: Record<string, string> = {
+    grass: 'G',
+    g: 'G',
+    fire: 'R',
+    r: 'R',
+    water: 'W',
+    w: 'W',
+    lightning: 'L',
+    electric: 'L',
+    l: 'L',
+    psychic: 'P',
+    p: 'P',
+    fighting: 'F',
+    f: 'F',
+    darkness: 'D',
+    dark: 'D',
+    d: 'D',
+    metal: 'M',
+    m: 'M',
+    fairy: 'Y',
+    y: 'Y',
+    dragon: 'N',
+    n: 'N',
+    colorless: 'C',
+    c: 'C',
+  };
+  return map[key] || 'C';
 }
 
 /** Catalog of reusable effect prefabs that the builder is allowed to emit. */
@@ -605,18 +638,36 @@ export const PREFAB_CATALOG: PrefabDefinition[] = [
     exampleTexts: [
       'Discard an Energy attached to this Pokemon.',
       'Discard 2 Energy attached to this Pokemon.',
+      'Discard a Fire Energy attached to this Pokemon.',
     ],
     scope: 'attack',
     importFrom: COSTS,
     importNames: ['DISCARD_X_ENERGY_FROM_THIS_POKEMON'],
-    params: [{ key: 'count', label: 'Energy count', type: 'number', defaultValue: 1 }],
+    params: [
+      { key: 'count', label: 'Energy count', type: 'number', defaultValue: 1 },
+      { key: 'energyType', label: 'Energy type (optional)', type: 'energy', defaultValue: '' },
+    ],
     patterns: [
       /^discard an energy attached to this pokemon\.?$/i,
       /^discard (\d+) energy attached to this pokemon\.?$/i,
+      /^discard an? (grass|fire|water|lightning|psychic|fighting|darkness|dark|metal|fairy|dragon|colorless) energy attached to this pokemon\.?$/i,
+      /^discard (\d+) (grass|fire|water|lightning|psychic|fighting|darkness|dark|metal|fairy|dragon|colorless) energy attached to this pokemon\.?$/i,
     ],
-    paramCaptures: { 1: 'count' },
+    paramCaptures: { 1: 'count', 2: 'energyType' },
     generateCall: (params) => {
-      const count = params.count ? num(params, 'count', '1') : '1';
+      // Typed single-energy pattern puts the type in capture group 1
+      const typedOnly = params.count && /^(grass|fire|water|lightning|psychic|fighting|darkness|dark|metal|fairy|dragon|colorless)$/i.test(params.count)
+        ? params.count
+        : undefined;
+      const energyType = typedOnly || params.energyType;
+      const count = typedOnly ? '1' : (params.count ? num(params, 'count', '1') : '1');
+      if (energyType && energyType.trim()) {
+        return {
+          lines: [
+            `DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, ${count}, ${energyTypeExpr(energyType)});`,
+          ],
+        };
+      }
       return {
         lines: [`DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, ${count});`],
       };
@@ -870,6 +921,112 @@ export const PREFAB_CATALOG: PrefabDefinition[] = [
     ],
     generateCall: () => ({
       lines: ['return OPPONENT_CANNOT_PLAY_SUPPORTER_CARDS(store, state, effect, this);'],
+      returns: true,
+    }),
+  },
+
+  // ── Protect / Detect style ───────────────────────────────────────────────
+  {
+    id: 'FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN',
+    name: 'FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN',
+    description: 'Flip coin; if heads, prevent damage and effects next turn.',
+    exampleTexts: [
+      "Flip a coin. If heads, during your opponent's next turn, prevent all damage from and effects of attacks done to this Pokemon.",
+    ],
+    scope: 'attack',
+    importFrom: EFFECT_OF_ATTACK,
+    importNames: ['FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN'],
+    params: [],
+    patterns: [
+      /^flip a coin\.?\s*if heads,? during your opponent'?s next turn,? prevent all damage from and effects of attacks done to this pokemon\.?$/i,
+      /^flip a coin\.?\s*if heads,? prevent all effects of attacks,? including damage,? done to this pokemon during your opponent'?s next turn\.?$/i,
+    ],
+    generateCall: () => ({
+      lines: [
+        'FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN(store, state, effect, this);',
+      ],
+    }),
+  },
+  {
+    id: 'FLIP_COIN_TO_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN',
+    name: 'FLIP_COIN_TO_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN',
+    description: 'Flip coin; if heads, prevent damage next turn (Stiffen).',
+    exampleTexts: [
+      "Flip a coin. If heads, during your opponent's next turn, prevent all damage done to this Pokemon by attacks.",
+    ],
+    scope: 'attack',
+    importFrom: EFFECT_OF_ATTACK,
+    importNames: ['FLIP_COIN_TO_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN'],
+    params: [],
+    patterns: [
+      /^flip a coin\.?\s*if heads,? during your opponent'?s next turn,? prevent all damage done to this pokemon(?: by attacks)?\.?$/i,
+    ],
+    generateCall: () => ({
+      lines: [
+        'FLIP_COIN_TO_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN(store, state, effect, this);',
+      ],
+    }),
+  },
+
+  // ── Damage bonuses ───────────────────────────────────────────────────────
+  {
+    id: 'THIS_ATTACK_DOES_X_MORE_DAMAGE',
+    name: 'THIS_ATTACK_DOES_X_MORE_DAMAGE',
+    description: 'This attack does X more damage (flat bonus).',
+    exampleTexts: ['This attack does 30 more damage.'],
+    scope: 'attack',
+    importFrom: PREFABS,
+    importNames: ['THIS_ATTACK_DOES_X_MORE_DAMAGE'],
+    params: [{ key: 'damage', label: 'Bonus damage', type: 'number', defaultValue: 30 }],
+    patterns: [/^this attack does (\d+) more damage\.?$/i],
+    paramCaptures: { 1: 'damage' },
+    generateCall: (params) => ({
+      lines: [
+        `THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, ${num(params, 'damage', '30')});`,
+      ],
+    }),
+  },
+
+  // ── Trainer draw / shuffle ───────────────────────────────────────────────
+  {
+    id: 'SHUFFLE_HAND_INTO_DECK_THEN_DRAW',
+    name: 'SHUFFLE_HAND_INTO_DECK_THEN_DRAW',
+    description: 'Shuffle hand into deck, then draw X cards.',
+    exampleTexts: [
+      'Shuffle your hand into your deck. Then, draw 7 cards.',
+      'Shuffle your hand into your deck, then draw 6 cards.',
+    ],
+    scope: 'both',
+    importFrom: PREFABS,
+    importNames: ['SHUFFLE_HAND_INTO_DECK_THEN_DRAW'],
+    params: [{ key: 'count', label: 'Draw count', type: 'number', defaultValue: 7 }],
+    patterns: [
+      /^shuffle your hand into your deck\.?\s*then,? draw (\d+) cards?\.?$/i,
+      /^shuffle your hand into your deck,? then draw (\d+) cards?\.?$/i,
+    ],
+    paramCaptures: { 1: 'count' },
+    generateCall: (params) => ({
+      lines: [
+        `return SHUFFLE_HAND_INTO_DECK_THEN_DRAW(store, state, player, { drawCount: ${num(params, 'count', '7')}, excludeCard: this, sourceCard: this });`,
+      ],
+      returns: true,
+    }),
+  },
+  {
+    id: 'DISCARD_HAND_THEN_DRAW',
+    name: 'SHUFFLE_HAND_INTO_DECK_THEN_DRAW (discard wording)',
+    description: 'Discard your hand and draw X (emits shuffle-then-draw prefab).',
+    exampleTexts: ['Discard your hand and draw 7 cards.'],
+    scope: 'both',
+    importFrom: PREFABS,
+    importNames: ['SHUFFLE_HAND_INTO_DECK_THEN_DRAW'],
+    params: [{ key: 'count', label: 'Draw count', type: 'number', defaultValue: 7 }],
+    patterns: [/^discard your hand and draw (\d+) cards?\.?$/i],
+    paramCaptures: { 1: 'count' },
+    generateCall: (params) => ({
+      lines: [
+        `return SHUFFLE_HAND_INTO_DECK_THEN_DRAW(store, state, player, { drawCount: ${num(params, 'count', '7')}, excludeCard: this, sourceCard: this });`,
+      ],
       returns: true,
     }),
   },

@@ -13,8 +13,11 @@ function uid(prefix: string): string {
   return `${prefix}-${Math.random().toString(36).slice(2, 9)}`;
 }
 
+/** "Hop's Phantump" → "HopsPhantump" (possessive 's stays with the name). */
 function toPascalCase(str: string): string {
   return str
+    .replace(/[''\u2019]s\b/gi, 's')
+    .replace(/[''\u2019]/g, '')
     .replace(/[^a-zA-Z0-9 ]/g, ' ')
     .split(/\s+/)
     .filter(Boolean)
@@ -254,7 +257,11 @@ export function mapTcgDexCardToDraft(card: TcgDexCard): CardDraft {
   base.evolvesFrom = card.evolveFrom || '';
   base.tags = mapTags(card);
   base.hp = String(card.hp ?? 0);
-  base.cardType = mapEnergyType(card.types?.[0]) || 'C';
+  base.cardType =
+    (card.types || [])
+      .map(t => mapEnergyType(t))
+      .filter((t): t is EnergyShort => Boolean(t))
+      .join('') || 'C';
 
   const weak = card.weaknesses?.[0];
   if (weak) {

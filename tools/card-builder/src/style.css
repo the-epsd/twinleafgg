@@ -397,6 +397,29 @@ button.danger {
   border-top: 1px dashed var(--border-strong);
 }
 
+.hybrid-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin: 0.6rem 0;
+}
+
+.hybrid-source,
+.hybrid-unmatched {
+  background: rgba(4, 8, 22, 0.45);
+  border: 1px solid var(--border);
+  border-radius: 3px 10px 3px 10px;
+  padding: 0.55rem 0.7rem;
+}
+
+.hybrid-source .badge {
+  margin-left: 0.35rem;
+}
+
+.hybrid-unmatched {
+  border-color: color-mix(in srgb, var(--danger) 40%, transparent);
+}
+
 .prefab-row {
   background: rgba(4, 8, 22, 0.62);
   border: 1px solid var(--border);

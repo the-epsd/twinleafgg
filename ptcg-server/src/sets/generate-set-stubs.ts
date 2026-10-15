@@ -124,7 +124,8 @@ function toPascalCase(str: string): string {
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     .replace(/♀/g, 'F').replace(/♂/g, 'M')
     .replace(/&/g, ' And ')
-    .replace(/'/g, '')
+    .replace(/[''\u2019]s\b/gi, 's')
+    .replace(/[''\u2019]/g, '')
     .split(/[^a-zA-Z0-9]+/)
     .filter(Boolean)
     .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
@@ -136,6 +137,8 @@ function toKebabCase(str: string): string {
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     .replace(/♀/g, '-f').replace(/♂/g, '-m')
     .replace(/&/g, '-and-')
+    .replace(/[''\u2019]s\b/gi, 's')
+    .replace(/[''\u2019]/g, '')
     .replace(/[^a-zA-Z0-9 -]/g, '')
     .trim()
     .toLowerCase()
@@ -348,9 +351,12 @@ function generatePokemonStub(card: any, className: string, setCode: string, need
     lines.push(`  public evolvesFrom: string = '${escapeSingleQuotes(card.evolvesFrom)}';`);
   }
 
-  // cardType
-  const cardType = card.types && card.types[0] ? typeShort(card.types[0]) : 'C';
-  lines.push(`  public cardType: CardType[] = [${cardType}];`);
+  // cardType (array — dual-types like Legend / Delta Species included)
+  const cardTypes =
+    card.types && card.types.length > 0
+      ? card.types.map(t => typeShort(t)).filter(Boolean)
+      : ['C'];
+  lines.push(`  public cardType: CardType[] = [${cardTypes.join(', ')}];`);
 
   // hp
   lines.push(`  public hp: number = ${parseInt(card.hp, 10) || 0};`);
@@ -482,7 +488,7 @@ function generateTrainerStub(card: any, className: string, setCode: string, full
   lines.push('');
   lines.push(`export class ${className} extends TrainerCard {`);
 
-  lines.push(`  public trainerType: TrainerType = ${getTrainerType(card.subtypes)};`);
+  lines.push(`  protected _trainerType: TrainerType = ${getTrainerType(card.subtypes)};`);
 
   if (tags.length) {
     lines.push(`  public tags = [${tags.join(', ')}];`);
