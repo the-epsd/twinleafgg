@@ -74,6 +74,7 @@ export class RetreatStartEffect implements Effect {
   readonly type: string = GameEffects.RETREAT_START_EFFECT;
   public preventDefault = false;
   public player: Player;
+  public ignoreStatusConditions = false;
 
   constructor(player: Player) {
     this.player = player;
