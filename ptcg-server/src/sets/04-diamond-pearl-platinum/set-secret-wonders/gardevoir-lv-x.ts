@@ -22,6 +22,8 @@ import {
 import { Effect } from '../../../game/store/effects/effect';
 import {
   ABILITY_USED,
+  BLOCK_IF_HAS_SPECIAL_CONDITION,
+  IS_POKEPOWER_BLOCKED,
   SWITCH_ACTIVE_WITH_BENCHED,
   WAS_ATTACK_USED,
   WAS_POWER_USED,
@@ -67,8 +69,13 @@ export class GardevoirLVX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Teleportation
-    if (WAS_POWER_USED(effect, 1, this)) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
+
+      if (IS_POKEPOWER_BLOCKED(store, state, player, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
+      BLOCK_IF_HAS_SPECIAL_CONDITION(player, this);
 
       if (player.marker.hasMarker(this.TELEPORTATION_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
