@@ -20,6 +20,8 @@ import { Heliolisk } from './heliolisk';
 import { Helioptile } from './helioptile';
 import { Hitmontop } from './hitmontop';
 import { Hoopa } from './hoopa';
+import { HopsPhantump } from './hops-phantump';
+import { HopsTrevenant } from './hops-trevenant';
 import { Mawile } from './mawile';
 import { Medicham } from './medicham';
 import { Meditite } from './meditite';
@@ -110,6 +112,8 @@ export const setAscendedHeroes: Card[] = [
   new Helioptile(),
   new Hitmontop(),
   new Hoopa(),
+  new HopsPhantump(),
+  new HopsTrevenant(),
   new Mawile(),
   new Medicham(),
   new Meditite(),
