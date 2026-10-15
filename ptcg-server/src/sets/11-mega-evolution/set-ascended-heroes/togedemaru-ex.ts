@@ -7,7 +7,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/s
 
 export class TogedemaruEx extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public hp: number = 190;
   public cardType: CardType[] = [M];
   public weakness = [{ type: R }];
@@ -20,7 +20,7 @@ export class TogedemaruEx extends PokemonCard {
     damage: 20,
     text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
   },
-{
+  {
     name: 'Spiky Rolling',
     cost: [M, C],
     damage: 80,
@@ -38,8 +38,7 @@ export class TogedemaruEx extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Stun Needle
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      COIN_FLIP_PROMPT(store, state, player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
           YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
         }
@@ -48,9 +47,13 @@ export class TogedemaruEx extends PokemonCard {
 
     // Spiky Rolling
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      if (player.marker.hasMarker(this.CLEAR_BUBBLE_MARKER, this)) {
-      effect.damage += 80;
+      const lastAttack = state.playerLastAttack?.[effect.player.id];
+      if (
+        lastAttack &&
+        lastAttack.sourceCard === this &&
+        lastAttack.attack.name === 'Spiky Rolling'
+      ) {
+        effect.damage += 80;
       }
     }
 

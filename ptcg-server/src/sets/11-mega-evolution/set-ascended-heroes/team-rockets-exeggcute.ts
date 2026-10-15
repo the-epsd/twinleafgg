@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { CardType, Stage } from '../../../game/store/card/card-types';
+import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
@@ -7,6 +7,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class TeamRocketsExeggcute extends PokemonCard {
   public stage: Stage = Stage.BASIC;
+  protected _tags = [CardTag.TEAM_ROCKET];
   public hp: number = 60;
   public cardType: CardType[] = [P];
   public weakness = [{ type: D }];

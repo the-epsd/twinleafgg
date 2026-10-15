@@ -2,7 +2,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { THIS_ATTACK_DOES_X_MORE_DAMAGE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class GalarianObstagoon extends PokemonCard {
@@ -20,7 +20,7 @@ export class GalarianObstagoon extends PokemonCard {
     damageCalculation: 'x',
     text: 'This attack does 70 damage for each damage counter on your opponent\'s Active Pokémon.'
   },
-{
+  {
     name: 'Punk Smash',
     cost: [D, C, C],
     damage: 160,
@@ -37,9 +37,9 @@ export class GalarianObstagoon extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Scarring Shout
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
-      THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, 2 * opponent.active.damage);
+      const damageCounters = Math.floor(opponent.active.damage / 10);
+      effect.damage = 70 * damageCounters;
     }
 
     // Punk Smash

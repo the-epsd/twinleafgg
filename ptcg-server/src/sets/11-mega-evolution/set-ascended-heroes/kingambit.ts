@@ -1,11 +1,13 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../../game/store/card/card-types';
-import { PowerType, State, StoreLike } from '../../../game';
+import { PowerType, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
-import { StateUtils, pokemonHasCardTypeOptional } from '../../..';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
-import {WAS_ATTACK_USED, WAS_POWER_USED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import {
+  IS_ABILITY_BLOCKED,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Kingambit extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -19,8 +21,7 @@ export class Kingambit extends PokemonCard {
   public powers = [{
     name: 'Supreme Overlord',
     powerType: PowerType.ABILITY,
-    text: 'Attacks used by this Pokémon do 30 more damage to your opponent\'s Active Pokémon for each Prize card your opponent has taken (before applying Weakness and Resistance).',
-    useWhenInPlay: true
+    text: 'Attacks used by this Pokémon do 30 more damage to your opponent\'s Active Pokémon for each Prize card your opponent has taken (before applying Weakness and Resistance).'
   }];
 
   public attacks = [{
@@ -39,14 +40,13 @@ export class Kingambit extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Supreme Overlord
-    if (WAS_POWER_USED(effect, 0, this)) {
+    if (effect instanceof DealDamageEffect && effect.source.getPokemonCard() === this) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      if (player.active.getPokemonCard()?.stage == Stage.BASIC && pokemonHasCardTypeOptional(opponent.active.getPokemonCard(), CardType.DARK)) {
-      if (effect instanceof DealDamageEffect) {
-      effect.damage += 30;
-      }
-      return state;
+      if (!IS_ABILITY_BLOCKED(store, state, player, this)) {
+        const opponent = StateUtils.getOpponent(state, player);
+        if (effect.target === opponent.active) {
+          effect.damage += 30 * opponent.prizesTaken;
+        }
       }
     }
 

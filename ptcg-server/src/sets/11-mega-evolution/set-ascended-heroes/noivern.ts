@@ -19,7 +19,7 @@ export class Noivern extends PokemonCard {
     damage: 40,
     text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
   },
-{
+  {
     name: 'Enhanced Blade',
     cost: [P, D],
     damage: 70,
@@ -43,7 +43,7 @@ export class Noivern extends PokemonCard {
     // Enhanced Blade
     if (WAS_ATTACK_USED(effect, 1, this)) {
       if (effect.source.tools.length > 0) {
-      effect.damage += 80;
+        effect.damage += 70;
       }
     }
 

@@ -6,7 +6,7 @@ import { DRAW_CARDS, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from 
 
 export class ZangooseEx extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.POKEMON_ex];
   public hp: number = 200;
   public cardType: CardType[] = [C];
   public weakness = [{ type: F }];

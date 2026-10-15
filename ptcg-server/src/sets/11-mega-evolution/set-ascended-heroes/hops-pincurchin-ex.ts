@@ -1,12 +1,18 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
-import { PowerType, State, StoreLike } from '../../../game';
+import { PowerType, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { DRAW_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
+import {
+  DRAW_CARDS,
+  IS_ABILITY_BLOCKED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class HopsPincurchinEx extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_ex];
+  protected _tags = [CardTag.HOPS, CardTag.POKEMON_ex];
   public hp: number = 200;
   public cardType: CardType[] = [L];
   public weakness = [{ type: F }];
@@ -15,8 +21,7 @@ export class HopsPincurchinEx extends PokemonCard {
   public powers = [{
     name: 'Counterattack Quills',
     powerType: PowerType.ABILITY,
-    text: 'If this Pokémon is in the Active Spot and is damaged by an attack from your opponent\'s Pokémon (even if this Pokémon is Knocked Out), place 3 damage counters on the Attacking Pokémon.',
-    useWhenInPlay: true
+    text: 'If this Pokémon is in the Active Spot and is damaged by an attack from your opponent\'s Pokémon (even if this Pokémon is Knocked Out), place 3 damage counters on the Attacking Pokémon.'
   }];
 
   public attacks = [{
@@ -35,15 +40,19 @@ export class HopsPincurchinEx extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Counterattack Quills
-    if (WAS_POWER_USED(effect, 0, this)) {
-      // TODO unmatched: "If this Pokemon is in the Active Spot and is damaged by an attack from your opponent's Pokemon (even if this Pokemon is Knocked Out), place 3 damage counters on the Attacking Pokemon."
-      return state;
+    if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
+      if (!IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        store.reduceEffect(
+          state,
+          new PlaceDamageCountersEffect(abilityOwner, effect.source, 30, this, this.powers[0]),
+        );
+      }
     }
 
     // Spiky Thunder
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      DRAW_CARDS(store, state, player, 2);
+      DRAW_CARDS(store, state, effect.player, 2);
     }
 
     return state;

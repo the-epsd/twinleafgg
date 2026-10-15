@@ -34,7 +34,6 @@ export class Drampa extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Dragon Strike
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
       THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN(effect.player, this.attacks[1]);
     }
 

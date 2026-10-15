@@ -1,9 +1,8 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardType, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, State, StateUtils, StoreLike } from '../../../game';
+import { State, StoreLike, TrainerCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import {SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTACK_USED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Noibat extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -18,7 +17,7 @@ export class Noibat extends PokemonCard {
     damage: 0,
     text: 'Search your deck for a Pokémon Tool card, reveal it, and put it into your hand. Then, shuffle your deck.'
   },
-{
+  {
     name: 'Bite',
     cost: [P, D],
     damage: 30,
@@ -35,35 +34,18 @@ export class Noibat extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Knickknack Carrying
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      if (player.deck.cards.length === 0) {
-      return state;
-      } else {
-      return store.prompt(state, new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_HAND,
-      player.deck,
-      { superType: SuperType.TRAINER, trainerType: TrainerType.TOOL },
-      { min: 0, max: 1, allowCancel: true }
-      ), selectedCards => {
-      const cards = selectedCards || [];
-      // Operation canceled by the user
-      if (cards.length === 0) {
-      return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-      player.deck.applyOrder(order);
-      return state;
-      });
-      }
-      cards.forEach((card, index) => {
-      MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this });
-      });
-      if (cards.length > 0) {
-      SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-      }
-      SHUFFLE_DECK(store, state, player);
-      });
-      }
+      const filter: Partial<TrainerCard> = {
+        superType: SuperType.TRAINER,
+        trainerType: TrainerType.TOOL,
+      };
+      SEARCH_DECK_FOR_CARDS_TO_HAND(
+        store,
+        state,
+        effect.player,
+        this,
+        filter,
+        { min: 0, max: 1, allowCancel: true },
+      );
     }
 
     return state;

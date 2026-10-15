@@ -2,7 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PowerType, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { GET_PLAYER_PRIZES, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
+import { GET_PLAYER_PRIZES, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Carbink extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -14,8 +15,7 @@ export class Carbink extends PokemonCard {
   public powers = [{
     name: 'Double Type',
     powerType: PowerType.ABILITY,
-    text: 'As long as this Pokémon is in play, it is Fighting and Psychic type.',
-    useWhenInPlay: true
+    text: 'As long as this Pokémon is in play, it is Fighting and Psychic type.'
   }];
 
   public attacks = [{
@@ -35,17 +35,19 @@ export class Carbink extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Double Type
-    if (WAS_POWER_USED(effect, 0, this)) {
-      // TODO unmatched: "As long as this Pokemon is in play, it is Fighting and Psychic type."
+    if (effect instanceof CheckPokemonTypeEffect && effect.target.getPokemonCard() === this) {
+      const player = StateUtils.findOwner(state, effect.target);
+      if (!IS_ABILITY_BLOCKED(store, state, player, this)) {
+        effect.cardTypes = [F, P];
+      }
       return state;
     }
 
     // Counter Jewel
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
-      if (GET_PLAYER_PRIZES(opponent).length <= 4) {
-      effect.damage += 90;
+      if (GET_PLAYER_PRIZES(opponent).length <= 2) {
+        effect.damage += 100;
       }
     }
 

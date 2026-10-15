@@ -1,11 +1,25 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { CardType, Stage } from '../../../game/store/card/card-types';
-import { State, StoreLike } from '../../../game';
+import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
+import {
+  ChoosePokemonPrompt,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
+import {
+  MULTIPLE_COIN_FLIPS_PROMPT,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class TeamRocketsExeggutor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
+  protected _tags = [CardTag.TEAM_ROCKET];
   public evolvesFrom: string = 'Team Rocket\'s Exeggcute';
   public hp: number = 140;
   public cardType: CardType[] = [P];
@@ -19,7 +33,7 @@ export class TeamRocketsExeggutor extends PokemonCard {
     damage: 0,
     text: 'Flip 3 coins. If all of them are heads, Knock Out 1 of your opponent\'s Pokémon.'
   },
-{
+  {
     name: 'Double-Edge',
     cost: [P, C, C],
     damage: 150,
@@ -36,8 +50,27 @@ export class TeamRocketsExeggutor extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Tri Kinesis
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.player, this);
-      // TODO unmatched: "If all of them are heads, Knock Out 1 of your opponent's Pokemon."
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, results => {
+        if (results.every(r => r === true) && opponent.getPokemonInPlay().length > 0) {
+          store.prompt(
+            state,
+            new ChoosePokemonPrompt(
+              player.id,
+              GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+              PlayerType.TOP_PLAYER,
+              [SlotType.ACTIVE, SlotType.BENCH],
+              { min: 1, max: 1, allowCancel: false },
+            ),
+            targets => {
+              if (targets && targets.length > 0) {
+                KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect, targets[0]);
+              }
+            },
+          );
+        }
+      });
     }
 
     // Double-Edge

@@ -18,7 +18,7 @@ export class Pangoro extends PokemonCard {
     damage: 40,
     text: ''
   },
-{
+  {
     name: 'Master\'s Punch',
     cost: [D, D, C],
     damage: 80,
@@ -37,14 +37,14 @@ export class Pangoro extends PokemonCard {
     // Master's Punch
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      let isMagmortarWithDamageInPlay = false;
+      let hasDamagedBenchedPancham = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-      if (card.name === 'Magmortar' && cardList.damage > 0) {
-      isMagmortarWithDamageInPlay = true;
-      }
+        if (cardList !== player.active && card.name === 'Pancham' && cardList.damage > 0) {
+          hasDamagedBenchedPancham = true;
+        }
       });
-      if (isMagmortarWithDamageInPlay) {
-      effect.damage += 90;
+      if (hasDamagedBenchedPancham) {
+        effect.damage += 120;
       }
     }
 

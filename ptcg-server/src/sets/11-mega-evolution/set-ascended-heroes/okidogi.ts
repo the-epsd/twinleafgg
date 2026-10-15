@@ -17,7 +17,7 @@ export class Okidogi extends PokemonCard {
     damage: 20,
     text: ''
   },
-{
+  {
     name: 'Settle the Score',
     cost: [F, F, C],
     damage: 80,
@@ -35,10 +35,8 @@ export class Okidogi extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Settle the Score
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const prizesTaken = opponent.prizesTakenLastTurn;
-      effect.damage += prizesTaken * 100;
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      effect.damage += opponent.prizesTakenLastTurn * 60;
     }
 
     return state;
