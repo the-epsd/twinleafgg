@@ -46,6 +46,11 @@ function extractPublicText(source: string): string {
   return match ? extractStringExpression(match[1]) : '';
 }
 
+/**
+ * Normalize game imports to `../../game/...` for the JSON effect catalog index.
+ * Depth is intentionally fixed for the catalog; `normalizeSavedSource` rewrites
+ * paths to the correct relative depth when cards are saved into set folders.
+ */
 function normalizeGameImport(line: string): string {
   return line.replace(
     /from ['"][^'"]*\/game(\/[^'"]*)?['"]/,
@@ -240,8 +245,9 @@ function normalizeSavedSource(source: string, cardDirectory: string): string {
   const importBase = gameImportBase.startsWith('.') ? gameImportBase : `./${gameImportBase}`;
   const imports = new Map<string, Set<string>>();
   const otherImports: string[] = [];
-  // Allow empty `{ }` so we can drop those lines instead of leaving them behind.
-  const body = source.replace(/^import \{ ([^}]*) \} from ['"]([^'"]+)['"];?\s*$/gm, (_line, names: string, module: string) => {
+  // Optional whitespace after `{` / before `}` so server snippets like
+  // `import {WAS_ATTACK_USED, ...} from '...'` are still rewritten.
+  const body = source.replace(/^import \{\s*([^}]*)\s*\} from ['"]([^'"]+)['"];?\s*$/gm, (_line, names: string, module: string) => {
     const parsed = names.split(',').map(name => name.trim()).filter(Boolean);
     if (parsed.length === 0) {
       return '';
@@ -256,7 +262,14 @@ function normalizeSavedSource(source: string, cardDirectory: string): string {
   for (const line of remaining) {
     // Drop empty named imports that didn't match / were left over
     if (/^import \{\s*\} from/.test(line)) continue;
-    otherImports.push(line);
+    // Rewrite any leftover import that still points at /game (default, namespace, etc.)
+    otherImports.push(
+      line.replace(/from ['"]([^'"]+)['"]/, (match, module: string) => {
+        if (!module.includes('/game')) return match;
+        const normalized = normalizeGameModulePath(module, importBase);
+        return match.replace(module, normalized);
+      })
+    );
   }
   const code = body.replace(/^import .+$/gm, '');
   const generatedImports = [...imports.entries()]

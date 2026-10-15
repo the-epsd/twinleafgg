@@ -2,7 +2,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardType, EnergyType, Stage, SuperType } from '../../../game/store/card/card-types';
 import { EnergyCard, GameError, GameMessage, PowerType, SlotType, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON, IS_ABILITY_BLOCKED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON, IS_POKEPOWER_BLOCKED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class Typhlosion extends PokemonCard {
@@ -10,7 +10,7 @@ export class Typhlosion extends PokemonCard {
   public evolvesFrom: string = 'Quilava';
   public hp: number = 110;
   public cardType: CardType[] = [R];
-  public weakness = [{ type: W, value: 30 }];
+  public weakness = [{ type: W, value: +30 }];
   public retreat = [C, C];
 
   public powers = [{
@@ -43,7 +43,7 @@ export class Typhlosion extends PokemonCard {
         && (card as EnergyCard).provides.includes(CardType.FIRE)
       );
 
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (IS_POKEPOWER_BLOCKED(store, state, player, this)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
@@ -64,7 +64,7 @@ export class Typhlosion extends PokemonCard {
 
     // Evaporating Heat
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      return DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect, [CardType.WATER, CardType.ANY]);
+      return DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect, [CardType.WATER]);
     }
 
     return state;

@@ -103,10 +103,10 @@ function mapCost(cost: string[] | undefined): string {
 
 function mapWeaknessValue(value: string | undefined): WeaknessValue {
   if (!value) return 'x2';
-  const v = value.trim().toLowerCase();
-  if (v === 'x2' || v === '×2' || v === '*2') return 'x2';
-  if (v.includes('20') || v === '+20') return '+20';
-  if (v.includes('30') || v === '+30') return '+30';
+  const v = value.trim().toLowerCase().replace(/×/g, 'x');
+  if (v === 'x2' || v === '*2' || v === '2x') return 'x2';
+  const plus = v.match(/^\+?\s*(\d+)\s*$/);
+  if (plus) return `+${Number(plus[1])}` as WeaknessValue;
   return 'x2';
 }
 

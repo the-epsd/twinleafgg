@@ -35,35 +35,33 @@ export class Mesprit extends PokemonCard {
 
     // Upper Material
     if (effect instanceof CheckRetreatCostEffect) {
-      const player = effect.player;
-      const cardList = StateUtils.findCardList(state, this);
-      const owner = StateUtils.findOwner(state, cardList);
-      const active = effect.player.active.getPokemonCard();
-
-      if (owner !== player || active === undefined) {
+      const retreating = effect.player;
+      const active = retreating.active.getPokemonCard();
+      if (!active || (active.name !== 'Uxie' && active.name !== 'Mesprit' && active.name !== 'Azelf')) {
         return state;
       }
 
-      let isMespritInPlay = false;
-      let isUxieInPlay = false;
-      let isAzelfInPlay = false;
-      owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
+
+      let hasThisMesprit = false;
+      let hasUxie = false;
+      let hasAzelf = false;
+      owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (_list, card) => {
         if (card === this) {
-          isMespritInPlay = true;
+          hasThisMesprit = true;
         } else if (card.name === 'Uxie') {
-          isUxieInPlay = true;
+          hasUxie = true;
         } else if (card.name === 'Azelf') {
-          isAzelfInPlay = true;
+          hasAzelf = true;
         }
       });
 
-      const isTrioInPlay = isMespritInPlay && isUxieInPlay && isAzelfInPlay;
-
-      if (!isTrioInPlay) {
+      if (!hasThisMesprit || !hasUxie || !hasAzelf) {
         return state;
       }
 
-      if (!IS_POKEBODY_BLOCKED(store, state, player, this) && (active.name === 'Uxie' || active.name === 'Mesprit' || active.name === 'Azelf')) {
+      if (!IS_POKEBODY_BLOCKED(store, state, owner, this)) {
         effect.cost = [];
       }
       return state;

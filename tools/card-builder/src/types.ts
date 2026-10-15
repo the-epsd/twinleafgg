@@ -82,7 +82,8 @@ export const POWER_TYPES = [
 
 export type PowerTypeName = (typeof POWER_TYPES)[number];
 
-export type WeaknessValue = 'x2' | '+20' | '+30';
+/** Multiplier (`x2`) or plus-weakness (`+10`, `+20`, `+30`, `+40`, …). */
+export type WeaknessValue = 'x2' | `+${number}`;
 
 export type PrefabScope = EffectKind | 'both';
 

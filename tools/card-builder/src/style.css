@@ -876,9 +876,33 @@ button.linkish,
   box-shadow: inset 0 0 28px rgba(62, 199, 201, 0.06);
 }
 
+.source-banner.is-implemented {
+  border-color: rgba(154, 163, 154, 0.55);
+  box-shadow: inset 0 0 28px rgba(154, 163, 154, 0.1);
+}
+
 .source-banner > div {
   min-width: 0;
   flex: 1;
+}
+
+.source-banner-head {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.impl-status {
+  display: inline-block;
+  padding: 0.15rem 0.45rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--bg, #0b100c);
+  background: var(--muted, #9aa39a);
+  border-radius: 3px;
 }
 
 .source-banner img {
@@ -904,6 +928,20 @@ button.linkish,
 
 .source-banner .muted {
   margin: 0.25rem 0 0;
+}
+
+.card-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.card-nav-label {
+  min-width: 4.5rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
 }
 
 .image-modal-backdrop {

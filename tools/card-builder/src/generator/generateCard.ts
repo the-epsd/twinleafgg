@@ -65,7 +65,7 @@ function mergeNamedImports(lines: string[]): string[] {
     if (/^import \{\s*\} from/.test(line)) {
       continue;
     }
-    const match = line.match(/^import \{ ([^}]*) \} from '([^']+)';$/);
+    const match = line.match(/^import \{\s*([^}]*)\s*\} from '([^']+)';$/);
     if (!match) {
       if (line.trim()) other.push(line);
       continue;
@@ -84,6 +84,34 @@ function mergeNamedImports(lines: string[]): string[] {
       .map(([from, names]) => `import { ${[...names].sort().join(', ')} } from '${from}';`),
     ...other,
   ];
+}
+
+/** Activatable powers use WAS_POWER_USED; passive Poké-Bodies / locked abilities do not. */
+function isActivatablePower(power: PowerDraft): boolean {
+  return power.powerType === 'POKEPOWER' || power.useWhenInPlay;
+}
+
+function parseWeaknessPlusValue(value: string): number {
+  const n = Number(String(value).replace(/^\+/, ''));
+  return Number.isFinite(n) ? n : 30;
+}
+
+/** Prefer DP-era Poké-Power helpers over Ability-era names. */
+function rewritePokePowerHelpers(text: string): string {
+  return text.replace(/\bIS_ABILITY_BLOCKED\b/g, 'IS_POKEPOWER_BLOCKED');
+}
+
+function rewritePokePowerImportLine(line: string): string {
+  if (!line.includes('IS_ABILITY_BLOCKED')) return line;
+  const rewritten = rewritePokePowerHelpers(line);
+  // Deduplicate if both names somehow appear after rewrite
+  return rewritten.replace(
+    /^import \{\s*([^}]*)\s*\} from ('[^']+');$/,
+    (_m, names: string, from: string) => {
+      const unique = [...new Set(names.split(',').map(n => n.trim()).filter(Boolean))];
+      return `import { ${unique.sort().join(', ')} } from ${from};`;
+    }
+  );
 }
 
 function fullNameFor(draft: CardDraft): string {
@@ -126,17 +154,25 @@ function collectImports(
   const markers = new Set<string>();
   const flags = new Set<string>();
 
-  const addSelected = (selected: SelectedPrefab[], kind: EffectKind, index: number) => {
+  const addSelected = (
+    selected: SelectedPrefab[],
+    kind: EffectKind,
+    index: number,
+    options: { guard?: boolean; pokePower?: boolean } = {}
+  ) => {
+    const shouldGuard = options.guard !== false;
     for (const sel of selected) {
       const prefab = getPrefabById(sel.prefabId);
       if (!prefab) continue;
       if (prefab.importNames.length > 0) {
         const set = prefabImports.get(prefab.importFrom) ?? new Set();
-        for (const name of prefab.importNames) set.add(name);
+        for (const name of prefab.importNames) {
+          set.add(options.pokePower && name === 'IS_ABILITY_BLOCKED' ? 'IS_POKEPOWER_BLOCKED' : name);
+        }
         prefabImports.set(prefab.importFrom, set);
       }
       for (const line of prefab.extraImports ?? []) {
-        extraImportLines.add(line);
+        extraImportLines.add(options.pokePower ? rewritePokePowerImportLine(line) : line);
       }
       if (prefab.id === 'USE_ABILITY_ONCE_PER_TURN') {
         markers.add(sel.params.marker || 'ABILITY_USED_MARKER');
@@ -144,7 +180,9 @@ function collectImports(
       if (prefab.id === 'SWITCH_ACTIVE_WITH_BENCHED_SELF') {
         flags.add(`usedSwitchAttack${index}`);
       }
-      ensureGuard(prefabImports, kind);
+      if (shouldGuard) {
+        ensureGuard(prefabImports, kind);
+      }
     }
   };
 
@@ -161,8 +199,13 @@ function collectImports(
   }
   if (hasPowers) {
     powers.forEach((p, i) => {
-      addSelected(p.selectedPrefabs, 'power', i);
+      const activatable = isActivatablePower(p);
+      addSelected(p.selectedPrefabs, 'power', i, {
+        guard: activatable,
+        pokePower: p.powerType === 'POKEPOWER',
+      });
       if (
+        activatable &&
         p.selectedPrefabs.length === 0 &&
         (p.serverEffect || (p.serverSnippets?.length ?? 0) > 0 || (p.unmatchedClauses?.length ?? 0) > 0)
       ) {
@@ -250,12 +293,17 @@ function effectHasReduceBody(
 function collectServerMeta(
   serverImports: Set<string>,
   helpers: Set<string>,
-  effects: Array<ServerEffect | undefined>
+  effects: Array<ServerEffect | undefined>,
+  options: { pokePower?: boolean } = {}
 ): void {
   for (const effect of effects) {
     if (!effect) continue;
-    for (const line of effect.imports) serverImports.add(line);
-    for (const helper of effect.helpers ?? []) helpers.add(helper);
+    for (const line of effect.imports) {
+      serverImports.add(options.pokePower ? rewritePokePowerImportLine(line) : line);
+    }
+    for (const helper of effect.helpers ?? []) {
+      helpers.add(options.pokePower ? rewritePokePowerHelpers(helper) : helper);
+    }
   }
 }
 
@@ -274,6 +322,10 @@ function emitHybridBlockBody(options: {
   companions: string[];
   /** Powers/trainers typically return state; attacks often fall through. */
   defaultReturn: boolean;
+  /** Passive Poké-Body: label unmatched TODOs distinctly. */
+  passivePokeBody?: boolean;
+  /** Rewrite Ability-era helpers to Poké-Power helpers. */
+  pokePower?: boolean;
 }): { lines: string[]; returns: boolean } {
   const {
     kind,
@@ -285,12 +337,18 @@ function emitHybridBlockBody(options: {
     unmatchedClauses = [],
     companions,
     defaultReturn,
+    passivePokeBody = false,
+    pokePower = false,
   } = options;
+
+  const maybeRewrite = (line: string) => (pokePower ? rewritePokePowerHelpers(line) : line);
 
   // Exclusive full-effect copy when no prefabs were kept
   if (serverEffect && selectedPrefabs.length === 0 && serverSnippets.length === 0) {
     return {
-      lines: serverEffect.body.map(line => (line.startsWith('      ') ? line.trimStart() : line)),
+      lines: serverEffect.body
+        .map(line => (line.startsWith('      ') ? line.trimStart() : line))
+        .map(maybeRewrite),
       returns: true,
     };
   }
@@ -307,16 +365,18 @@ function emitHybridBlockBody(options: {
       attackName: kind === 'attack' ? name : undefined,
       powerName: kind !== 'attack' ? name : undefined,
     });
-    generatedLines.push(...result.lines);
+    generatedLines.push(...result.lines.map(maybeRewrite));
     if (result.returns) returns = true;
     if (prefab.generateCompanions) {
       companions.push(
-        ...prefab.generateCompanions(sel.params, {
-          kind,
-          index,
-          attackName: kind === 'attack' ? name : undefined,
-          powerName: kind !== 'attack' ? name : undefined,
-        })
+        ...prefab
+          .generateCompanions(sel.params, {
+            kind,
+            index,
+            attackName: kind === 'attack' ? name : undefined,
+            powerName: kind !== 'attack' ? name : undefined,
+          })
+          .map(maybeRewrite)
       );
     }
   }
@@ -327,12 +387,13 @@ function emitHybridBlockBody(options: {
       if (!trimmed) continue;
       // Skip leftover attribution / TODO comments from source cards
       if (/^\s*\/\//.test(trimmed) && /\bfrom\b|\bTODO unmatched\b/i.test(trimmed)) continue;
-      generatedLines.push(trimmed);
+      generatedLines.push(maybeRewrite(trimmed));
     }
   }
 
   for (const clause of unmatchedClauses) {
-    generatedLines.push(`// TODO unmatched: "${clause.replace(/"/g, '\\"')}"`);
+    const label = passivePokeBody ? 'TODO unmatched Poké-Body' : 'TODO unmatched';
+    generatedLines.push(`// ${label}: "${clause.replace(/"/g, '\\"')}"`);
   }
 
   // Bare `player` identifier only — ignore `effect.player`
@@ -379,12 +440,16 @@ function generateReduceEffect(
     ) {
       return;
     }
-    collectServerMeta(serverImports, helpers, [
-      power.serverEffect,
-      ...(power.serverSnippets ?? []),
-    ]);
+    const activatable = isActivatablePower(power);
+    const pokePower = power.powerType === 'POKEPOWER';
+    const passivePokeBody = power.powerType === 'POKEBODY' || !activatable;
+    collectServerMeta(
+      serverImports,
+      helpers,
+      [power.serverEffect, ...(power.serverSnippets ?? [])],
+      { pokePower }
+    );
     body.push(`    // ${power.name || `Power ${index + 1}`}`);
-    body.push(`    if (WAS_POWER_USED(effect, ${index}, this)) {`);
     const { lines } = emitHybridBlockBody({
       kind: 'power',
       index,
@@ -394,10 +459,18 @@ function generateReduceEffect(
       serverSnippets: power.serverSnippets,
       unmatchedClauses: power.unmatchedClauses,
       companions,
-      defaultReturn: true,
+      defaultReturn: activatable,
+      passivePokeBody,
+      pokePower,
     });
-    body.push(...lines.map(line => `      ${line}`));
-    body.push(`    }`);
+    if (activatable) {
+      body.push(`    if (WAS_POWER_USED(effect, ${index}, this)) {`);
+      body.push(...lines.map(line => `      ${line}`));
+      body.push(`    }`);
+    } else {
+      // Passive Poké-Bodies / non-activatable powers: emit reducer checks directly
+      body.push(...lines.map(line => `    ${line}`));
+    }
     body.push('');
   });
 
@@ -678,7 +751,7 @@ function generatePokemon(draft: CardDraft, className: string, fullName: string):
     if (draft.weaknessValue === 'x2') {
       props.push(`  public weakness = [{ type: ${formatEnergyType(draft.weaknessType)} }];`);
     } else {
-      const value = draft.weaknessValue === '+20' ? 20 : 30;
+      const value = parseWeaknessPlusValue(draft.weaknessValue);
       props.push(`  public weakness = [{ type: ${formatEnergyType(draft.weaknessType)}, value: ${value} }];`);
     }
   } else {

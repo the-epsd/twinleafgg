@@ -34,6 +34,7 @@ import {
   pickCardToDraft,
   renderBrowse,
   runSearch,
+  visibleBrowseCards,
 } from './tcgdex/browse';
 import type { BrowseSourceMeta } from './tcgdex/mapCardToDraft';
 import {
@@ -43,7 +44,7 @@ import {
   TcgDexApiError,
   resetDataSource,
 } from './tcgdex/client';
-import { clearImplementedCache } from './data/implemented';
+import { clearImplementedCache, isImplemented } from './data/implemented';
 import {
   applyRemovedDuplicate,
   createDuplicatesState,
@@ -219,6 +220,109 @@ async function ensureSeriesLoaded() {
   await ensureImplementedLoaded(browse);
   await loadSeries(browse);
   render();
+}
+
+function browseCardNav(): {
+  cards: ReturnType<typeof visibleBrowseCards>;
+  index: number;
+  canPrev: boolean;
+  canNext: boolean;
+  label: string;
+} | null {
+  if (!sourceMeta || browse.cards.length === 0) return null;
+  const visible = visibleBrowseCards(browse);
+  let cards = visible;
+  let index = cards.findIndex(c => c.id === sourceMeta!.tcgDexId);
+  // Current card may be hidden by the implemented filter — fall back to full list.
+  if (index < 0) {
+    cards = browse.cards;
+    index = cards.findIndex(c => c.id === sourceMeta!.tcgDexId);
+  }
+  if (index < 0) return null;
+  const canPrev =
+    index > 0 || (browse.level === 'search' && browse.searchOffset > 0);
+  const canNext =
+    index < cards.length - 1 || (browse.level === 'search' && browse.searchHasMore);
+  return {
+    cards,
+    index,
+    canPrev,
+    canNext,
+    label: `${index + 1 + (browse.level === 'search' ? browse.searchOffset : 0)} / ${
+      browse.level === 'search' && browse.searchHasMore
+        ? `${cards.length + browse.searchOffset}+`
+        : String(cards.length + (browse.level === 'search' ? browse.searchOffset : 0))
+    }`,
+  };
+}
+
+async function openCardInEditor(id: string): Promise<void> {
+  clearReprintState();
+  imageModalOpen = false;
+  imageModalUrl = '';
+  browse.loading = true;
+  statusMessage = `Loading ${id}…`;
+  outputError = '';
+  render();
+  try {
+    const { draft: next, meta } = await pickCardToDraft(id);
+    draft = next;
+    sourceMeta = meta;
+    outputCode = '';
+    view = 'editor';
+    statusMessage = `Pre-filled from ${id}. Match prefabs, then Generate.`;
+    browse.loading = false;
+  } catch (err) {
+    browse.loading = false;
+    statusMessage = '';
+    outputError =
+      err instanceof TcgDexApiError
+        ? err.message
+        : err instanceof Error
+          ? err.message
+          : String(err);
+  }
+  render(view === 'editor' ? 'top' : 'preserve');
+  if (view === 'editor') void refreshReprintCandidates();
+}
+
+async function navigateBrowseCard(direction: -1 | 1): Promise<void> {
+  const nav = browseCardNav();
+  if (!nav) return;
+  const nextIndex = nav.index + direction;
+  if (nextIndex >= 0 && nextIndex < nav.cards.length) {
+    await openCardInEditor(nav.cards[nextIndex].id);
+    return;
+  }
+  if (browse.level !== 'search') return;
+
+  if (direction === 1 && browse.searchHasMore) {
+    browse.loading = true;
+    statusMessage = `Searching ${browse.searchQuery}…`;
+    outputError = '';
+    browse.searchOffset += browse.searchPageSize;
+    render();
+    await runSearch(browse, browse.searchQuery);
+    const nextCards = visibleBrowseCards(browse);
+    const target = nextCards[0] || browse.cards[0];
+    if (target) await openCardInEditor(target.id);
+    else render();
+    return;
+  }
+
+  if (direction === -1 && browse.searchOffset > 0) {
+    browse.loading = true;
+    statusMessage = `Searching ${browse.searchQuery}…`;
+    outputError = '';
+    browse.searchOffset = Math.max(0, browse.searchOffset - browse.searchPageSize);
+    render();
+    await runSearch(browse, browse.searchQuery);
+    const prevCards = visibleBrowseCards(browse);
+    const list = prevCards.length > 0 ? prevCards : browse.cards;
+    const target = list[list.length - 1];
+    if (target) await openCardInEditor(target.id);
+    else render();
+  }
 }
 
 async function ensureDuplicatesLoaded(force = false) {
@@ -441,8 +545,10 @@ function renderPokemonFields(): string {
       <label>Weakness value
         <select data-root="weaknessValue">
           <option value="x2" ${draft.weaknessValue === 'x2' ? 'selected' : ''}>2x</option>
+          <option value="+10" ${draft.weaknessValue === '+10' ? 'selected' : ''}>+10</option>
           <option value="+20" ${draft.weaknessValue === '+20' ? 'selected' : ''}>+20</option>
           <option value="+30" ${draft.weaknessValue === '+30' ? 'selected' : ''}>+30</option>
+          <option value="+40" ${draft.weaknessValue === '+40' ? 'selected' : ''}>+40</option>
         </select>
       </label>
       <label>Retreat (C per cost)<input data-root="retreat" value="${escapeAttr(draft.retreat)}" placeholder="CCC" /></label>
@@ -609,6 +715,7 @@ function render(scrollMode: RenderScrollMode = 'preserve') {
       : null;
   const selectedReprint = selectedReprintCandidate();
   const canSave = Boolean(outputCode || (saveAsReprint && selectedReprint));
+  const cardNav = view === 'editor' ? browseCardNav() : null;
 
   const heroActions =
     view === 'browse'
@@ -620,19 +727,39 @@ function render(scrollMode: RenderScrollMode = 'preserve') {
            <button type="button" data-action="reload-duplicates">Rescan</button>
            <button type="button" data-action="show-editor">Blank card form</button>`
         : `<button type="button" data-action="show-browse">← Browse cards</button>
+         ${
+           cardNav
+             ? `<button type="button" data-action="prev-card" ${cardNav.canPrev ? '' : 'disabled'} title="Previous card in browse list">← Prev</button>
+                <button type="button" data-action="next-card" ${cardNav.canNext ? '' : 'disabled'} title="Next card in browse list">Next →</button>`
+             : ''
+         }
          <button type="button" class="primary" data-action="generate">Generate card</button>
          <button type="button" data-action="save" ${canSave ? '' : 'disabled'}>${saveAsReprint && selectedReprint ? 'Save reprint to other-prints.ts' : 'Save to ptcg-server'}</button>
          <button type="button" data-action="copy" ${outputCode ? '' : 'disabled'}>Copy output</button>
          <button type="button" data-action="reset">Reset form</button>`;
 
+  const cardIsImplemented =
+    Boolean(sourceMeta) && isImplemented(browse.implementedIds, sourceMeta!.tcgDexId);
   const sourceBanner =
     view === 'editor' && sourceMeta
-      ? `<div class="source-banner">
+      ? `<div class="source-banner${cardIsImplemented ? ' is-implemented' : ''}">
           ${sourceMeta.imageUrl ? `<button type="button" class="source-image-button" data-action="open-image-modal" aria-label="Enlarge card image"><img src="${escapeAttr(sourceMeta.imageUrl)}" alt="Reference card" /></button>` : ''}
           <div>
-            <strong>Loaded from local catalog</strong>
+            <div class="source-banner-head">
+              <strong>Loaded from local catalog</strong>
+              ${cardIsImplemented ? '<span class="impl-status" title="This card ID is already present in ptcg-server">Implemented</span>' : ''}
+            </div>
             <p class="muted">${escapeHtml(sourceMeta.tcgDexId)}${sourceMeta.setName ? ` · ${escapeHtml(sourceMeta.setName)}` : ''}${sourceMeta.rarity ? ` · ${escapeHtml(sourceMeta.rarity)}` : ''}</p>
             <p class="muted">Art is reference only — generated <code>cardImage</code> stays <code>assets/cardback.png</code>. Match prefabs from attack/power text before generating.</p>
+            ${
+              cardNav
+                ? `<div class="card-nav">
+                    <button type="button" data-action="prev-card" ${cardNav.canPrev ? '' : 'disabled'} aria-label="Previous card">← Previous</button>
+                    <span class="card-nav-label muted">${escapeHtml(cardNav.label)}</span>
+                    <button type="button" data-action="next-card" ${cardNav.canNext ? '' : 'disabled'} aria-label="Next card">Next →</button>
+                  </div>`
+                : ''
+            }
           </div>
         </div>`
       : '';
@@ -902,30 +1029,7 @@ async function handleBrowse(action: string | null, btn: HTMLButtonElement) {
     case 'pick-card': {
       const id = btn.getAttribute('data-id')!;
       browseScrollY = window.scrollY;
-      browse.loading = true;
-      statusMessage = `Loading ${id}…`;
-      outputError = '';
-      render();
-      try {
-        const { draft: next, meta } = await pickCardToDraft(id);
-        draft = next;
-        sourceMeta = meta;
-        outputCode = '';
-        view = 'editor';
-        statusMessage = `Pre-filled from ${id}. Match prefabs, then Generate.`;
-        browse.loading = false;
-      } catch (err) {
-        browse.loading = false;
-        statusMessage = '';
-        outputError =
-          err instanceof TcgDexApiError
-            ? err.message
-            : err instanceof Error
-              ? err.message
-              : String(err);
-      }
-      render(view === 'editor' ? 'top' : 'preserve');
-      if (view === 'editor') void refreshReprintCandidates();
+      await openCardInEditor(id);
       break;
     }
   }
@@ -1059,6 +1163,12 @@ function bindEvents() {
 
 async function handleAction(action: string | null, btn: HTMLButtonElement) {
   switch (action) {
+    case 'prev-card':
+      void navigateBrowseCard(-1);
+      break;
+    case 'next-card':
+      void navigateBrowseCard(1);
+      break;
     case 'show-browse':
       imageModalOpen = false;
       imageModalUrl = '';

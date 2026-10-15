@@ -3,6 +3,87 @@ import { matchEffectTextPartial, matchedToSelected } from './prefabs/matcher';
 
 let cached: ServerEffect[] | null = null;
 
+/** Markers the generator commonly auto-declares from prefabs. */
+const AUTO_DECLARED_MARKERS = new Set(['ABILITY_USED_MARKER']);
+
+const COMMON_TOKENS = new Set([
+  'the',
+  'this',
+  'that',
+  'your',
+  'opponent',
+  'opponents',
+  'pokemon',
+  'active',
+  'benched',
+  'bench',
+  'damage',
+  'attack',
+  'attacks',
+  'during',
+  'next',
+  'turn',
+  'once',
+  'flip',
+  'coin',
+  'from',
+  'with',
+  'into',
+  'onto',
+  'and',
+  'or',
+  'for',
+  'each',
+  'then',
+  'when',
+  'if',
+  'put',
+  'search',
+  'deck',
+  'hand',
+  'discard',
+  'pile',
+  'shuffle',
+  'draw',
+  'card',
+  'cards',
+  'energy',
+  'special',
+  'condition',
+  'does',
+  'do',
+  'less',
+  'more',
+  'times',
+  'until',
+  'end',
+  'of',
+  'a',
+  'an',
+  'to',
+  'is',
+  'are',
+  'was',
+  'were',
+  'be',
+  'by',
+  'as',
+  'in',
+  'on',
+  'at',
+  'his',
+  'her',
+  'their',
+  'you',
+  'may',
+  'cannot',
+  'cant',
+  'dont',
+  'apply',
+  'weakness',
+  'resistance',
+]);
+
 function normalize(text: string): string {
   return text
     .normalize('NFKD')
@@ -34,8 +115,57 @@ function similarity(left: string, right: string): number {
 
 function thresholdFor(kind: EffectKind | undefined, clauseMode: boolean): number {
   if (kind === 'energy') return 0.68;
-  if (clauseMode) return 0.7;
-  return 0.75;
+  if (clauseMode) return 0.85;
+  return 0.85;
+}
+
+/** Distinctive tokens: longer words, pokemon-ish names, and specific numbers. */
+function distinctiveTokens(text: string): string[] {
+  return normalize(text)
+    .split(/\s+/)
+    .filter(Boolean)
+    .filter(token => {
+      if (/^\d+$/.test(token)) return token.length >= 2 || Number(token) >= 10;
+      if (COMMON_TOKENS.has(token)) return false;
+      return token.length >= 5;
+    });
+}
+
+/**
+ * Reject full-text matches that are only weakly related despite clearing the
+ * numeric threshold (length mismatch or few shared distinctive tokens).
+ */
+function isConfidentTextMatch(query: string, effectText: string, score: number): boolean {
+  if (score < 0.85) return false;
+  const qNorm = normalize(query);
+  const eNorm = normalize(effectText);
+  if (!qNorm || !eNorm) return false;
+
+  const lenRatio = Math.min(qNorm.length, eNorm.length) / Math.max(qNorm.length, eNorm.length);
+  if (lenRatio < 0.45) return false;
+
+  const qDist = distinctiveTokens(query);
+  if (qDist.length === 0) return score >= 0.9;
+  const eDist = new Set(distinctiveTokens(effectText));
+  const shared = qDist.filter(t => eDist.has(t)).length;
+  return shared / qDist.length >= 0.4;
+}
+
+/**
+ * Skip snippets that reference `this.SOME_MARKER` when that marker would not be
+ * auto-declared by the generator (avoids pasting WISHING_STAR_MARKER etc.).
+ */
+function referencesUndeclaredMarkers(effect: ServerEffect): boolean {
+  const body = effect.body.join('\n');
+  const refs = [...body.matchAll(/this\.([A-Z][A-Z0-9_]*_MARKER)\b/g)].map(m => m[1]);
+  return refs.some(name => !AUTO_DECLARED_MARKERS.has(name));
+}
+
+function isUsableSnippet(effect: ServerEffect, query: string, minScore: number): boolean {
+  if (effect.similarity < minScore) return false;
+  if (referencesUndeclaredMarkers(effect)) return false;
+  const effectText = effect.effectText || effect.attackText || '';
+  return isConfidentTextMatch(query, effectText, effect.similarity);
 }
 
 export async function loadServerEffects(): Promise<ServerEffect[]> {
@@ -73,6 +203,7 @@ export async function findServerEffect(
   const minScore = options.minScore ?? thresholdFor(kind, Boolean(options.clauseMode));
   const ranked = effects
     .filter(effect => !kind || effect.kind === kind || (!effect.kind && kind === 'attack'))
+    .filter(effect => !referencesUndeclaredMarkers(effect))
     .map(effect => {
       const primary = similarity(text, effect.effectText || effect.attackText || '');
       // Slight preference for shorter, prefab-using branches (cleaner reuse)
@@ -84,7 +215,10 @@ export async function findServerEffect(
         primary,
       };
     })
-    .filter(({ primary, score }) => primary >= minScore || score >= minScore)
+    .filter(({ primary, score, effect }) => {
+      if (primary < minScore && score < minScore) return false;
+      return isConfidentTextMatch(text, effect.effectText || effect.attackText || '', primary);
+    })
     .sort((a, b) => {
       if (b.primary !== a.primary) return b.primary - a.primary;
       if (b.score !== a.score) return b.score - a.score;
@@ -107,7 +241,7 @@ export async function findServerEffectsForClauses(
   const missed: string[] = [];
   for (const clause of clauses) {
     const hit = await findServerEffect(clause, kind, { clauseMode: true });
-    if (hit) {
+    if (hit && isUsableSnippet(hit, clause, 0.85)) {
       hits.push({ ...hit, matchedClause: clause });
     } else {
       missed.push(clause);
@@ -190,12 +324,9 @@ export async function resolveEffectHybrid(
     }
   }
 
-  // Hybrid: keep prefabs; only attach clause snippets that are strong enough.
-  const strongSnippets = hits.filter(h => {
-    if (h.similarity >= 0.9) return true;
-    if (h.similarity >= 0.75 && h.body.length <= 12) return true;
-    return false;
-  });
+  // Hybrid: keep prefabs; only attach high-confidence clause snippets (>= 0.9).
+  // Prefer unmatched TODOs over low-confidence pastes with wrong species/markers.
+  const strongSnippets = hits.filter(h => h.similarity >= 0.9 && isUsableSnippet(h, h.matchedClause || trimmed, 0.9));
   const strongClauses = new Set(strongSnippets.map(s => s.matchedClause).filter(Boolean));
   const stillUnmatched = filterUnmatchedCoveredBySnippets(
     [
