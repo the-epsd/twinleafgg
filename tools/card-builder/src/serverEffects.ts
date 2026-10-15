@@ -19,12 +19,17 @@ function similarity(left: string, right: string): number {
   const bNorm = normalize(right);
   if (!aNorm || !bNorm) return 0;
   if (aNorm === bNorm) return 1;
+  // Contained substring boost (handles slight wording differences around a shared core)
+  if (aNorm.length >= 20 && bNorm.includes(aNorm)) return 0.92;
+  if (bNorm.length >= 20 && aNorm.includes(bNorm)) return 0.9;
   const a = new Set(aNorm.split(/\s+/).filter(Boolean));
   const b = new Set(bNorm.split(/\s+/).filter(Boolean));
   if (a.size === 0 || b.size === 0) return 0;
   let overlap = 0;
   for (const token of a) if (b.has(token)) overlap++;
-  return overlap / Math.max(a.size, b.size);
+  const jaccard = overlap / Math.max(a.size, b.size);
+  const coverage = overlap / Math.min(a.size, b.size);
+  return Math.max(jaccard, coverage * 0.85);
 }
 
 function thresholdFor(kind: EffectKind | undefined, clauseMode: boolean): number {
@@ -68,18 +73,26 @@ export async function findServerEffect(
   const minScore = options.minScore ?? thresholdFor(kind, Boolean(options.clauseMode));
   const ranked = effects
     .filter(effect => !kind || effect.kind === kind || (!effect.kind && kind === 'attack'))
-    .map(effect => ({
-      effect,
-      score: similarity(text, effect.effectText || effect.attackText || ''),
-    }))
-    .filter(({ score }) => score >= minScore)
+    .map(effect => {
+      const primary = similarity(text, effect.effectText || effect.attackText || '');
+      // Slight preference for shorter, prefab-using branches (cleaner reuse)
+      const prefabBonus = (effect.prefabsUsed?.length ?? 0) > 0 ? 0.01 : 0;
+      const branchBonus = effect.bodyMode === 'branch' ? 0.01 : 0;
+      return {
+        effect,
+        score: Math.min(1, primary + prefabBonus + branchBonus),
+        primary,
+      };
+    })
+    .filter(({ primary, score }) => primary >= minScore || score >= minScore)
     .sort((a, b) => {
+      if (b.primary !== a.primary) return b.primary - a.primary;
       if (b.score !== a.score) return b.score - a.score;
       return a.effect.body.length - b.effect.body.length;
     });
   const best = ranked[0];
   if (!best) return undefined;
-  return { ...best.effect, similarity: best.score };
+  return { ...best.effect, similarity: best.primary };
 }
 
 /**

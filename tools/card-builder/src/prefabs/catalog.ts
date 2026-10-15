@@ -43,8 +43,11 @@ function energyTypeExpr(raw: string | undefined): string {
   return map[key] || 'C';
 }
 
-/** Catalog of reusable effect prefabs that the builder is allowed to emit. */
-export const PREFAB_CATALOG: PrefabDefinition[] = [
+/**
+ * Hand-tuned prefabs with high-quality patterns (match priority over auto-indexed engine prefabs).
+ * The live catalog is `PREFAB_CATALOG`, which merges these with `/engine-prefabs.json`.
+ */
+export const CURATED_PREFAB_CATALOG: PrefabDefinition[] = [
   // ── Drawing ──────────────────────────────────────────────────────────────
   {
     id: 'DRAW_CARDS',
@@ -1230,10 +1233,27 @@ export const PREFAB_CATALOG: PrefabDefinition[] = [
   },
 ];
 
+/** Live catalog: curated first, then auto-indexed engine prefabs (filled by mergeEnginePrefabs). */
+export let PREFAB_CATALOG: PrefabDefinition[] = [...CURATED_PREFAB_CATALOG];
+
+export function mergeEnginePrefabs(enginePrefabs: PrefabDefinition[]): void {
+  const curatedIds = new Set(CURATED_PREFAB_CATALOG.map(p => p.id));
+  const extras = enginePrefabs.filter(p => !curatedIds.has(p.id));
+  PREFAB_CATALOG = [...CURATED_PREFAB_CATALOG, ...extras];
+}
+
 export function getPrefabById(id: string): PrefabDefinition | undefined {
   return PREFAB_CATALOG.find(p => p.id === id);
 }
 
 export function prefabsForScope(scope: 'attack' | 'power' | 'trainer' | 'energy'): PrefabDefinition[] {
   return PREFAB_CATALOG.filter(p => p.scope === scope || p.scope === 'both');
+}
+
+export function catalogStats(): { curated: number; total: number; withPatterns: number } {
+  return {
+    curated: CURATED_PREFAB_CATALOG.length,
+    total: PREFAB_CATALOG.length,
+    withPatterns: PREFAB_CATALOG.filter(p => p.patterns.length > 0).length,
+  };
 }

@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "sync-data": "node scripts/sync-data.mjs",
+    "index-engine": "node lib/engineIndex.mjs",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"

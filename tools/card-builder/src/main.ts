@@ -15,8 +15,10 @@ import {
   POWER_TYPES,
   STAGES,
 } from './types';
-import { getPrefabById, prefabsForScope } from './prefabs/catalog';
+import { catalogStats, getPrefabById, mergeEnginePrefabs, prefabsForScope } from './prefabs/catalog';
 import { createManualSelected } from './prefabs/matcher';
+import { engineRecordToPrefab, loadEnginePrefabIndex } from './prefabs/enginePrefabs';
+import { clearServerEffectsCache } from './serverEffects';
 import {
   describeHybridResolution,
   generateCardSource,
@@ -694,16 +696,21 @@ function render(scrollMode: RenderScrollMode = 'preserve') {
         >${escapeHtml(outputCode)}</textarea>
         ${renderReprintSection()}
         <details class="catalog-help">
-          <summary>Available attack/ability prefab patterns</summary>
+          <summary>Available prefabs (${catalogStats().total}: ${catalogStats().curated} curated + ${catalogStats().total - catalogStats().curated} engine; ${catalogStats().withPatterns} with text patterns)</summary>
           <ul>
             ${prefabsForScope('attack')
-              .concat(prefabsForScope('power').filter((p) => p.scope === 'power'))
+              .concat(prefabsForScope('power'))
+              .concat(prefabsForScope('trainer'))
+              .filter((p, i, arr) => arr.findIndex(x => x.id === p.id) === i)
+              .filter(p => p.patterns.length > 0 || !p.description.startsWith('[helper]'))
+              .slice(0, 200)
               .map(
                 (p) =>
                   `<li><strong>${escapeHtml(p.name)}</strong> — ${escapeHtml(p.exampleTexts[0] || p.description)}</li>`
               )
               .join('')}
           </ul>
+          <p class="muted">Full engine catalog is in the Add prefab dropdown (includes helpers). Match from text uses curated patterns first, then JSDoc examples, then similar card reducers from every implemented set card.</p>
         </details>
       </aside>
     </main>`;
@@ -1378,5 +1385,20 @@ function escapeAttr(s: string): string {
 // Silence unused type imports used only for casts in comments
 void (0 as unknown as EnergyShort | PowerTypeName | StageName | WeaknessValue);
 
+async function ensureEngineKnowledgeLoaded(): Promise<void> {
+  try {
+    const index = await loadEnginePrefabIndex();
+    mergeEnginePrefabs(index.prefabs.map(engineRecordToPrefab));
+    clearServerEffectsCache();
+    const stats = catalogStats();
+    console.info(
+      `[card-builder] Engine knowledge: ${index.count} prefabs indexed, catalog ${stats.total} (${stats.curated} curated, ${stats.withPatterns} with patterns)`
+    );
+  } catch (error) {
+    console.warn('[card-builder] Failed to load engine prefabs; using curated catalog only.', error);
+  }
+}
+
 render();
+void ensureEngineKnowledgeLoaded().then(() => render());
 void ensureSeriesLoaded();

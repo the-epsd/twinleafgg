@@ -201,6 +201,13 @@ export interface ServerEffect {
   helpers?: string[];
   /** Clause text this snippet was matched against (hybrid resolution). */
   matchedClause?: string;
+  cardName?: string;
+  set?: string;
+  fullName?: string;
+  /** Prefab / UPPER_SNAKE helpers referenced in the body. */
+  prefabsUsed?: string[];
+  /** Guard that produced this branch (WAS_ATTACK_USED, JUST_EVOLVED, …). */
+  guard?: string;
 }
 
 export interface HybridEffectResolution {
