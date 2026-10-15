@@ -102,9 +102,20 @@ export function matchEffectTextPartial(
   const catalog = catalogForScope(scope);
   const results: MatchedPrefab[] = [];
 
+  // Baby Evolution is a full Poké-Power — match before the generic once-per-turn stub.
+  if (scope === 'power') {
+    const babyPrefab = catalog.find(p => p.id === 'BABY_EVOLUTION');
+    if (babyPrefab) {
+      const babyHit = tryMatchPrefab(normalized, babyPrefab);
+      if (babyHit) {
+        return { matched: [babyHit], unmatched: [] };
+      }
+    }
+  }
+
   // Powers often start with "Once during your turn, ..."
   if (scope === 'power') {
-    const once = normalized.match(/^once during your turn\.?(?:\s*[,:])?\s*(.*)$/i);
+    const once = normalized.match(/^once during your turn(?:\s*\([^)]*\))?\.?(?:\s*[,:])?\s*(.*)$/i);
     if (once) {
       const oncePrefab = catalog.find(p => p.id === 'USE_ABILITY_ONCE_PER_TURN');
       if (oncePrefab) {
@@ -115,6 +126,15 @@ export function matchEffectTextPartial(
         });
       }
       normalized = (once[1] || '').replace(/^[.,:;]+\s*/, '').trim();
+      // After stripping once-per-turn, try Baby Evolution on the remainder
+      const babyPrefab = catalog.find(p => p.id === 'BABY_EVOLUTION');
+      if (babyPrefab) {
+        const babyHit = tryMatchPrefab(normalized, babyPrefab);
+        if (babyHit) {
+          // Baby Evolution implementations do not use the once-per-turn marker stub
+          return { matched: [babyHit], unmatched: [] };
+        }
+      }
       if (!normalized) {
         return { matched: results, unmatched: [] };
       }

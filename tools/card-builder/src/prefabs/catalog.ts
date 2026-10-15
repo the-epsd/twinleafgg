@@ -199,17 +199,25 @@ export const PREFAB_CATALOG: PrefabDefinition[] = [
     }),
   },
 
-  // ── Self special conditions (ability-sourced) ────────────────────────────
+  // ── Self special conditions ──────────────────────────────────────────────
   {
     id: 'ADD_SLEEP_TO_PLAYER_ACTIVE',
     name: 'ADD_SLEEP_TO_PLAYER_ACTIVE',
-    description: 'This Pokemon is now Asleep. (ability-sourced)',
-    exampleTexts: ['This Pokemon is now Asleep.'],
-    scope: 'power',
+    description: 'This Pokemon (or a named Pokemon) is now Asleep.',
+    exampleTexts: [
+      'This Pokemon is now Asleep.',
+      'Snorlax is now Asleep.',
+      'Bibarel is now Asleep.',
+    ],
+    scope: 'both',
     importFrom: PREFABS,
     importNames: ['ADD_SLEEP_TO_PLAYER_ACTIVE'],
     params: [],
-    patterns: [/^this pokemon is now asleep\.?$/i],
+    patterns: [
+      /^this pokemon is now asleep\.?$/i,
+      // Named self-sleep (Snorlax/Bibarel/etc.) — exclude Defending / opponent wording
+      /^(?!the defending)(?!your opponent)[A-Za-z][A-Za-z0-9.' -]* is now asleep\.?$/i,
+    ],
     generateCall: () => ({
       lines: ['ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, player, this);'],
     }),
@@ -598,7 +606,12 @@ export const PREFAB_CATALOG: PrefabDefinition[] = [
       `import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';`,
     ],
     params: [],
-    patterns: [/^switch this pokemon with 1 of your benched pokemon\.?$/i],
+    patterns: [
+      /^switch this pokemon with 1 of your benched pokemon\.?$/i,
+      /^switch [A-Za-z][A-Za-z0-9.' -]* with 1 of your benched pokemon\.?$/i,
+      /^you may switch this pokemon with 1 of your benched pokemon\.?$/i,
+      /^you may switch [A-Za-z][A-Za-z0-9.' -]* with 1 of your benched pokemon\.?$/i,
+    ],
     generateCall: (_params, ctx) => ({
       lines: [`this.usedSwitchAttack${ctx.index} = true;`],
     }),
@@ -617,6 +630,7 @@ export const PREFAB_CATALOG: PrefabDefinition[] = [
     description: "Switch 1 of opponent's Benched with their Active (you choose).",
     exampleTexts: [
       "Switch 1 of your opponent's Benched Pokemon with their Active Pokemon.",
+      "Switch 1 of your opponent's Benched Pokemon with 1 of the Defending Pokemon.",
     ],
     scope: 'attack',
     importFrom: PREFABS,
@@ -624,10 +638,138 @@ export const PREFAB_CATALOG: PrefabDefinition[] = [
     params: [],
     patterns: [
       /^switch 1 of your opponent'?s benched pokemon with their active pokemon\.?$/i,
+      /^switch 1 of your opponent'?s benched pokemon with 1 of the defending pokemon\.?$/i,
+      /^switch 1 of your opponent'?s benched pokemon with the defending pokemon\.?$/i,
     ],
     generateCall: () => ({
       lines: ['GUST_OPPONENT_BENCHED_POKEMON(store, state, player);'],
     }),
+  },
+  {
+    id: 'IF_EVOLVED_FROM_BONUS_DAMAGE',
+    name: 'IF_EVOLVED_FROM_BONUS_DAMAGE',
+    description: 'Bonus damage if this Pokemon is evolved from a named Baby/prior stage.',
+    exampleTexts: [
+      'If Marill is evolved from Azurill, this attack does 10 damage plus 20 more damage.',
+      'If Clefairy is evolved from Cleffa, this attack does 20 damage plus 20 more damage.',
+    ],
+    scope: 'attack',
+    importFrom: PREFABS,
+    importNames: [],
+    params: [
+      { key: 'underName', label: 'Under Pokemon name', type: 'string' },
+      { key: 'bonus', label: 'Bonus damage', type: 'number', defaultValue: 20 },
+    ],
+    patterns: [
+      /^if [A-Za-z][A-Za-z0-9.' -]* is evolved from ([A-Za-z][A-Za-z0-9.' -]*), this attack does \d+ damage plus (\d+) more damage\.?$/i,
+    ],
+    paramCaptures: { 1: 'underName', 2: 'bonus' },
+    generateCall: (params) => {
+      const under = (params.underName || 'Basic').replace(/'/g, "\\'");
+      return {
+        lines: [
+          `if (effect.player.active.getPokemons().some(p => p.name === '${under}')) {`,
+          `  effect.damage += ${num(params, 'bonus', '20')};`,
+          '}',
+        ],
+      };
+    },
+  },
+  {
+    id: 'IF_ANYWHERE_UNDER_COIN_PARALYZE',
+    name: 'IF_ANYWHERE_UNDER_COIN_PARALYZE',
+    description: 'If named Pokemon is under this one, flip coin; heads = Paralyze.',
+    exampleTexts: [
+      'If Azurill is anywhere under Azumarill, flip a coin. If heads, the Defending Pokemon is now Paralyzed.',
+    ],
+    scope: 'attack',
+    importFrom: PREFABS,
+    importNames: ['COIN_FLIP_PROMPT'],
+    extraImports: [
+      `import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../game/store/prefabs/attack-effects';`,
+    ],
+    params: [{ key: 'underName', label: 'Under Pokemon name', type: 'string' }],
+    patterns: [
+      /^if ([A-Za-z][A-Za-z0-9.' -]*) is anywhere under [A-Za-z][A-Za-z0-9.' -]*, flip a coin\. if heads, the defending pokemon is now paralyzed\.?$/i,
+    ],
+    paramCaptures: { 1: 'underName' },
+    generateCall: (params) => {
+      const under = (params.underName || 'Basic').replace(/'/g, "\\'");
+      return {
+        lines: [
+          `if (effect.player.active.getPokemons().some(p => p.name === '${under}')) {`,
+          '  COIN_FLIP_PROMPT(store, state, player, result => {',
+          '    if (result) {',
+          '      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);',
+          '    }',
+          '  });',
+          '}',
+        ],
+      };
+    },
+  },
+  {
+    id: 'BABY_EVOLUTION',
+    name: 'BABY_EVOLUTION',
+    description: 'Poké-Power: put named evolution from hand onto this Baby Pokemon and heal all damage.',
+    exampleTexts: [
+      'Once during your turn (before your attack), you may put Marill from your hand onto Azurill (this counts as evolving Azurill) and remove all damage counters from Azurill.',
+    ],
+    scope: 'power',
+    importFrom: PREFABS,
+    importNames: ['MOVE_CARDS', 'WAS_POWER_USED'],
+    extraImports: [
+      `import { Card, ChooseCardsPrompt, GameError, GameMessage, PokemonCardList, StateUtils } from '../../game';`,
+      `import { SuperType } from '../../game/store/card/card-types';`,
+      `import { HealEffect } from '../../game/store/effects/game-effects';`,
+      `import { PokemonCard } from '../../game/store/card/pokemon-card';`,
+    ],
+    params: [
+      { key: 'evolutionName', label: 'Evolution name', type: 'string' },
+    ],
+    patterns: [
+      /^(?:\(before your attack\),?\s*)?you may put ([A-Za-z][A-Za-z0-9.' -]*) from your hand onto [A-Za-z][A-Za-z0-9.' -]* \(this counts a[s]? evolving [A-Za-z][A-Za-z0-9.' -]*\) and remove all damage counters from [A-Za-z][A-Za-z0-9.' -]*\.?$/i,
+      /^once during your turn \(before your attack\), you may put ([A-Za-z][A-Za-z0-9.' -]*) from your hand onto [A-Za-z][A-Za-z0-9.' -]* \(this counts a[s]? evolving [A-Za-z][A-Za-z0-9.' -]*\) and remove all damage counters from [A-Za-z][A-Za-z0-9.' -]*\.?$/i,
+    ],
+    paramCaptures: { 1: 'evolutionName' },
+    generateCall: (params) => {
+      const evo = (params.evolutionName || 'Evolution').replace(/'/g, "\\'");
+      return {
+        lines: [
+          `const hasEvolution = player.hand.cards.some(card => card instanceof PokemonCard && card.name === '${evo}');`,
+          'if (!hasEvolution) {',
+          '  throw new GameError(GameMessage.CANNOT_USE_POWER);',
+          '}',
+          'const blocked: number[] = [];',
+          'player.hand.cards.forEach((card, index) => {',
+          `  if (card instanceof PokemonCard && card.name !== '${evo}') {`,
+          '    blocked.push(index);',
+          '  }',
+          '});',
+          'store.prompt(state, new ChooseCardsPrompt(',
+          '  player,',
+          '  GameMessage.CHOOSE_CARD_TO_EVOLVE,',
+          '  player.hand,',
+          '  { superType: SuperType.POKEMON },',
+          '  { min: 1, max: 1, allowCancel: true, blocked }',
+          '), selected => {',
+          '  const selectedCards = selected || [];',
+          '  if (selectedCards.length === 0) {',
+          '    return;',
+          '  }',
+          '  const evolution = selectedCards[0] as PokemonCard;',
+          '  const target = StateUtils.findCardList(state, this);',
+          '  MOVE_CARDS(store, state, player.hand, target, { cards: [evolution], sourceCard: this });',
+          '  const pokemonTarget = target as PokemonCardList;',
+          '  pokemonTarget.clearEffects();',
+          '  pokemonTarget.pokemonPlayedTurn = state.turn;',
+          '  const healEffect = new HealEffect(player, pokemonTarget, pokemonTarget.damage);',
+          '  store.reduceEffect(state, healEffect);',
+          '});',
+        ],
+        returns: true,
+      };
+    },
   },
 
   // ── Energy ───────────────────────────────────────────────────────────────
@@ -783,7 +925,7 @@ export const PREFAB_CATALOG: PrefabDefinition[] = [
       "The Defending Pokemon can't retreat during your opponent's next turn.",
     ],
     scope: 'attack',
-    importFrom: PREFABS,
+    importFrom: EFFECT_OF_ATTACK,
     importNames: ['BLOCK_RETREAT'],
     params: [],
     patterns: [
@@ -802,7 +944,7 @@ export const PREFAB_CATALOG: PrefabDefinition[] = [
       "The Defending Pokemon can't attack during your opponent's next turn.",
     ],
     scope: 'attack',
-    importFrom: PREFABS,
+    importFrom: EFFECT_OF_ATTACK,
     importNames: ['DEFENDING_POKEMON_CANNOT_ATTACK'],
     params: [],
     patterns: [
@@ -821,7 +963,7 @@ export const PREFAB_CATALOG: PrefabDefinition[] = [
       "If the Defending Pokemon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack does nothing.",
     ],
     scope: 'attack',
-    importFrom: PREFABS,
+    importFrom: EFFECT_OF_ATTACK,
     importNames: ['DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK'],
     params: [{ key: 'coins', label: 'Coins to flip', type: 'number', defaultValue: 1 }],
     patterns: [
@@ -851,7 +993,7 @@ export const PREFAB_CATALOG: PrefabDefinition[] = [
       "During your opponent's next turn, the Defending Pokemon's attacks do 20 less damage (before applying Weakness and Resistance).",
     ],
     scope: 'attack',
-    importFrom: PREFABS,
+    importFrom: EFFECT_OF_ATTACK,
     importNames: ['DEFENDING_POKEMON_DOES_LESS_DAMAGE'],
     params: [{ key: 'damage', label: 'Reduction', type: 'number', defaultValue: 20 }],
     patterns: [

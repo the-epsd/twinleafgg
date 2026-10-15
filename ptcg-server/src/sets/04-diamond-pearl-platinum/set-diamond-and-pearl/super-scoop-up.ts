@@ -7,11 +7,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { PlayerType, SlotType } from '../../../game';
-import {
-  MOVE_CARDS,
-  COIN_FLIP_PROMPT,
-  MOVE_POKEMON_OFF_BOARD,
-} from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, COIN_FLIP_PROMPT, MOVE_POKEMON_OFF_BOARD } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(
   next: Function,
