@@ -10,7 +10,7 @@ export class Seadra extends PokemonCard {
   public evolvesFrom: string = 'Horsea';
   public hp: number = 80;
   public cardType: CardType[] = [W];
-  public weakness = [{ type: L, value: 20 }];
+  public weakness = [{ type: L, value: +20 }];
   public retreat = [C];
 
   public attacks = [{
