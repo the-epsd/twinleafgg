@@ -31,13 +31,14 @@ export class PathToThePeak extends TrainerCard {
           return false;
         }
         const slot = StateUtils.findPokemonSlot(state, card);
-        if (slot === undefined) {
-          return false;
+        if (slot !== undefined) {
+          const owner = StateUtils.findOwner(state, slot);
+          if (IS_STADIUM_EFFECT_BLOCKED(store, state, owner, slot)) {
+            return false;
+          }
         }
-        const owner = StateUtils.findOwner(state, slot);
-        if (IS_STADIUM_EFFECT_BLOCKED(store, state, owner, slot)) {
-          return false;
-        }
+        // No slot yet (PlayPokemonEffect / EvolveEffect probe before move) — still lock.
+        // True hand/discard Abilities stay usable via allowUseFromHand / allowUseFromDiscard.
         return true;
       },
       {
