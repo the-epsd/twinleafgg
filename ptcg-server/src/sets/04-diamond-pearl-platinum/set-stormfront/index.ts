@@ -17,6 +17,7 @@ import { Card } from '../../../game/store/card/card';
 import { Combee } from './combee';
 import { Dusclops } from './dusclops';
 import { Dusclops2 } from './dusclops2';
+import { DusknoirLVX } from './dusknoir-lv-x';
 import { Duskull } from './duskull';
 import { Farfetchd } from './farfetchd';
 import { Finneon } from './finneon';
@@ -105,6 +106,7 @@ export const setStormfront: Card[] = [
   new Drifloon(),
   new Dusclops(),
   new Dusclops2(),
+  new DusknoirLVX(),
   new Duskull(),
   new Electrode(),
   new Empoleon(),

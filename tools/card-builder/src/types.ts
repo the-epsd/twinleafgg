@@ -225,6 +225,21 @@ export interface ReprintCandidate {
   setNumber: string;
   fullName: string;
   sourcePath: string;
+  /** True when draft attacks/powers/text match this candidate (true reprint). */
+  identical: boolean;
+  /** True when this file is other-prints / full-art / alt-arts (thin wrapper). */
+  isReprintFile: boolean;
+}
+
+/** Response extras from `/reprint-candidates` for distinct same-name variants. */
+export interface ReprintLookupResult {
+  candidates: ReprintCandidate[];
+  /** Next occurrence for a distinct variant (1 = no suffix). */
+  nextOccurrence: number;
+  /** Suggested class name when saving as a distinct variant. */
+  suggestedClassName: string;
+  /** Suggested fullName when saving as a distinct variant. */
+  suggestedFullName: string;
 }
 
 export interface CardDraft {

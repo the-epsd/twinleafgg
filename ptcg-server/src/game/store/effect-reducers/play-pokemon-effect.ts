@@ -2,7 +2,7 @@ import { PlayPokemonEffect } from '../effects/play-card-effects';
 import { GameError } from '../../game-error';
 import { GameMessage, GameLog } from '../../game-message';
 import { Effect } from '../effects/effect';
-import { BoardEffect, Stage } from '../card/card-types';
+import { BoardEffect, CardTag, Stage } from '../card/card-types';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { CheckPokemonPlayedTurnEffect, CheckSpecialConditionRemovalEffect } from '../effects/check-effects';
@@ -66,7 +66,22 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
       return state;
     }
     const player = effect.player;
-    const isEvolved = stage === Stage.STAGE_1 || Stage.STAGE_2;
+    // Include LV_X / BREAK / VMAX / etc. — previously `|| Stage.STAGE_2` was always true
+    // (missing `stage ===`), which accidentally allowed Level-Up; keep that behavior explicitly.
+    const isEvolved =
+      stage === Stage.STAGE_1 ||
+      stage === Stage.STAGE_2 ||
+      stage === Stage.VMAX ||
+      stage === Stage.VSTAR ||
+      stage === Stage.MEGA ||
+      stage === Stage.BREAK ||
+      stage === Stage.LV_X;
+    const isLvX =
+      stage === Stage.LV_X || effect.pokemonCard.hasTag(CardTag.POKEMON_LV_X);
+    // Level-Up Rule: put LV.X only onto the Active Pokémon
+    if (isLvX && effect.target !== player.active) {
+      throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+    }
     const evolvesFrom = effect.pokemonCard.evolvesFrom;
     const pokemonCard = effect.target.getPokemonCard();
     if (pokemonCard === undefined) {

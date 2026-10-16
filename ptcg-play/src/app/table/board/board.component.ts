@@ -659,7 +659,9 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
       return this.onCardClick(card, this.stadiumCard);
     }
 
-    const options = { enableTrainer: true };
+    // Pokemon-as-Stadium (e.g. Dusknoir LV.X) has no Use Stadium action
+    const canUseStadium = card.superType === SuperType.TRAINER;
+    const options = canUseStadium ? { enableTrainer: true } : undefined;
     this.cardsBaseService.showCardInfo({ card, cardList: this.stadiumCard, options, players: [this.topPlayer, this.bottomPlayer].filter(p => p) })
       .then(result => {
         if (!result) {
@@ -667,7 +669,7 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
         }
 
         // Use stadium card effect
-        if (result.trainer) {
+        if (result.trainer && canUseStadium) {
           this.gameService.stadium(this.gameState.gameId);
         }
       });

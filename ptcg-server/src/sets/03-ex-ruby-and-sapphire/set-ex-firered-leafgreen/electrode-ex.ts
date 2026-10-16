@@ -16,6 +16,7 @@ import {
 import { Effect } from '../../../game/store/effects/effect';
 import {ABILITY_USED,
   BLOCK_IF_HAS_SPECIAL_CONDITION,
+  KNOCK_OUT_THIS_POKEMON,
   MOVE_CARD_TO,
   WAS_ATTACK_USED,
   WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
@@ -75,7 +76,7 @@ export class Electrodeex extends PokemonCard {
       tools.forEach((c) => MOVE_CARDS(store, state, cardList, player.discard, { cards: [c], sourceCard: this }));
 
       // Mark for KO - engine will handle the actual KO (prizes, slot cleanup)
-      cardList.damage += 999;
+      state = KNOCK_OUT_THIS_POKEMON(store, state, player, this);
 
       // Block Pokemon-ex from receiving energy
       let validTargets = 0;

@@ -4150,8 +4150,9 @@ export class Board3dController {
         return;
       }
 
-      // Owner can activate stadium effect
-      const options = { enableTrainer: true };
+      // Owner can activate stadium effect (Pokemon-as-Stadium has no Use Stadium action)
+      const canUseStadium = cardData?.superType === SuperType.TRAINER;
+      const options = canUseStadium ? { enableTrainer: true } : undefined;
       void this.openCardInfo(cardObject, {
         card: cardData,
         cardList: cardList,
@@ -4163,7 +4164,7 @@ export class Board3dController {
         }
 
           // Use stadium card effect
-          if (result.trainer) {
+          if (result.trainer && canUseStadium) {
             this.gameActions.stadium(this.gameState.gameId);
           }
         });

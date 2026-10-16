@@ -1,4 +1,5 @@
 import {
+  CardTag,
   PlayerType,
   SlotType,
   Stage,
@@ -214,13 +215,15 @@ export async function handleBoard2dStadiumClick(
     });
     return;
   }
+  // Pokemon-as-Stadium (e.g. Dusknoir LV.X) has no Use Stadium action
+  const canUseStadium = card.superType === SuperType.TRAINER;
   const result = await ctx.cardsAdapter.showCardInfo({
     card,
     cardList: stadiumCard,
-    options: { enableTrainer: true },
+    options: canUseStadium ? { enableTrainer: true } : undefined,
     players: players(ctx),
   });
-  if (result?.trainer) {
+  if (result?.trainer && canUseStadium) {
     await ctx.gameActions.stadium(ctx.gameState.gameId);
   }
 }
@@ -417,8 +420,17 @@ export function findAttachTargets(
     card.superType === SuperType.POKEMON &&
     !!(card as PokemonCard).evolvesFrom;
 
+  const isLvX =
+    isEvo &&
+    ((card as PokemonCard).stage === Stage.LV_X ||
+      (card as PokemonCard).tags?.includes(CardTag.POKEMON_LV_X) === true);
+
   const consider = (list: CardList | undefined, index: number, slot: SlotType) => {
     if (!list?.cards?.length) {
+      return;
+    }
+    // LV.X Level-Up may only target the Active Pokémon.
+    if (isLvX && slot !== SlotType.ACTIVE) {
       return;
     }
     const pokemon = (list as { getPokemonCard?: () => Card | undefined }).getPokemonCard?.();

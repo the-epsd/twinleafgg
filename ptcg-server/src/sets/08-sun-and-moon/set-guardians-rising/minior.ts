@@ -8,7 +8,7 @@ import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { ApplyWeaknessEffect, AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { KNOCK_OUT_THIS_POKEMON, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Minior extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -68,7 +68,7 @@ export class Minior extends PokemonCard {
     if (effect instanceof AfterAttackEffect && this.usedCosmicsplosion) {
       this.usedCosmicsplosion = false;
       const player = effect.player;
-      player.active.damage = 999;
+      state = KNOCK_OUT_THIS_POKEMON(store, state, player, this);
     }
 
     if (effect instanceof EndTurnEffect) {

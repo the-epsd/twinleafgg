@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State, PowerType, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
-import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { KNOCK_OUT_THIS_POKEMON, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Dusclops extends PokemonCard {
 
@@ -31,14 +31,12 @@ export class Dusclops extends PokemonCard {
     text: 'Once during your turn, you may put 5 damage counters on 1 of your opponent\'s Pokémon. If you placed any damage counters in this way, this Pokémon is Knocked Out.'
   }];
 
-  public attacks = [
-    {
-      name: 'Will-o-Wisp',
-      cost: [CardType.PSYCHIC, CardType.PSYCHIC],
-      damage: 50,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Will-o-Wisp',
+    cost: [CardType.PSYCHIC, CardType.PSYCHIC],
+    damage: 50,
+    text: ''
+  }];
 
   public set: string = 'SFA';
 
@@ -75,11 +73,7 @@ export class Dusclops extends PokemonCard {
         }
 
         // Self-KO still happens even if counters were prevented (e.g. Stealthy Hood)
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            cardList.damage += 999;
-          }
-        });
+        state = KNOCK_OUT_THIS_POKEMON(store, state, player, this);
       });
     }
     return state;

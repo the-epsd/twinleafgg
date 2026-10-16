@@ -18,6 +18,7 @@ export enum GameEffects {
   POWER_EFFECT = 'POWER_EFFECT',
   ATTACK_EFFECT = 'ATTACK_EFFECT',
   KNOCK_OUT_EFFECT = 'KNOCK_OUT_EFFECT',
+  SELF_KNOCK_OUT_EFFECT = 'SELF_KNOCK_OUT_EFFECT',
   HEAL_EFFECT = 'HEAL_EFFECT',
   EVOLVE_EFFECT = 'EVOLVE_EFFECT',
   DRAW_PRIZES_EFFECT = 'DRAW_PRIZES_EFFECT',
@@ -242,6 +243,23 @@ export class KnockOutAttackEffect extends KnockOutEffect {
   constructor(player: Player, target: PokemonCardList, attack: Attack) {
     super(player, target);
     this.attack = attack;
+  }
+}
+
+/**
+ * Marks this Pokémon for Knock Out via lethal damage.
+ * checkState then fires KnockOutEffect and awards prizes (including simultaneous KOs).
+ * Uses source card identity so LV.X stacks resolve correctly.
+ */
+export class SelfKnockOutEffect implements Effect {
+  readonly type: string = GameEffects.SELF_KNOCK_OUT_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public source: PokemonCard;
+
+  constructor(player: Player, source: PokemonCard) {
+    this.player = player;
+    this.source = source;
   }
 }
 

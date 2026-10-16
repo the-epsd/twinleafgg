@@ -7,7 +7,7 @@ import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effe
 import { DamageMap } from '../../../game/store/prompts/move-damage-prompt';
 import { PutDamagePrompt } from '../../../game/store/prompts/put-damage-prompt';
 import { SlotType } from '../../../game/store/actions/play-card-action';
-import { IS_ABILITY_BLOCKED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, KNOCK_OUT_THIS_POKEMON, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 import { State } from '../../../game/store/state/state';
 
 export class Cofagrigus extends PokemonCard {
@@ -73,11 +73,7 @@ export class Cofagrigus extends PokemonCard {
             );
           }
 
-          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-            if (cardList.getPokemonCard() === this) {
-              cardList.damage += 999;
-            }
-          });
+          state = KNOCK_OUT_THIS_POKEMON(store, state, player, this);
         },
       );
     }

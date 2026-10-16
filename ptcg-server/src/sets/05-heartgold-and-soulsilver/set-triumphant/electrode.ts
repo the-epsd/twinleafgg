@@ -1,6 +1,6 @@
-import { CardType, AttachEnergyPrompt, CardList, GameMessage, PlayerType, PokemonCard, PokemonCardList, PowerType, ShowCardsPrompt, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../../game';
+import { CardType, AttachEnergyPrompt, CardList, GameMessage, PlayerType, PokemonCard, PowerType, ShowCardsPrompt, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { ABILITY_USED, BLOCK_IF_HAS_SPECIAL_CONDITION, MOVE_CARDS, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { ABILITY_USED, BLOCK_IF_HAS_SPECIAL_CONDITION, KNOCK_OUT_THIS_POKEMON, MOVE_CARDS, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Electrode extends PokemonCard {
   public stage = Stage.STAGE_1;
@@ -39,8 +39,7 @@ export class Electrode extends PokemonCard {
       BLOCK_IF_HAS_SPECIAL_CONDITION(player, this);
       ABILITY_USED(player, this);
 
-      const thisCardList = StateUtils.findCardList(state, effect.card) as PokemonCardList;
-      thisCardList.damage += 9990;
+      state = KNOCK_OUT_THIS_POKEMON(store, state, player, this);
 
       const temp = new CardList();
 

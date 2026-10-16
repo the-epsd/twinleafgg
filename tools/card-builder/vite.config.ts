@@ -4,11 +4,23 @@ import { dirname, join, normalize, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { buildEnginePrefabIndex } from './lib/engineIndex.mjs';
+import {
+  classNameForVariant,
+  emptySignature,
+  fullNameForVariant,
+  signaturesMatch,
+  toPascalClassName,
+  variantOccurrence,
+  type CardSignature,
+  type NamedEffect,
+} from './src/cardIdentity';
 
 const rootDir = dirname(fileURLToPath(import.meta.url));
 const dataRoot = join(rootDir, 'data', 'pokemon-tcg-data');
 const implementedCardIdsPath = join(rootDir, '../../ptcg-server/implementedCardIds.json');
 const serverSetsRoot = join(rootDir, '../../ptcg-server/src/sets');
+const REPRINT_FILE_NAMES = new Set(['other-prints.ts', 'full-art.ts', 'alt-arts.ts']);
+const SKIP_FILE_NAMES = new Set(['index.ts']);
 
 interface ServerEffect {
   source: string;
@@ -142,6 +154,9 @@ interface ReprintCandidateRecord {
   fullName: string;
   sourcePath: string;
   filePath: string;
+  signature: CardSignature;
+  isReprintFile: boolean;
+  identical: boolean;
 }
 
 function extractPublicString(source: string, property: string): string {
@@ -149,7 +164,66 @@ function extractPublicString(source: string, property: string): string {
   return match ? extractStringExpression(match[1]) : '';
 }
 
-function findReprintCandidates(set: string, name: string, excludeSetNumber = ''): ReprintCandidateRecord[] {
+function matchingBracket(source: string, open: number): number {
+  let depth = 0;
+  let quote = '';
+  for (let i = open; i < source.length; i++) {
+    const char = source[i];
+    if (quote) {
+      if (char === '\\') i++;
+      else if (char === quote) quote = '';
+      continue;
+    }
+    if (char === "'" || char === '"' || char === '`') {
+      quote = char;
+    } else if (char === '[') {
+      depth++;
+    } else if (char === ']' && --depth === 0) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+function extractNamedEffects(classSource: string, property: 'attacks' | 'powers'): NamedEffect[] | undefined {
+  const match = classSource.match(new RegExp(`public\\s+${property}(?:\\s*:\\s*[^=]+)?\\s*=\\s*`));
+  if (!match || match.index === undefined) return undefined;
+  let i = match.index + match[0].length;
+  while (i < classSource.length && /\s/.test(classSource[i])) i++;
+  if (classSource[i] !== '[') return [];
+  const close = matchingBracket(classSource, i);
+  if (close < 0) return [];
+  const body = classSource.slice(i + 1, close);
+  const effects: NamedEffect[] = [];
+  let pos = 0;
+  while (pos < body.length) {
+    const open = body.indexOf('{', pos);
+    if (open < 0) break;
+    const end = matchingBrace(body, open);
+    if (end < 0) break;
+    const objectBody = body.slice(open + 1, end);
+    const nameMatch = objectBody.match(/\bname\s*:\s*(['"`])([\s\S]*?)\1/);
+    const textMatch = objectBody.match(/\btext\s*:\s*(['"`])([\s\S]*?)\1/);
+    effects.push({
+      name: nameMatch ? decodeString(nameMatch[2]) : '',
+      text: textMatch ? decodeString(textMatch[2]) : '',
+    });
+    pos = end + 1;
+  }
+  return effects;
+}
+
+function isReprintWrapperFile(filePath: string): boolean {
+  const base = filePath.split(sep).pop() || '';
+  return REPRINT_FILE_NAMES.has(base);
+}
+
+function findReprintCandidates(
+  set: string,
+  name: string,
+  excludeSetNumber = '',
+  draftSignature: CardSignature = emptySignature()
+): ReprintCandidateRecord[] {
   const directory = findSetDirectory(set);
   const normalizedName = name.trim().toLowerCase();
   const normalizedSetNumber = excludeSetNumber.trim();
@@ -189,6 +263,31 @@ function findReprintCandidates(set: string, name: string, excludeSetNumber = '')
     const parent = classByName.get(parsed.extendsName);
     return parent ? resolveProperty(parent, property, seen) : '';
   };
+  const resolveNamedEffects = (
+    parsed: ParsedClass,
+    property: 'attacks' | 'powers',
+    seen = new Set<string>()
+  ): NamedEffect[] => {
+    const own = extractNamedEffects(parsed.classSource, property);
+    if (own !== undefined) return own;
+    if (!parsed.extendsName || seen.has(parsed.className)) return [];
+    seen.add(parsed.className);
+    const parent = classByName.get(parsed.extendsName);
+    return parent ? resolveNamedEffects(parent, property, seen) : [];
+  };
+  const resolveEffectText = (parsed: ParsedClass, seen = new Set<string>()): string => {
+    const own = extractPublicText(parsed.classSource);
+    if (own || !parsed.extendsName || seen.has(parsed.className)) return own;
+    seen.add(parsed.className);
+    const parent = classByName.get(parsed.extendsName);
+    return parent ? resolveEffectText(parent, seen) : '';
+  };
+  const resolveSignature = (parsed: ParsedClass): CardSignature => {
+    const attacks = resolveNamedEffects(parsed, 'attacks');
+    const powers = resolveNamedEffects(parsed, 'powers');
+    const effectText = attacks.length === 0 && powers.length === 0 ? resolveEffectText(parsed) : '';
+    return { attacks, powers, effectText };
+  };
 
   return classes
     .filter(parsed => parsed.filePath === directory || parsed.filePath.startsWith(`${directory}${sep}`))
@@ -196,6 +295,7 @@ function findReprintCandidates(set: string, name: string, excludeSetNumber = '')
       const cardName = resolveProperty(parsed, 'name');
       const cardSet = resolveProperty(parsed, 'set').toUpperCase();
       const setNumber = extractPublicString(parsed.classSource, 'setNumber');
+      const signature = resolveSignature(parsed);
       return {
         className: parsed.className,
         name: cardName,
@@ -204,6 +304,9 @@ function findReprintCandidates(set: string, name: string, excludeSetNumber = '')
         fullName: extractPublicString(parsed.classSource, 'fullName') || resolveProperty(parsed, 'fullName'),
         sourcePath: relative(serverSetsRoot, parsed.filePath).replaceAll(sep, '/'),
         filePath: parsed.filePath,
+        signature,
+        isReprintFile: isReprintWrapperFile(parsed.filePath),
+        identical: signaturesMatch(draftSignature, signature),
       };
     })
     .filter(candidate => {
@@ -216,22 +319,97 @@ function findReprintCandidates(set: string, name: string, excludeSetNumber = '')
     .sort((a, b) => a.set.localeCompare(b.set));
 }
 
-function serveReprintCandidates(req: IncomingMessage, res: ServerResponse, next: () => void): void {
-  if (req.url?.split('?')[0] !== '/reprint-candidates' || req.method !== 'GET') {
+function parseDraftSignature(payload: {
+  extends?: string;
+  hasAttacks?: boolean;
+  hasPowers?: boolean;
+  attacks?: Array<{ name?: string; text?: string }>;
+  powers?: Array<{ name?: string; text?: string }>;
+  trainerText?: string;
+  energyText?: string;
+}): CardSignature {
+  const cardBase = payload.extends === 'TrainerCard' || payload.extends === 'EnergyCard'
+    ? payload.extends
+    : 'PokemonCard';
+  if (cardBase === 'TrainerCard') {
+    return { attacks: [], powers: [], effectText: payload.trainerText ?? '' };
+  }
+  if (cardBase === 'EnergyCard') {
+    return { attacks: [], powers: [], effectText: payload.energyText ?? '' };
+  }
+  return {
+    attacks: payload.hasAttacks
+      ? (payload.attacks ?? []).map(a => ({ name: (a.name ?? '').trim(), text: a.text ?? '' }))
+      : [],
+    powers: payload.hasPowers
+      ? (payload.powers ?? []).map(p => ({ name: (p.name ?? '').trim(), text: p.text ?? '' }))
+      : [],
+    effectText: '',
+  };
+}
+
+async function serveReprintCandidates(req: IncomingMessage, res: ServerResponse, next: () => void): Promise<void> {
+  const path = req.url?.split('?')[0];
+  if (path !== '/reprint-candidates') {
     next();
     return;
   }
-  const url = new URL(req.url, 'http://localhost');
-  const set = url.searchParams.get('set')?.trim().toUpperCase() || '';
-  const name = url.searchParams.get('name')?.trim() || '';
-  const excludeSetNumber = url.searchParams.get('excludeSetNumber')?.trim() || '';
-  if (!/^[A-Z0-9][A-Z0-9_-]*$/.test(set) || !name) {
-    jsonResponse(res, 400, { error: 'Set code and card name are required.' });
+  if (req.method !== 'POST' && req.method !== 'GET') {
+    next();
     return;
   }
-  jsonResponse(res, 200, {
-    candidates: findReprintCandidates(set, name, excludeSetNumber).map(({ filePath: _filePath, ...candidate }) => candidate),
-  });
+
+  try {
+    let set = '';
+    let name = '';
+    let excludeSetNumber = '';
+    let draftSignature = emptySignature();
+
+    if (req.method === 'POST') {
+      const payload = JSON.parse(await readRequestBody(req)) as {
+        set?: string;
+        name?: string;
+        excludeSetNumber?: string;
+        extends?: string;
+        hasAttacks?: boolean;
+        hasPowers?: boolean;
+        attacks?: Array<{ name?: string; text?: string }>;
+        powers?: Array<{ name?: string; text?: string }>;
+        trainerText?: string;
+        energyText?: string;
+      };
+      set = payload.set?.trim().toUpperCase() || '';
+      name = payload.name?.trim() || '';
+      excludeSetNumber = payload.excludeSetNumber?.trim() || '';
+      draftSignature = parseDraftSignature(payload);
+    } else {
+      const url = new URL(req.url || '', 'http://localhost');
+      set = url.searchParams.get('set')?.trim().toUpperCase() || '';
+      name = url.searchParams.get('name')?.trim() || '';
+      excludeSetNumber = url.searchParams.get('excludeSetNumber')?.trim() || '';
+    }
+
+    if (!/^[A-Z0-9][A-Z0-9_-]*$/.test(set) || !name) {
+      jsonResponse(res, 400, { error: 'Set code and card name are required.' });
+      return;
+    }
+
+    const candidates = findReprintCandidates(set, name, excludeSetNumber, draftSignature);
+    const primaryClassNames = candidates
+      .filter(candidate => !candidate.isReprintFile)
+      .map(candidate => candidate.className);
+    const baseClassName = toPascalClassName(name) || 'NewCard';
+    const nextOccurrence = variantOccurrence(baseClassName, primaryClassNames);
+
+    jsonResponse(res, 200, {
+      candidates: candidates.map(({ filePath: _filePath, signature: _signature, ...candidate }) => candidate),
+      nextOccurrence,
+      suggestedClassName: classNameForVariant(baseClassName, nextOccurrence),
+      suggestedFullName: fullNameForVariant(name, set, nextOccurrence),
+    });
+  } catch (error) {
+    jsonResponse(res, 400, { error: error instanceof Error ? error.message : String(error) });
+  }
 }
 
 function normalizeGameModulePath(module: string, importBase: string): string {
@@ -905,9 +1083,6 @@ interface DuplicateGroup {
   reasons: DuplicateReason[];
   cards: DuplicateCardRecord[];
 }
-
-const REPRINT_FILE_NAMES = new Set(['other-prints.ts', 'full-art.ts', 'alt-arts.ts']);
-const SKIP_FILE_NAMES = new Set(['index.ts']);
 
 function cardFileKind(fileName: string): string {
   if (fileName === 'other-prints.ts') return 'other-prints';

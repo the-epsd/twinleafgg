@@ -15,6 +15,11 @@ import {
   POWER_TYPES,
   STAGES,
 } from './types';
+import {
+  classNameForVariant,
+  fullNameForVariant,
+  toPascalClassName,
+} from './cardIdentity';
 import { catalogStats, getPrefabById, mergeEnginePrefabs, prefabsForScope } from './prefabs/catalog';
 import { createManualSelected } from './prefabs/matcher';
 import { engineRecordToPrefab, loadEnginePrefabIndex } from './prefabs/enginePrefabs';
@@ -142,6 +147,10 @@ let saveAsReprint = false;
 let reprintLoading = false;
 let reprintError = '';
 let reprintLookupVersion = 0;
+let reprintNextOccurrence = 1;
+let reprintSuggestedClassName = '';
+let reprintSuggestedFullName = '';
+let reprintRefreshTimer: ReturnType<typeof setTimeout> | undefined;
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
@@ -168,6 +177,32 @@ function clearReprintState(): void {
   saveAsReprint = false;
   reprintLoading = false;
   reprintError = '';
+  reprintNextOccurrence = 1;
+  reprintSuggestedClassName = '';
+  reprintSuggestedFullName = '';
+  if (reprintRefreshTimer) {
+    clearTimeout(reprintRefreshTimer);
+    reprintRefreshTimer = undefined;
+  }
+}
+
+function scheduleReprintRefresh(): void {
+  if (reprintRefreshTimer) clearTimeout(reprintRefreshTimer);
+  reprintRefreshTimer = setTimeout(() => {
+    reprintRefreshTimer = undefined;
+    void refreshReprintCandidates();
+  }, 300);
+}
+
+function hasIdenticalReprint(): boolean {
+  return reprintCandidates.some(candidate => candidate.identical);
+}
+
+/** Occurrence for a new distinct file — 1 when saving a true reprint or no name collision. */
+function effectiveVariantOccurrence(): number {
+  if (saveAsReprint && selectedReprintCandidate()?.identical) return 1;
+  if (hasIdenticalReprint()) return 1;
+  return reprintNextOccurrence;
 }
 
 async function refreshReprintCandidates(): Promise<void> {
@@ -178,6 +213,9 @@ async function refreshReprintCandidates(): Promise<void> {
   selectedReprintKey = '';
   saveAsReprint = false;
   reprintError = '';
+  reprintNextOccurrence = 1;
+  reprintSuggestedClassName = '';
+  reprintSuggestedFullName = '';
   if (!name || !set) {
     reprintLoading = false;
     render();
@@ -187,23 +225,32 @@ async function refreshReprintCandidates(): Promise<void> {
   reprintLoading = true;
   render();
   try {
-    const candidates = await findReprintCandidates(set, name, draft.setNumber);
+    const result = await findReprintCandidates(draft);
     const cardsBySet = new Map<string, Awaited<ReturnType<typeof findCardsByNameAndSet>>>();
     await Promise.all(
-      [...new Set(candidates.map(candidate => candidate.set))].map(async candidateSet => {
+      [...new Set(result.candidates.map(candidate => candidate.set))].map(async candidateSet => {
         cardsBySet.set(candidateSet, await findCardsByNameAndSet(name, candidateSet));
       })
     );
     if (lookupVersion !== reprintLookupVersion) return;
-    reprintCandidates = candidates.map(candidate => ({
+    reprintCandidates = result.candidates.map(candidate => ({
       ...candidate,
       imageUrl: cardImageUrl(
         cardsBySet.get(candidate.set)?.find(card => card.localId === candidate.setNumber)?.image,
         'high'
       ),
     }));
-    selectedReprintKey = reprintCandidates.length > 0 ? reprintKey(reprintCandidates[0]) : '';
-    saveAsReprint = reprintCandidates.length === 1;
+    reprintNextOccurrence = result.nextOccurrence;
+    reprintSuggestedClassName = result.suggestedClassName;
+    reprintSuggestedFullName = result.suggestedFullName;
+    const identical = reprintCandidates.filter(candidate => candidate.identical);
+    if (identical.length > 0) {
+      selectedReprintKey = reprintKey(identical[0]);
+      saveAsReprint = true;
+    } else {
+      selectedReprintKey = '';
+      saveAsReprint = false;
+    }
   } catch (error) {
     if (lookupVersion !== reprintLookupVersion) return;
     reprintError = error instanceof Error ? error.message : String(error);
@@ -637,25 +684,31 @@ function computedFullName(): string {
   const name = draft.name.trim();
   const set = draft.set.trim();
   if (!name) return '(name + set)';
-  return set ? `${name} ${set}` : name;
+  if (saveAsReprint && selectedReprintCandidate()?.identical) {
+    return set ? `${name} ${set}` : name;
+  }
+  return fullNameForVariant(name, set, effectiveVariantOccurrence()) || '(name + set)';
 }
 
 function computedClassName(): string {
   if (draft.className.trim()) return draft.className.trim();
-  return (
-    draft.name
-      .replace(/[^a-zA-Z0-9 ]/g, ' ')
-      .split(/\s+/)
-      .filter(Boolean)
-      .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-      .join('') || '(from name)'
-  );
+  const base = toPascalClassName(draft.name) || 'NewCard';
+  if (saveAsReprint && selectedReprintCandidate()?.identical) {
+    return base;
+  }
+  const occurrence = effectiveVariantOccurrence();
+  if (occurrence > 1 && reprintSuggestedClassName) {
+    return reprintSuggestedClassName;
+  }
+  return classNameForVariant(base, occurrence);
 }
 
 function renderReprintSection(): string {
   const selected = selectedReprintCandidate();
   const name = draft.name.trim();
   const set = draft.set.trim();
+  const identicalCount = reprintCandidates.filter(c => c.identical).length;
+  const distinctCount = reprintCandidates.length - identicalCount;
   let content = '';
   if (!name || !set) {
     content = '<p class="muted">Enter a card name and set to check for existing reprint sources.</p>';
@@ -664,26 +717,39 @@ function renderReprintSection(): string {
   } else if (reprintError) {
     content = `<p class="muted">${escapeHtml(reprintError)}</p>`;
   } else if (reprintCandidates.length === 0) {
-    content = '<p class="muted">No same-set reprint candidate found.</p>';
+    content = '<p class="muted">No same-set card with this name found.</p>';
   } else {
+    const variantNote =
+      identicalCount === 0 && distinctCount > 0
+        ? `<p class="muted">Same name, different attacks/abilities — will save as <code>${escapeHtml(
+            reprintSuggestedClassName || computedClassName()
+          )}</code> with fullName <code>${escapeHtml(
+            reprintSuggestedFullName || computedFullName()
+          )}</code> (not a reprint).</p>`
+        : identicalCount > 0
+          ? `<p class="muted">Found ${identicalCount} matching reprint source${identicalCount === 1 ? '' : 's'} (same attacks/abilities). Confirm before saving.</p>`
+          : '';
     content = `
-      <p class="muted">Found ${reprintCandidates.length} existing card${reprintCandidates.length === 1 ? '' : 's'} with this name. Confirm the source before saving.</p>
+      ${variantNote}
+      ${distinctCount > 0 && identicalCount > 0 ? `<p class="muted">Also found ${distinctCount} same-name card${distinctCount === 1 ? '' : 's'} with different attacks (not reprints).</p>` : ''}
       <div class="reprint-options">
         ${reprintCandidates
           .map(candidate => {
             const key = reprintKey(candidate);
-            return `<div class="reprint-option${key === selectedReprintKey ? ' is-selected' : ''}">
-              <input type="radio" name="reprint-source" data-reprint-candidate="${escapeAttr(key)}" value="${escapeAttr(key)}" ${key === selectedReprintKey ? 'checked' : ''} aria-label="Use ${escapeAttr(candidate.fullName || candidate.name)} as reprint source" />
+            const label = candidate.identical ? 'identical' : 'different attacks';
+            const disabled = candidate.identical ? '' : 'disabled';
+            return `<div class="reprint-option${key === selectedReprintKey ? ' is-selected' : ''}${candidate.identical ? '' : ' is-distinct'}">
+              <input type="radio" name="reprint-source" data-reprint-candidate="${escapeAttr(key)}" value="${escapeAttr(key)}" ${key === selectedReprintKey ? 'checked' : ''} ${disabled} aria-label="Use ${escapeAttr(candidate.fullName || candidate.name)} as reprint source" />
               ${candidate.imageUrl
                 ? `<button type="button" class="reprint-image-button" data-action="open-reprint-image" data-image-url="${escapeAttr(candidate.imageUrl)}" data-image-alt="${escapeAttr(candidate.fullName || candidate.name)}" aria-label="Enlarge ${escapeAttr(candidate.fullName || candidate.name)} image"><img src="${escapeAttr(candidate.imageUrl)}" alt="${escapeAttr(candidate.fullName || candidate.name)}" /></button>`
                 : '<div class="reprint-image-missing">No art</div>'}
-              <div><strong>${escapeHtml(candidate.fullName || candidate.name)}</strong><small>${escapeHtml(candidate.set)} · #${escapeHtml(candidate.setNumber)} · ${escapeHtml(candidate.sourcePath)}</small></div>
+              <div><strong>${escapeHtml(candidate.fullName || candidate.name)}</strong><small>${escapeHtml(candidate.set)} · #${escapeHtml(candidate.setNumber)} · ${escapeHtml(label)} · ${escapeHtml(candidate.sourcePath)}</small></div>
             </div>`;
           })
           .join('')}
       </div>
-      <label class="reprint-toggle"><input type="checkbox" data-reprint-enabled ${saveAsReprint ? 'checked' : ''} /> Save as a reprint in <code>other-prints.ts</code></label>
-      ${selected ? `<p class="muted">The saved class will inherit <code>${escapeHtml(selected.className)}</code> and override this print’s set metadata.</p>` : ''}
+      <label class="reprint-toggle"><input type="checkbox" data-reprint-enabled ${saveAsReprint ? 'checked' : ''} ${identicalCount === 0 ? 'disabled' : ''} /> Save as a reprint in <code>other-prints.ts</code></label>
+      ${selected?.identical ? `<p class="muted">The saved class will inherit <code>${escapeHtml(selected.className)}</code> and override this print’s set metadata.</p>` : ''}
     `;
   }
   return `<section class="reprint-section">
@@ -714,7 +780,10 @@ function render(scrollMode: RenderScrollMode = 'preserve') {
       ? active.selectionEnd
       : null;
   const selectedReprint = selectedReprintCandidate();
-  const canSave = Boolean(outputCode || (saveAsReprint && selectedReprint));
+  const canSave = Boolean(
+    (saveAsReprint && selectedReprint?.identical) ||
+      (draft.name.trim() && draft.set.trim() && (outputCode || !saveAsReprint))
+  );
   const cardNav = view === 'editor' ? browseCardNav() : null;
 
   const heroActions =
@@ -792,7 +861,7 @@ function render(scrollMode: RenderScrollMode = 'preserve') {
           </div>
           <div class="grid-2">
             <label>cardImage<input readonly value="assets/cardback.png" /></label>
-            <label>fullName (name + set)<input readonly value="${escapeAttr(computedFullName())}" /></label>
+            <label>fullName (name + set[+N])<input readonly value="${escapeAttr(computedFullName())}" /></label>
           </div>
           ${
             draft.extends === 'PokemonCard'
@@ -1061,14 +1130,15 @@ function bindEvents() {
   app.querySelectorAll<HTMLInputElement>('[data-reprint-candidate]').forEach(input => {
     input.addEventListener('change', () => {
       selectedReprintKey = input.value;
-      saveAsReprint = true;
+      const selected = selectedReprintCandidate();
+      saveAsReprint = Boolean(selected?.identical);
       render();
     });
   });
 
   const reprintToggle = app.querySelector<HTMLInputElement>('[data-reprint-enabled]');
   reprintToggle?.addEventListener('change', () => {
-    saveAsReprint = reprintToggle.checked;
+    saveAsReprint = reprintToggle.checked && Boolean(selectedReprintCandidate()?.identical);
     render();
   });
 
@@ -1087,15 +1157,22 @@ function bindEvents() {
       }
       if (key === 'extends' || key === 'hasPowers' || key === 'hasAttacks') {
         render();
+        scheduleReprintRefresh();
       }
       if (key === 'name' || key === 'set' || key === 'setNumber') {
         void refreshReprintCandidates();
+      }
+      if (key === 'trainerText' || key === 'energyText') {
+        scheduleReprintRefresh();
       }
     };
     el.addEventListener('change', handler);
     if (!(el instanceof HTMLSelectElement) && !(el instanceof HTMLInputElement && el.type === 'checkbox')) {
       el.addEventListener('input', () => {
         (draft as any)[key] = el.value;
+        if (key === 'trainerText' || key === 'energyText') {
+          scheduleReprintRefresh();
+        }
       });
     }
   });
@@ -1108,12 +1185,14 @@ function bindEvents() {
       if (!attack) return;
       (attack as any)[key] = (el as HTMLInputElement).value;
       if (key === 'cost') render();
+      if (key === 'name' || key === 'text') scheduleReprintRefresh();
     };
     el.addEventListener('change', apply);
     el.addEventListener('input', () => {
       const attack = findAttack(id);
       if (!attack) return;
       (attack as any)[key] = (el as HTMLInputElement).value;
+      if (key === 'name' || key === 'text') scheduleReprintRefresh();
     });
   });
 
@@ -1124,11 +1203,13 @@ function bindEvents() {
       const power = findPower(id);
       if (!power) return;
       (power as any)[key] = (el as HTMLInputElement).value;
+      if (key === 'name' || key === 'text') scheduleReprintRefresh();
     });
     el.addEventListener('input', () => {
       const power = findPower(id);
       if (!power) return;
       (power as any)[key] = (el as HTMLInputElement).value;
+      if (key === 'name' || key === 'text') scheduleReprintRefresh();
     });
   });
 
@@ -1325,7 +1406,9 @@ async function handleAction(action: string | null, btn: HTMLButtonElement) {
       // Sync latest input values that may not have blurred
       syncAllInputs();
       try {
-        outputCode = await generateCardSource(draft);
+        outputCode = await generateCardSource(draft, {
+          occurrence: effectiveVariantOccurrence(),
+        });
         outputError = '';
         statusMessage = 'Generated successfully.';
       } catch (err) {
@@ -1390,27 +1473,47 @@ async function handleAction(action: string | null, btn: HTMLButtonElement) {
     case 'save': {
       syncAllInputs();
       const selected = selectedReprintCandidate();
-      const reprint = saveAsReprint && selected
-        ? {
-            className: draft.className || computedClassName().replace(/[^A-Za-z0-9]/g, ''),
-            sourceClassName: selected.className,
-            sourcePath: selected.sourcePath,
-            name: draft.name,
-            set: draft.set,
-            setNumber: draft.setNumber,
-            fullName: computedFullName(),
-            regulationMark: draft.regulationMark,
-          }
-        : undefined;
-      if (!outputCode && !reprint) return;
+      const reprint =
+        saveAsReprint && selected?.identical
+          ? {
+              className: draft.className || computedClassName().replace(/[^A-Za-z0-9]/g, ''),
+              sourceClassName: selected.className,
+              sourcePath: selected.sourcePath,
+              name: draft.name,
+              set: draft.set,
+              setNumber: draft.setNumber,
+              fullName: computedFullName(),
+              regulationMark: draft.regulationMark,
+            }
+          : undefined;
+      const resolvedClassName =
+        draft.className.trim() || computedClassName().replace(/[^A-Za-z0-9]/g, '');
       const save = async (overwrite: boolean) => {
+        let source = outputCode;
+        if (!reprint) {
+          const occurrence = effectiveVariantOccurrence();
+          const classMatches = Boolean(
+            source && new RegExp(`export class\\s+${resolvedClassName}\\b`).test(source)
+          );
+          const fullName = computedFullName();
+          const fullNameMatches = Boolean(
+            source &&
+              (source.includes(`fullName: string = '${fullName}'`) ||
+                source.includes(`fullName = '${fullName}'`))
+          );
+          if (!source || !classMatches || !fullNameMatches) {
+            source = await generateCardSource(draft, { occurrence });
+            outputCode = source;
+          }
+        }
+        if (!source && !reprint) return;
         const response = await fetch('/save-card', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             set: draft.set,
-            className: draft.className || draft.name.replace(/[^a-zA-Z0-9 ]/g, ' ').split(/\s+/).filter(Boolean).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(''),
-            source: outputCode,
+            className: resolvedClassName,
+            source,
             overwrite,
             ...(reprint ? { reprint } : {}),
           }),

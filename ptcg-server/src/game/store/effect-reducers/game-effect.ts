@@ -20,6 +20,7 @@ import {
   PlaceDamageCountersEffect,
   PowerEffect,
   PutDamageCountersEffect,
+  SelfKnockOutEffect,
   TrainerPowerEffect,
   UseAttackEffect,
   UsePowerEffect,
@@ -501,6 +502,18 @@ function* usePower(next: Function, store: StoreLike, state: State, effect: UsePo
 }
 
 export function gameReducer(store: StoreLike, state: State, effect: Effect): State {
+
+  if (effect instanceof SelfKnockOutEffect) {
+    if (effect.preventDefault) {
+      return state;
+    }
+    // Lethal damage → checkState fires KnockOutEffect + prizes (LV.X-safe via findPokemonSlot).
+    const cardList = StateUtils.findPokemonSlot(state, effect.source);
+    if (cardList) {
+      cardList.damage += 999;
+    }
+    return state;
+  }
 
   if (effect instanceof KnockOutEffect) {
     const card = effect.target.getPokemonCard();

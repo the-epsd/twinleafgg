@@ -16,6 +16,7 @@ import { Effect } from '../../../game/store/effects/effect';
 
 import { DiscardEnergyPrompt } from '../../../game/store/prompts/discard-energy-prompt';
 import {BLOCK_IF_GX_ATTACK_USED,
+  KNOCK_OUT_THIS_POKEMON,
   SHUFFLE_DECK,
   WAS_ATTACK_USED,
   WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
@@ -110,22 +111,14 @@ export class ElectrodeGX extends PokemonCard {
           // cancelled by user
           if (transfers.length === 0) {
             SHUFFLE_DECK(store, state, player);
-            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-              if (cardList.getPokemonCard() === this) {
-                cardList.damage += 999;
-                return state;
-              }
-            });
+            state = KNOCK_OUT_THIS_POKEMON(store, state, player, this);
+            return state;
           }
           for (const transfer of transfers) {
             const target = StateUtils.getTarget(state, player, transfer.to);
             MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
           }
-          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-            if (cardList.getPokemonCard() === this) {
-              cardList.damage += 999;
-            }
-          });
+          state = KNOCK_OUT_THIS_POKEMON(store, state, player, this);
         },
       );
     }

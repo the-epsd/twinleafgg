@@ -12,6 +12,7 @@ import { CardTag, TrainerType } from '../card/card-types';
 import { Player } from '../state/player';
 import { TrainerCard } from '../card/trainer-card';
 import { CoinFlipEffect } from '../effects/play-card-effects';
+import { REMOVE_STADIUM_CARD_LIST } from '../stadium-utils';
 
 function getTrainerCleanupTarget(player: Player, trainerCard: TrainerCard) {
   return trainerCard.tags.includes(CardTag.PRISM_STAR) ? player.lostzone : player.discard;
@@ -123,29 +124,20 @@ export function playTrainerReducer(store: StoreLike, state: State, effect: Effec
   if (effect instanceof PlayStadiumEffect) {
     const player = effect.player;
     const opponent = StateUtils.getOpponent(state, player);
-    const stadiumCard = StateUtils.getStadiumCard(state);
 
     if (player.cannotPlayStadiumCards) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
     return withOptionalCoinFlipCancelTrainer(store, state, player, effect.trainerCard, () => {
-      // Handle player's existing stadium
+      // Handle player's existing stadium (Pokemon-as-Stadium returns to hand)
       if (player.stadium.cards.length > 0) {
-        if (stadiumCard && stadiumCard.tags.includes(CardTag.PRISM_STAR)) {
-          player.stadium.moveTo(player.lostzone);
-        } else {
-          player.stadium.moveTo(player.discard);
-        }
+        REMOVE_STADIUM_CARD_LIST(player.stadium, player);
       }
 
       // Handle opponent's existing stadium
       if (opponent.stadium.cards.length > 0) {
-        if (stadiumCard && stadiumCard.tags.includes(CardTag.PRISM_STAR)) {
-          opponent.stadium.moveTo(opponent.lostzone);
-        } else {
-          opponent.stadium.moveTo(opponent.discard);
-        }
+        REMOVE_STADIUM_CARD_LIST(opponent.stadium, opponent);
       }
 
       store.log(state, GameLog.LOG_PLAYER_PLAYS_STADIUM, {

@@ -4,13 +4,13 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType } from '../../../game/store/card/card-types';
-import { CardTarget, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike, pokemonHasCardType, pokemonHasCardTypeOptional } from '../../../game';
+import { CardTarget, GameError, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike, pokemonHasCardType, pokemonHasCardTypeOptional } from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { checkState } from '../../../game/store/effect-reducers/check-effect';
-import {WAS_POWER_USED, IS_ABILITY_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_POWER_USED, IS_ABILITY_BLOCKED, KNOCK_OUT_THIS_POKEMON, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Electrode extends PokemonCard implements EnergyCard {
   public stage: Stage = Stage.STAGE_1;
@@ -73,8 +73,7 @@ export class Electrode extends PokemonCard implements EnergyCard {
       }
 
       // KO this Pokemon
-      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
-      cardList.damage = 999;
+      state = KNOCK_OUT_THIS_POKEMON(store, state, player, this);
       state = checkState(store, state);
 
       if (store.hasPrompts()) {

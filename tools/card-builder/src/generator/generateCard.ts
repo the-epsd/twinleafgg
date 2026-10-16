@@ -1,3 +1,8 @@
+import {
+  classNameForVariant,
+  fullNameForVariant,
+  toPascalClassName,
+} from '../cardIdentity';
 import { getPrefabById } from '../prefabs/catalog';
 import { resolveEffectHybrid } from '../serverEffects';
 import type {
@@ -10,18 +15,6 @@ import type {
   SelectedPrefab,
   ServerEffect,
 } from '../types';
-
-/** "Hop's Phantump" → "HopsPhantump" (possessive 's stays with the name). */
-function toPascalClassName(name: string): string {
-  return name
-    .replace(/[''\u2019]s\b/gi, 's')
-    .replace(/[''\u2019]/g, '')
-    .replace(/[^a-zA-Z0-9 ]/g, ' ')
-    .split(/\s+/)
-    .filter(Boolean)
-    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-    .join('');
-}
 
 export function parseEnergyCost(input: string): EnergyShort[] {
   const cleaned = input.toUpperCase().replace(/ANY/g, 'A').replace(/[^GRWLPFDMYNCA]/g, '');
@@ -114,17 +107,13 @@ function rewritePokePowerImportLine(line: string): string {
   );
 }
 
-function fullNameFor(draft: CardDraft): string {
-  const name = draft.name.trim();
-  const set = draft.set.trim();
-  if (!name) return '';
-  if (!set) return name;
-  return `${name} ${set}`;
+function fullNameFor(draft: CardDraft, occurrence = 1): string {
+  return fullNameForVariant(draft.name, draft.set, occurrence);
 }
 
-function classNameFor(draft: CardDraft): string {
+function classNameFor(draft: CardDraft, occurrence = 1): string {
   if (draft.className.trim()) return draft.className.trim();
-  return toPascalClassName(draft.name) || 'NewCard';
+  return classNameForVariant(toPascalClassName(draft.name) || 'NewCard', occurrence);
 }
 
 function ensureGuard(prefabImports: Map<string, Set<string>>, kind: EffectKind): void {
@@ -664,10 +653,14 @@ export async function resolvePrefabs(draft: CardDraft): Promise<CardDraft> {
 export { resolveEffectHybrid, describeHybridResolution } from '../serverEffects';
 export type { HybridEffectResolution };
 
-export async function generateCardSource(draft: CardDraft): Promise<string> {
+export async function generateCardSource(
+  draft: CardDraft,
+  options: { occurrence?: number } = {}
+): Promise<string> {
   const resolved = await resolvePrefabs(draft);
-  const className = classNameFor(resolved);
-  const fullName = fullNameFor(resolved);
+  const occurrence = options.occurrence ?? 1;
+  const className = classNameFor(resolved, occurrence);
+  const fullName = fullNameFor(resolved, occurrence);
 
   if (resolved.extends === 'TrainerCard') {
     return generateTrainer(resolved, className, fullName);
