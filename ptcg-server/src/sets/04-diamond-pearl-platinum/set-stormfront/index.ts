@@ -1,23 +1,63 @@
+import { Abomasnow } from './abomasnow';
+import { Bagon } from './bagon';
+import { Bibarel } from './bibarel';
+import { Bidoof } from './bidoof';
+import { Bronzong } from './bronzong';
+import { Bronzor } from './bronzor';
+import { Budew } from './budew';
+import { Cherrim } from './cherrim';
+import { Cherubi } from './cherubi';
+import { Drapion } from './drapion';
+import { Drifblim } from './drifblim';
+import { Drifloon } from './drifloon';
+import { Electrode } from './electrode';
+import { Empoleon } from './empoleon';
 import { EnergySwitchPKSF, GreatBallSF, PotionSF, SwitchSF, CharmanderSF, CharmeleonSF, CharizardSF } from './other-prints';
 import { Card } from '../../../game/store/card/card';
 import { Combee } from './combee';
 import { Dusclops } from './dusclops';
 import { Dusclops2 } from './dusclops2';
 import { Duskull } from './duskull';
+import { Farfetchd } from './farfetchd';
+import { Finneon } from './finneon';
 import { Gastly } from './gastly';
 import { Gengar } from './gengar';
+import { Grovyle } from './grovyle';
 import { Gyarados } from './gyarados';
 import { Haunter } from './haunter';
+import { HeatranLVX } from './heatran-lvx';
+import { Infernape } from './infernape';
+import { Larvitar } from './larvitar';
+import { Lumineon } from './lumineon';
 import { LuxuryBall } from './luxury-ball';
 import { Machoke } from './machoke';
 import { Machamp } from './machamp';
 import { MachampLVX } from './machamp-lv-x';
 import { Machop } from './machop';
 import { Magikarp } from './magikarp';
+import { Magnemite } from './magnemite';
+import { Magneton } from './magneton';
+import { Magnezone } from './magnezone';
+import { Mamoswine } from './mamoswine';
 import { MarleysRequest } from './marleys-request';
+import { Miltank } from './miltank';
+import { Misdreavus } from './misdreavus';
+import { Mismagius } from './mismagius';
+import { Onix } from './onix';
+import { Pichu } from './pichu';
+import { Pikachu } from './pikachu';
+import { Piloswine } from './piloswine';
 import { PokeBlower } from './poke-blower';
 import { PokeDrawer } from './poke-drawer';
+import { Ponyta } from './ponyta';
+import { Pupitar } from './pupitar';
+import { Raichu } from './raichu';
+import { RaichuLVX } from './raichu-lvx';
+import { Rapidash } from './rapidash';
+import { Regigigas } from './regigigas';
 import { RegigigasLVX } from './regigigas-lv-x';
+import { Roselia } from './roselia';
+import { Roserade } from './roserade';
 import { Sableye } from './sableye';
 
 // Other prints
@@ -27,29 +67,113 @@ import {
   WarpEnergySF
 } from './other-prints';
 
+import { Salamence } from './salamence';
+import { Sceptile } from './sceptile';
+import { Scizor } from './scizor';
+import { Scyther } from './scyther';
+import { Shelgon } from './shelgon';
+import { Skarmory } from './skarmory';
+import { Skorupi } from './skorupi';
+import { Skuntank } from './skuntank';
+import { Snover } from './snover';
+import { Staraptor } from './staraptor';
+import { Staravia } from './staravia';
+import { Starly } from './starly';
+import { Steelix } from './steelix';
+import { Stunky } from './stunky';
+import { Swinub } from './swinub';
+import { Tangela } from './tangela';
+import { Tangrowth } from './tangrowth';
+import { Torterra } from './torterra';
+import { Treecko } from './treecko';
+import { Tyranitar } from './tyranitar';
+import { Vespiquen } from './vespiquen';
+import { Voltorb } from './voltorb';
 export const setStormfront: Card[] = [
+  new Abomasnow(),
+  new Bagon(),
+  new Bibarel(),
+  new Bidoof(),
+  new Bronzong(),
+  new Bronzor(),
+  new Budew(),
+  new Cherrim(),
+  new Cherubi(),
   new Combee(),
+  new Drapion(),
+  new Drifblim(),
+  new Drifloon(),
   new Dusclops(),
   new Dusclops2(),
   new Duskull(),
+  new Electrode(),
+  new Empoleon(),
+  new Farfetchd(),
+  new Finneon(),
   new Gengar(),
+  new Grovyle(),
   new Gyarados(),
   new Haunter(),
+  new HeatranLVX(),
+  new Infernape(),
+  new Larvitar(),
+  new Lumineon(),
   new LuxuryBall(),
   new Machoke(),
   new Machamp(),
   new MachampLVX(),
   new Machop(),
   new Magikarp(),
+  new Magnemite(),
+  new Magneton(),
+  new Magnezone(),
+  new Mamoswine(),
   new MarleysRequest(),
+  new Miltank(),
+  new Misdreavus(),
+  new Mismagius(),
+  new Onix(),
+  new Pichu(),
+  new Pikachu(),
+  new Piloswine(),
   new PokeBlower(),
   new PokeDrawer(),
+  new Ponyta(),
+  new Pupitar(),
+  new Raichu(),
+  new RaichuLVX(),
+  new Rapidash(),
+  new Regigigas(),
   new RegigigasLVX(),
+  new Roselia(),
+  new Roserade(),
   new Sableye(),
   new Gastly(),
   // Other prints
   new CycloneEnergySF(),
   new PremierBallSF(),
+  new Salamence(),
+  new Sceptile(),
+  new Scizor(),
+  new Scyther(),
+  new Shelgon(),
+  new Skarmory(),
+  new Skorupi(),
+  new Skuntank(),
+  new Snover(),
+  new Staraptor(),
+  new Staravia(),
+  new Starly(),
+  new Steelix(),
+  new Stunky(),
+  new Swinub(),
+  new Tangela(),
+  new Tangrowth(),
+  new Torterra(),
+  new Treecko(),
+  new Tyranitar(),
+  new Vespiquen(),
+  new Voltorb(),
   new WarpEnergySF(),
   new EnergySwitchPKSF(),
   new GreatBallSF(),
