@@ -1,13 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State, GameError, GameMessage,
-  PlayerType, SlotType,
-  ChoosePokemonPrompt,
-  CardTarget,
-  StateUtils,
-  CardList
-} from '../../../game';
+import { PowerType, StoreLike, State, GameError, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, CardTarget, StateUtils, CardList } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
