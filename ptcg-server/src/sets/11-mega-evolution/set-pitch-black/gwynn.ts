@@ -27,7 +27,7 @@ function* playGwynn(
   });
 
   const selectableCount = player.hand.cards.length - blocked.length;
-  if (selectableCount < 2) {
+  if (selectableCount < 1) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
