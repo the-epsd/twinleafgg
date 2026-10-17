@@ -100,6 +100,9 @@ import { Wimpod } from './wimpod';
 import { Xatu } from './xatu';
 import { Yamask } from './yamask';
 import { Zacian } from './zacian';
+import { Pansage } from './pansage';
+import { Simisage } from './simisage';
+
 export const setParadoxRift: Card[] = [
   new Aegislash(),
   new Aegislashex(),
@@ -201,6 +204,8 @@ export const setParadoxRift: Card[] = [
   new Vanillish(),
   new Vanilluxe(),
   new SnorlaxDoll(),
+  new Pansage(),
+  new Simisage(),
 
   //Full s
   new ToedscruelIR(),
