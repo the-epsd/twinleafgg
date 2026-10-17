@@ -1,41 +1,40 @@
-import { PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
-import { GameMessage } from '../../../game/game-message';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
+import { ChoosePokemonPrompt, GameError, GameMessage, Player, PlayerType, SlotType, State, StoreLike } from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
+import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
-import { GameError } from '../../../game';
-import {
-  SHUFFLE_DECK,
-  MOVE_CARDS,
-  MOVE_POKEMON_OFF_BOARD,
-} from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, MOVE_POKEMON_OFF_BOARD, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+
 export class Cassius extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'XY';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '115';
-
   public name: string = 'Cassius';
-
   public fullName: string = 'Cassius XY';
-
   public text: string = 'Shuffle 1 of your Pokémon and all cards attached to it into your deck.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    let hasPokemonInPlay = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, () => {
+      hasPokemonInPlay = true;
+    });
+    return hasPokemonInPlay;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
-      const supporterTurn = player.supporterTurn;
-
-      if (supporterTurn > 0) {
+      if (player.supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      if (!this.canPlay(store, state, player)) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
       MOVE_CARDS(store, state, player.hand, player.supporter, {

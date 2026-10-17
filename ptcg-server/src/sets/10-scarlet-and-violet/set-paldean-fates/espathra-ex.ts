@@ -2,9 +2,9 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, PowerType, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
 import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { TERA_RULE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { IS_ABILITY_BLOCKED, TERA_RULE, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Espathraex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
@@ -41,38 +41,41 @@ export class Espathraex extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Dazzling Gaze
     if (effect instanceof CheckAttackCostEffect) {
-      const player = effect.player;
+      const attackingPlayer = effect.player;
       const cardList = StateUtils.findCardList(state, this);
-      const owner = StateUtils.findOwner(state, cardList);
+      const abilityOwner = StateUtils.findOwner(state, cardList);
 
-      // Check if Espathra ex is in the active position
-      if (owner.active.getPokemonCard() === this) {
-        try {
-          const stub = new PowerEffect(
-            player,
-            {
-              name: 'test',
-              powerType: PowerType.ABILITY,
-              text: '',
-            },
-            this,
-          );
-          store.reduceEffect(state, stub);
-        } catch {
-          return state;
-        }
-
-        if (player !== owner && player.active.getPokemonCard()) {
-          const index = effect.cost.indexOf(CardType.COLORLESS);
-          if (index > -1) {
-            effect.cost.splice(index, 0, CardType.COLORLESS);
-          } else {
-            effect.cost.push(CardType.COLORLESS);
-          }
-        }
+      if (abilityOwner.active.getPokemonCard() !== this) {
         return state;
       }
+
+      if (attackingPlayer === abilityOwner) {
+        return state;
+      }
+
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        attackingPlayer.active,
+      )) {
+        return state;
+      }
+
+      const index = effect.cost.indexOf(CardType.COLORLESS);
+      if (index > -1) {
+        effect.cost.splice(index, 0, CardType.COLORLESS);
+      } else {
+        effect.cost.push(CardType.COLORLESS);
+      }
     }
+
     // Psy Ball
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;

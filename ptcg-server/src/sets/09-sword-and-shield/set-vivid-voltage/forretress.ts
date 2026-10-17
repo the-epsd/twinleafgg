@@ -6,8 +6,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../game/store/prefabs/prefabs';
-import { KnockOutEffect } from '../../../game/store/effects/game-effects';
+import { KNOCK_OUT_THIS_POKEMON, WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../game/store/prefabs/prefabs';
 
 export class Forretress extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -47,19 +46,13 @@ export class Forretress extends PokemonCard {
       THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 30);
     }
 
-    // Attack 2: Double KO
-    // Ref: set-plasma-blast/haxorus.ts (KnockOutEffect for both active)
+    // Attack 2: Double KO — lethal damage so checkState KOs both + prizes together
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // KO the opponent's active
-      const knockOutOpponent = new KnockOutEffect(player, opponent.active);
-      store.reduceEffect(state, knockOutOpponent);
-
-      // KO this Pokemon
-      const knockOutSelf = new KnockOutEffect(opponent, player.active);
-      store.reduceEffect(state, knockOutSelf);
+      opponent.active.damage += 999;
+      state = KNOCK_OUT_THIS_POKEMON(store, state, player, this);
     }
 
     return state;

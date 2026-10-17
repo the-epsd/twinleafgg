@@ -57,6 +57,7 @@ import {
   BOARD_DECK_SHUFFLE_SERVER_WAIT_MS,
   BOARD_DRAW_WAIT_FALLBACK_MS,
   BOARD_HAND_TO_DECK_WAIT_FALLBACK_MS,
+  BOARD_SHOW_CARDS_WAIT_FALLBACK_MS,
 } from '../animationTiming';
 import {
   autoTakeChoosePrizeIndices,
@@ -80,6 +81,8 @@ export type TablePromptLayerProps = {
   onResolvePrompt: (promptId: number, result: unknown) => void | Promise<void>;
   /** Hide Choose prize until 3D KO animation finishes (same server prompt, deferred UI). */
   suppressChoosePrizePrompt?: boolean;
+  /** When true, ShowCardsPrompt is a silent 3D reveal animation instead of a modal. */
+  use3dBoard?: boolean;
 };
 
 function gameMessageText(t: TFunction, message: string | number): string {
@@ -199,7 +202,7 @@ function PendingBoardAnimationWaitPrompt(props: {
   pollMs?: number;
   /** How far before mount an animation start still counts (trainer prompt delay can be ~650ms). */
   startedAtSkewMs?: number;
-  kind: 'handToDeck' | 'shuffle' | 'draw';
+  kind: 'handToDeck' | 'shuffle' | 'draw' | 'showCards';
   boardInteraction: BoardInteractionService;
   resolve: (id: number, result: unknown) => void | Promise<void>;
 }) {
@@ -229,6 +232,9 @@ function PendingBoardAnimationWaitPrompt(props: {
       if (kind === 'shuffle') {
         return boardInteraction.getPendingDeckShuffleAnimationPromise();
       }
+      if (kind === 'showCards') {
+        return boardInteraction.getPendingShowCardsAnimationPromise();
+      }
       return boardInteraction.getPendingDrawAnimationPromise();
     };
 
@@ -238,6 +244,9 @@ function PendingBoardAnimationWaitPrompt(props: {
       }
       if (kind === 'shuffle') {
         return boardInteraction.getDeckShuffleAnimationStartedAt();
+      }
+      if (kind === 'showCards') {
+        return boardInteraction.getShowCardsAnimationStartedAt();
       }
       return boardInteraction.getDrawAnimationStartedAt();
     };
@@ -343,6 +352,26 @@ function DrawAnimationWaitPrompt(props: {
       fallbackMs={fallback}
       pollMs={1200}
       kind="draw"
+      boardInteraction={boardInteraction}
+      resolve={resolve}
+    />
+  );
+}
+
+/** 3D ShowCardsPrompt: await board reveal flight, then ack (no modal). */
+function ShowCardsAnimationPrompt(props: {
+  promptId: number;
+  boardInteraction: BoardInteractionService;
+  resolve: (id: number, result: unknown) => void | Promise<void>;
+}) {
+  const { promptId, boardInteraction, resolve } = props;
+  return (
+    <PendingBoardAnimationWaitPrompt
+      promptId={promptId}
+      fallbackMs={BOARD_SHOW_CARDS_WAIT_FALLBACK_MS}
+      pollMs={2000}
+      startedAtSkewMs={5000}
+      kind="showCards"
       boardInteraction={boardInteraction}
       resolve={resolve}
     />
@@ -488,8 +517,9 @@ function SelfPlayOpponentWaitPrompts(props: {
   clientId: number;
   boardInteraction: BoardInteractionService;
   onResolvePrompt: (promptId: number, result: unknown) => void | Promise<void>;
+  use3dBoard?: boolean;
 }) {
-  const { localGame, clientId, boardInteraction, onResolvePrompt } = props;
+  const { localGame, clientId, boardInteraction, onResolvePrompt, use3dBoard } = props;
   const { t } = useTranslation();
   const resolve = useCallback(
     (id: number, result: unknown) => {
@@ -506,13 +536,27 @@ function SelfPlayOpponentWaitPrompts(props: {
     (p): p is WaitPrompt =>
       p.type === 'WaitPrompt' && p.result === undefined && p.playerId !== clientId,
   );
-  if (waits.length === 0) {
+  const showCards = use3dBoard
+    ? localGame.state.prompts.filter(
+        (p): p is ShowCardsPrompt =>
+          p.type === 'Show cards' && p.result === undefined && p.playerId !== clientId,
+      )
+    : [];
+  if (waits.length === 0 && showCards.length === 0) {
     return null;
   }
 
   return (
     <>
       {waits.map((wp) => renderWaitPromptResolver(wp, boardInteraction, resolve, t))}
+      {showCards.map((sc) => (
+        <ShowCardsAnimationPrompt
+          key={sc.id}
+          promptId={sc.id}
+          boardInteraction={boardInteraction}
+          resolve={resolve}
+        />
+      ))}
     </>
   );
 }
@@ -913,6 +957,7 @@ export function TablePromptLayer(props: TablePromptLayerProps) {
         clientId={props.clientId}
         boardInteraction={props.boardInteraction}
         onResolvePrompt={props.onResolvePrompt}
+        use3dBoard={props.use3dBoard}
       />
       <TablePromptLayerBody {...props} />
     </>
@@ -927,6 +972,7 @@ function TablePromptLayerBody({
   boardInteraction,
   onResolvePrompt,
   suppressChoosePrizePrompt = false,
+  use3dBoard = false,
 }: TablePromptLayerProps) {
   const { t } = useTranslation();
   const localGameRef = useLocalGameRef(localGame);
@@ -1104,6 +1150,8 @@ function TablePromptLayerBody({
         return null;
       }
       // Fall through to WaitPrompt rendering below.
+    } else if (use3dBoard && activePrompt.type === 'Show cards') {
+      // Fall through — 3D ShowCards is a silent reveal animation gate.
     } else if (
       activePrompt.type === 'Choose cards' &&
       shouldUseBoardHandForChooseCards(activePrompt as ChooseCardsPrompt, clientId)
@@ -1205,6 +1253,16 @@ function TablePromptLayerBody({
 
   if (p.type === 'Show cards') {
     const sc = p as ShowCardsPrompt;
+    if (use3dBoard) {
+      return (
+        <ShowCardsAnimationPrompt
+          key={sc.id}
+          promptId={sc.id}
+          boardInteraction={boardInteraction}
+          resolve={resolve}
+        />
+      );
+    }
     return (
       <ShowCardsPanel
         key={sc.id}

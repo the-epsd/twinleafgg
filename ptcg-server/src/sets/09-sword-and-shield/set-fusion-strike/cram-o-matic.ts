@@ -3,14 +3,12 @@ import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { GameMessage } from '../../../game/game-message';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { Effect } from '../../../game/store/effects/effect';
-import { Card, CardList, GameError } from '../../../game';
-
-import { COIN_FLIP_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { Card, CardList, GameError, Player } from '../../../game';
+import { COIN_FLIP_PROMPT, MOVE_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -37,7 +35,7 @@ function* playCard(
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
-  // prepare card list without Junk Arm
+  // prepare card list of the player's hand
   const handTemp = new CardList();
   handTemp.cards = player.hand.cards;
 
@@ -93,29 +91,39 @@ function* playCard(
     });
   }
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {
-    player.deck.applyOrder(order);
-  });
+  return SHUFFLE_DECK(store, state, player);
 }
 
 export class Creamomatic extends TrainerCard {
   protected _trainerType = TrainerType.ITEM;
-
+  public regulationMark = 'E';
   public set: string = 'FST';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '229';
-
-  public regulationMark = 'E';
-
   public name: string = 'Cram-o-matic';
   public fullName: string = 'Cram-o-matic FST';
-
   public text: string = `You can use this card only if you discard another Item card from your hand.
 
 Flip a coin. If heads, search your deck for a card and put it into your hand. Then, shuffle your deck.`;
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const itemCards = player.hand.cards.filter(
+      (c) => c instanceof TrainerCard && c.trainerType == TrainerType.ITEM,
+    );
+
+    if (itemCards.length < 1) {
+      return false;
+    }
+
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

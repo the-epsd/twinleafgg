@@ -12,16 +12,15 @@ import {
   GameError,
   GameMessage,
   PlayerType,
-  SlotType,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
+import { GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import {
   MOVED_TO_ACTIVE_THIS_TURN,
   WAS_ATTACK_USED,
   WAS_POWER_USED,
   IS_ABILITY_BLOCKED,
 } from '../../../game/store/prefabs/prefabs';
-import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 
 export class MawileVstar extends PokemonCard {
   protected _tags = [CardTag.POKEMON_VSTAR];
@@ -60,8 +59,6 @@ export class MawileVstar extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Star Rondo (VSTAR Power)
-    // Ref: set-astral-radiance/origin-forme-palkia-vstar.ts (usedVSTAR check + BoardEffect.ABILITY_USED)
-    // Ref: set-brilliant-stars/probopass.ts (switch opponent bench to active via ChoosePokemonPrompt)
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -112,21 +109,12 @@ export class MawileVstar extends PokemonCard {
       }
 
       // Gust opponent's benched Pokemon to active
-      return store.prompt(
+      return GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY(
+        store,
         state,
-        new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-          PlayerType.TOP_PLAYER,
-          [SlotType.BENCH],
-          { allowCancel: false },
-        ),
-        (result) => {
-          if (!result || result.length === 0) {
-            return;
-          }
-          opponent.switchPokemon(result[0]);
-        },
+        player,
+        this.powers[0],
+        this,
       );
     }
 

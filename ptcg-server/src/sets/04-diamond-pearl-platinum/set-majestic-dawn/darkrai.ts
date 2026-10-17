@@ -1,13 +1,11 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PowerType } from '../../../game';
+import { PokemonCard, PowerType, StateUtils, StoreLike } from '../../../game';
+import { CardType, SpecialCondition, Stage } from '../../../game/store/card/card-types';
 import { Effect } from '../../../game/store/effects/effect';
-import { ADD_SLEEP_TO_PLAYER_ACTIVE, CONFIRMATION_PROMPT, HEAL_X_DAMAGE_FROM_THIS_POKEMON, IS_POKEPOWER_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import {
-  APPLY_SPECIAL_CONDITION_TO_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN,
-} from '../../../game/store/prefabs/attack-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
+import { APPLY_SPECIAL_CONDITION_TO_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/attack-effects';
+import { APPLY_SPECIAL_CONDITIONS_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { CONFIRMATION_PROMPT, HEAL_X_DAMAGE_FROM_THIS_POKEMON, IS_POKEPOWER_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { State } from '../../../game/store/state/state';
 
 export class Darkrai extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -43,27 +41,34 @@ export class Darkrai extends PokemonCard {
   public fullName: string = 'Darkrai MD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Darkness Shade
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this && !IS_POKEPOWER_BLOCKED(store, state, effect.player, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       CONFIRMATION_PROMPT(store, state, player, result => {
         if (result) {
-          const powerEffect = new PowerEffect(player, this.powers[0], this);
-          store.reduceEffect(state, powerEffect);
-
-          ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, opponent, this);
+          APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+            store,
+            state,
+            player,
+            this.powers[0],
+            this,
+            opponent.active,
+            [SpecialCondition.ASLEEP],
+          );
         }
       });
     }
 
+    // Dark Slumber
     if (WAS_ATTACK_USED(effect, 0, this)) {
       APPLY_SPECIAL_CONDITION_TO_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(
         store, state, effect, this, SpecialCondition.ASLEEP,
       );
     }
 
+    // Dark Resolve
     if (WAS_ATTACK_USED(effect, 1, this)) {
       if (effect.opponent.active.specialConditions.includes(SpecialCondition.ASLEEP)) {
         HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 40);

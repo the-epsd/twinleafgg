@@ -1,15 +1,19 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, EnergyCard, PlayerType, SlotType, PokemonCardList, ChooseCardsPrompt } from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-import { AttackEffect } from '../../../game/store/effects/game-effects';
-import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-prompt';
-import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
+import { AttachEnergyPrompt, ChooseCardsPrompt, EnergyCard, GameError, GameMessage, PlayerType, PokemonCard, PokemonCardList, PowerType, SlotType, StateUtils, StoreLike, SuperType } from '../../../game';
+import { CardType, EnergyType, Stage } from '../../../game/store/card/card-types';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
+import { AttackEffect, PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
+import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
+import { Effect } from '../../../game/store/effects/effect';
+import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
-import {WAS_ATTACK_USED, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import {
+  IS_POKEPOWER_BLOCKED,
+  MOVE_CARDS,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
+import { State } from '../../../game/store/state/state';
 
 function* useFlareDestroy(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -40,7 +44,6 @@ function* useFlareDestroy(next: Function, store: StoreLike, state: State,
 }
 
 export class Typhlosion extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Quilava';
   public cardType: CardType[] = [R];
@@ -55,38 +58,42 @@ export class Typhlosion extends PokemonCard {
     text: 'Once during your turn (before your attack), you may search your discard pile for a [R] Energy card and attach it to 1 of your Pokémon. If you do, put 1 damage counter on that Pokémon. This power can\'t be used if Typhlosion is affected by a Special Condition.'
   }];
 
-  public attacks = [
-    {
-      name: 'Flare Destroy',
-      cost: [R, R, C],
-      damage: 70,
-      text: 'Discard an Energy card attached to Typhlosion and discard an Energy card attached to the Defending Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Flare Destroy',
+    cost: [R, R, C],
+    damage: 70,
+    text: 'Discard an Energy card attached to Typhlosion and discard an Energy card attached to the Defending Pokémon.'
+  }];
 
   public set: string = 'HS';
-  public name: string = 'Typhlosion';
-  public fullName: string = 'Typhlosion HS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '110';
+  public name: string = 'Typhlosion';
+  public fullName: string = 'Typhlosion HS';
 
   public readonly AFTERBURNER_MARKER = 'AFTERBURNER_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.AFTERBURNER_MARKER, this);
-      return state;
+      effect.player.marker.removeMarker(this.AFTERBURNER_MARKER, this);
     }
 
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.AFTERBURNER_MARKER, this);
+
+    // Flare Destroy
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useFlareDestroy(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
 
+    // Afterburner
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
+
+      if (IS_POKEPOWER_BLOCKED(store, state, player, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
 
       if (cardList.specialConditions.length > 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -98,6 +105,7 @@ export class Typhlosion extends PokemonCard {
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
+
       if (player.marker.hasMarker(this.AFTERBURNER_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
@@ -112,7 +120,6 @@ export class Typhlosion extends PokemonCard {
         { allowCancel: true, min: 1, max: 1 }
       ), transfers => {
         transfers = transfers || [];
-        // cancelled by user
         if (transfers.length === 0) {
           return;
         }
@@ -120,16 +127,14 @@ export class Typhlosion extends PokemonCard {
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
-          target.damage += 10;
+          store.reduceEffect(
+            state,
+            new PlaceDamageCountersEffect(player, target, 10, this, this.powers[0]),
+          );
         }
       });
     }
 
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.AFTERBURNER_MARKER, this);
-    }
-
     return state;
   }
-
 }

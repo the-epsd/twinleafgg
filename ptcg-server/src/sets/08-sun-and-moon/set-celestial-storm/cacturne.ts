@@ -3,12 +3,17 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType } from '../../../game';
 import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
+import { AddSpecialConditionsPowerEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { GamePhase } from '../../../game/store/state/state';
-import { WAS_ATTACK_USED, ADD_POISON_TO_PLAYER_ACTIVE, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Cacturne extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -40,20 +45,34 @@ export class Cacturne extends PokemonCard {
   public fullName: string = 'Cacturne CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Poison Payback (passive - triggered when damaged by opponent's attack)
-    // Ref: set-forbidden-light/dragalge.ts (Poison Point)
-    if (effect instanceof AfterDamageEffect && effect.target.getPokemonCard() === this && state.phase === GamePhase.ATTACK) {
-      const player = StateUtils.findOwner(state, effect.target);
-      const opponent = effect.player;
+    // Poison Payback — Ref: set-ascended-heroes/numel.ts / set-twilight-masquerade/heatran.ts
+    if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      if (player === opponent || player.active !== effect.target) {
-        return state;
-      }
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        effect.source,
+      )) {
+        return state;
+      }
+
+      store.reduceEffect(
+        state,
+        new AddSpecialConditionsPowerEffect(
+          abilityOwner,
+          this,
+          effect.source,
+          [SpecialCondition.POISONED],
+        ),
+      );
     }
 
     // Attack 1: Feint Attack

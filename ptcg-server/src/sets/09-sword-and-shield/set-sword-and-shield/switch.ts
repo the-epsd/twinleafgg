@@ -1,77 +1,44 @@
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { PlayerType, SlotType, GameError, GameMessage, PokemonCardList } from '../../../game';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
-
-function* playCard(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  effect: TrainerEffect,
-): IterableIterator<State> {
-  const player = effect.player;
-  const hasBench = player.bench.some((b) => b.cards.length > 0);
-
-  if (hasBench === false) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
-  // Do not discard the card yet
-  effect.preventDefault = true;
-  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
-
-  let targets: PokemonCardList[] = [];
-  yield store.prompt(
-    state,
-    new ChoosePokemonPrompt(
-      player.id,
-      GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-      PlayerType.BOTTOM_PLAYER,
-      [SlotType.BENCH],
-      { allowCancel: true },
-    ),
-    (results) => {
-      targets = results || [];
-      next();
-    },
-  );
-
-  if (targets.length === 0) {
-    return state;
-  }
-
-  // Discard trainer only when user selected a Pokemon
-
-  player.active.clearEffects();
-  player.switchPokemon(targets[0]);
-  return state;
-}
+import { TrainerCard, StoreLike, State, GameError, GameMessage, Player } from '../../../game';
+import { MOVE_CARDS, SWITCH_ACTIVE_WITH_BENCHED } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Switch extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
   public regulationMark = 'G';
-
   public set: string = 'SSH';
-
-  public name: string = 'Switch';
-
-  public fullName: string = 'Switch SSH';
-
+  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '183';
-
+  public name: string = 'Switch';
+  public fullName: string = 'Switch SSH';
   public text: string = 'Switch your Active Pokemon with 1 of your Benched Pokemon.';
 
-  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, effect);
-      return generator.next().value;
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const hasBench = player.bench.some((b) => b.cards.length > 0);
+    if (!hasBench) {
+      return false;
     }
+    return true;
+  }
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (WAS_TRAINER_USED(effect, this)) {
+      const player = effect.player;
+      const hasBench = player.bench.some((b) => b.cards.length > 0);
+
+      if (!hasBench) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      MOVE_CARDS(store, state, player.hand, player.supporter, {
+        cards: [effect.trainerCard],
+        sourceCard: this,
+      });
+
+      SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
+    }
+
     return state;
   }
 }

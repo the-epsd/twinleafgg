@@ -19,8 +19,6 @@ import {
   PlayerType,
   SlotType,
   EnergyCard,
-  PokemonCardList,
-  Player,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import {
@@ -28,11 +26,8 @@ import {
   IS_ABILITY_BLOCKED,
   MOVE_CARDS,
 } from '../../../game/store/prefabs/prefabs';
-import {
-  AddSpecialConditionsPowerEffect,
-  CheckProvidedEnergyEffect,
-} from '../../../game/store/effects/check-effects';
-import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
+import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
+import { PREVENT_EFFECTS_OF_OPPONENTS_ABILITIES } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { GameMessage } from '../../../game/game-message';
 
 export class EnamorusV extends PokemonCard {
@@ -68,99 +63,47 @@ export class EnamorusV extends PokemonCard {
   public fullName: string = 'Enamorus V LOR 82';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Guardian of Love (passive)
-    // Prevent all effects of your opponent's Pokemon's Abilities done to each of your Pokemon
-    // that has any [P] Energy attached, except any Enamorus V.
-    // Ref: set-unbroken-bonds/stealthy-hood.ts (EffectOfAbilityEffect pattern),
-    //      set-unbroken-bonds/vileplume.ts (AddSpecialConditionsPowerEffect pattern),
-    //      set-astral-radiance/bastiodon.ts (passive ability isPokemonInPlay check)
+    // Guardian of Love — Ref: set-unbroken-bonds/stealthy-hood.ts
+    PREVENT_EFFECTS_OF_OPPONENTS_ABILITIES(state, effect, (target) => {
+      let enamorusOwner;
+      try {
+        enamorusOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
+      } catch {
+        return false;
+      }
 
-    // Helper: check whether the guardian protection applies to a given target PokemonCardList
-    const shouldProtectTarget = (
-      targetList: PokemonCardList,
-      abilityOwnerPlayer: Player,
-    ): boolean => {
-      const targetPokemon = targetList.getPokemonCard();
-      if (!targetPokemon) {
+      if (!StateUtils.isPokemonInPlay(enamorusOwner, this)) {
         return false;
       }
-      if (targetPokemon.name === 'Enamorus V') {
+
+      if (IS_ABILITY_BLOCKED(store, state, enamorusOwner, this, this.powers[0])) {
         return false;
       }
-      const checkEnergy = new CheckProvidedEnergyEffect(abilityOwnerPlayer, targetList);
+
+      let targetOwner;
+      try {
+        targetOwner = StateUtils.findOwner(state, target);
+      } catch {
+        return false;
+      }
+
+      if (targetOwner !== enamorusOwner) {
+        return false;
+      }
+
+      const targetPokemon = target.getPokemonCard();
+      if (!targetPokemon || targetPokemon.name === 'Enamorus V') {
+        return false;
+      }
+
+      const checkEnergy = new CheckProvidedEnergyEffect(enamorusOwner, target);
       store.reduceEffect(state, checkEnergy);
       return checkEnergy.energyMap.some(
         (em) => em.provides.includes(CardType.PSYCHIC) || em.provides.includes(CardType.ANY),
       );
-    };
+    });
 
-    // Intercept EffectOfAbilityEffect (e.g. Garbodor-style, Kecleon-style ability targeting)
-    if (effect instanceof EffectOfAbilityEffect && effect.target) {
-      let enamorusPlayer = null;
-      for (const p of state.players) {
-        if (StateUtils.isPokemonInPlay(p, this)) {
-          enamorusPlayer = p;
-          break;
-        }
-      }
-      if (!enamorusPlayer) {
-        return state;
-      }
-      if (IS_ABILITY_BLOCKED(store, state, enamorusPlayer, this)) {
-        return state;
-      }
-
-      try {
-        const targetPlayer = StateUtils.findOwner(state, effect.target);
-        if (targetPlayer !== enamorusPlayer) {
-          return state;
-        }
-        if (effect.player === enamorusPlayer) {
-          return state;
-        }
-        if (shouldProtectTarget(effect.target, enamorusPlayer)) {
-          effect.target = undefined;
-        }
-      } catch {
-        return state;
-      }
-    }
-
-    // Intercept ability-sourced special conditions (AddSpecialConditionsPowerEffect)
-    if (effect instanceof AddSpecialConditionsPowerEffect) {
-      let enamorusPlayer = null;
-      for (const p of state.players) {
-        if (StateUtils.isPokemonInPlay(p, this)) {
-          enamorusPlayer = p;
-          break;
-        }
-      }
-      if (!enamorusPlayer) {
-        return state;
-      }
-      if (IS_ABILITY_BLOCKED(store, state, enamorusPlayer, this)) {
-        return state;
-      }
-
-      try {
-        const targetPlayer = StateUtils.findOwner(state, effect.target);
-        if (!targetPlayer || targetPlayer !== enamorusPlayer) {
-          return state;
-        }
-        if (effect.player === enamorusPlayer) {
-          return state;
-        }
-        if (shouldProtectTarget(effect.target, enamorusPlayer)) {
-          effect.preventDefault = true;
-        }
-      } catch {
-        return state;
-      }
-    }
-
-    // Attack 1: Blossom Tail
-    // Attach up to 2 basic Energy cards from your discard pile to your Benched Pokemon
-    // Ref: set-astral-radiance/regigigas.ts (AttachEnergyPrompt from discard to bench)
+    // Blossom Tail
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 

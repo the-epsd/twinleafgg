@@ -100,7 +100,13 @@ export class Phantump extends PokemonCard {
           cardList.clearEffects();
           cardList.pokemonPlayedTurn = state.turn;
 
-          const placeDamage = new PlaceDamageCountersEffect(player, cardList, 20, this);
+          const placeDamage = new PlaceDamageCountersEffect(
+            player,
+            cardList,
+            20,
+            this,
+            this.powers[0],
+          );
           store.reduceEffect(state, placeDamage);
 
           return state;

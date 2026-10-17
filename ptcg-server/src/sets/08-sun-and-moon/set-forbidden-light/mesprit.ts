@@ -7,6 +7,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils, PlayerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckPokemonStatsEffect } from '../../../game/store/effects/check-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Mesprit extends PokemonCard {
@@ -72,9 +73,22 @@ export class Mesprit extends PokemonCard {
         }
       });
 
-      if (hasAzelf) {
-        effect.resistance = [];
+      if (!hasAzelf) {
+        return state;
       }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        mespritOwner,
+        this.powers[0],
+        this,
+        effect.target,
+      )) {
+        return state;
+      }
+
+      effect.resistance = [];
     }
 
     // Attack 1: Mind Splash

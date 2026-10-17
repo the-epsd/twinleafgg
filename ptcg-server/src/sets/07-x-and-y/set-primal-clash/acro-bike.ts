@@ -1,34 +1,25 @@
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { CardList } from '../../../game/store/state/card-list';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { State, StoreLike, TrainerCard, GameError, GameMessage, Player, CardList, ChooseCardsPrompt } from '../../../game';
+import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class AcroBike extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'PRC';
-
-  public name: string = 'Acro Bike';
-
-  public fullName: string = 'Acro Bike PRC';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '122';
-
+  public name: string = 'Acro Bike';
+  public fullName: string = 'Acro Bike PRC';
   public text: string =
-    'Look at the top 2 cards of your deck and put 1 of them into your hand. ' +
-    'Discard the other card.';
+    'Look at the top 2 cards of your deck and put 1 of them into your hand. Discard the other card.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    return player.deck.cards.length > 0;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
       if (player.deck.cards.length === 0) {
@@ -42,6 +33,7 @@ export class AcroBike extends TrainerCard {
 
       const deckTop = new CardList();
       MOVE_CARDS(store, state, player.deck, deckTop, { count: 2, sourceCard: this });
+      SHOW_CARDS_TO_PLAYER(store, state, player, deckTop.cards);
 
       return store.prompt(
         state,

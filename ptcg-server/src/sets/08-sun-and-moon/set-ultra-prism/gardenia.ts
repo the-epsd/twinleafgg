@@ -1,62 +1,41 @@
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
+import { HealEffect } from '../../../game/store/effects/game-effects';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import {
-  PlayerType,
-  SlotType,
   CardTarget,
+  ChoosePokemonPrompt,
   GameError,
   GameMessage,
+  Player,
+  PlayerType,
   PokemonCardList,
+  SlotType,
+  State,
+  StoreLike,
+  TrainerCard,
 } from '../../../game';
-import { HealEffect } from '../../../game/store/effects/game-effects';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
   store: StoreLike,
   state: State,
+  self: Gardenia,
   effect: TrainerEffect,
 ): IterableIterator<State> {
   const player = effect.player;
 
+  if (!self.canPlay(store, state, player)) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
+
   const blocked: CardTarget[] = [];
-  let hasPokemonWithDamage: boolean = false;
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-    if (
-      cardList.damage === 0 ||
-      !cardList.energies.cards.some(
-        (c) => c.superType === SuperType.ENERGY && c.name === 'Grass Energy',
-      )
-    ) {
+    if (!self.canHeal(cardList)) {
       blocked.push(target);
-    } else {
-      hasPokemonWithDamage = true;
     }
   });
-
-  if (hasPokemonWithDamage === false) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
-  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
-  // We will discard this card after prompt confirmation
-  effect.preventDefault = true;
-
-  if (player.hand.cards.length < 4) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
-  if (player.deck.cards.length === 0) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
-  // We will discard this card after prompt confirmation
-  effect.preventDefault = true;
 
   let targets: PokemonCardList[] = [];
   yield store.prompt(
@@ -78,37 +57,58 @@ function* playCard(
     return state;
   }
 
-  const target = targets[0];
-
-  // Discard trainer only when user selected a Pokemon
-
-  // Heal Pokemon
-  const healEffect = new HealEffect(player, target, 80);
+  const healEffect = new HealEffect(player, targets[0], 80);
   store.reduceEffect(state, healEffect);
   return state;
 }
 
 export class Gardenia extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'UPR';
-
-  public name: string = 'Gardenia';
-
-  public fullName: string = 'Gardenia UPR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '124';
-
+  public name: string = 'Gardenia';
+  public fullName: string = 'Gardenia UPR';
   public text: string =
     'Heal 80 damage from 1 of your Pokémon that has any [G] Energy attached to it.';
 
+  public canHeal(cardList: PokemonCardList): boolean {
+    return (
+      cardList.damage > 0 &&
+      cardList.energies.cards.some(
+        (c) => c.superType === SuperType.ENERGY && c.name === 'Grass Energy',
+      )
+    );
+  }
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+
+    let hasPokemonToHeal = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+      if (this.canHeal(cardList)) {
+        hasPokemonToHeal = true;
+      }
+    });
+    if (!hasPokemonToHeal) {
+      return false;
+    }
+
+    // Need at least 4 other cards in hand and a non-empty deck
+    if (player.hand.cards.filter((c) => c !== this).length < 4) {
+      return false;
+    }
+    return player.deck.cards.length > 0;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, effect);
+    if (WAS_TRAINER_USED(effect, this)) {
+      const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
+
     return state;
   }
 }

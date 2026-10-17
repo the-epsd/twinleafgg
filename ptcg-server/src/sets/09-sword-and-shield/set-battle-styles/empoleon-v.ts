@@ -16,6 +16,7 @@ import {
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import {
+  CAN_APPLY_LOCK_TO_TARGET,
   HANDLE_ABILITY_LOCK,
   LOCKER_ABILITY_APPLIES,
 } from '../../../game/store/prefabs/ability-lock';
@@ -120,7 +121,10 @@ export class EmpoleonV extends PokemonCard {
 
         // Check + PowerEffect: Emperor's Eyes must itself be usable (e.g. Path to the Peak).
         // First-in-wins vs other Active ability lockers (Bide Barricade, Mischievous Lock, …).
-        return LOCKER_ABILITY_APPLIES(store, state, owner, this, this.powers[0], card);
+        if (!LOCKER_ABILITY_APPLIES(store, state, owner, this, this.powers[0], card)) {
+          return false;
+        }
+        return CAN_APPLY_LOCK_TO_TARGET(store, state, owner, this, this.powers[0], card);
       },
       {
         allowUseFromHand: true,

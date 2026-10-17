@@ -65,6 +65,7 @@ Search your deck for up to 3 Basic Team Rocket's Pokémon, reveal them, and put 
       effect.preventDefault = true;
 
       let cards: Card[] = [];
+      MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
       return store.prompt(
         state,
         new ChooseCardsPrompt(
@@ -77,7 +78,6 @@ Search your deck for up to 3 Basic Team Rocket's Pokémon, reveal them, and put 
         (selectedCards) => {
           cards = selectedCards || [];
 
-          MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
           SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
           SHUFFLE_DECK(store, state, player);
         },

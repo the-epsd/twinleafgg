@@ -12,6 +12,7 @@ import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
 import {
   CAN_APPLY_LOCKER_ABILITY,
+  CAN_APPLY_LOCK_TO_TARGET,
   HANDLE_ABILITY_LOCK,
 } from '../../../game/store/prefabs/ability-lock';
 
@@ -72,7 +73,10 @@ export class Wobbuffet extends PokemonCard {
 
         const owner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
         // Check + PowerEffect: Shady Tail must itself be usable (e.g. Path to the Peak).
-        return CAN_APPLY_LOCKER_ABILITY(store, state, owner, this, this.powers[0]);
+        if (!CAN_APPLY_LOCKER_ABILITY(store, state, owner, this, this.powers[0])) {
+          return false;
+        }
+        return CAN_APPLY_LOCK_TO_TARGET(store, state, owner, this, this.powers[0], card);
       },
       {
         allowUseFromDiscard: true,

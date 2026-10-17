@@ -11,6 +11,7 @@ import {
   PlayerType,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { BetweenTurnsEffect } from '../../../game/store/effects/game-phase-effects';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
@@ -49,25 +50,23 @@ export class TeamRocketsTyranitar extends PokemonCard {
   public fullName: string = "Team Rocket's Tyranitar DRI";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Sand Stream
-    if (effect instanceof BetweenTurnsEffect) {
+    // Sand Stream — Ref: set-boundaries-crossed/flygon.ts (Sand Slammer)
+    if (effect instanceof BetweenTurnsEffect && effect.player.active.getPokemonCard() === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
-      if (player.active.getPokemonCard() !== this) {
-        return state;
-      }
 
       opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card.stage === Stage.BASIC) {
-          cardList.damage += 20;
+          store.reduceEffect(
+            state,
+            new PlaceDamageCountersEffect(player, cardList, 20, this, this.powers[0]),
+          );
         }
       });
-
-      return state;
     }
 
     // Breakthrough Tackle

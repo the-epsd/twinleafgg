@@ -4,10 +4,14 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { GamePhase, PowerType, StoreLike, State, StateUtils } from '../../../game';
+import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
+import {
+  IS_ABILITY_BLOCKED,
+  WAS_ATTACK_USED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+} from '../../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
 
 export class Sharpedo extends PokemonCard {
@@ -45,30 +49,25 @@ export class Sharpedo extends PokemonCard {
   public fullName: string = 'Sharpedo PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Rough Skin (passive - damage attacker on hit)
-    // Ref: set-noble-victories/druddigon.ts (Rough Skin ability)
-    if (effect instanceof AfterDamageEffect && effect.target.cards.includes(this)) {
-      const player = effect.player;
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
+    // Ability: Rough Skin
+    if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, targetPlayer, this)) {
-        return state;
-      }
-
-      if (state.phase !== GamePhase.ATTACK) {
-        return state;
-      }
-
-      // Put 2 damage counters on attacker
-      effect.source.damage += 20;
+      const placeCounters = new PlaceDamageCountersEffect(
+        abilityOwner,
+        effect.source,
+        20,
+        this,
+        this.powers[0],
+      );
+      store.reduceEffect(state, placeCounters);
     }
 
     // Attack 1: Hard Bite
-    // Ref: AGENTS-patterns.md (coin flip more damage)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(store, state, effect, 20);
     }

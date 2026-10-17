@@ -6,6 +6,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import {
   ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
   IS_ABILITY_BLOCKED,
@@ -49,15 +50,24 @@ export class PincurchinV extends PokemonCard {
     // Ability: Counterattack Kerzap (passive - flip 3 coins when damaged, 3 damage counters per heads)
     // Ref: set-evolutions/machamp.ts (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT)
     if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      if (IS_ABILITY_BLOCKED(store, state, targetPlayer, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      MULTIPLE_COIN_FLIPS_PROMPT(store, state, targetPlayer, 3, (results) => {
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, abilityOwner, 3, (results) => {
         const heads = results.filter((r) => r).length;
-        effect.source.damage += 30 * heads;
+        if (heads > 0) {
+          const placeCounters = new PlaceDamageCountersEffect(
+            abilityOwner,
+            effect.source,
+            30 * heads,
+            this,
+            this.powers[0],
+          );
+          store.reduceEffect(state, placeCounters);
+        }
       });
     }
 

@@ -5,6 +5,7 @@ import {
   ChooseCardsPrompt,
   GameError,
   GameMessage,
+  Player,
   PlayerType,
   PokemonCardList,
   SlotType,
@@ -15,9 +16,28 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { SupporterEffect, TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+
+// Opponent's Pokémon without an Energy attached can't be chosen
+function getEnergyTargets(
+  state: State,
+  player: Player,
+): { hasPokemonWithEnergy: boolean; blocked: CardTarget[] } {
+  const opponent = StateUtils.getOpponent(state, player);
+  let hasPokemonWithEnergy = false;
+  const blocked: CardTarget[] = [];
+  opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
+    if (cardList.cards.some((c) => c.superType === SuperType.ENERGY)) {
+      hasPokemonWithEnergy = true;
+    } else {
+      blocked.push(target);
+    }
+  });
+  return { hasPokemonWithEnergy, blocked };
+}
 
 function* playCard(
   next: Function,
@@ -40,22 +60,17 @@ function* playCard(
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  let hasPokemonWithEnergy = false;
-  const blocked: CardTarget[] = [];
-  opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-    if (cardList.cards.some((c) => c.superType === SuperType.ENERGY)) {
-      hasPokemonWithEnergy = true;
-    } else {
-      blocked.push(target);
-    }
-  });
+  const { hasPokemonWithEnergy, blocked } = getEnergyTargets(state, player);
 
   if (!hasPokemonWithEnergy) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
   effect.preventDefault = true;
-  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
+  MOVE_CARDS(store, state, player.hand, player.supporter, {
+    cards: [effect.trainerCard],
+    sourceCard: self,
+  });
 
   const handTemp = new CardList();
   handTemp.cards = player.hand.cards.filter((c) => c !== self);
@@ -135,22 +150,28 @@ function* playCard(
 
 export class Plumeria extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'BUS';
-
-  public name: string = 'Plumeria';
-
-  public fullName: string = 'Plumeria BUS';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '120';
-
+  public name: string = 'Plumeria';
+  public fullName: string = 'Plumeria BUS';
   public text: string =
     "Discard 2 cards from your hand. If you do, discard an Energy from 1 of your opponent's Pokémon.";
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    // Need 2 other cards in hand to discard
+    if (player.hand.cards.filter((c) => c !== this).length < 2) {
+      return false;
+    }
+    // Opponent needs a Pokémon with an Energy attached
+    return getEnergyTargets(state, player).hasPokemonWithEnergy;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }

@@ -7,6 +7,7 @@ import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../../game/store/prefabs/attack-effects';
 
@@ -42,28 +43,37 @@ export class Muk extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Sludge Street
-    // Ref: set-boundaries-crossed/jellicent.ts (Stickiness - CheckRetreatCostEffect pattern)
     if (effect instanceof CheckRetreatCostEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      const retreatingPlayer = effect.player;
+      const abilityOwner = StateUtils.getOpponent(state, retreatingPlayer);
 
-      // This Muk must be in play (opponent's field relative to retreating player)
-      if (!StateUtils.isPokemonInPlay(opponent, this)) {
-        return state;
-      }
-      if (IS_ABILITY_BLOCKED(store, state, opponent, this)) {
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
         return state;
       }
 
-      // Only applies to the retreating Pokemon if it is Poisoned
-      const retreatingPokemon = player.active;
-      if (retreatingPokemon.specialConditions.includes(SpecialCondition.POISONED)) {
-        effect.cost.push(CardType.COLORLESS);
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
       }
+
+      if (!retreatingPlayer.active.specialConditions.includes(SpecialCondition.POISONED)) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        retreatingPlayer.active,
+      )) {
+        return state;
+      }
+
+      effect.cost.push(CardType.COLORLESS);
     }
 
     // Attack 1: Shrieking Poison
-    // Ref: set-unbroken-bonds/kogas-trap.ts (Confused and Poisoned together)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
       YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect);

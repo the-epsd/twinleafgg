@@ -36,7 +36,7 @@ export class UnownR extends PokemonCard {
 
   public hp: number = 60;
 
-  public weakness = [{ type: CardType.PSYCHIC, value: 10 }];
+  public weakness = [{ type: CardType.PSYCHIC, value: +10 }];
 
   public retreat = [CardType.COLORLESS];
 

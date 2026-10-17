@@ -3,6 +3,7 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { RetreatEffect } from '../../../game/store/effects/game-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
@@ -51,14 +52,24 @@ export class Cradily extends PokemonCard {
         return state;
       }
 
-      const opponent = StateUtils.getOpponent(state, retreatingPlayer);
+      const abilityOwner = StateUtils.getOpponent(state, retreatingPlayer);
 
-      // Cradily must be on the opponent's side
-      if (!StateUtils.isPokemonInPlay(opponent, this)) {
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, opponent, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        retreatingPlayer.active,
+      )) {
         return state;
       }
 

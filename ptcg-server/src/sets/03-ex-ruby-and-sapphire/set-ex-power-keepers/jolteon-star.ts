@@ -4,7 +4,7 @@ import { StoreLike, State, PowerType, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CONFIRMATION_PROMPT, IS_POKEPOWER_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN } from '../../../game/store/prefabs/effect-of-attack-prefabs';
-import { EffectOfAbilityEffect, PowerEffect } from '../../../game/store/effects/game-effects';
+import { PlaceDamageCountersEffect, PowerEffect } from '../../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 
 export class JolteonStar extends PokemonCard {
@@ -53,17 +53,23 @@ export class JolteonStar extends PokemonCard {
           const powerEffect = new PowerEffect(player, this.powers[0], this);
           store.reduceEffect(state, powerEffect);
 
-          const effectOfAbility = new EffectOfAbilityEffect(
-            effect.player,
-            this.powers[0],
-            this,
+          const placeCountersOpponent = new PlaceDamageCountersEffect(
+            player,
             opponent.active,
+            10,
+            this,
+            this.powers[0],
           );
-          store.reduceEffect(state, effectOfAbility);
-          if (effectOfAbility.target) {
-            opponent.active.damage += 10;
-          }
-          player.active.damage += 10;
+          store.reduceEffect(state, placeCountersOpponent);
+
+          const placeCountersSelf = new PlaceDamageCountersEffect(
+            player,
+            player.active,
+            10,
+            this,
+            this.powers[0],
+          );
+          store.reduceEffect(state, placeCountersSelf);
         }
       });
     }

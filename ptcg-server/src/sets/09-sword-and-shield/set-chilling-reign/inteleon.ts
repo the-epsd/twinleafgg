@@ -97,7 +97,13 @@ export class Inteleon extends PokemonCard {
           const targets = selected || [];
 
           if (targets.length > 0) {
-            const placeCountersEffect = new PlaceDamageCountersEffect(player, targets[0], 20, this);
+            const placeCountersEffect = new PlaceDamageCountersEffect(
+              player,
+              targets[0],
+              20,
+              this,
+              this.powers[0],
+            );
             state = store.reduceEffect(state, placeCountersEffect);
           }
 

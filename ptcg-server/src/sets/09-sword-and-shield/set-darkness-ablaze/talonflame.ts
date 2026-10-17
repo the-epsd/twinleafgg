@@ -6,10 +6,15 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
-import { GamePhase } from '../../../game/store/state/state';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { AddSpecialConditionsPowerEffect } from '../../../game/store/effects/check-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+} from '../../../game/store/prefabs/prefabs';
 import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
+
 export class Talonflame extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Fletchinder';
@@ -42,26 +47,37 @@ export class Talonflame extends PokemonCard {
   public fullName: string = 'Talonflame DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Scorching Feathers (passive - when damaged by opponent's attack, attacker is Burned)
-    // Ref: set-sword-and-shield/qwilfish.ts (Poison Point - AfterDamageEffect pattern)
-    if (effect instanceof AfterDamageEffect && effect.target.getPokemonCard() === this && state.phase === GamePhase.ATTACK) {
-      const owner = StateUtils.findOwner(state, effect.target);
-      const opponent = effect.player;
+    // Ability: Scorching Feathers
+    if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      if (owner === opponent || owner.active !== effect.target) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, owner, this)) {
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        effect.source,
+      )) {
         return state;
       }
 
-      // Apply Burned to the attacking Pokemon
-      opponent.active.addSpecialCondition(SpecialCondition.BURNED);
+      store.reduceEffect(
+        state,
+        new AddSpecialConditionsPowerEffect(
+          abilityOwner,
+          this,
+          effect.source,
+          [SpecialCondition.BURNED],
+        ),
+      );
     }
 
     // Attack 1: Mach Flight
-    // Ref: set-rebel-clash/trevenant.ts (BLOCK_RETREAT 3-call pattern)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return BLOCK_RETREAT(store, state, effect, this);
     }

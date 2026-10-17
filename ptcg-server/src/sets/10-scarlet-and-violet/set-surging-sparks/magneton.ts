@@ -3,7 +3,7 @@ import { Stage, CardType, EnergyType, SuperType } from '../../../game/store/card
 import { StoreLike, State, PowerType, GameMessage, PlayerType, SlotType, GameError, AttachEnergyPrompt, StateUtils, CardTarget, pokemonHasCardType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
-import {WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { KNOCK_OUT_THIS_POKEMON, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Magneton extends PokemonCard {
 
@@ -74,11 +74,7 @@ export class Magneton extends PokemonCard {
           const target = StateUtils.getTarget(state, player, transfer.to);
           MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
         }
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            cardList.damage += 999;
-          }
-        });
+        state = KNOCK_OUT_THIS_POKEMON(store, state, player, this);
       });
     }
     return state;

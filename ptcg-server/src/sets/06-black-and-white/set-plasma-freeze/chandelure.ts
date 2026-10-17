@@ -1,70 +1,58 @@
+import { ChooseCardsPrompt, ChoosePokemonPrompt, EnergyCard, GameMessage, PlayerType, SlotType, StoreLike } from '../../../game';
+import { CardTag, CardType, EnergyType, Stage, SuperType } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import {
-  Stage,
-  CardType,
-  CardTag,
-  EnergyType,
-  SuperType,
-} from '../../../game/store/card/card-types';
-import {
-  PowerType,
-  StoreLike,
-  State,
-  GameMessage,
-  ChooseCardsPrompt,
-  ChoosePokemonPrompt,
-  PlayerType,
-  SlotType,
-  EnergyCard,
-} from '../../../game';
+import { PowerType } from '../../../game/store/card/pokemon-types';
 import { Effect } from '../../../game/store/effects/effect';
-import {WAS_ATTACK_USED,
-  WAS_POWER_USED,
-  IS_ABILITY_BLOCKED,
-  USE_ABILITY_ONCE_PER_TURN,
-  REMOVE_MARKER_AT_END_OF_TURN,
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
+import {
   ABILITY_USED,
-  SHUFFLE_DECK,
   BLOCK_IF_DECK_EMPTY,
-  HEAL_X_DAMAGE_FROM_THIS_POKEMON, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+  HEAL_X_DAMAGE_FROM_THIS_POKEMON,
+  IS_ABILITY_BLOCKED,
+  MOVE_CARDS,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  SHUFFLE_DECK,
+  USE_ABILITY_ONCE_PER_TURN,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
+import { State } from '../../../game/store/state/state';
 
 export class Chandelure extends PokemonCard {
-  protected _tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_2;
-  public evolvesFrom: string = 'Lampent';
+  public evolvesFrom = 'Lampent';
+  protected _tags = [CardTag.TEAM_PLASMA];
   public cardType: CardType[] = [R];
   public hp: number = 130;
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public powers = [
-    {
-      name: 'Flare Navigate',
-      useWhenInPlay: true,
-      powerType: PowerType.ABILITY,
-      text: 'Once during your turn (before your attack), you may search your deck for a [R] Energy card and attach it to 1 of your Pokémon. If you do, put 1 damage counter on that Pokémon. Shuffle your deck afterward.',
-    },
-  ];
+  public powers = [{
+    name: 'Flare Navigate',
+    useWhenInPlay: true,
+    powerType: PowerType.ABILITY,
+    text: 'Once during your turn (before your attack), you may search your deck for a [R] Energy card and attach it to 1 of your Pokémon. If you do, put 1 damage counter on that Pokémon. Shuffle your deck afterward.',
+  }];
 
-  public attacks = [
-    {
-      name: 'Absorb Life',
-      cost: [R, R, C],
-      damage: 70,
-      text: 'Heal 30 damage from this Pokémon.',
-    },
-  ];
+  public attacks = [{
+    name: 'Absorb Life',
+    cost: [R, R, C],
+    damage: 70,
+    text: 'Heal 30 damage from this Pokémon.',
+  }];
 
   public set: string = 'PLF';
-  public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '16';
   public name: string = 'Chandelure';
   public fullName: string = 'Chandelure PLF';
 
   public readonly FLARE_NAVIGATE_MARKER = 'FLARE_NAVIGATE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Flare Navigate
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.FLARE_NAVIGATE_MARKER, this);
+
+    // Flare Navigate
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -76,7 +64,6 @@ export class Chandelure extends PokemonCard {
       USE_ABILITY_ONCE_PER_TURN(player, this.FLARE_NAVIGATE_MARKER, this);
       ABILITY_USED(player, this);
 
-      // Build blocked list: only allow [R] Energy cards
       const blocked: number[] = [];
       player.deck.cards.forEach((c, index) => {
         if (
@@ -105,7 +92,6 @@ export class Chandelure extends PokemonCard {
 
           const energyCard = selected[0];
 
-          // Choose a Pokemon to attach the energy to
           store.prompt(
             state,
             new ChoosePokemonPrompt(
@@ -125,17 +111,17 @@ export class Chandelure extends PokemonCard {
               MOVE_CARDS(store, state, player.deck, target, { cards: [energyCard], sourceCard: this });
               SHUFFLE_DECK(store, state, player);
 
-              // Put 1 damage counter on that Pokemon
-              target.damage += 10;
+              store.reduceEffect(
+                state,
+                new PlaceDamageCountersEffect(player, target, 10, this, this.powers[0]),
+              );
             },
           );
         },
       );
     }
 
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.FLARE_NAVIGATE_MARKER, this);
-
-    // Attack: Absorb Life
+    // Absorb Life
     if (WAS_ATTACK_USED(effect, 0, this)) {
       HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 30);
     }

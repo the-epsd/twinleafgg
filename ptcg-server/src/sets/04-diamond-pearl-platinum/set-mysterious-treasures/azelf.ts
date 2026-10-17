@@ -1,20 +1,24 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, PlayerType } from "../../../game";
-import { CheckAttackCostEffect } from "../../../game/store/effects/check-effects";
-import { Effect } from "../../../game/store/effects/effect";
-import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
-import { OPPONENT_CANNOT_PLAY_CARDS } from "../../../game/store/prefabs/effect-of-attack-prefabs";
+import { PlayerType, PokemonCard, PowerType, StateUtils } from '../../../game';
+import { CardType, Stage } from '../../../game/store/card/card-types';
+import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects';
+import { Effect } from '../../../game/store/effects/effect';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { OPPONENT_CANNOT_PLAY_CARDS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { State } from '../../../game/store/state/state';
+import { StoreLike } from '../../../game/store/store-like';
 
 export class Azelf extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType[] = [P];
   public hp: number = 60;
+  public cardType: CardType[] = [P];
   public weakness = [{ type: P, value: +20 }];
   public retreat = [C];
 
   public powers = [{
     name: 'Downer Material',
+    powerType: PowerType.POKEBODY,
     text: 'If you have Uxie and Mesprit in play, the attack cost of each of your opponent\'s Basic Pokémon\'s attacks is [C] more. You can\'t use more than 1 Downer Material Poké-Body each turn.',
-    powerType: PowerType.POKEBODY
   }];
 
   public attacks = [{
@@ -25,21 +29,26 @@ export class Azelf extends PokemonCard {
   }];
 
   public set: string = 'MT';
-  public name: string = 'Azelf';
-  public fullName: string = 'Azelf MT';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '4';
+  public name: string = 'Azelf';
+  public fullName: string = 'Azelf MT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Sticky Membrane
+    // Downer Material
     if (effect instanceof CheckAttackCostEffect) {
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      if (!IS_POKEBODY_BLOCKED(store, state, opponent, this) && opponent.active.getPokemonCard()?.stage === Stage.BASIC) {
+      const attackingPlayer = effect.player;
+      const abilityOwner = StateUtils.getOpponent(state, attackingPlayer);
+      const attackingPokemon = attackingPlayer.active.getPokemonCard();
+      if (
+        !IS_POKEBODY_BLOCKED(store, state, abilityOwner, this) &&
+        attackingPokemon?.stage === Stage.BASIC
+      ) {
 
         let isAzelfInPlay = false;
         let isMespritInPlay = false;
         let isUxieInPlay = false;
-        opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        abilityOwner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
           if (card === this) {
             isAzelfInPlay = true;
           } else if (card.name === 'Uxie') {
@@ -54,16 +63,27 @@ export class Azelf extends PokemonCard {
           return state;
         }
 
-        // Prevent stacking if multiple copies are in play
-        const NON_STACK_MARKER = 'DOWNER_MATERIAL_APPLIED';
-        if (effect.player.marker.hasMarker(NON_STACK_MARKER, this)) {
+        if (!CAN_APPLY_ABILITY_TO_TARGET(
+          store,
+          state,
+          abilityOwner,
+          this.powers[0],
+          this,
+          attackingPlayer.active,
+        )) {
           return state;
         }
-        effect.player.marker.addMarker(NON_STACK_MARKER, this);
+
+        const NON_STACK_MARKER = 'DOWNER_MATERIAL_APPLIED';
+        if (attackingPlayer.marker.hasMarker(NON_STACK_MARKER, this)) {
+          return state;
+        }
+        attackingPlayer.marker.addMarker(NON_STACK_MARKER, this);
 
         effect.cost.push(CardType.COLORLESS);
       }
     }
+
     // Bind Pulse
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return OPPONENT_CANNOT_PLAY_CARDS(store, state, effect, this, { specialEnergy: true });

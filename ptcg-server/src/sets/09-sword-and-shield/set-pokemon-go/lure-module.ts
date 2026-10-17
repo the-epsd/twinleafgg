@@ -1,39 +1,36 @@
-import { Effect } from '../../../game/store/effects/effect';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { Effect } from '../../../game/store/effects/effect';
 import {
+  TrainerCard,
+  StoreLike,
+  State,
+  Player,
   CardList,
   GameMessage,
   StateUtils,
-  ShuffleDeckPrompt,
   ShowCardsPrompt,
   PokemonCard,
 } from '../../../game';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class LureModule extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
   public regulationMark = 'F';
-
   public set: string = 'PGO';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '67';
-
   public name: string = 'Lure Module';
-
   public fullName: string = 'Lure Module PGO';
-
   public text: string =
     'Each player reveals the top 3 cards of their deck and puts all Pokémon they find there into their hand. Then, each player shuffles the other cards back into their deck.';
 
+  public canPlay(_store: StoreLike, _state: State, _player: Player): boolean {
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const tempOpp = new CardList();
@@ -116,18 +113,8 @@ export class LureModule extends TrainerCard {
                         sourceCard: this,
                       });
 
-                      state = store.prompt(
-                        state,
-                        new ShuffleDeckPrompt(player.id),
-                        (playerOrder) => {
-                          player.deck.applyOrder(playerOrder);
-                          return state;
-                        },
-                      );
-                      return store.prompt(state, new ShuffleDeckPrompt(opponent.id), (oppOrder) => {
-                        opponent.deck.applyOrder(oppOrder);
-                        return state;
-                      });
+                      SHUFFLE_DECK(store, state, player);
+                      return SHUFFLE_DECK(store, state, opponent);
                     },
                   );
                 },

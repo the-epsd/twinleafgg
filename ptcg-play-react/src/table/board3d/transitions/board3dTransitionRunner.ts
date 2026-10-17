@@ -71,6 +71,8 @@ export interface Board3dTransitionHost {
   render(): Promise<void>;
   setKoActive(active: boolean): void;
   markDirty(): void;
+  /** Pending attack damage for this defending player, or null if none / already applied. */
+  consumePendingAttackDamage?(defenderId: number): number | null;
 }
 
 export interface TransitionRunResult {
@@ -166,6 +168,8 @@ export class Board3dTransitionRunner {
   async run(): Promise<TransitionRunResult> {
     try {
       this.primeOverrides();
+      // Suppress Choose prize before any await / paint so the prompt cannot flash.
+      this.activateKoSuppressIfNeeded();
       const ghostKeys = this.detachGhosts();
       this.prepareHandRows();
       await this.render();
@@ -205,6 +209,9 @@ export class Board3dTransitionRunner {
             break;
           case 'trainerToDiscard':
             await this.runTrainerToDiscard(step);
+            break;
+          case 'showCards':
+            await this.runShowCards(step);
             break;
         }
         ranAny = true;
@@ -299,6 +306,17 @@ export class Board3dTransitionRunner {
     this.refreshPileOverrides();
   }
 
+  private activateKoSuppressIfNeeded(): void {
+    if (this.koActive) {
+      return;
+    }
+    if (!this.steps.some((s) => s.kind === 'boardGhostToPile')) {
+      return;
+    }
+    this.koActive = true;
+    this.host.setKoActive(true);
+  }
+
   private detachGhosts(): Map<TransitionStep, string | null> {
     const out = new Map<TransitionStep, string | null>();
     for (const step of this.steps) {
@@ -306,13 +324,38 @@ export class Board3dTransitionRunner {
         continue;
       }
       const meshId = boardSlotMeshId(this.seatOf(step.playerId), step.playerId, step.loc);
+      // Paint lethal damage on the live slot before re-key so overlays follow the ghost.
+      this.ensureKoDamageCounter(meshId, step.playerId);
       out.set(step, this.host.stateSync.detachBoardCardAsGhost(meshId));
-      if (step.loc.slot === 'active' && !this.koActive) {
-        this.koActive = true;
-        this.host.setKoActive(true);
-      }
     }
+    this.activateKoSuppressIfNeeded();
     return out;
+  }
+
+  /**
+   * Keep damage visible on a KO'd Pokémon for the discard flight. Server often clears
+   * damage in the same state that removes the card, so the board never syncs the total.
+   */
+  private ensureKoDamageCounter(meshId: string, ownerPlayerId: number): void {
+    const boardCard = this.host.stateSync.getCardById(meshId);
+    if (!boardCard) {
+      return;
+    }
+    const cardList = boardCard.getGroup().userData.cardList as { damage?: number } | undefined;
+    const shown = this.host.stateSync.getDamageCounterValue(meshId);
+    const base = Math.max(0, cardList?.damage ?? 0, shown);
+    // Only consume pending once (first call before re-key); second call keeps the painted total.
+    const pending = this.host.consumePendingAttackDamage?.(ownerPlayerId) ?? null;
+    const next = Math.max(shown, base + (pending ?? 0));
+    if (next <= 0) {
+      return;
+    }
+    if (next !== shown) {
+      this.host.stateSync.applyDamageCounterVisual(meshId, next);
+    }
+    if (cardList) {
+      cardList.damage = next;
+    }
   }
 
   /** Cards that left a hand without a flight disappear before the first step. */
@@ -645,7 +688,7 @@ export class Board3dTransitionRunner {
     const isBottom = playerId === this.host.bottomPlayer()?.id;
     const hs = this.host.handService;
     const base = this.deckCount.get(playerId) ?? 0;
-    const flights: { group: Object3D; dispose: () => void }[] = [];
+    const flights: { group: Object3D; dispose: () => void; board3d?: Board3dCard }[] = [];
 
     if (isBottom) {
       this.result.bottomHandTouched = true;
@@ -653,8 +696,26 @@ export class Board3dTransitionRunner {
       for (const id of ids) {
         const detached = hs.detachHandCardForDiscardFlight(id, this.host.worldRoot);
         if (detached) {
-          flights.push({ group: detached.getGroup(), dispose: () => detached.dispose() });
+          flights.push({
+            group: detached.getGroup(),
+            dispose: () => detached.dispose(),
+            board3d: detached,
+          });
         }
+      }
+    } else if (this.host.isTopHandFaceUp()) {
+      this.result.topHandTouched = true;
+      const detached = hs.detachOpponentHandCardsForDeckFlight(
+        count,
+        this.host.worldRoot,
+        step.cardIds ?? undefined,
+      );
+      for (const card of detached) {
+        flights.push({
+          group: card.getGroup(),
+          dispose: () => card.dispose(),
+          board3d: card,
+        });
       }
     } else {
       this.result.topHandTouched = true;
@@ -664,9 +725,14 @@ export class Board3dTransitionRunner {
           faceDown: true,
           scale: 1.1,
         });
-        flights.push({ group: mesh.getGroup(), dispose: () => mesh.dispose() });
+        flights.push({ group: mesh.getGroup(), dispose: () => mesh.dispose(), board3d: mesh });
       }
     }
+
+    const [cardBack, mask] = await Promise.all([
+      this.backTexture(this.playerOf(playerId)),
+      this.host.assetLoader.loadCardMaskTexture(),
+    ]);
 
     await Promise.all(
       flights.map(async (flight, i) => {
@@ -674,7 +740,22 @@ export class Board3dTransitionRunner {
           await sleep(i * HAND_TO_DECK_STAGGER_SEC * 1000);
         }
         flight.group.renderOrder = FLIGHT_RENDER_ORDER;
-        await this.host.animationService.playHandToDeck(flight.group, this.deckTopWorld(playerId, base + i + 1));
+        const alreadyFaceDown = Math.abs(flight.group.rotation.z) > Math.PI / 2;
+        await this.host.animationService.playHandToDeck(
+          flight.group,
+          this.deckTopWorld(playerId, base + i + 1),
+          alreadyFaceDown
+            ? undefined
+            : {
+                flipFaceDownDuringTravel: {
+                  onHideFace: () => {
+                    flight.board3d?.updateTexture(cardBack, cardBack, mask);
+                    flight.board3d?.setHolo(null);
+                    flight.group.userData.isFaceDown = true;
+                  },
+                },
+              },
+        );
       }),
     );
     this.deckCount.set(playerId, base + count);
@@ -849,6 +930,14 @@ export class Board3dTransitionRunner {
     await this.flyDrawsToHand(flights, preset);
   }
 
+  private showCardLookup(cardId: number): Card | undefined {
+    return (
+      this.plan.showCardsById?.get(cardId) ??
+      findCard(this.host.bottomPlayer(), cardId) ??
+      findCard(this.host.topPlayer(), cardId)
+    );
+  }
+
   private async flyDrawsToHand(flights: DrawSequenceFlight[], preset: DrawFlightVisualPreset): Promise<void> {
     const anim = this.host.animationService;
     const hs = this.host.handService;
@@ -906,6 +995,10 @@ export class Board3dTransitionRunner {
     this.result.topHandTouched = true;
     const hand = this.host.topHand();
     const keep = Math.max(0, hand.cards.length - later.size);
+    const revealCards = (step.revealCardIds ?? [])
+      .map((id) => this.showCardLookup(id))
+      .filter((c): c is Card => c != null);
+    const useReveal = revealCards.length > 0;
     const flights = await this.host.handService.prepareOpponentDrawSequence(
       withCards(hand, hand.cards.slice(0, keep)),
       this.host.isTopHandFaceUp(),
@@ -913,7 +1006,20 @@ export class Board3dTransitionRunner {
       this.host.worldRoot,
       step.cards.length,
       origins,
+      useReveal ? revealCards : undefined,
     );
+    if (flights.length === 0) {
+      return;
+    }
+    if (useReveal) {
+      const preset: DrawFlightVisualPreset = step.setupDeal
+        ? 'setupMulligan'
+        : step.turnBegin
+          ? 'turnBegin'
+          : 'default';
+      await this.flyDrawsToHand(flights, preset);
+      return;
+    }
     await Promise.all(
       flights.map((f, i) =>
         this.host.animationService.playDrawStageToHand(f.flyingCard, f.handSlotWorld, {
@@ -926,6 +1032,273 @@ export class Board3dTransitionRunner {
       this.host.handService.finishDrawSequenceFlight(f.flyingCard);
     }
     this.host.markDirty();
+  }
+
+  /**
+   * ShowCards cards not covered by a reveal draw: origin → stage flip → destination
+   * (same motion as draw-from-deck).
+   */
+  private async runShowCards(step: Extract<TransitionStep, { kind: 'showCards' }>): Promise<void> {
+    if (step.cardIds.length === 0) {
+      return;
+    }
+    type Flight = {
+      mesh: Board3dCard;
+      group: Object3D;
+      dest: Vector3;
+      endScale: number;
+      toDeck: boolean;
+    };
+    const flights: Flight[] = [];
+    const deckCursor = new Map<number, number>();
+    for (const [playerId, P] of this.prev.players) {
+      deckCursor.set(playerId, this.deckCount.get(playerId) ?? P.deckCount);
+    }
+
+    for (const cardId of step.cardIds) {
+      if (this.isStale()) {
+        break;
+      }
+      const card = this.showCardLookup(cardId);
+      const prevLoc = this.locateCard(cardId, this.prev);
+      const nextLoc = this.locateCard(cardId, this.next);
+      const ownerId =
+        nextLoc?.playerId ??
+        prevLoc?.playerId ??
+        this.inferShowCardsOwner(cardId) ??
+        this.host.topPlayer()?.id;
+      if (ownerId == null) {
+        continue;
+      }
+
+      let origin: Vector3;
+      if (prevLoc) {
+        origin = this.zoneWorld(prevLoc.playerId, prevLoc.zone, prevLoc.loc, prevLoc.grid, deckCursor);
+      } else {
+        const deck = deckCursor.get(ownerId) ?? 0;
+        origin = this.deckTopWorld(ownerId, deck);
+        deckCursor.set(ownerId, Math.max(0, deck - 1));
+      }
+
+      const unmoved =
+        !!prevLoc &&
+        !!nextLoc &&
+        prevLoc.zone === nextLoc.zone &&
+        prevLoc.playerId === nextLoc.playerId;
+      // Prefer a real relocation; when show-before-move leaves the card in place (or the
+      // card entered a secret zone), use the ChooseCards destination hint / deck fallback
+      // so we do not bounce Super Rod-style reveals back into the discard.
+      let dest: Vector3;
+      let toDeck = false;
+      const endScale = 1.1;
+      if (nextLoc && !unmoved) {
+        dest = this.zoneWorld(nextLoc.playerId, nextLoc.zone, nextLoc.loc, nextLoc.grid, deckCursor);
+        toDeck = nextLoc.zone === 'deck';
+      } else if (step.destinationHint === 'hand') {
+        dest = this.zoneWorld(ownerId, 'hand', undefined, undefined, deckCursor);
+      } else {
+        // Secret zone (deck) or show-before-move with deck hint / default.
+        const deck = deckCursor.get(ownerId) ?? 0;
+        dest = this.deckTopWorld(ownerId, deck);
+        toDeck = true;
+      }
+
+      const mesh = await this.createFlightCard(ownerId, card, origin, {
+        faceDown: true,
+        scale: 1.1,
+      });
+      const group = mesh.getGroup();
+      const [back, mask] = await Promise.all([
+        this.backTexture(this.playerOf(ownerId)),
+        this.host.assetLoader.loadCardMaskTexture(),
+      ]);
+      let revealFront = back;
+      const scanUrl = card ? this.host.cardsAdapter.getScanUrlFor3D(card) : undefined;
+      if (scanUrl?.trim()) {
+        try {
+          revealFront = await this.host.assetLoader.loadCardTexture(scanUrl);
+        } catch {
+          revealFront = back;
+        }
+      }
+      mesh.updateTexture(back, back, mask);
+      group.userData.drawRevealFrontTexture = revealFront;
+      group.userData.drawRevealBackTexture = back;
+      group.userData.drawRevealMaskTexture = mask;
+      group.userData.drawBoard3dCard = mesh;
+      group.rotation.set(0, 0, 0);
+      group.quaternion.identity();
+      flights.push({ mesh, group, dest, endScale, toDeck });
+    }
+
+    if (flights.length === 0) {
+      return;
+    }
+
+    const anim = this.host.animationService;
+    const aspect = this.host.aspect();
+    const stage = getDrawFlightStageCenterWorld(aspect, this.host.isUpsideDown());
+    const reveal = (group: Object3D) => this.host.handService.revealDrawFlightFace(group);
+    const hideForDeck = (group: Object3D) => this.host.handService.hideDrawFlightFace(group);
+    const prepareDeckFlip = (group: Object3D) => this.host.handService.normalizeDrawFlightFaceUp(group);
+
+    if (flights.length === 1) {
+      const f = flights[0];
+      await anim.playDrawFromDeckToHand(f.group, stage, f.dest, {
+        handScale: f.endScale,
+        onRevealFace: () => reveal(f.group),
+        ...(f.toDeck
+          ? {
+              beforeStageToHand: () => prepareDeckFlip(f.group),
+              flipFaceDownDuringTravel: {
+                onHideFace: () => hideForDeck(f.group),
+              },
+            }
+          : {}),
+      });
+    } else {
+      const maxRowWidth = getMaxDrawStageRowWidthWorld(aspect, this.host.isUpsideDown());
+      const { stageScale, centerSpread } = getMultiDrawBatchStageLayout(flights.length, maxRowWidth);
+      for (let i = 0; i < flights.length; i++) {
+        if (this.isStale()) {
+          break;
+        }
+        const f = flights[i];
+        const stagePos = stage.clone();
+        stagePos.x += (i - (flights.length - 1) / 2) * centerSpread;
+        await anim.playDrawDeckToStage(f.group, stagePos, {
+          onRevealFace: () => reveal(f.group),
+          omitPhasePad: true,
+          targetStageScale: stageScale,
+        });
+      }
+      await sleep(getMultiDrawSharedHoldSec('default') * 1000);
+      for (const f of flights) {
+        if (f.toDeck) {
+          prepareDeckFlip(f.group);
+        }
+      }
+      await Promise.all(
+        flights.map((f, i) =>
+          anim.playDrawStageToHand(f.group, f.dest, {
+            handScale: f.endScale,
+            burst: true,
+            delay: i * MULTI_DRAW_STAGE_TO_HAND_STAGGER_SEC,
+            ...(f.toDeck
+              ? {
+                  flipFaceDownDuringTravel: {
+                    onHideFace: () => hideForDeck(f.group),
+                  },
+                }
+              : {}),
+          }),
+        ),
+      );
+    }
+
+    for (const f of flights) {
+      for (const key of [
+        'drawRevealFrontTexture',
+        'drawRevealBackTexture',
+        'drawRevealMaskTexture',
+        'drawBoard3dCard',
+        'drawingFromDeck',
+      ]) {
+        delete f.group.userData[key];
+      }
+      f.group.removeFromParent();
+      f.mesh.dispose();
+    }
+    this.host.markDirty();
+    await this.render();
+  }
+
+  private locateCard(
+    cardId: number,
+    snap: BoardSnapshot,
+  ): { playerId: number; zone: string; loc?: BoardCardLocation; grid?: number } | undefined {
+    for (const p of snap.players.values()) {
+      if (p.handIds?.includes(cardId)) {
+        return { playerId: p.playerId, zone: 'hand' };
+      }
+      if (p.discardIds.includes(cardId)) {
+        return { playerId: p.playerId, zone: 'discard' };
+      }
+      if (p.lostzoneIds.includes(cardId)) {
+        return { playerId: p.playerId, zone: 'lostzone' };
+      }
+      if (p.supporterIds.includes(cardId)) {
+        return { playerId: p.playerId, zone: 'supporter' };
+      }
+      if (p.stadiumIds.includes(cardId)) {
+        return { playerId: p.playerId, zone: 'stadium' };
+      }
+      const board = p.boardCards.get(cardId);
+      if (board) {
+        return { playerId: p.playerId, zone: 'board', loc: board };
+      }
+      const prizeIdx = p.prizeIds.indexOf(cardId);
+      if (prizeIdx >= 0) {
+        return { playerId: p.playerId, zone: 'prize', grid: prizeIdx };
+      }
+    }
+    return undefined;
+  }
+
+  private inferShowCardsOwner(cardId: number): number | undefined {
+    // Prefer the non-viewer seat when the card isn't indexed (search / limbo).
+    const bottom = this.host.bottomPlayer()?.id;
+    const top = this.host.topPlayer()?.id;
+    for (const step of this.steps) {
+      if (step.kind === 'draw' && step.revealCardIds?.includes(cardId)) {
+        return step.playerId;
+      }
+    }
+    return top ?? bottom;
+  }
+
+  private zoneWorld(
+    playerId: number,
+    zone: string,
+    loc: BoardCardLocation | undefined,
+    grid: number | undefined,
+    deckCursor: Map<number, number>,
+  ): Vector3 {
+    const seat = this.seatOf(playerId);
+    const zp = ZONE_POSITIONS[seat];
+    switch (zone) {
+      case 'hand': {
+        const isBottom = playerId === this.host.bottomPlayer()?.id;
+        if (isBottom) {
+          return this.host.handService.getHandSlotWorld(0, 1);
+        }
+        return this.host.handService.getOpponentHandSlotWorld(0, 1);
+      }
+      case 'discard':
+        return zp.discard.clone().setY(FLIGHT_LIFT_Y);
+      case 'lostzone':
+        return zp.lostZone.clone().setY(FLIGHT_LIFT_Y);
+      case 'supporter':
+        return zp.supporter.clone().setY(FLIGHT_LIFT_Y);
+      case 'stadium':
+        return ZONE_POSITIONS.stadium.clone().setY(FLIGHT_LIFT_Y);
+      case 'board':
+        return loc ? this.boardSlotWorld(playerId, loc) : zp.active.clone().setY(FLIGHT_LIFT_Y);
+      case 'prize': {
+        const aspect = this.host.aspect();
+        const g = grid ?? 0;
+        const slot =
+          playerId === this.host.bottomPlayer()?.id
+            ? getBottomPrizeSlotWorld(aspect, g)
+            : getTopPrizeSlotWorld(aspect, g);
+        return slot.setY(slot.y + FLIGHT_LIFT_Y);
+      }
+      case 'deck':
+      default: {
+        const deck = deckCursor.get(playerId) ?? 0;
+        return this.deckTopWorld(playerId, deck);
+      }
+    }
   }
 
   private async runTrainerToDiscard(

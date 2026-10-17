@@ -8,6 +8,7 @@ import { PlayerType, PowerType, StateUtils, StoreLike, State } from '../../../ga
 import { CheckPokemonStatsEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../../game/store/prefabs/attack-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Vileplume extends PokemonCard {
@@ -60,6 +61,17 @@ export class Vileplume extends PokemonCard {
       });
 
       if (!isInPlay || IS_ABILITY_BLOCKED(store, state, owner, this)) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        owner,
+        this.powers[0],
+        this,
+        effect.target,
+      )) {
         return state;
       }
 

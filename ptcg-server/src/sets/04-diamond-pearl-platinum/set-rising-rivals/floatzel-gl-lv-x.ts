@@ -131,8 +131,9 @@ export class FloatzelGLLVX extends PokemonCard {
             return;
           }
 
-          SHOW_CARDS_TO_PLAYER(store, state, effect.opponent, cards);
           MOVE_CARDS(store, state, player.hand, player.deck, { cards: cards });
+          SHOW_CARDS_TO_PLAYER(store, state, effect.opponent, cards);
+          
           SHUFFLE_DECK(store, state, player);
 
           effect.damage = cards.length * 20;

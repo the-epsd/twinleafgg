@@ -24,6 +24,7 @@ import {
 } from '../../../game';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import {WAS_ATTACK_USED,
@@ -127,7 +128,16 @@ export class VolcaronaGx extends PokemonCard {
               ),
               (targets) => {
                 if (targets && targets.length > 0) {
-                  targets[0].damage += 20;
+                  store.reduceEffect(
+                    state,
+                    new PlaceDamageCountersEffect(
+                      player,
+                      targets[0],
+                      20,
+                      this,
+                      this.powers[0],
+                    ),
+                  );
                 }
               },
             );

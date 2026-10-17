@@ -4,11 +4,12 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { GameMessage } from '../../../game/game-message';
+import { GameMessage, StateUtils } from '../../../game';
 import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import {
   CAN_APPLY_LOCKER_ABILITY,
+  CAN_APPLY_LOCK_TO_TARGET,
   HANDLE_ABILITY_BLOCK,
   IS_ABILITY_LOCKER_ACTIVE,
   POKEPOWER_TYPES,
@@ -51,11 +52,15 @@ export class Muk extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    HANDLE_ABILITY_BLOCK(effect, ({ player }) => {
+    HANDLE_ABILITY_BLOCK(effect, ({ player, card }) => {
       if (!IS_ABILITY_LOCKER_ACTIVE(state, player, this)) {
         return false;
       }
-      return CAN_APPLY_LOCKER_ABILITY(store, state, player, this, this.powers[0]);
+      const lockerOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
+      if (!CAN_APPLY_LOCKER_ABILITY(store, state, lockerOwner, this, this.powers[0])) {
+        return false;
+      }
+      return CAN_APPLY_LOCK_TO_TARGET(store, state, lockerOwner, this, this.powers[0], card);
     }, {
       powerTypes: POKEPOWER_TYPES,
       error: GameMessage.BLOCKED_BY_ABILITY,

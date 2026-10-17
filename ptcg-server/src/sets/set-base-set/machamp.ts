@@ -1,11 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { PowerType, Weakness } from '../../game/store/card/pokemon-types';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { GamePhase, State } from '../../game/store/state/state';
+import { State } from '../../game/store/state/state';
 import { StoreLike, StateUtils, PokemonCardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { IS_POKEMON_POWER_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { PlaceDamageCountersEffect } from '../../game/store/effects/game-effects';
+import { IS_POKEMON_POWER_BLOCKED, ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT } from '../../game/store/prefabs/prefabs';
 
 export class Machamp extends PokemonCard {
 
@@ -50,10 +50,8 @@ export class Machamp extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this)) {
-
-      const player = effect.player;
-
+    if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
 
       if (cardList.specialConditions.includes(SpecialCondition.ASLEEP) ||
@@ -62,20 +60,18 @@ export class Machamp extends PokemonCard {
         return state;
       }
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      if (IS_POKEMON_POWER_BLOCKED(store, state, player, this)) {
+      if (IS_POKEMON_POWER_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
-
-      if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
-        return state;
-      }
-
-      if (state.phase === GamePhase.ATTACK) {
-        effect.source.damage += 10;
-      }
+      const placeCounters = new PlaceDamageCountersEffect(
+        abilityOwner,
+        effect.source,
+        10,
+        this,
+        this.powers[0],
+      );
+      store.reduceEffect(state, placeCounters);
     }
 
     return state;

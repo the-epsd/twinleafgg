@@ -299,6 +299,14 @@ export async function runSearch(state: BrowseState, query: string): Promise<void
   }
 }
 
+/** Cards currently shown in the browse grid (respects hide-implemented). */
+export function visibleBrowseCards(state: BrowseState): TcgDexCardResume[] {
+  if (state.hideImplemented) {
+    return state.cards.filter(c => !isImplemented(state.implementedIds, c.id));
+  }
+  return state.cards;
+}
+
 export async function pickCardToDraft(cardId: string): Promise<{
   draft: CardDraft;
   meta: BrowseSourceMeta;

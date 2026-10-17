@@ -40,7 +40,6 @@ import { Mew } from './mew';
 import { MewtwoGx2 } from './mewtwo-gx-2';
 import { MoltresZapdosArticunoGX } from './moltres-zapdos-articuno-gx';
 import { MrMime } from './mr-mime';
-import { NihilegoGx } from './nihilego-gx';
 import { OnixGx } from './onix-gx';
 import { Paras } from './paras';
 import { PinsirGx } from './pinsir-gx';
@@ -109,6 +108,7 @@ import {
   MewtwoGX2HIF,
   EspeonGXHIF,
   BanetteGXHIF,
+  NihilegoGxHIF,
   NaganadelGXHIF,
   LucarioGXHIF,
   LycanrocGXHIF,
@@ -207,7 +207,6 @@ export const setHiddenFates: Card[] = [
   new MewtwoGx2(),
   new MoltresZapdosArticunoGX(),
   new MrMime(),
-  new NihilegoGx(),
   new OnixGx(),
   new Paras(),
   new PinsirGx(),
@@ -279,6 +278,7 @@ export const setHiddenFates: Card[] = [
   new MewtwoGX2HIF(),
   new EspeonGXHIF(),
   new BanetteGXHIF(),
+  new NihilegoGxHIF(),
   new NaganadelGXHIF(),
   new LucarioGXHIF(),
   new LycanrocGXHIF(),

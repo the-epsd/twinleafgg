@@ -3,10 +3,11 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils, ConfirmPrompt, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { WAS_ATTACK_USED, JUST_EVOLVED, IS_ABILITY_BLOCKED, ADD_BURN_TO_PLAYER_ACTIVE, ADD_POISON_TO_PLAYER_ACTIVE } from '../../../game/store/prefabs/prefabs';
+import { APPLY_SPECIAL_CONDITIONS_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { WAS_ATTACK_USED, JUST_EVOLVED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class Salazzle extends PokemonCard {
@@ -55,8 +56,15 @@ export class Salazzle extends PokemonCard {
         GameMessage.WANT_TO_USE_ABILITY
       ), wantToUse => {
         if (wantToUse) {
-          ADD_BURN_TO_PLAYER_ACTIVE(store, state, opponent, this);
-          ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
+          APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+            store,
+            state,
+            player,
+            this.powers[0],
+            this,
+            opponent.active,
+            [SpecialCondition.BURNED, SpecialCondition.POISONED],
+          );
         }
       });
     }

@@ -1,85 +1,69 @@
+import { GameError, GameMessage, PlayerType, StateUtils, StoreLike } from '../../../game';
+import { CardType, SpecialCondition, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
-import { Effect } from '../../../game/store/effects/effect';
-
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { StateUtils } from '../../../game/store/state-utils';
-import { PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
-import { GameMessage } from '../../../game/game-message';
-import { DamageMap } from '../../../game/store/prompts/move-damage-prompt';
-import { CheckHpEffect } from '../../../game/store/effects/check-effects';
-import { PutDamagePrompt } from '../../../game/store/prompts/put-damage-prompt';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
+import { CheckHpEffect } from '../../../game/store/effects/check-effects';
+import { Effect } from '../../../game/store/effects/effect';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { GameError } from '../../../game/game-error';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { DamageMap } from '../../../game/store/prompts/move-damage-prompt';
+import { PutDamagePrompt } from '../../../game/store/prompts/put-damage-prompt';
+import { SlotType } from '../../../game/store/actions/play-card-action';
+import { IS_ABILITY_BLOCKED, REMOVE_MARKER_AT_END_OF_TURN, USE_ABILITY_ONCE_PER_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { State } from '../../../game/store/state/state';
 
 export class Chandelure extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Lampent';
-
-  public cardType: CardType[] = [CardType.PSYCHIC];
-
+  public cardType: CardType[] = [P];
   public hp: number = 130;
-
-  public weakness = [{ type: CardType.DARK }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: D }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Cursed Shadow',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before attack), if this Pokemon is your ' +
-      'Active Pokemon, you may put 3 damage counters on your opponent\'s ' +
-      'Pokemon in any way you like.'
+    text: 'Once during your turn (before attack), if this Pokemon is your Active Pokemon, you may put 3 damage counters on your opponent\'s Pokemon in any way you like.'
   }];
 
   public attacks = [{
     name: 'Eerie Glow',
-    cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS],
+    cost: [P, P, C],
     damage: 50,
     text: 'The Defending Pokemon is now Burned and Confused.'
   }];
 
   public set: string = 'NVI';
-
-  public name: string = 'Chandelure';
-
-  public fullName: string = 'Chandelure NVI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '60';
+  public name: string = 'Chandelure';
+  public fullName: string = 'Chandelure NVI';
 
   public readonly CURSED_SHADOW_MARKER = 'CURSED_SHADOW_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.CURSED_SHADOW_MARKER, this);
+      effect.player.marker.removeMarker(this.CURSED_SHADOW_MARKER, this);
     }
 
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.CURSED_SHADOW_MARKER, this);
+
+    // Cursed Shadow
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
+
+      if (player.active.getPokemonCard() !== this) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      if (!player.active.cards.includes(this)) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
-      if (player.marker.hasMarker(this.CURSED_SHADOW_MARKER, this)) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
-      }
+      USE_ABILITY_ONCE_PER_TURN(player, this.CURSED_SHADOW_MARKER, this);
 
       const maxAllowedDamage: DamageMap[] = [];
       let damageLeft = 0;
@@ -102,18 +86,21 @@ export class Chandelure extends PokemonCard {
         { allowCancel: true }
       ), targets => {
         const results = targets || [];
-        // cancelled by user
         if (results.length === 0) {
+          player.marker.removeMarker(this.CURSED_SHADOW_MARKER, this);
           return;
         }
-        player.marker.addMarker(this.CURSED_SHADOW_MARKER, this);
         for (const result of results) {
           const target = StateUtils.getTarget(state, player, result.target);
-          target.damage += result.damage;
+          store.reduceEffect(
+            state,
+            new PlaceDamageCountersEffect(player, target, result.damage, this, this.powers[0]),
+          );
         }
       });
     }
 
+    // Eerie Glow
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [
         SpecialCondition.BURNED,
@@ -122,11 +109,6 @@ export class Chandelure extends PokemonCard {
       store.reduceEffect(state, specialConditionEffect);
     }
 
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.CURSED_SHADOW_MARKER, this);
-    }
-
     return state;
   }
-
 }

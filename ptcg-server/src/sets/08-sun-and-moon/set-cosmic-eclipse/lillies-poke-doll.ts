@@ -2,6 +2,7 @@ import {
   GameError,
   GameLog,
   GameMessage,
+  Player,
   PokemonCard,
   Power,
   PowerType,
@@ -25,14 +26,10 @@ import { MOVE_CARDS, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs'
 export class LilliesPokeDoll extends TrainerCard {
   protected _trainerType = TrainerType.ITEM;
   public superType = SuperType.TRAINER;
-
   public stage: Stage = Stage.BASIC;
-
   public cardType: CardType[] = [CardType.COLORLESS];
   public cardTypez: CardType = CardType.COLORLESS;
-
   public movedToActiveThisTurn = false;
-
   public pokemonType = PokemonType.NORMAL;
   public evolvesFrom = '';
   public cardTag = [];
@@ -50,12 +47,6 @@ export class LilliesPokeDoll extends TrainerCard {
   public allowSubsequentAttackChoice: boolean = false;
   public evolvesFromBase: string[] = [];
   public maxTools: number = 1;
-  public set: string = 'CEC';
-  public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '197';
-  public name: string = "Lillie's Poké Doll";
-  public fullName: string = "Lillie's Poké Doll CEC";
-
   public powers: Power[] = [
     {
       name: "Lillie's Poké Doll",
@@ -67,11 +58,16 @@ This card can't retreat. If this card is Knocked Out, your opponent can't take a
       powerType: PowerType.TRAINER_ABILITY,
     },
   ];
+  public set: string = 'CEC';
+  public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '197';
+  public name: string = "Lillie's Poké Doll";
+  public fullName: string = "Lillie's Poké Doll CEC";
 
-  // public text =
-  //   'Play this card as if it were a 30-HP [C] Basic Pokémon. At any time during your turn (before your attack), if this Pokémon is your Active Pokémon, you may discard all cards from it and put it on the bottom of your deck.' +
-  //   '' +
-  //   'This card can\'t retreat. If this card is Knocked Out, your opponent can\'t take any Prize cards for it.';
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    // Needs an empty Bench slot to be played as a Basic Pokémon
+    return player.bench.some((b) => b.cards.length === 0);
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_POWER_USED(effect, 0, this)) {
@@ -118,10 +114,6 @@ This card can't retreat. If this card is Knocked Out, your opponent can't take a
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
       effect.prizeCount = 0;
       return state;
-    }
-
-    if (effect instanceof RetreatEffect && effect.player.active.cards.includes(this)) {
-      throw new GameError(GameMessage.CANNOT_RETREAT);
     }
 
     return state;

@@ -6,7 +6,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
+import { PREVENT_EFFECTS_OF_OPPONENTS_ABILITIES } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class CorviknightVmax extends PokemonCard {
@@ -44,36 +44,19 @@ export class CorviknightVmax extends PokemonCard {
   public fullName: string = 'Corviknight VMAX BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Lustrous Body (passive - prevent effects of opponent's abilities on this Pokemon)
-    // Ref: set-unbroken-bonds/stealthy-hood.ts (EffectOfAbilityEffect interception)
-    if (effect instanceof EffectOfAbilityEffect && effect.target) {
-      const player = StateUtils.findOwner(state, effect.target);
-
-      if (!player) {
-        return state;
+    // Lustrous Body — Ref: set-unbroken-bonds/stealthy-hood.ts
+    PREVENT_EFFECTS_OF_OPPONENTS_ABILITIES(state, effect, (target) => {
+      if (target.getPokemonCard() !== this) {
+        return false;
       }
-
-      // Check if this Corviknight VMAX is the target
-      if (!effect.target.cards.includes(this) || effect.target.getPokemonCard() !== this) {
-        return state;
+      const owner = StateUtils.findOwner(state, target);
+      if (IS_ABILITY_BLOCKED(store, state, owner, this, this.powers[0])) {
+        return false;
       }
+      return true;
+    });
 
-      // Check if the ability is coming from the opponent's side
-      const opponent = StateUtils.getOpponent(state, player);
-      if (effect.player !== opponent) {
-        return state;
-      }
-
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
-        return state;
-      }
-
-      // Prevent the ability effect from targeting this Pokemon
-      effect.target = undefined;
-    }
-
-    // Attack 1: G-Max Hurricane
-    // Ref: AGENTS-patterns.md (can't use specific attack next turn)
+    // G-Max Hurricane
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       player.active.cannotUseAttacksNextTurnPending.push('G-Max Hurricane');

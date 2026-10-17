@@ -3,21 +3,22 @@ import {
   GameError,
   GameMessage,
   GamePhase,
+  Player,
   State,
   StateUtils,
   StoreLike,
+  TrainerCard,
   pokemonHasCardTypeOptional,
 } from '../../../game';
 import { CardType, TrainerType } from '../../../game/store/card/card-types';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import {
   REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN,
   MOVE_CARDS,
 } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Diantha extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -26,39 +27,38 @@ export class Diantha extends TrainerCard {
   public setNumber: string = '105';
   public name: string = 'Diantha';
   public fullName: string = 'Diantha FLI';
-
   public text: string =
     "You can play this card only if 1 of your [Y] Pokémon was Knocked Out during your opponent's last turn. " +
     'Put 2 cards from your discard pile into your hand.';
 
   public readonly DIANTHA_MARKER = 'DIANTHA_MARKER';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (!player.marker.hasMarker(this.DIANTHA_MARKER)) {
+      return false;
+    }
+    return player.discard.cards.length >= 2;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
-      const supporterTurn = player.supporterTurn;
 
       // No Pokemon KO last turn
       if (!player.marker.hasMarker(this.DIANTHA_MARKER)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      if (supporterTurn > 0) {
+      if (player.supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
       if (player.discard.cards.length < 2) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-
-      // We will discard this card after prompt confirmation
-      MOVE_CARDS(store, state, player.hand, player.supporter, {
-        cards: [effect.trainerCard],
-        sourceCard: this,
-      });
-
-      // This will prevent unblocked supporter to appear in the discard pile
-      effect.preventDefault = true;
 
       state = store.prompt(
         state,
@@ -70,8 +70,7 @@ export class Diantha extends TrainerCard {
           { min: 2, max: 2, allowCancel: false },
         ),
         (cards) => {
-          MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
-
+          MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: this });
           return state;
         },
       );

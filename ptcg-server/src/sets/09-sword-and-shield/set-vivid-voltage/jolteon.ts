@@ -10,7 +10,11 @@ import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effect
 import { Effect } from '../../../game/store/effects/effect';
 import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
-import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
+import {
+  CAN_APPLY_LOCK_TO_TARGET,
+  HANDLE_ABILITY_LOCK,
+  LOCKER_ABILITY_APPLIES,
+} from '../../../game/store/prefabs/ability-lock';
 
 export class Jolteon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -88,11 +92,10 @@ export class Jolteon extends PokemonCard {
         return false;
       }
 
-      try {
-        return StateUtils.findCardList(state, card) instanceof PokemonCardList;
-      } catch {
+      if (!LOCKER_ABILITY_APPLIES(store, state, jolteon.owner, this, this.powers[0], card)) {
         return false;
       }
+      return CAN_APPLY_LOCK_TO_TARGET(store, state, jolteon.owner, this, this.powers[0], card);
     };
 
     HANDLE_ABILITY_LOCK(effect, ({ card }) => isTargetLocked({ card }), {

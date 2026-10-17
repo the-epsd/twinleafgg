@@ -15,6 +15,7 @@ import {
 import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import {
   WAS_ATTACK_USED,
   COIN_FLIP_PROMPT,
@@ -52,23 +53,39 @@ export class Gengarex extends PokemonCard {
   public fullName: string = 'Gengar ex 30C';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Fainting Spell
-    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+    // Fainting Spell — Ref: set-stormfront/gengar.ts
+    if (
+      effect instanceof KnockOutEffect &&
+      effect.target.cards.includes(this) &&
+      effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)
+    ) {
+      const abilityOwner = effect.player;
+      const attackerOwner = StateUtils.getOpponent(state, abilityOwner);
 
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      CONFIRMATION_PROMPT(store, state, player, wantToUse => {
-        if (wantToUse) {
-          COIN_FLIP_PROMPT(store, state, player, flipResult => {
-            if (flipResult) {
-              opponent.active.damage += 999;
-            }
-          });
+      CONFIRMATION_PROMPT(store, state, abilityOwner, wantToUse => {
+        if (!wantToUse) {
+          return;
         }
+        COIN_FLIP_PROMPT(store, state, abilityOwner, flipResult => {
+          if (!flipResult) {
+            return;
+          }
+          if (!CAN_APPLY_ABILITY_TO_TARGET(
+            store,
+            state,
+            abilityOwner,
+            this.powers[0],
+            this,
+            attackerOwner.active,
+          )) {
+            return;
+          }
+          attackerOwner.active.damage += 999;
+        });
       });
     }
 

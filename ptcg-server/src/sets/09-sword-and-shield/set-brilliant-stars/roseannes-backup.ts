@@ -8,11 +8,10 @@ import { State } from '../../../game/store/state/state';
 import { StateUtils } from '../../../game/store/state-utils';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
-import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { GameError } from '../../../game';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { GameError, Player } from '../../../game';
+import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -114,33 +113,22 @@ function* playCard(
   MOVE_CARDS(store, state, player.discard, player.deck, { cards, sourceCard: self });
 
   if (cards.length > 0) {
-    yield store.prompt(
-      state,
-      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
-      () => next(),
-    );
+    SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
   }
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-    player.deck.applyOrder(order);
-  });
+  SHUFFLE_DECK(store, state, player);
+  CLEAN_UP_SUPPORTER(store, effect, player);
+  return state;
 }
 
 export class RoseannesBackup extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
-  public set: string = 'BRS';
-
   public regulationMark = 'F';
-
+  public set: string = 'BRS';
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '148';
-
   public name: string = "Roseanne's Backup";
-
   public fullName: string = "Roseanne's Backup BRS";
-
   public text: string = `Choose 1 or more:
 
   • Shuffle a Pokémon from your discard pile into your deck.
@@ -148,8 +136,28 @@ export class RoseannesBackup extends TrainerCard {
   • Shuffle a Stadium card from your discard pile into your deck.
   • Shuffle an Energy card from your discard pile into your deck.`;
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+
+    const hasValidCard = player.discard.cards.some(
+      (c) =>
+        c instanceof PokemonCard ||
+        (c instanceof TrainerCard && c.trainerType === TrainerType.TOOL) ||
+        (c instanceof TrainerCard && c.trainerType === TrainerType.STADIUM) ||
+        c.superType === SuperType.ENERGY,
+    );
+
+    if (!hasValidCard) {
+      return false;
+    }
+
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }

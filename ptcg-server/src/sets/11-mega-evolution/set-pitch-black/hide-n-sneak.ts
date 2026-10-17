@@ -14,14 +14,9 @@ import {
   DealDamageEffect,
   PutDamageEffect,
 } from '../../../game/store/effects/attack-effects';
-import {
-  PlaceDamageCountersEffect,
-  PutDamageCountersEffect,
-} from '../../../game/store/effects/game-effects';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
 import { StateUtils } from '../../../game/store/state-utils';
-import { AddSpecialConditionsPowerEffect } from '../../../game/store/effects/check-effects';
+import { PREVENT_EFFECTS_OF_OPPONENTS_ABILITIES } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 /** Pokémon cards in discard whose Ability name is Hide 'n' Sneak (used by Sinistcha line / Spiritomb / Dhelmise). */
@@ -41,7 +36,7 @@ export function countHideNSneakPokemonInDiscard(player: Player): number {
 /**
  * Passive Ability: This Pokémon can't be affected by effects of attacks or Abilities from your opponent's Pokémon.
  * Refs: set-burning-shadows/alolan-ninetales.ts (AbstractAttackEffect — blocks attack-sourced status via preventDefault before attackReducer);
- *       set-lost-origin/enamorus-v.ts (AddSpecialConditionsPowerEffect — ability-sourced Special Conditions).
+ *       set-unbroken-bonds/stealthy-hood.ts (PREVENT_EFFECTS_OF_OPPONENTS_ABILITIES).
  */
 export function reduceHideNSneak(
   store: StoreLike,
@@ -81,77 +76,23 @@ export function reduceHideNSneak(
     return state;
   }
 
-  if (effect instanceof PlaceDamageCountersEffect) {
-    const target = effect.target;
-    if (!target.cards.includes(self) || target.getPokemonCard() !== self) {
-      return state;
+  // Ability half — Ref: set-unbroken-bonds/stealthy-hood.ts
+  const hideNSneakPower = self.powers.find(
+    (p) => p.powerType === PowerType.ABILITY && p.name === "Hide 'n' Sneak",
+  );
+  PREVENT_EFFECTS_OF_OPPONENTS_ABILITIES(state, effect, (target) => {
+    if (target.getPokemonCard() !== self) {
+      return false;
     }
     const owner = StateUtils.findOwner(state, target);
     if (!StateUtils.isPokemonInPlay(owner, self)) {
-      return state;
+      return false;
     }
-    if (IS_ABILITY_BLOCKED(store, state, owner, self)) {
-      return state;
+    if (IS_ABILITY_BLOCKED(store, state, owner, self, hideNSneakPower)) {
+      return false;
     }
-    if (effect.player === owner) {
-      return state;
-    }
-    if (effect.source === undefined) {
-      return state;
-    }
-    const sourceSlot = StateUtils.findPokemonSlot(state, effect.source);
-    if (!sourceSlot || StateUtils.findOwner(state, sourceSlot) !== effect.player) {
-      return state;
-    }
-    effect.preventDefault = true;
-    return state;
-  }
-
-  // Ability-sourced Special Conditions (gameReducer path — not a subclass of AbstractAttackEffect)
-  if (effect instanceof AddSpecialConditionsPowerEffect) {
-    const target = effect.target;
-    if (!target.cards.includes(self) || target.getPokemonCard() !== self) {
-      return state;
-    }
-    const owner = StateUtils.findOwner(state, target);
-    if (!StateUtils.isPokemonInPlay(owner, self)) {
-      return state;
-    }
-    if (IS_ABILITY_BLOCKED(store, state, owner, self)) {
-      return state;
-    }
-    if (effect.player === owner) {
-      return state;
-    }
-    if (!(effect.source instanceof PokemonCard)) {
-      return state;
-    }
-    const sourceSlot = StateUtils.findPokemonSlot(state, effect.source);
-    if (!sourceSlot || StateUtils.findOwner(state, sourceSlot) !== effect.player) {
-      return state;
-    }
-    effect.preventDefault = true;
-    return state;
-  }
-
-  if (effect instanceof PutDamageCountersEffect && effect.effectOfAbility.target) {
-    const target = effect.effectOfAbility.target as PokemonCardList;
-    if (!target.cards.includes(self) || target.getPokemonCard() !== self) {
-      return state;
-    }
-    const owner = StateUtils.findOwner(state, target);
-    if (!StateUtils.isPokemonInPlay(owner, self)) {
-      return state;
-    }
-    if (IS_ABILITY_BLOCKED(store, state, owner, self)) {
-      return state;
-    }
-    if (effect.player === owner) {
-      return state;
-    }
-    effect.damage = 0;
-    return state;
-  }
+    return true;
+  });
 
   return state;
 }

@@ -38,3 +38,9 @@ export const BOARD_HAND_TO_DECK_WAIT_FALLBACK_MS = 2500;
  * Multi-draw length is owned by the 3D hand sync, not the server card.
  */
 export const BOARD_DRAW_WAIT_FALLBACK_MS = 3500;
+
+/**
+ * Client-only safety fallback when a ShowCards animation gate never registers
+ * (matches the legacy 5s ShowCardsPanel auto-OK).
+ */
+export const BOARD_SHOW_CARDS_WAIT_FALLBACK_MS = 5000;

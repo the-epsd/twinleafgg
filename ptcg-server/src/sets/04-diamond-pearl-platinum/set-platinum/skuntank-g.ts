@@ -1,10 +1,11 @@
 import { Effect } from '../../../game/store/effects/effect';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { PowerType, StoreLike, State, StateUtils, GameError } from '../../../game';
-import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SpecialCondition } from '../../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { GameMessage } from '../../../game/game-message';
-import { ABILITY_USED, ADD_MARKER, ADD_POISON_TO_PLAYER_ACTIVE, HAS_MARKER, REMOVE_MARKER, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { APPLY_SPECIAL_CONDITIONS_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 import { DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
@@ -77,11 +78,27 @@ export class SkuntankG extends PokemonCard {
       }
 
       if (!player.active?.getPokemonCard()?.hasTag(CardTag.POKEMON_SP)) {
-        ADD_POISON_TO_PLAYER_ACTIVE(store, state, player, this);
+        APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+          store,
+          state,
+          player,
+          this.powers[0],
+          this,
+          player.active,
+          [SpecialCondition.POISONED],
+        );
       }
 
       if (!opponent.active?.getPokemonCard()?.hasTag(CardTag.POKEMON_SP)) {
-        ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
+        APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+          store,
+          state,
+          player,
+          this.powers[0],
+          this,
+          opponent.active,
+          [SpecialCondition.POISONED],
+        );
       }
 
       ADD_MARKER(this.POISON_STRUCTURE_MARKER, player, this);

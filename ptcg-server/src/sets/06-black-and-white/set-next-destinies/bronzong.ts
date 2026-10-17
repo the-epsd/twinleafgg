@@ -1,9 +1,11 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType } from '../../../game';
+import { StoreLike, State, StateUtils } from '../../../game';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { Effect } from '../../../game/store/effects/effect';
+import { HealTargetEffect } from '../../../game/store/effects/attack-effects';
 import { HealEffect } from '../../../game/store/effects/game-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Bronzong extends PokemonCard {
@@ -35,25 +37,30 @@ export class Bronzong extends PokemonCard {
   public fullName: string = 'Bronzong NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Heal Block - prevent all healing
-    if (effect instanceof HealEffect) {
-      // Check if any Bronzong with this ability is in play
-      let bronzongInPlay = false;
-      let bronzongOwner: any = null;
-
-      state.players.forEach(player => {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-          if (cardList.getPokemonCard() === this) {
-            bronzongInPlay = true;
-            bronzongOwner = player;
-          }
-        });
-      });
-
-      if (bronzongInPlay && bronzongOwner) {
-        if (!IS_ABILITY_BLOCKED(store, state, bronzongOwner, this)) {
-          effect.preventDefault = true;
+    // Heal Block — Ref: set-30th-celebration/yveltal.ts
+    if (effect instanceof HealEffect || effect instanceof HealTargetEffect) {
+      for (const abilityOwner of state.players) {
+        if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
+          continue;
         }
+
+        if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+          continue;
+        }
+
+        if (!CAN_APPLY_ABILITY_TO_TARGET(
+          store,
+          state,
+          abilityOwner,
+          this.powers[0],
+          this,
+          effect.target,
+        )) {
+          continue;
+        }
+
+        effect.preventDefault = true;
+        return state;
       }
     }
 

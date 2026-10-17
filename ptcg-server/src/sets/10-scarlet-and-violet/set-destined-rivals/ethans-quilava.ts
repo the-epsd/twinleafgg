@@ -90,12 +90,13 @@ export class EthansQuilava extends PokemonCard {
             return state;
           }
 
-          SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
           MOVE_CARDS(store, state, player.deck, player.hand, {
             cards,
             sourceCard: this,
             sourceEffect: this.powers[0],
           });
+          SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+          
           ADD_MARKER(this.ADVENTURE_BOUND_MARKER, player, this);
           ABILITY_USED(player, this);
           SHUFFLE_DECK(store, state, player);

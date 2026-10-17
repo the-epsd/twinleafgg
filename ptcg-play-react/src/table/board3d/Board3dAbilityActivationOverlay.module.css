@@ -1,5 +1,5 @@
 .root {
-  position: fixed;
+  position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 500;
@@ -7,7 +7,7 @@
 }
 
 .maskLayer {
-  position: fixed;
+  position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
@@ -20,6 +20,40 @@
 }
 
 @keyframes dimFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.nameBarGroup {
+  animation: nameBarFadeIn 0.15s ease-out forwards;
+}
+
+.nameBarFill {
+  fill: rgba(8, 12, 20, 0.9);
+}
+
+.nameBarEdge {
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.nameBarText {
+  fill: rgba(245, 248, 255, 0.96);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  paint-order: stroke fill;
+  stroke: rgba(0, 0, 0, 0.55);
+  stroke-width: 2.5px;
+  stroke-linejoin: round;
+}
+
+@keyframes nameBarFadeIn {
   from {
     opacity: 0;
   }

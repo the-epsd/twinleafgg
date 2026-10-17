@@ -5,12 +5,11 @@ import {
   CardTag,
   SuperType,
   EnergyType,
-  BoardEffect,
 } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import {
@@ -22,9 +21,16 @@ import {
   ChooseCardsPrompt,
   EnergyCard,
 } from '../../../game';
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import {WAS_ATTACK_USED, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  MOVE_CARDS,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  IS_ABILITY_BLOCKED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Meowscaradaex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -76,21 +82,18 @@ export class Meowscaradaex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.BOUQUET_MAGIC_MARKER, this);
+      effect.player.marker.removeMarker(this.BOUQUET_MAGIC_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      player.marker.removeMarker(this.BOUQUET_MAGIC_MARKER, this);
-    }
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.BOUQUET_MAGIC_MARKER, this);
 
+    // Bouquet Magic — Ref: set-chilling-reign/inteleon.ts (Quick Shooting)
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (player.marker.hasMarker(this.BOUQUET_MAGIC_MARKER, this)) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
 
       const hasBenched = opponent.bench.some((b) => b.cards.length > 0);
@@ -106,10 +109,11 @@ export class Meowscaradaex extends PokemonCard {
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      if (player.marker.hasMarker(this.BOUQUET_MAGIC_MARKER, this)) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
-      }
-      state = store.prompt(
+
+      USE_ABILITY_ONCE_PER_TURN(player, this.BOUQUET_MAGIC_MARKER, this);
+      ABILITY_USED(player, this);
+
+      return store.prompt(
         state,
         new ChooseCardsPrompt(
           player,
@@ -124,9 +128,9 @@ export class Meowscaradaex extends PokemonCard {
             return;
           }
 
-          MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
+          MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this });
 
-          return store.prompt(
+          store.prompt(
             state,
             new ChoosePokemonPrompt(
               player.id,
@@ -137,17 +141,19 @@ export class Meowscaradaex extends PokemonCard {
             ),
             (selected) => {
               const targets = selected || [];
-
-              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-                if (cardList.getPokemonCard() === this) {
-                  cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-                }
-              });
-
-              targets.forEach((target) => {
-                target.damage += 30;
-                player.marker.addMarker(this.BOUQUET_MAGIC_MARKER, this);
-              });
+              if (targets.length === 0) {
+                return;
+              }
+              store.reduceEffect(
+                state,
+                new PlaceDamageCountersEffect(
+                  player,
+                  targets[0],
+                  30,
+                  this,
+                  this.powers[0],
+                ),
+              );
             },
           );
         },
@@ -155,8 +161,7 @@ export class Meowscaradaex extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      const opponent = StateUtils.getOpponent(state, effect.player);
       if (opponent.active.damage > 0) {
         effect.damage += 120;
       }

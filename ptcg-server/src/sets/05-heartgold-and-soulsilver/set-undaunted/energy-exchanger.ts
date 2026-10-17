@@ -1,33 +1,32 @@
-import { Card } from '../../../game/store/card/card';
+import { Card, ChooseCardsPrompt, GameError, GameMessage, Player, State, StateUtils, StoreLike, TrainerCard } from '../../../game';
+import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { TrainerType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
-import { StateUtils } from '../../../game/store/state-utils';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
-import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import {
+  MOVE_CARDS,
+  SEARCH_DECK_FOR_CARDS_TO_HAND,
+  SHOW_CARDS_TO_PLAYER,
+} from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+
+function hasEnergyInHand(player: Player): boolean {
+  return player.hand.cards.some((c) => c.superType === SuperType.ENERGY);
+}
 
 function* playCard(
   next: Function,
   store: StoreLike,
   state: State,
+  self: EnergyExchanger,
   effect: TrainerEffect,
 ): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
-  const hasEnergy = player.hand.cards.some((c) => c.superType === SuperType.ENERGY);
 
-  if (!hasEnergy) {
+  if (!hasEnergyInHand(player)) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  // Do not discard the card yet
   effect.preventDefault = true;
 
   let cards: Card[] = [];
@@ -50,49 +49,23 @@ function* playCard(
     return;
   }
 
-  // Put Energy from hand into the deck
   MOVE_CARDS(store, state, player.hand, player.deck, {
-    cards: cards,
-    sourceCard: effect.trainerCard,
+    cards,
+    toTop: true,
+    sourceCard: self,
   });
 
-  yield store.prompt(
+  SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+
+  SEARCH_DECK_FOR_CARDS_TO_HAND(
+    store,
     state,
-    new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
-    () => next(),
+    player,
+    self,
+    { superType: SuperType.ENERGY },
+    { min: 0, max: 1, allowCancel: true },
+    effect,
   );
-
-  yield store.prompt(
-    state,
-    new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_HAND,
-      player.deck,
-      { superType: SuperType.ENERGY },
-      { min: 1, max: 1, allowCancel: true },
-    ),
-    (selected) => {
-      cards = selected || [];
-      next();
-    },
-  );
-
-  MOVE_CARDS(store, state, player.deck, player.hand, {
-    cards: cards,
-    sourceCard: effect.trainerCard,
-  });
-
-  if (cards.length > 0) {
-    yield store.prompt(
-      state,
-      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
-      () => next(),
-    );
-  }
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-    player.deck.applyOrder(order);
-  });
 }
 
 export class EnergyExchanger extends TrainerCard {
@@ -102,13 +75,16 @@ export class EnergyExchanger extends TrainerCard {
   public fullName: string = 'Energy Exchanger UD';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '73';
-
   public text: string =
     'Choose an Energy card from your hand, show it to your opponent, and put it on top of your deck. Search your deck for an Energy card, show it to your opponent, and put it into your hand. Shuffle your deck afterward.';
 
+  public canPlay(_store: StoreLike, _state: State, player: Player): boolean {
+    return hasEnergyInHand(player);
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, effect);
+    if (WAS_TRAINER_USED(effect, this)) {
+      const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
 

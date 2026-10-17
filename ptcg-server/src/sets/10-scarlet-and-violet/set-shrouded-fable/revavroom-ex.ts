@@ -2,9 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { MOVED_TO_ACTIVE_THIS_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { KNOCK_OUT_THIS_POKEMON, MOVED_TO_ACTIVE_THIS_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Revavroomex extends PokemonCard {
   public regulationMark = 'H';
@@ -63,9 +62,7 @@ export class Revavroomex extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const knockOutEffect = new KnockOutEffect(player, player.active);
-      state = store.reduceEffect(state, knockOutEffect);
-      return state;
+      return KNOCK_OUT_THIS_POKEMON(store, state, player, this);
     }
 
     if (

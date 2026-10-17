@@ -20,7 +20,7 @@ import {
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 
-import {WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { KNOCK_OUT_THIS_POKEMON, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Milotic extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -103,11 +103,7 @@ export class Milotic extends PokemonCard {
             MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
           }
 
-          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-            if (cardList.getPokemonCard() === this) {
-              cardList.damage += 999;
-            }
-          });
+          state = KNOCK_OUT_THIS_POKEMON(store, state, player, this);
         },
       );
 

@@ -82,7 +82,8 @@ export const POWER_TYPES = [
 
 export type PowerTypeName = (typeof POWER_TYPES)[number];
 
-export type WeaknessValue = 'x2' | '+20' | '+30';
+/** Multiplier (`x2`) or plus-weakness (`+10`, `+20`, `+30`, `+40`, …). */
+export type WeaknessValue = 'x2' | `+${number}`;
 
 export type PrefabScope = EffectKind | 'both';
 
@@ -135,6 +136,11 @@ export interface MatchedPrefab {
   matchedText: string;
 }
 
+export interface PartialMatchResult {
+  matched: MatchedPrefab[];
+  unmatched: string[];
+}
+
 export interface SelectedPrefab {
   id: string;
   prefabId: string;
@@ -152,7 +158,12 @@ export interface AttackDraft {
   damageCalculation: '' | '+' | 'x' | '-';
   text: string;
   selectedPrefabs: SelectedPrefab[];
+  /** Full-effect server fallback when no prefabs matched (or weak hybrid). */
   serverEffect?: ServerEffect;
+  /** Per-clause server snippets used alongside prefabs. */
+  serverSnippets?: ServerEffect[];
+  /** Clauses that matched neither prefab nor snippet. */
+  unmatchedClauses?: string[];
   matchError?: string;
 }
 
@@ -173,6 +184,8 @@ export interface PowerDraft {
   isFossil: boolean;
   selectedPrefabs: SelectedPrefab[];
   serverEffect?: ServerEffect;
+  serverSnippets?: ServerEffect[];
+  unmatchedClauses?: string[];
   matchError?: string;
 }
 
@@ -187,6 +200,22 @@ export interface ServerEffect {
   similarity: number;
   bodyMode?: 'branch' | 'full';
   helpers?: string[];
+  /** Clause text this snippet was matched against (hybrid resolution). */
+  matchedClause?: string;
+  cardName?: string;
+  set?: string;
+  fullName?: string;
+  /** Prefab / UPPER_SNAKE helpers referenced in the body. */
+  prefabsUsed?: string[];
+  /** Guard that produced this branch (WAS_ATTACK_USED, JUST_EVOLVED, …). */
+  guard?: string;
+}
+
+export interface HybridEffectResolution {
+  selectedPrefabs: SelectedPrefab[];
+  serverSnippets: ServerEffect[];
+  serverEffect?: ServerEffect;
+  unmatchedClauses: string[];
 }
 
 export interface ReprintCandidate {
@@ -196,6 +225,21 @@ export interface ReprintCandidate {
   setNumber: string;
   fullName: string;
   sourcePath: string;
+  /** True when draft attacks/powers/text match this candidate (true reprint). */
+  identical: boolean;
+  /** True when this file is other-prints / full-art / alt-arts (thin wrapper). */
+  isReprintFile: boolean;
+}
+
+/** Response extras from `/reprint-candidates` for distinct same-name variants. */
+export interface ReprintLookupResult {
+  candidates: ReprintCandidate[];
+  /** Next occurrence for a distinct variant (1 = no suffix). */
+  nextOccurrence: number;
+  /** Suggested class name when saving as a distinct variant. */
+  suggestedClassName: string;
+  /** Suggested fullName when saving as a distinct variant. */
+  suggestedFullName: string;
 }
 
 export interface CardDraft {
@@ -206,7 +250,8 @@ export interface CardDraft {
   evolvesFrom: string;
   tags: string;
   hp: string;
-  cardType: EnergyShort;
+  /** Energy short codes, e.g. `"R"` or `"FM"` for dual-type. Emitted as `CardType[]`. */
+  cardType: string;
   weaknessType: '' | EnergyShort;
   weaknessValue: WeaknessValue;
   resistanceType: '' | EnergyShort;
@@ -226,6 +271,8 @@ export interface CardDraft {
   trainerText: string;
   trainerPrefabs: SelectedPrefab[];
   trainerServerEffect?: ServerEffect;
+  trainerServerSnippets?: ServerEffect[];
+  trainerUnmatchedClauses?: string[];
   // Energy
   energyType: 'BASIC' | 'SPECIAL';
   provides: string;

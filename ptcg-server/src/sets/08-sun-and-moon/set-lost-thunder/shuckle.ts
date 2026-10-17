@@ -58,6 +58,8 @@ export class Shuckle extends PokemonCard {
           ), selected => {
             cards = selected || [];
 
+            MOVE_CARDS(store, state, player.deck, player.discard, { cards: cards, sourceCard: this });
+
             if (cards.length > 0) {
               store.prompt(state, new ShowCardsPrompt(
                 opponent.id,
@@ -65,8 +67,6 @@ export class Shuckle extends PokemonCard {
                 cards
               ), () => state);
             }
-
-            MOVE_CARDS(store, state, player.deck, player.discard, { cards: cards, sourceCard: this });
 
             return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
               player.deck.applyOrder(order);

@@ -8,6 +8,7 @@ import { PowerType, StoreLike, State, StateUtils, GameMessage, ChoosePokemonProm
 import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class AlolanDugtrio extends PokemonCard {
@@ -41,16 +42,27 @@ export class AlolanDugtrio extends PokemonCard {
   public fullName: string = 'Alolan Dugtrio SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Tangling Hair (passive - retreat cost increase)
-    // Ref: set-boundaries-crossed/jellicent.ts (Stickiness)
+    // Ability: Tangling Hair
     if (effect instanceof CheckRetreatCostEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      const retreatingPlayer = effect.player;
+      const abilityOwner = StateUtils.getOpponent(state, retreatingPlayer);
 
-      if (!StateUtils.isPokemonInPlay(opponent, this)) {
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
         return state;
       }
-      if (IS_ABILITY_BLOCKED(store, state, opponent, this)) {
+
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        retreatingPlayer.active,
+      )) {
         return state;
       }
 
@@ -58,7 +70,6 @@ export class AlolanDugtrio extends PokemonCard {
     }
 
     // Attack 1: Dig Under
-    // Ref: AGENTS-patterns.md (damage to 1 opponent Pokemon, not affected by W/R)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 

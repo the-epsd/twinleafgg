@@ -50,13 +50,13 @@ export class Lotad extends PokemonCard {
       ), cards => {
         cards = cards || [];
 
+        MOVE_CARDS(store, state, opponent.hand, opponent.deck, { cards: cards, sourceCard: this });
+
         store.prompt(state, new ShowCardsPrompt(
           player.id,
           GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
           cards
         ), () => { });
-
-        MOVE_CARDS(store, state, opponent.hand, opponent.deck, { cards: cards, sourceCard: this });
 
         return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
           opponent.deck.applyOrder(order);

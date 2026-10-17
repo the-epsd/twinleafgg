@@ -4,14 +4,13 @@ import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { PowerEffect, RetreatEffect } from '../../../game/store/effects/game-effects';
+import { RetreatEffect } from '../../../game/store/effects/game-effects';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
-
-import { PlayerType } from '../../../game/store/actions/play-card-action';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Dragalge extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -56,37 +55,34 @@ export class Dragalge extends PokemonCard {
       });
     }
 
-    // Block retreat for opponent's poisoned Pokemon.
     if (effect instanceof RetreatEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      const retreatingPlayer = effect.player;
 
-      const isPoisoned = player.active.specialConditions.includes(SpecialCondition.POISONED);
-      if (!isPoisoned) {
+      if (!retreatingPlayer.active.specialConditions.includes(SpecialCondition.POISONED)) {
         return state;
       }
 
-      let isDragalgeInPlay = false;
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isDragalgeInPlay = true;
-        }
-      });
-
-      if (isDragalgeInPlay) {
-        // Try to reduce PowerEffect, to check if something is blocking our ability
-        try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
-          return state;
-        }
-        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+      const abilityOwner = StateUtils.getOpponent(state, retreatingPlayer);
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
+        return state;
       }
+
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        retreatingPlayer.active,
+      )) {
+        return state;
+      }
+
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
     return state;

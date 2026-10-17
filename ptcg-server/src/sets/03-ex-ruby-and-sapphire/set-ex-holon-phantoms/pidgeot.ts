@@ -19,7 +19,12 @@ import {
 import { Effect } from '../../../game/store/effects/effect';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { HANDLE_ABILITY_BLOCK, POKEPOWER_TYPES } from '../../../game/store/prefabs/ability-lock';
+import {
+  CAN_APPLY_LOCKER_ABILITY,
+  CAN_APPLY_LOCK_TO_TARGET,
+  HANDLE_ABILITY_BLOCK,
+  POKEPOWER_TYPES,
+} from '../../../game/store/prefabs/ability-lock';
 import {
   CONFIRMATION_PROMPT,
   IS_POKEBODY_BLOCKED,
@@ -95,7 +100,10 @@ export class Pidgeot extends PokemonCard {
           return false;
         }
 
-        return true;
+        if (!CAN_APPLY_LOCKER_ABILITY(store, state, owner, this, this.powers[0])) {
+          return false;
+        }
+        return CAN_APPLY_LOCK_TO_TARGET(store, state, owner, this, this.powers[0], card);
       },
       {
         powerTypes: POKEPOWER_TYPES,

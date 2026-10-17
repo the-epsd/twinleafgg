@@ -1,41 +1,34 @@
-import { PlayerType } from '../../../game/store/actions/play-card-action';
-import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { PowerType } from '../../../game/store/card/pokemon-types';
+import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
+import { PowerType, StoreLike, State, StateUtils, PlayerType } from '../../../game';
+import { Effect } from '../../../game/store/effects/effect';
 import { DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
-import { Effect } from '../../../game/store/effects/effect';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
-import { StateUtils } from '../../../game/store/state-utils';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
 
 export class Orthwormex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType[] = [M];
   public hp: number = 220;
+  public cardType: CardType[] = [M];
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C, C, C];
 
-  public powers = [
-    {
-      name: 'Pummeling Payback',
-      powerType: PowerType.ABILITY,
-      text: "If this Pokémon is damaged by an attack from your opponent's Pokémon(even if this Pokémon is Knocked Out), put 2 damage counters on the Attacking Pokémon for each [M] Energy attached to this Pokémon.",
-    },
-  ];
+  public powers = [{
+    name: 'Pummeling Payback',
+    powerType: PowerType.ABILITY,
+    text: "If this Pokémon is damaged by an attack from your opponent's Pokémon(even if this Pokémon is Knocked Out), put 2 damage counters on the Attacking Pokémon for each [M] Energy attached to this Pokémon.",
+  }];
 
-  public attacks = [
-    {
-      name: 'Rock Tomb',
-      cost: [C, C, C, C],
-      damage: 150,
-      text: "During your opponent's next turn, the Defending Pokémon can't retreat.",
-    },
-  ];
+  public attacks = [{
+    name: 'Rock Tomb',
+    cost: [C, C, C, C],
+    damage: 150,
+    text: "During your opponent's next turn, the Defending Pokémon can't retreat.",
+  }];
 
   public regulationMark = 'H';
   public set: string = 'SCR';
@@ -67,12 +60,11 @@ export class Orthwormex extends PokemonCard {
         return state;
       }
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, targetPlayer, this)) {
         return state;
       }
 
-      const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(targetPlayer);
+      const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(targetPlayer, effect.target);
       store.reduceEffect(state, checkProvidedEnergyEffect);
 
       let energyCount = 0;
@@ -82,8 +74,18 @@ export class Orthwormex extends PokemonCard {
         ).length;
       });
 
-      const oppActive = player.active;
-      oppActive.damage += energyCount * 10;
+      if (energyCount > 0) {
+        store.reduceEffect(
+          state,
+          new PlaceDamageCountersEffect(
+            targetPlayer,
+            player.active,
+            energyCount * 10,
+            this,
+            this.powers[0],
+          ),
+        );
+      }
     }
 
     // Rock Tomb

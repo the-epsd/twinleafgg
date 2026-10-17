@@ -118,8 +118,28 @@ const HAND_TO_DECK_TRAVEL_DURATION_SEC = 0.28;
 /** Stagger between starting each hand → deck flight (overlapping cascade). */
 export const HAND_TO_DECK_STAGGER_SEC = 0.06;
 
-/** KO: whole Pokémon + attachments fly as one unit to discard. */
-const KO_DISCARD_TRAVEL_DURATION_SEC = 0.48;
+/** KO bounce — PTCGO `P1_active_knockOut` key span ~0.5s (compressed slightly). */
+const KO_BOUNCE_DURATION_SEC = 0.32;
+/** KO discard arc — single continuous tween (PTCGO travel ~0.5s). */
+const KO_DISCARD_TRAVEL_DURATION_SEC = 0.55;
+/** Arc height above the chord (sin envelope — continuous velocity, no mid freeze). */
+const KO_DISCARD_ARC_LIFT = 1.35;
+/** Peak bounce height (PTCGO Y peak = 2; scaled for Twinleaf). */
+const KO_BOUNCE_PEAK_Y = 1.15;
+/**
+ * Signature PTCGO sideways yaw (rotation.y): active KO ends ~45°, discard eases back.
+ * Applied as yaw only — pitch (X) stays tiny so thin cards don't foreshorten/stretch.
+ */
+const KO_YAW_PEAK = (38 * Math.PI) / 180;
+const KO_YAW_BOUNCE_MID = (28 * Math.PI) / 180;
+/** Mild pitch wobble (PTCGO ±13.5° scaled down). */
+const KO_PITCH_PEAK = (6 * Math.PI) / 180;
+/** In-plane roll peak during discard (PTCGO mid Z = 20°). */
+const KO_DISCARD_TWIST_Z = (20 * Math.PI) / 180;
+/** Discard / Lost Zone pile cards render at scale 1 (Active is 1.5). */
+const KO_DISCARD_END_SCALE = 1;
+/** Fraction of discard travel before scale-down + final drop begin. */
+const KO_DISCARD_LAND_START_T = 0.55;
 
 /** Shorter hold during setup mulligan redraws (full row on stage). */
 const MULTI_DRAW_SHARED_STAGED_HOLD_SEC_MULLIGAN = 0.15;
@@ -365,8 +385,15 @@ export class Board3dAnimationService {
   /**
    * Attack motion: same keyframe proportions as Angular `board-card.component.scss` `@keyframes attackAnimation`,
    * stretched to {@link BOARD3D_ATTACK_ANIMATION_DURATION_SEC}, `cubic-bezier(0.4, 0, 0.1, 1)`.
+   * Impact (slam lands at 75%) fires {@link opts.onImpact} once — use this to start the defender hit.
    */
-  playAttackAnimation(card: Object3D): Promise<void> {
+  playAttackAnimation(
+    card: Object3D,
+    opts?: {
+      /** Fired once when the slam lands (75% of the clip — Angular impact keyframe). */
+      onImpact?: () => void;
+    },
+  ): Promise<void> {
     return new Promise(resolve => {
       const easeAttack = 'cubic-bezier(0.4, 0, 0.1, 1)';
       const totalDuration = BOARD3D_ATTACK_ANIMATION_DURATION_SEC;
@@ -385,9 +412,26 @@ export class Board3dAnimationService {
       const slamScale = baseScale * 0.92;
       const bounceScale = baseScale * 1.12;
       const prevRenderOrder = card.renderOrder;
+      let impactFired = false;
+      const fireImpact = (): void => {
+        if (impactFired) {
+          return;
+        }
+        impactFired = true;
+        opts?.onImpact?.();
+      };
 
       const timeline = gsap.timeline({
         onComplete: () => {
+          fireImpact();
+          card.position.y = baseY;
+          card.scale.setScalar(baseScale);
+          card.renderOrder = prevRenderOrder;
+          this.removeAnimation(timeline);
+          resolve();
+        },
+        onKill: () => {
+          fireImpact();
           card.position.y = baseY;
           card.scale.setScalar(baseScale);
           card.renderOrder = prevRenderOrder;
@@ -412,7 +456,14 @@ export class Board3dAnimationService {
       timeline.to(card.position, { y: baseY, duration: d23, ease: easeAttack }, t60);
       timeline.to(
         card.scale,
-        { x: slamScale, y: slamScale, z: slamScale, duration: d23, ease: easeAttack },
+        {
+          x: slamScale,
+          y: slamScale,
+          z: slamScale,
+          duration: d23,
+          ease: easeAttack,
+          onComplete: fireImpact,
+        },
         t60,
       );
       timeline.to(
@@ -425,6 +476,137 @@ export class Board3dAnimationService {
         { x: baseScale, y: baseScale, z: baseScale, duration: d45, ease: easeAttack },
         t85,
       );
+
+      this.activeAnimations.push(timeline);
+      this.updateAnimationState();
+    });
+  }
+
+  /**
+   * Defender flinch when an Active Pokémon's attack lands.
+   * Knock away from the attacker, small lift + tilt, then settle.
+   */
+  playGetHitReaction(
+    card: Object3D,
+    opts?: { awayFromWorld?: Vector3 },
+  ): Promise<void> {
+    return new Promise(resolve => {
+      const start = card.position.clone();
+      const startRotX = card.rotation.x;
+      const startRotY = card.rotation.y;
+      const startRotZ = card.rotation.z;
+      const startScale = card.scale.x;
+      const away = new Vector3();
+      if (opts?.awayFromWorld) {
+        away.copy(start).sub(opts.awayFromWorld);
+        away.y = 0;
+      }
+      if (away.lengthSq() < 1e-6) {
+        away.set(0, 0, start.z >= 0 ? 1 : -1);
+      } else {
+        away.normalize();
+      }
+
+      const knock = 0.85;
+      const lift = 0.45;
+      const duration = 0.6;
+      const tPeak = duration * 0.2;
+      const tHold = duration * 0.4;
+      const yawSign = away.x >= 0 ? 1 : -1;
+      const peak = start.clone().add(away.clone().multiplyScalar(knock)).add(new Vector3(0, lift, 0));
+      const hold = start
+        .clone()
+        .add(away.clone().multiplyScalar(knock * 0.7))
+        .add(new Vector3(0, lift * 0.4, 0));
+      const peakScale = startScale * 1.06;
+      const prevRenderOrder = card.renderOrder;
+
+      const timeline = gsap.timeline({
+        onComplete: () => {
+          card.position.copy(start);
+          card.rotation.set(startRotX, startRotY, startRotZ);
+          card.scale.setScalar(startScale);
+          card.renderOrder = prevRenderOrder;
+          this.removeAnimation(timeline);
+          resolve();
+        },
+        onKill: () => {
+          card.position.copy(start);
+          card.rotation.set(startRotX, startRotY, startRotZ);
+          card.scale.setScalar(startScale);
+          card.renderOrder = prevRenderOrder;
+          this.removeAnimation(timeline);
+          resolve();
+        },
+      });
+
+      card.renderOrder = 90;
+
+      timeline
+        .to(
+          card.position,
+          { x: peak.x, y: peak.y, z: peak.z, duration: tPeak, ease: 'power2.out' },
+          0,
+        )
+        .to(
+          card.rotation,
+          {
+            x: startRotX + (10 * Math.PI) / 180,
+            y: startRotY + yawSign * (14 * Math.PI) / 180,
+            z: startRotZ + 0.12,
+            duration: tPeak,
+            ease: 'power2.out',
+          },
+          0,
+        )
+        .to(
+          card.scale,
+          { x: peakScale, y: peakScale, z: peakScale, duration: tPeak, ease: 'power2.out' },
+          0,
+        )
+        .to(
+          card.position,
+          { x: hold.x, y: hold.y, z: hold.z, duration: tHold - tPeak, ease: 'power1.inOut' },
+          tPeak,
+        )
+        .to(
+          card.rotation,
+          {
+            x: startRotX + (4 * Math.PI) / 180,
+            y: startRotY + yawSign * (6 * Math.PI) / 180,
+            z: startRotZ + 0.05,
+            duration: tHold - tPeak,
+            ease: 'power1.inOut',
+          },
+          tPeak,
+        )
+        .to(
+          card.position,
+          { x: start.x, y: start.y, z: start.z, duration: duration - tHold, ease: 'power2.inOut' },
+          tHold,
+        )
+        .to(
+          card.rotation,
+          {
+            x: startRotX,
+            y: startRotY,
+            z: startRotZ,
+            duration: duration - tHold,
+            ease: 'power2.inOut',
+          },
+          tHold,
+        )
+        .to(
+          card.scale,
+          {
+            x: startScale,
+            y: startScale,
+            z: startScale,
+            duration: duration - tHold,
+            ease: 'power2.inOut',
+          },
+          tHold,
+        );
 
       this.activeAnimations.push(timeline);
       this.updateAnimationState();
@@ -773,6 +955,7 @@ export class Board3dAnimationService {
 
   /**
    * Stage → hand slot + hand scale. Call after {@link playDrawDeckToStage}. Rotation stays until finishDrawFlight.
+   * When {@link flipFaceDownDuringTravel} is set (ShowCards → deck), the card flips face-down mid-flight.
    */
   playDrawStageToHand(
     card: Object3D,
@@ -783,12 +966,18 @@ export class Board3dAnimationService {
       visualPreset?: DrawFlightVisualPreset;
       /** Seconds before position/scale tweens begin (e.g. multi-draw stagger). */
       delay?: number;
+      /** Deck-bound second leg: flip face-down while traveling. */
+      flipFaceDownDuringTravel?: {
+        onHideFace?: () => void;
+      };
     }
   ): Promise<void> {
     const handScale = options?.handScale ?? HAND_DRAW_SCALE;
     const burst = options?.burst === true;
     const { pos: posDur, scale: scaleDur } = stageToHandTiming(options?.visualPreset, burst);
     const delay = options?.delay ?? 0;
+    const flipDown = options?.flipFaceDownDuringTravel;
+    let hideApplied = false;
 
     return new Promise(resolve => {
       const timeline = gsap.timeline({
@@ -819,6 +1008,28 @@ export class Board3dAnimationService {
           '<'
         );
 
+      if (flipDown) {
+        timeline.to(
+          card.rotation,
+          {
+            z: Math.PI,
+            duration: posDur,
+            ease: 'power2.out',
+            onUpdate: () => {
+              if (hideApplied) {
+                return;
+              }
+              const progress = Math.abs(card.rotation.z) / Math.PI;
+              if (progress >= 0.5) {
+                hideApplied = true;
+                flipDown.onHideFace?.();
+              }
+            },
+          },
+          '<',
+        );
+      }
+
       this.activeAnimations.push(timeline);
       this.updateAnimationState();
     });
@@ -835,6 +1046,12 @@ export class Board3dAnimationService {
       handScale?: number;
       onRevealFace?: () => void;
       visualPreset?: DrawFlightVisualPreset;
+      /** When set, second leg flips face-down (ShowCards → deck). */
+      flipFaceDownDuringTravel?: {
+        onHideFace?: () => void;
+      };
+      /** Called after stage reveal, before the second leg (e.g. normalize face-up for a deck flip). */
+      beforeStageToHand?: () => void;
     }
   ): Promise<void> {
     const preset = options?.visualPreset;
@@ -842,9 +1059,11 @@ export class Board3dAnimationService {
       onRevealFace: options?.onRevealFace,
       visualPreset: preset
     });
+    options?.beforeStageToHand?.();
     await this.playDrawStageToHand(card, handWorld, {
       handScale: options?.handScale,
-      visualPreset: preset
+      visualPreset: preset,
+      flipFaceDownDuringTravel: options?.flipFaceDownDuringTravel,
     });
   }
 
@@ -1503,9 +1722,21 @@ export class Board3dAnimationService {
 
   /**
    * Hand card returning to deck (shuffle-hand-into-deck effects).
+   * When {@link flipFaceDownDuringTravel} is set, the card flips face-down mid-flight.
    */
-  playHandToDeck(card: Object3D, targetWorld: Vector3): Promise<void> {
+  playHandToDeck(
+    card: Object3D,
+    targetWorld: Vector3,
+    options?: {
+      flipFaceDownDuringTravel?: {
+        onHideFace?: () => void;
+      };
+    },
+  ): Promise<void> {
     return new Promise(resolve => {
+      const flipDown = options?.flipFaceDownDuringTravel;
+      let hideApplied = false;
+
       const timeline = gsap.timeline({
         onComplete: () => {
           this.removeAnimation(timeline);
@@ -1533,13 +1764,36 @@ export class Board3dAnimationService {
           0,
         );
 
+      if (flipDown) {
+        timeline.to(
+          card.rotation,
+          {
+            z: Math.PI,
+            duration: HAND_TO_DECK_TRAVEL_DURATION_SEC,
+            ease: 'power2.out',
+            onUpdate: () => {
+              if (hideApplied) {
+                return;
+              }
+              const progress = Math.abs(card.rotation.z) / Math.PI;
+              if (progress >= 0.5) {
+                hideApplied = true;
+                flipDown.onHideFace?.();
+              }
+            },
+          },
+          0,
+        );
+      }
+
       this.activeAnimations.push(timeline);
       this.updateAnimationState();
     });
   }
 
   /**
-   * Knock Out: move the Pokémon root (energies, tools, BREAK, and body still parented) to discard in one motion.
+   * Knock Out: bounce with signature PTCGO sideways yaw → continuous arced discard,
+   * then scale down and drop into the pile (Active 1.5 → pile 1).
    */
   playKnockOutToDiscardSequence(ghostRoot: Object3D, discardWorld: Vector3): Promise<void> {
     ghostRoot.traverse((o) => {
@@ -1549,25 +1803,114 @@ export class Board3dAnimationService {
     });
     ghostRoot.renderOrder = 120;
 
-    const travel = {
-      duration: KO_DISCARD_TRAVEL_DURATION_SEC,
-      ease: 'power2.inOut' as const,
-    };
+    const start = ghostRoot.position.clone();
+    const startRotX = ghostRoot.rotation.x;
+    const startRotY = ghostRoot.rotation.y;
+    const startRotZ = ghostRoot.rotation.z;
+    const startScale = ghostRoot.scale.x;
+
+    const flight = { t: 0 };
+    const flightStart = new Vector3();
+    let flightYawStart = startRotY;
 
     return new Promise((resolve) => {
       const timeline = gsap.timeline({
         onComplete: () => {
+          ghostRoot.position.copy(discardWorld);
+          ghostRoot.rotation.set(startRotX, startRotY, startRotZ);
+          ghostRoot.scale.setScalar(KO_DISCARD_END_SCALE);
+          this.removeAnimation(timeline);
+          resolve();
+        },
+        onKill: () => {
+          ghostRoot.rotation.set(startRotX, startRotY, startRotZ);
+          ghostRoot.scale.setScalar(KO_DISCARD_END_SCALE);
           this.removeAnimation(timeline);
           resolve();
         },
       });
 
-      timeline.to(ghostRoot.position, {
-        x: discardWorld.x,
-        y: discardWorld.y,
-        z: discardWorld.z,
-        ...travel,
-      });
+      // Phase 1 — PTCGO active KO bounce: Y lift + yaw sideways + light pitch/roll.
+      const b0 = 0;
+      const b1 = KO_BOUNCE_DURATION_SEC * 0.34;
+      const b2 = KO_BOUNCE_DURATION_SEC * 0.67;
+
+      timeline
+        .to(ghostRoot.position, { y: start.y + KO_BOUNCE_PEAK_Y, duration: b1 - b0, ease: 'power2.out' }, b0)
+        .to(
+          ghostRoot.rotation,
+          {
+            x: startRotX + KO_PITCH_PEAK,
+            y: startRotY + KO_YAW_BOUNCE_MID,
+            z: startRotZ + KO_DISCARD_TWIST_Z * 0.55,
+            duration: b1 - b0,
+            ease: 'power2.out',
+          },
+          b0,
+        )
+        .to(ghostRoot.position, { y: start.y + KO_BOUNCE_PEAK_Y * 0.38, duration: b2 - b1, ease: 'power1.inOut' }, b1)
+        .to(
+          ghostRoot.rotation,
+          {
+            x: startRotX - KO_PITCH_PEAK * 0.7,
+            y: startRotY + KO_YAW_PEAK * 0.9,
+            z: startRotZ + KO_DISCARD_TWIST_Z * 0.15,
+            duration: b2 - b1,
+            ease: 'power1.inOut',
+          },
+          b1,
+        )
+        .to(ghostRoot.position, { y: start.y + KO_BOUNCE_PEAK_Y * 0.12, duration: KO_BOUNCE_DURATION_SEC - b2, ease: 'power2.in' }, b2)
+        .to(
+          ghostRoot.rotation,
+          {
+            x: startRotX,
+            y: startRotY + KO_YAW_PEAK,
+            z: startRotZ,
+            duration: KO_BOUNCE_DURATION_SEC - b2,
+            ease: 'power2.in',
+          },
+          b2,
+        );
+
+      // Phase 2 — continuous arc; yaw eases from sideways back to upright (bench discard 30→0).
+      // Late travel: ease-in scale to pile size + settle Y so the card drops into the stack.
+      timeline.add(() => {
+        flightStart.copy(ghostRoot.position);
+        flightYawStart = ghostRoot.rotation.y;
+        flight.t = 0;
+      }, KO_BOUNCE_DURATION_SEC);
+
+      timeline.to(
+        flight,
+        {
+          t: 1,
+          duration: KO_DISCARD_TRAVEL_DURATION_SEC,
+          ease: 'power2.inOut',
+          onUpdate: () => {
+            const t = flight.t;
+            const omt = 1 - t;
+            ghostRoot.position.x = flightStart.x * omt + discardWorld.x * t;
+            ghostRoot.position.z = flightStart.z * omt + discardWorld.z * t;
+            const chordY = flightStart.y * omt + discardWorld.y * t;
+            let arcY = chordY + Math.sin(t * Math.PI) * KO_DISCARD_ARC_LIFT;
+            // Final stretch: pull into the pile (power2.in on remaining height).
+            if (t > KO_DISCARD_LAND_START_T) {
+              const landT = (t - KO_DISCARD_LAND_START_T) / (1 - KO_DISCARD_LAND_START_T);
+              const landEase = landT * landT;
+              arcY = arcY + (discardWorld.y - arcY) * landEase;
+              const scale =
+                startScale + (KO_DISCARD_END_SCALE - startScale) * landEase;
+              ghostRoot.scale.setScalar(scale);
+            }
+            ghostRoot.position.y = arcY;
+            ghostRoot.rotation.x = startRotX;
+            ghostRoot.rotation.y = flightYawStart * omt + startRotY * t;
+            ghostRoot.rotation.z = startRotZ + Math.sin(t * Math.PI) * KO_DISCARD_TWIST_Z;
+          },
+        },
+        KO_BOUNCE_DURATION_SEC,
+      );
 
       this.activeAnimations.push(timeline);
       this.updateAnimationState();

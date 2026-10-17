@@ -78,17 +78,17 @@ export class PowerTree extends TrainerCard {
           }
 
           if (cards.length > 0) {
-            store.prompt(
-              state,
-              new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
-              () => {
-                cards.forEach((card, index) => {
+            cards.forEach((card, index) => {
                   MOVE_CARDS(store, state, player.discard, player.hand, {
                     cards: [card],
                     sourceCard: this,
                   });
                 });
-              },
+                store.prompt(
+              state,
+              new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+              () => {
+},
             );
           }
         },

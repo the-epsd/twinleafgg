@@ -20,6 +20,7 @@ import {
   PlaceDamageCountersEffect,
   PowerEffect,
   PutDamageCountersEffect,
+  SelfKnockOutEffect,
   TrainerPowerEffect,
   UseAttackEffect,
   UsePowerEffect,
@@ -38,6 +39,7 @@ import { GameStatsTracker } from '../game-stats-tracker';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { MOVE_CARDS, COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED } from '../prefabs/prefabs';
 import { OPPONENT_WEAKNESS_AURA_POWER, STAMP_ABILITY_LOCK_ACTIVATION } from '../prefabs/ability-lock';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../prefabs/effect-of-ability-prefabs';
 import { RESOLVE_COIN_FLIP_EFFECT, RUN_COIN_FLIP_SEQUENCE } from '../prefabs/attack-coin-reflip';
 import { CardList } from '../state/card-list';
 import { ConfirmPrompt } from '../prompts/confirm-prompt';
@@ -501,6 +503,18 @@ function* usePower(next: Function, store: StoreLike, state: State, effect: UsePo
 
 export function gameReducer(store: StoreLike, state: State, effect: Effect): State {
 
+  if (effect instanceof SelfKnockOutEffect) {
+    if (effect.preventDefault) {
+      return state;
+    }
+    // Lethal damage → checkState fires KnockOutEffect + prizes (LV.X-safe via findPokemonSlot).
+    const cardList = StateUtils.findPokemonSlot(state, effect.source);
+    if (cardList) {
+      cardList.damage += 999;
+    }
+    return state;
+  }
+
   if (effect instanceof KnockOutEffect) {
     const card = effect.target.getPokemonCard();
     if (card !== undefined) {
@@ -647,14 +661,32 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
           state = MOVE_CARDS(store, state, lostZoned, effect.player.lostzone);
         }
       } else {
-        // Default behavior - move to discard
+        // Attachments first, Pokémon last so the KO'd Pokémon is the top discard card
+        // (same order as bench-overflow discard / MOVE_POKEMON_OFF_BOARD).
+        const pokemons = effect.target.getPokemons();
         const tools = [...effect.target.tools];
-        // Move tools to discard BEFORE clearing effects (directly)
-        for (const tool of tools) {
-          effect.target.moveCardTo(tool, effect.player.discard);
+        const otherCards = effect.target.cards.filter(
+          c =>
+            !(c instanceof PokemonCard) &&
+            !pokemons.includes(c as PokemonCard) &&
+            !tools.includes(c),
+        );
+
+        if (otherCards.length > 0) {
+          state = MOVE_CARDS(store, state, effect.target, effect.player.discard, {
+            cards: otherCards,
+          });
         }
-        effect.target.clearEffects();
-        state = MOVE_CARDS(store, state, effect.target, effect.player.discard);
+        for (const tool of tools) {
+          state = MOVE_CARDS(store, state, effect.target, effect.player.discard, {
+            cards: [tool],
+          });
+        }
+        if (pokemons.length > 0) {
+          state = MOVE_CARDS(store, state, effect.target, effect.player.discard, {
+            cards: pokemons,
+          });
+        }
       }
     }
   }
@@ -704,6 +736,9 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
   }
 
   if (effect instanceof AddSpecialConditionsPowerEffect) {
+    if (effect.preventDefault) {
+      return state;
+    }
     const target = effect.target;
     effect.specialConditions.forEach(sp => {
       target.addSpecialCondition(sp);
@@ -784,11 +819,38 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
       throw new GameError(GameMessage.ILLEGAL_ACTION);
     }
 
+    // Ability-sourced counters: probe EffectOfAbilityEffect before applying
+    // (same contract as PutDamageCountersEffect). Skip when source is absent
+    // (stadium/tool/attack-adjacent paths are not effects of Abilities).
+    if (effect.source instanceof PokemonCard) {
+      const sourceSlot = StateUtils.findPokemonSlot(state, effect.source);
+      if (sourceSlot && StateUtils.findOwner(state, sourceSlot) === effect.player) {
+        const power =
+          effect.sourcePower
+          ?? effect.source.powers.find(p => p.powerType === PowerType.ABILITY)
+          ?? effect.source.powers[0];
+        if (power) {
+          const canApplyAbility = new EffectOfAbilityEffect(
+            effect.player,
+            power,
+            effect.source,
+            target,
+          );
+          state = store.reduceEffect(state, canApplyAbility);
+          if (!canApplyAbility.target) {
+            effect.preventDefault = true;
+            return state;
+          }
+        }
+      }
+    }
+
     const damage = Math.max(0, effect.damage);
     target.damage += damage;
 
     if (damage > 0) {
-      const effectName = effect.source ? effect.source.name : '';
+      const effectName = effect.sourcePower?.name
+        ?? (effect.source ? effect.source.name : '');
       store.log(state, GameLog.LOG_PLAYER_PLACES_DAMAGE_COUNTERS, {
         name: effect.player.name,
         damage: damage,
@@ -1007,14 +1069,16 @@ function applyWhileInPlayOpponentWeakness(
   if (IS_ABILITY_BLOCKED(store, state, opponent, source)) {
     return;
   }
-  const canApply = new EffectOfAbilityEffect(
-    opponent,
-    OPPONENT_WEAKNESS_AURA_POWER(source.whileInPlayOpponentWeakness),
-    source,
-    effect.target,
-  );
-  store.reduceEffect(state, canApply);
-  if (canApply.target) {
+  if (
+    CAN_APPLY_ABILITY_TO_TARGET(
+      store,
+      state,
+      opponent,
+      OPPONENT_WEAKNESS_AURA_POWER(source.whileInPlayOpponentWeakness),
+      source,
+      effect.target,
+    )
+  ) {
     effect.weakness = [{ type: source.whileInPlayOpponentWeakness }];
   }
 }

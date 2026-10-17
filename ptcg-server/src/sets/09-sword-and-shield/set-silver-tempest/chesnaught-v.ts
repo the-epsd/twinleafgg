@@ -11,7 +11,7 @@ import {
   IS_ABILITY_BLOCKED,
   ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
 } from '../../../game/store/prefabs/prefabs';
-import { HealEffect } from '../../../game/store/effects/game-effects';
+import { HealEffect, PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 
 export class ChesnaughtV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
@@ -50,18 +50,20 @@ export class ChesnaughtV extends PokemonCard {
     // If this Pokemon (in Active) is damaged by opponent's attack, put 3 damage counters on Attacking Pokemon.
     // Ref: set-dragons-majesty/druddigon.ts (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT)
     if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      if (IS_ABILITY_BLOCKED(store, state, targetPlayer, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      // Must be in active spot
-      if (effect.target !== targetPlayer.active) {
-        return state;
-      }
-
-      effect.source.damage += 30;
+      const placeCounters = new PlaceDamageCountersEffect(
+        abilityOwner,
+        effect.source,
+        30,
+        this,
+        this.powers[0],
+      );
+      store.reduceEffect(state, placeCounters);
     }
 
     // Attack 1: Touchdown

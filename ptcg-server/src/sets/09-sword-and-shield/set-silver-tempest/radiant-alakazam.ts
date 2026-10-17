@@ -13,6 +13,7 @@ import { GameMessage } from '../../../game/game-message';
 import { GameError } from '../../../game';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
+import { MoveDamageCountersEffect, PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class RadiantAlakazam extends PokemonCard {
@@ -118,8 +119,23 @@ export class RadiantAlakazam extends PokemonCard {
             const target = StateUtils.getTarget(state, player, transfer.to);
             const damageToMove = 10; // Each transfer represents 10 damage
 
+            const moveEffect = new MoveDamageCountersEffect(player);
+            state = store.reduceEffect(state, moveEffect);
+            if (moveEffect.preventDefault) {
+              continue;
+            }
+            const placeCountersEffect = new PlaceDamageCountersEffect(
+              player,
+              target,
+              damageToMove,
+              this,
+              this.powers[0],
+            );
+            state = store.reduceEffect(state, placeCountersEffect);
+            if (placeCountersEffect.preventDefault) {
+              continue;
+            }
             source.damage -= damageToMove;
-            target.damage += damageToMove;
           }
 
           player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {

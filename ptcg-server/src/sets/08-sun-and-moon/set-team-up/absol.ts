@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
-
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Absol extends PokemonCard {
@@ -35,11 +35,30 @@ export class Absol extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckRetreatCostEffect && StateUtils.isPokemonInPlay(effect.player, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+    if (effect instanceof CheckRetreatCostEffect) {
+      const retreatingPlayer = effect.player;
+      const abilityOwner = StateUtils.getOpponent(state, retreatingPlayer);
 
-      if (IS_ABILITY_BLOCKED(store, state, player, this) || !opponent.active.isStage(Stage.BASIC)) {
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
+        return state;
+      }
+
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      if (!retreatingPlayer.active.isStage(Stage.BASIC)) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        retreatingPlayer.active,
+      )) {
         return state;
       }
 

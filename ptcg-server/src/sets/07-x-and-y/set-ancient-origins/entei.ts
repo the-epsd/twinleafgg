@@ -51,11 +51,6 @@ export class Entei extends PokemonCard {
       const fireEnergies: Card[] = [];
 
       // Show discarded cards to both players
-      store.prompt(state, [
-        new ShowCardsPrompt(player.id, GameMessage.CARDS_SHOWED_BY_EFFECT, cardsToDiscard),
-        new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cardsToDiscard),
-      ], () => { });
-
       cardsToDiscard.forEach(card => {
         if (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.provides.includes(CardType.FIRE)) {
           fireEnergies.push(card);
@@ -64,6 +59,11 @@ export class Entei extends PokemonCard {
           MOVE_CARDS(store, state, player.deck, player.discard, { cards: [card], sourceCard: this });
         }
       });
+
+      store.prompt(state, [
+        new ShowCardsPrompt(player.id, GameMessage.CARDS_SHOWED_BY_EFFECT, cardsToDiscard),
+        new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cardsToDiscard),
+      ], () => { });
 
       if (fireEnergies.length > 0) {
         const count = fireEnergies.length;

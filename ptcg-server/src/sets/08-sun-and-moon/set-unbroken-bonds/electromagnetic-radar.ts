@@ -1,20 +1,10 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, SuperType, CardType, CardTag } from '../../../game/store/card/card-types';
-import {
-  StoreLike,
-  State,
-  StateUtils,
-  Card,
-  GameError,
-  GameMessage,
-  CardList,
-  ChooseCardsPrompt,
-  ShowCardsPrompt,
-  ShuffleDeckPrompt,
-} from '../../../game';
+import { StoreLike, State, Player, Card, GameError, GameMessage, CardList, ChooseCardsPrompt, PokemonCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -24,7 +14,6 @@ function* playCard(
   effect: TrainerEffect,
 ): IterableIterator<State> {
   const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
 
   cards = player.hand.cards.filter((c) => c !== self);
@@ -40,7 +29,7 @@ function* playCard(
   effect.preventDefault = true;
   MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
 
-  // prepare card list without Junk Arm
+  // prepare card list without this card
   const handTemp = new CardList();
   handTemp.cards = player.hand.cards.filter((c) => c !== self);
 
@@ -68,68 +57,53 @@ function* playCard(
 
   const blocked: number[] = [];
   player.deck.cards.forEach((card, index) => {
-    // eslint-disable-next-line no-empty
     if (
-      card.hasTag(CardTag.POKEMON_GX) ||
-      card.hasTag(CardTag.POKEMON_EX) ||
-      card.hasTag(CardTag.TAG_TEAM)
+      !(
+        card.hasTag(CardTag.POKEMON_GX) ||
+        card.hasTag(CardTag.POKEMON_EX) ||
+        card.hasTag(CardTag.TAG_TEAM)
+      )
     ) {
-      /**/
-    } else {
       blocked.push(index);
     }
   });
 
-  yield store.prompt(
+  SEARCH_DECK_FOR_CARDS_TO_HAND(
+    store,
     state,
-    new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_HAND,
-      player.deck,
-      { superType: SuperType.POKEMON, cardType: [CardType.LIGHTNING] },
-      { min: 0, max: 2, allowCancel: false, blocked },
-    ),
-    (selected) => {
-      cards = selected || [];
-      next();
-    },
+    player,
+    self,
+    { superType: SuperType.POKEMON, cardType: [CardType.LIGHTNING] } as Partial<PokemonCard>,
+    { min: 0, max: 2, allowCancel: false, blocked },
   );
 
-  if (cards.length > 0) {
-    yield store.prompt(
-      state,
-      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
-      () => next(),
-    );
-  }
-
-  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-    player.deck.applyOrder(order);
-  });
+  return state;
 }
 
 export class ElectromagneticRadar extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'UNB';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '169';
-
   public name: string = 'Electromagnetic Radar';
-
   public fullName: string = 'Electromagnetic Radar UNB';
-
   public text: string =
-    'You can play this card only if you discard 2 other cards from your hand.' +
-    'Search your deck for up to 2 in any combination of[L] Pokémon - GX and[L] Pokémon - EX, ' +
+    'You can play this card only if you discard 2 other cards from your hand. ' +
+    'Search your deck for up to 2 in any combination of [L] Pokémon-GX and [L] Pokémon-EX, ' +
     'reveal them, and put them into your hand. Then, shuffle your deck.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.hand.cards.filter((c) => c !== this).length < 2) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }

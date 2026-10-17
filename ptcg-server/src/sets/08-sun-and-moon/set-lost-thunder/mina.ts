@@ -2,55 +2,47 @@ import {
   AttachEnergyPrompt,
   GameError,
   GameMessage,
+  Player,
   PlayerType,
-  ShuffleDeckPrompt,
   SlotType,
+  State,
   StateUtils,
+  StoreLike,
+  TrainerCard,
 } from '../../../game';
 import { EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Mina extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'LOT';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '183';
-
   public name: string = 'Mina';
-
   public fullName: string = 'Mina LOT';
-
   public text: string =
     'Search your deck for a [Y] Energy card and attach it to 1 of your Pokémon. Then, shuffle your deck.';
 
-  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const player = effect.player;
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return player.deck.cards.length > 0;
+  }
 
-      const supporterTurn = player.supporterTurn;
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (WAS_TRAINER_USED(effect, this)) {
+      const player = effect.player;
 
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      if (supporterTurn > 0) {
+      if (player.supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
-
-      MOVE_CARDS(store, state, player.hand, player.supporter, {
-        cards: [effect.trainerCard],
-        sourceCard: this,
-      });
-      // We will discard this card after prompt confirmation
-      effect.preventDefault = true;
 
       store.prompt(
         state,
@@ -73,9 +65,7 @@ export class Mina extends TrainerCard {
             });
           }
 
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-            player.deck.applyOrder(order);
-          });
+          return SHUFFLE_DECK(store, state, player);
         },
       );
     }

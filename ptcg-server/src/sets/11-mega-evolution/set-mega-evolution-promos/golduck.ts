@@ -6,6 +6,7 @@ import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-eff
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import {
   CAN_APPLY_LOCKER_ABILITY,
+  CAN_APPLY_LOCK_TO_TARGET,
   HANDLE_ABILITY_LOCK,
   IS_ABILITY_LOCKER_IN_PLAY,
 } from '../../../game/store/prefabs/ability-lock';
@@ -55,7 +56,10 @@ export class Golduck extends PokemonCard {
 
       const lockerOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
       // Check + PowerEffect: Damp must itself be usable (e.g. Path to the Peak).
-      return CAN_APPLY_LOCKER_ABILITY(store, state, lockerOwner, this, this.powers[0]);
+      if (!CAN_APPLY_LOCKER_ABILITY(store, state, lockerOwner, this, this.powers[0])) {
+        return false;
+      }
+      return CAN_APPLY_LOCK_TO_TARGET(store, state, lockerOwner, this, this.powers[0], card);
     }, {
       onlyKnocksOutSelf: true,
       exemptPowerNames: ['Damp'],

@@ -49,7 +49,7 @@ export class Uxie extends PokemonCard {
 
   public hp: number = 70;
 
-  public weakness = [{ type: CardType.PSYCHIC, value: 20 }];
+  public weakness = [{ type: CardType.PSYCHIC, value: +20 }];
 
   public retreat = [CardType.COLORLESS];
 

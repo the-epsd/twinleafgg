@@ -1,20 +1,14 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, BoardEffect } from '../../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import {
   PowerType,
   StoreLike,
   State,
   StateUtils,
-  GameMessage,
-  PlayerType,
-  SlotType,
-  ChoosePokemonPrompt,
-  ConfirmPrompt,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-
-import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, JUST_EVOLVED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 // GRI Lycanroc-GX 74 (https://limitlesstcg.com/cards/GRI/74)
 export class LycanrocGX extends PokemonCard {
@@ -70,45 +64,25 @@ export class LycanrocGX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Bloodthirsty Eyes
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+    if (JUST_EVOLVED(effect, this) && !IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const hasBench = opponent.bench.some((b) => b.cards.length > 0);
-
-      if (!hasBench) {
+      if (!opponent.bench.some(b => b.cards.length > 0)) {
         return state;
       }
 
-      state = store.prompt(
-        state,
-        new ConfirmPrompt(effect.player.id, GameMessage.WANT_TO_USE_ABILITY),
-        (wantToUse) => {
-          if (wantToUse) {
-            return store.prompt(
-              state,
-              new ChoosePokemonPrompt(
-                player.id,
-                GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-                PlayerType.TOP_PLAYER,
-                [SlotType.BENCH],
-                { allowCancel: false },
-              ),
-              (result) => {
-                const cardList = result[0];
-
-                player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-                  if (cardList.getPokemonCard() === this) {
-                    cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-                  }
-                });
-
-                opponent.switchPokemon(cardList);
-              },
-            );
-          }
-        },
-      );
+      CONFIRMATION_PROMPT(store, state, player, (result) => {
+        if (result) {
+          GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY(
+            store,
+            state,
+            player,
+            this.powers[0],
+            this,
+          );
+        }
+      });
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

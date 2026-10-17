@@ -1,10 +1,8 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, PowerType, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../../game';
-import { Effect } from '../../../game/store/effects/effect';
-import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
-import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from "../../../game";
+import { Effect } from "../../../game/store/effects/effect";
+import { PlaceDamageCountersEffect } from "../../../game/store/effects/game-effects";
+import { BLOCK_RETREAT } from "../../../game/store/prefabs/effect-of-attack-prefabs";
+import { WAS_POWER_USED, KNOCK_OUT_THIS_POKEMON, WAS_ATTACK_USED } from "../../../game/store/prefabs/prefabs";
 
 export class Dusknoir extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -52,15 +50,18 @@ export class Dusknoir extends PokemonCard {
         const targets = selected || [];
 
         if (targets.length > 0) {
-          const placeCountersEffect = new PlaceDamageCountersEffect(player, targets[0], 130, this);
+          const placeCountersEffect = new PlaceDamageCountersEffect(
+            player,
+            targets[0],
+            130,
+            this,
+            this.powers[0],
+          );
           state = store.reduceEffect(state, placeCountersEffect);
         }
 
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            cardList.damage += 999;
-          }
-        });
+        // Self-KO still happens even if counters were prevented (e.g. Stealthy Hood)
+        state = KNOCK_OUT_THIS_POKEMON(store, state, player, this);
       });
     }
     // Shadow Bind

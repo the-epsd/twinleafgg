@@ -2,13 +2,14 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
 import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { CardType, Stage } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { PlayerType, PowerType, State, StoreLike } from '../../../game';
+import { PowerType, State, StoreLike } from '../../../game';
 export class Gengar extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Haunter';
@@ -43,28 +44,31 @@ export class Gengar extends PokemonCard {
     // Ability: Gnawing Curse (passive - trigger on opponent's energy attachment)
     // Ref: set-temporal-forces/gengar-ex.ts (Gnawing Curse - same ability)
     if (effect instanceof AttachEnergyEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      const attachingPlayer = effect.player;
+      const abilityOwner = StateUtils.getOpponent(state, attachingPlayer);
 
-      // Check if this Gengar is in play on the opponent's side
-      let isGengarInPlay = false;
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isGengarInPlay = true;
-        }
-      });
-
-      if (!isGengarInPlay) {
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
         return state;
       }
 
-      // Check if ability is blocked
-      if (IS_ABILITY_BLOCKED(store, state, opponent, this)) {
+      if (!attachingPlayer.hand.cards.includes(effect.energyCard)) {
         return state;
       }
 
-      // Put 2 damage counters (20 damage) on the Pokemon that received the energy
-      effect.target.damage += 20;
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      store.reduceEffect(
+        state,
+        new PlaceDamageCountersEffect(
+          abilityOwner,
+          effect.target,
+          20,
+          this,
+          this.powers[0],
+        ),
+      );
     }
 
     // Attack 1: Fade to Black

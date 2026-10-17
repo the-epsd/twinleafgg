@@ -11,7 +11,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import {WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, COIN_FLIP_PROMPT, KNOCK_OUT_THIS_POKEMON, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Electrode extends PokemonCard implements EnergyCard {
   public name = 'Electrode';
@@ -79,7 +79,7 @@ export class Electrode extends PokemonCard implements EnergyCard {
         return state;
       }
 
-      cardList.damage = 999;
+      state = KNOCK_OUT_THIS_POKEMON(store, state, player, this);
       state = checkState(store, state);
 
       if (store.hasPrompts()) {

@@ -31,6 +31,7 @@ function* playCard(
     .filter((value, index, self) => self.indexOf(value) === index).length;
 
   let cards: Card[] = [];
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: effect.trainerCard });
   yield store.prompt(
     state,
     new ChooseCardsPrompt(
@@ -50,8 +51,6 @@ function* playCard(
       }
 
       SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-
-      MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: effect.trainerCard });
     },
   );
 

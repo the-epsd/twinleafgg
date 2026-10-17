@@ -1,7 +1,8 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, PlayerType } from "../../../game";
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, PlayerType, StateUtils } from "../../../game";
 import { ApplyWeaknessEffect } from "../../../game/store/effects/attack-effects";
 import { CheckPokemonTypeEffect, CheckPokemonStatsEffect } from "../../../game/store/effects/check-effects";
 import { Effect } from "../../../game/store/effects/effect";
+import { CAN_APPLY_ABILITY_TO_TARGET } from "../../../game/store/prefabs/effect-of-ability-prefabs";
 import { IS_ABILITY_BLOCKED } from "../../../game/store/prefabs/prefabs";
 
 export class Illumise extends PokemonCard {
@@ -36,6 +37,7 @@ export class Illumise extends PokemonCard {
     if (effect instanceof ApplyWeaknessEffect) {
       // Only one Illumise applies (no stacking); first qualifying in play order wins
       let applicator: PokemonCard | undefined;
+      let applicatorOwner: ReturnType<typeof StateUtils.findOwner> | undefined;
 
       for (const player of state.players) {
         let hasVolbeat = false;
@@ -60,6 +62,7 @@ export class Illumise extends PokemonCard {
         for (const illumise of illumises) {
           if (!IS_ABILITY_BLOCKED(store, state, player, illumise)) {
             applicator = illumise;
+            applicatorOwner = player;
             break;
           }
         }
@@ -69,7 +72,18 @@ export class Illumise extends PokemonCard {
         }
       }
 
-      if (applicator !== this) {
+      if (applicator !== this || !applicatorOwner) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        applicatorOwner,
+        this.powers[0],
+        this,
+        effect.target,
+      )) {
         return state;
       }
 
@@ -83,7 +97,7 @@ export class Illumise extends PokemonCard {
       );
 
       if (hasWeakness) {
-        // ×2 from engine × 1.5 here = ×3 
+        // ×2 from engine × 1.5 here = ×3
         effect.damage = effect.damage * 1.5;
       }
     }

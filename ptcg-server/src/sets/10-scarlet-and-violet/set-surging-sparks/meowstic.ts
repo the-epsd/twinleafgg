@@ -1,12 +1,12 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { Stage, CardType, SuperType } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, GameError, ChooseCardsPrompt } from '../../../game';
+import { PowerType, StoreLike, State, GameMessage, GameError, ChooseCardsPrompt } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { StateUtils } from '../../../game/store/state-utils';
-
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import {WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Meowstic extends PokemonCard {
 
@@ -96,16 +96,14 @@ export class Meowstic extends PokemonCard {
         { allowCancel: false, min: 1, max: 1 }
       ), cards => {
         MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
-        return store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-          PlayerType.TOP_PLAYER,
-          [SlotType.BENCH],
-          { allowCancel: false }
-        ), result => {
-          const cardList = result[0];
-          opponent.switchPokemon(cardList);
-        });
+        player.marker.addMarker(this.BECKONING_TAIL_MARKER, this);
+        GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY(
+          store,
+          state,
+          player,
+          this.powers[0],
+          this,
+        );
       });
     }
 

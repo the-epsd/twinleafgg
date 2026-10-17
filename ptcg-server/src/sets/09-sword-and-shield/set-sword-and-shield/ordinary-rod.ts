@@ -1,17 +1,24 @@
-import { Card } from '../../../game/store/card/card';
-import { GameMessage } from '../../../game/game-message';
-import { Effect } from '../../../game/store/effects/effect';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
-import { StateUtils } from '../../../game/store/state-utils';
+import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
-import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import { GameError, PokemonCard } from '../../../game';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import {
+  Card,
+  GameMessage,
+  TrainerCard,
+  StoreLike,
+  State,
+  StateUtils,
+  ChooseCardsPrompt,
+  GameError,
+  Player,
+  PokemonCard,
+} from '../../../game';
+import {
+  MOVE_CARDS,
+  SHOW_CARDS_TO_PLAYER,
+  SHUFFLE_DECK,
+} from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -75,35 +82,39 @@ function* playCard(
 
   MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: self });
 
-  if (cards.length > 0) {
-    yield store.prompt(
-      state,
-      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
-      () => next(),
-    );
-  }
+  SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-    player.deck.applyOrder(order);
-  });
+  return SHUFFLE_DECK(store, state, player);
 }
 
 export class OrdinaryRod extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
+  public regulationMark = 'D';
   public set: string = 'SSH';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '171';
-  public regulationMark = 'D';
   public name: string = 'Ordinary Rod';
   public fullName: string = 'Ordinary Rod SSH';
-
   public text: string = `Choose 1 or both:
 
   • Shuffle up to 2 Pokémon from your discard pile into your deck.
   • Shuffle up to 2 basic Energy cards from your discard pile into your deck.`;
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const pokemonAndEnergyInDiscardPile = player.discard.cards.filter(
+      (c) =>
+        c instanceof PokemonCard ||
+        (c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC),
+    ).length;
+
+    if (pokemonAndEnergyInDiscardPile === 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }

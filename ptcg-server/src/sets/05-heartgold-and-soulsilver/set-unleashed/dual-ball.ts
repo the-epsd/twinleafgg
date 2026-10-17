@@ -1,20 +1,9 @@
-import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { TrainerType, SuperType, Stage } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
+import { Card, GameError, GameMessage, Player, Stage, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  ChooseCardsPrompt,
-  Card,
-  StateUtils,
-  ShowCardsPrompt,
-  ShuffleDeckPrompt,
-  GameError,
-} from '../../../game';
-import { GameMessage } from '../../../game/game-message';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-
-import {MULTIPLE_COIN_FLIPS_PROMPT, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
+import { MULTIPLE_COIN_FLIPS_PROMPT, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -29,7 +18,7 @@ function* playCard(
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  let heads: number = 0;
+  let heads = 0;
   yield MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, (results) => {
     results.forEach((r) => {
       heads += r ? 1 : 0;
@@ -57,37 +46,40 @@ function* playCard(
     },
   );
 
-  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: effect.trainerCard });
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: effect.trainerCard });
 
   if (cards.length > 0) {
-    yield store.prompt(
-      state,
-      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
-      () => next(),
-    );
+    SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
   }
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-    player.deck.applyOrder(order);
-  });
+  return SHUFFLE_DECK(store, state, player);
 }
 
 export class DualBall extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'UL';
-  public name: string = 'Dual Ball';
-  public fullName: string = 'Dual Ball UL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '72';
-
+  public name: string = 'Dual Ball';
+  public fullName: string = 'Dual Ball UL';
   public text: string =
     'Flip 2 coins. For each heads, search your deck for a Basic Pokemon ' +
     'card, show it to your opponent, and put it into your hand. Shuffle your ' +
     'deck afterward.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
+      if (effect.player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

@@ -7,6 +7,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT } from '../../../game/store/prefabs/prefabs';
 
 export class Sharpedo extends PokemonCard {
@@ -44,13 +45,20 @@ export class Sharpedo extends PokemonCard {
     // Ability: Rough Skin (passive - damage attacker when damaged)
     // Ref: set-x-and-y/chesnaught.ts (Spiky Shield)
     if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      if (IS_ABILITY_BLOCKED(store, state, targetPlayer, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      effect.source.damage += 30;
+      const placeCounters = new PlaceDamageCountersEffect(
+        abilityOwner,
+        effect.source,
+        30,
+        this,
+        this.powers[0],
+      );
+      store.reduceEffect(state, placeCounters);
     }
 
     // Attack 1: Aqua Impact

@@ -71,7 +71,7 @@ export class IronThornsex extends PokemonCard {
 
     HANDLE_ABILITY_LOCK(
       effect,
-      ({ player, card, powerEffect }) => {
+      ({ player, card }) => {
         if (!IS_ABILITY_LOCKER_ACTIVE(state, player, this)) {
           return false;
         }
@@ -96,10 +96,9 @@ export class IronThornsex extends PokemonCard {
         if (!LOCKER_ABILITY_APPLIES(store, state, lockerOwner, this, this.powers[0], card)) {
           return false;
         }
-        if (powerEffect) {
-          return CAN_APPLY_LOCK_TO_TARGET(store, state, lockerOwner, this, this.powers[0], card);
-        }
-        return true;
+        // Probe EffectOfAbilityEffect so Stealthy Hood / similar can keep Abilities
+        // visible and usable on the protected Pokémon (CheckPokemonPowersEffect too).
+        return CAN_APPLY_LOCK_TO_TARGET(store, state, lockerOwner, this, this.powers[0], card);
       },
       {
         allowUseFromHand: true,

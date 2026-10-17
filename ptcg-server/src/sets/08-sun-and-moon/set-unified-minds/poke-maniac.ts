@@ -1,51 +1,51 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, ChooseCardsPrompt } from '../../../game';
+import { StoreLike, State, Player, GameError, GameMessage } from '../../../game';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class PokeManiac extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'UNM';
-  public setNumber: string = '204';
   public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '204';
   public name: string = 'Pok\u00e9 Maniac';
   public fullName: string = 'Pok\u00e9 Maniac UNM';
   public text: string =
     'Search your deck for up to 3 Pok\u00e9mon that have a Retreat Cost of exactly 4, reveal them, and put them into your hand. Then, shuffle your deck. You may play only 1 Supporter card during your turn (before your attack).';
 
-  // Ref: set-cosmic-eclipse/steelix.ts (Thumping Fall - retreat cost 4 filter)
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
+      if (player.supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      // Only Pokémon with a Retreat Cost of exactly 4 can be chosen
       const blocked: number[] = [];
       player.deck.cards.forEach((card, index) => {
-        if (card instanceof PokemonCard && card.retreat.length === 4) {
-          return;
+        if (!(card instanceof PokemonCard && card.retreat.length === 4)) {
+          blocked.push(index);
         }
-        blocked.push(index);
       });
 
-      state = store.prompt(
+      SEARCH_DECK_FOR_CARDS_TO_HAND(
+        store,
         state,
-        new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          player.deck,
-          { superType: SuperType.POKEMON },
-          { min: 0, max: 3, allowCancel: true, blocked },
-        ),
-        (cards) => {
-          cards = cards || [];
-          cards.forEach((card) => {
-            MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this });
-          });
-
-          return SHUFFLE_DECK(store, state, player);
-        },
+        player,
+        this,
+        { superType: SuperType.POKEMON },
+        { min: 0, max: 3, allowCancel: true, blocked },
       );
     }
 

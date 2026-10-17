@@ -35,6 +35,8 @@ function* useAstonish(next: Function, store: StoreLike, state: State,
     next();
   });
 
+  MOVE_CARDS(store, state, opponent.hand, opponent.deck, { cards, sourceCard, sourceEffect: sourceCard.attacks[0] });
+
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
       player.id,
@@ -42,8 +44,6 @@ function* useAstonish(next: Function, store: StoreLike, state: State,
       cards
     ), () => next());
   }
-
-  MOVE_CARDS(store, state, opponent.hand, opponent.deck, { cards, sourceCard, sourceEffect: sourceCard.attacks[0] });
 
   return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
     opponent.deck.applyOrder(order);

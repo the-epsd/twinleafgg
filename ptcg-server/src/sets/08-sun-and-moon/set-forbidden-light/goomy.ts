@@ -3,8 +3,8 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
-import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
 
 export class Goomy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -36,14 +36,37 @@ export class Goomy extends PokemonCard {
 
     // Sticky Membrane
     if (effect instanceof CheckAttackCostEffect) {
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      if (opponent.active.getPokemonCard() === this && !IS_ABILITY_BLOCKED(store, state, opponent, this)) {
-        const canApplyAbility = new EffectOfAbilityEffect(opponent, this.powers[0], this, effect.player.active);
-        store.reduceEffect(state, canApplyAbility);
-        if (!canApplyAbility.target) {
-          return state;
-        }
+      const attackingPlayer = effect.player;
+      const cardList = StateUtils.findCardList(state, this);
+      const abilityOwner = StateUtils.findOwner(state, cardList);
 
+      if (abilityOwner.active.getPokemonCard() !== this) {
+        return state;
+      }
+
+      if (attackingPlayer === abilityOwner) {
+        return state;
+      }
+
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        attackingPlayer.active,
+      )) {
+        return state;
+      }
+
+      const index = effect.cost.indexOf(CardType.COLORLESS);
+      if (index > -1) {
+        effect.cost.splice(index, 0, CardType.COLORLESS);
+      } else {
         effect.cost.push(CardType.COLORLESS);
       }
     }

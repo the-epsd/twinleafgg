@@ -105,6 +105,7 @@ export class Plusle extends PokemonCard {
           if (cards.length > 0) {
             MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
             if (cards.length > 0) {
+              MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
               state = store.prompt(
                 state,
                 new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
@@ -115,7 +116,7 @@ export class Plusle extends PokemonCard {
 
           if (cards.length > 0) {
             // Recover discarded Energy
-            MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
+            
           }
         },
       );

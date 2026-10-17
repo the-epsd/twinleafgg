@@ -1,10 +1,12 @@
 import { Effect } from '../../../game/store/effects/effect';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { PowerType, StoreLike, State, StateUtils, GameError } from '../../../game';
-import { Stage, CardType } from '../../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
+import { AddSpecialConditionsPowerEffect } from '../../../game/store/effects/check-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { GameMessage } from '../../../game/game-message';
-import { ABILITY_USED, ADD_MARKER, ADD_POISON_TO_PLAYER_ACTIVE, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Garbodor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -53,7 +55,17 @@ export class Garbodor extends PokemonCard {
       }
 
       if (opponent.active) {
-        ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
+        if (CAN_APPLY_ABILITY_TO_TARGET(store, state, player, this.powers[0], this, opponent.active)) {
+          store.reduceEffect(
+            state,
+            new AddSpecialConditionsPowerEffect(
+              player,
+              this,
+              opponent.active,
+              [SpecialCondition.POISONED],
+            ),
+          );
+        }
       }
 
       ADD_MARKER(this.POISON_STRUCTURE_MARKER, player, this);

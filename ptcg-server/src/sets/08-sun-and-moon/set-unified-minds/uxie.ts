@@ -3,6 +3,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, PlayerType } from '../../../game';
 import { CheckPokemonStatsEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Uxie extends PokemonCard {
@@ -70,6 +71,17 @@ export class Uxie extends PokemonCard {
       });
 
       if (!hasMesprit || !hasAzelf) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        uxieOwner,
+        this.powers[0],
+        this,
+        effect.target,
+      )) {
         return state;
       }
 

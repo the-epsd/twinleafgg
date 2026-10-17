@@ -1,38 +1,50 @@
-import { CardList, GameError, GameMessage, OrderCardsPrompt } from '../../../game';
+import {
+  CardList,
+  GameError,
+  GameMessage,
+  OrderCardsPrompt,
+  Player,
+  State,
+  StoreLike,
+  TrainerCard,
+} from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Pokedex extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
-  public set: string = 'BLW'; // Replace with the appropriate set abbreviation
-
+  public set: string = 'BLW';
+  public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '98';
   public name: string = 'Pokédex';
-
-  public fullName: string = 'Pokedex BLW'; // Replace with the appropriate set abbreviation
-
-  public cardImage: string = 'assets/cardback.png'; // Replace with the appropriate card image path
-
-  public setNumber: string = '98'; // Replace with the appropriate set number
-
+  public fullName: string = 'Pokedex BLW';
   public text: string =
     'Look at the top 5 cards of your deck and put them back on top of your deck in any order.';
 
+  public canPlay(_store: StoreLike, _state: State, player: Player): boolean {
+    return player.deck.cards.length > 0;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
+      MOVE_CARDS(store, state, player.hand, player.supporter, {
+        cards: [effect.trainerCard],
+        sourceCard: this,
+      });
+
       const deckTop = new CardList();
-      MOVE_CARDS(store, state, player.deck, deckTop, { count: 5, sourceCard: this });
+      const count = Math.min(5, player.deck.cards.length);
+      MOVE_CARDS(store, state, player.deck, deckTop, { count, sourceCard: this });
+
+      SHOW_CARDS_TO_PLAYER(store, state, player, deckTop.cards);
 
       return store.prompt(
         state,
@@ -49,6 +61,7 @@ export class Pokedex extends TrainerCard {
         },
       );
     }
+
     return state;
   }
 }

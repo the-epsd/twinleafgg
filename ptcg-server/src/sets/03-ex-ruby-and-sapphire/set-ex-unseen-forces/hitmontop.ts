@@ -1,11 +1,11 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
-import { GamePhase, State } from '../../../game/store/state/state';
+import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { IS_POKEBODY_BLOCKED, ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { PowerType, StateUtils } from '../../../game';
-import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 
 export class Hitmontop extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -42,18 +42,22 @@ export class Hitmontop extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AfterDamageEffect && effect.target.getPokemonCard() === this && state.phase === GamePhase.ATTACK) {
-      const player = StateUtils.findOwner(state, effect.target);
-      const opponent = effect.player;
-      if (player === opponent || player.active !== effect.target)
-        return state;
+    if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      if (IS_POKEBODY_BLOCKED(store, state, player, this)) {
+      if (IS_POKEBODY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
       if (effect.target.getPokemons().length > 1) {
-        effect.source.damage += 20;
+        const placeCounters = new PlaceDamageCountersEffect(
+          abilityOwner,
+          effect.source,
+          20,
+          this,
+          this.powers[0],
+        );
+        store.reduceEffect(state, placeCounters);
       }
     }
 

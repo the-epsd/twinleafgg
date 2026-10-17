@@ -58,6 +58,8 @@ export class Oricorio extends PokemonCard {
           ), selected => {
             cards = selected || [];
 
+            MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
+
             if (cards.length > 0) {
               store.prompt(state, new ShowCardsPrompt(
                 opponent.id,
@@ -65,8 +67,6 @@ export class Oricorio extends PokemonCard {
                 cards
               ), () => state);
             }
-
-            MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
 
             return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
               player.deck.applyOrder(order);

@@ -13,8 +13,11 @@ function uid(prefix: string): string {
   return `${prefix}-${Math.random().toString(36).slice(2, 9)}`;
 }
 
+/** "Hop's Phantump" → "HopsPhantump" (possessive 's stays with the name). */
 function toPascalCase(str: string): string {
   return str
+    .replace(/[''\u2019]s\b/gi, 's')
+    .replace(/[''\u2019]/g, '')
     .replace(/[^a-zA-Z0-9 ]/g, ' ')
     .split(/\s+/)
     .filter(Boolean)
@@ -100,10 +103,10 @@ function mapCost(cost: string[] | undefined): string {
 
 function mapWeaknessValue(value: string | undefined): WeaknessValue {
   if (!value) return 'x2';
-  const v = value.trim().toLowerCase();
-  if (v === 'x2' || v === '×2' || v === '*2') return 'x2';
-  if (v.includes('20') || v === '+20') return '+20';
-  if (v.includes('30') || v === '+30') return '+30';
+  const v = value.trim().toLowerCase().replace(/×/g, 'x');
+  if (v === 'x2' || v === '*2' || v === '2x') return 'x2';
+  const plus = v.match(/^\+?\s*(\d+)\s*$/);
+  if (plus) return `+${Number(plus[1])}` as WeaknessValue;
   return 'x2';
 }
 
@@ -254,7 +257,11 @@ export function mapTcgDexCardToDraft(card: TcgDexCard): CardDraft {
   base.evolvesFrom = card.evolveFrom || '';
   base.tags = mapTags(card);
   base.hp = String(card.hp ?? 0);
-  base.cardType = mapEnergyType(card.types?.[0]) || 'C';
+  base.cardType =
+    (card.types || [])
+      .map(t => mapEnergyType(t))
+      .filter((t): t is EnergyShort => Boolean(t))
+      .join('') || 'C';
 
   const weak = card.weaknesses?.[0];
   if (weak) {

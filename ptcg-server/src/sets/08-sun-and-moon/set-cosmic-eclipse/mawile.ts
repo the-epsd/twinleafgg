@@ -74,14 +74,15 @@ export class Mawile extends PokemonCard {
         (selected) => {
           const cards: Card[] = selected || [];
           if (cards.length > 0) {
+            cards.forEach((c) => {
+              MOVE_CARDS(store, state, player.deck, player.hand, { cards: [c], sourceCard: this });
+            });
             store.prompt(
               state,
               new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
               () => {},
             );
-            cards.forEach((c) => {
-              MOVE_CARDS(store, state, player.deck, player.hand, { cards: [c], sourceCard: this });
-            });
+            
           }
           return SHUFFLE_DECK(store, state, player);
         },

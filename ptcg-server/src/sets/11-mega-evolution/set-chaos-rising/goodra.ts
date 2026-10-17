@@ -2,12 +2,14 @@ import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { Effect } from '../../../game/store/effects/effect';
 import { RetreatEffect } from '../../../game/store/effects/game-effects';
-import { PokemonCard, PlayerType, StateUtils, StoreLike, State } from '../../../game';
+import { PokemonCard, StateUtils, StoreLike, State } from '../../../game';
 import { GameError, GameMessage } from '../../../game';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import {
   ADD_MARKER,
   COIN_FLIP_PROMPT,
   DISCARD_TOP_X_CARDS_FROM_YOUR_DECK,
+  IS_ABILITY_BLOCKED,
   REMOVE_MARKER,
   WAS_ATTACK_USED,
 } from '../../../game/store/prefabs/prefabs';
@@ -45,32 +47,51 @@ export class Goodra extends PokemonCard {
   public fullName: string = 'Goodra M4';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Slimy Sliding
     if (effect instanceof RetreatEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      if (player.marker.hasMarker(GOODRA_SLIMY_SLIP_ALLOWED)) {
-        REMOVE_MARKER(GOODRA_SLIMY_SLIP_ALLOWED, player);
+      const retreatingPlayer = effect.player;
+      const abilityOwner = StateUtils.getOpponent(state, retreatingPlayer);
+
+      if (retreatingPlayer.marker.hasMarker(GOODRA_SLIMY_SLIP_ALLOWED)) {
+        REMOVE_MARKER(GOODRA_SLIMY_SLIP_ALLOWED, retreatingPlayer);
         return state;
       }
-      let isGoodraInPlay = false;
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this) isGoodraInPlay = true;
-      });
-      if (isGoodraInPlay) {
-        effect.preventDefault = true;
-        return COIN_FLIP_PROMPT(store, state, player, (result) => {
-          if (!result) {
-            throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-          }
-          ADD_MARKER(GOODRA_SLIMY_SLIP_ALLOWED, player, this);
-          effect.preventDefault = false;
-          store.reduceEffect(state, effect);
-        });
+
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
+        return state;
       }
+
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        retreatingPlayer.active,
+      )) {
+        return state;
+      }
+
+      effect.preventDefault = true;
+      return COIN_FLIP_PROMPT(store, state, retreatingPlayer, (result) => {
+        if (!result) {
+          throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+        }
+        ADD_MARKER(GOODRA_SLIMY_SLIP_ALLOWED, retreatingPlayer, this);
+        effect.preventDefault = false;
+        store.reduceEffect(state, effect);
+      });
     }
+
+    // Dragon Pulse
     if (WAS_ATTACK_USED(effect, 0, this)) {
       DISCARD_TOP_X_CARDS_FROM_YOUR_DECK(store, state, effect.player, 1, this, effect);
     }
+
     return state;
   }
 }

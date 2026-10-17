@@ -5,6 +5,7 @@ import { Mewtwo } from './mewtwo';
 import { Pikachu } from './pikachu';
 import { PokemonTower } from './pokemon-tower';
 import { Snorlax } from './snorlax';
+import { SPikachu } from './s-pikachu';
 
 // Other prints
 import {
@@ -19,6 +20,7 @@ export const setWOTCPromos: Card[] = [
   new Pikachu(),
   new PokemonTower(),
   new Snorlax(),
+  new SPikachu(),
 
   // Other prints
   new MewtwoPR(),

@@ -1,21 +1,20 @@
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
+import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
 import { CardTag, CardType, TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
 import {
   ChoosePokemonPrompt,
   GameError,
   GameMessage,
+  Player,
   PlayerType,
   SlotType,
+  State,
   StateUtils,
+  StoreLike,
+  TrainerCard,
 } from '../../../game';
 import { MOVE_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
-
-//Avery is not done yet!! have to add the "remove from bench" logic
 
 export class CyrusPrismStar extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -25,37 +24,33 @@ export class CyrusPrismStar extends TrainerCard {
   public setNumber: string = '120';
   public name: string = 'Cyrus Prism Star';
   public fullName: string = 'Cyrus Prism Star UPR';
-
   public text: string =
     'You can play this card only if your Active Pokémon is a [W] or [M] Pokémon.\n\n' +
     'Your opponent chooses 2 Benched Pokémon and shuffles the others, and all cards attached to them, into their deck.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+
+    const checkPokemonTypeEffect = new CheckPokemonTypeEffect(player.active);
+    store.reduceEffect(state, checkPokemonTypeEffect);
+    return (
+      checkPokemonTypeEffect.cardTypes.includes(CardType.WATER) ||
+      checkPokemonTypeEffect.cardTypes.includes(CardType.METAL)
+    );
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
-      const supporterTurn = player.supporterTurn;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (supporterTurn > 0) {
+      if (player.supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
-      // We will discard this card after prompt confirmation
-      effect.preventDefault = true;
-
-      let hasActiveWaterMetal = false;
-
-      const checkPokemonTypeEffect = new CheckPokemonTypeEffect(player.active);
-      store.reduceEffect(state, checkPokemonTypeEffect);
-      if (
-        checkPokemonTypeEffect.cardTypes.includes(CardType.WATER) ||
-        checkPokemonTypeEffect.cardTypes.includes(CardType.METAL)
-      ) {
-        hasActiveWaterMetal = true;
-      }
-
-      if (!hasActiveWaterMetal) {
+      if (!this.canPlay(store, state, player)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
@@ -75,19 +70,23 @@ export class CyrusPrismStar extends TrainerCard {
               return;
             }
 
+            let shuffled = false;
             opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (card) => {
               if (card !== opponent.active && !targets.includes(card)) {
                 card.clearEffects();
                 MOVE_CARDS(store, state, card, opponent.deck);
-                SHUFFLE_DECK(store, state, opponent);
+                shuffled = true;
               }
             });
+
+            if (shuffled) {
+              SHUFFLE_DECK(store, state, opponent);
+            }
           },
         );
       }
-
-      return state;
     }
+
     return state;
   }
 }

@@ -1,10 +1,15 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType, SlotType, GameMessage, GamePhase } from '../../../game';
+import { StoreLike, State, StateUtils, PlayerType, SlotType, GameMessage } from '../../../game';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { Effect } from '../../../game/store/effects/effect';
-import { AfterDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+} from '../../../game/store/prefabs/prefabs';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 
 export class Lucario extends PokemonCard {
@@ -35,27 +40,22 @@ export class Lucario extends PokemonCard {
   public fullName: string = 'Lucario NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Reflexive Retaliation - damage attacker when hit
-    if (effect instanceof AfterDamageEffect && effect.target.cards.includes(this)) {
-      const player = effect.player;
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
+    // Reflexive Retaliation
+    if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      // Only works if this is the active Pokémon and was damaged by opponent
-      if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, targetPlayer, this)) {
-        return state;
-      }
-
-      // Only during attack phase
-      if (state.phase !== GamePhase.ATTACK) {
-        return state;
-      }
-
-      // Put 2 damage counters on attacker
-      effect.source.damage += 20;
+      const placeCounters = new PlaceDamageCountersEffect(
+        abilityOwner,
+        effect.source,
+        20,
+        this,
+        this.powers[0],
+      );
+      store.reduceEffect(state, placeCounters);
     }
 
     // Aura Sphere - damage a benched Pokémon

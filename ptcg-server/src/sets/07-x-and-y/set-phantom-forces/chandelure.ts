@@ -7,6 +7,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../../game/store/prefabs/attack-effects';
 
@@ -39,24 +40,39 @@ export class Chandelure extends PokemonCard {
   public fullName: string = 'Chandelure PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Fainting Spell (passive - triggers on KO)
-    // Ref: set-stormfront/gengar.ts (Fainting Spell)
-    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+    // Fainting Spell — Ref: set-30th-celebration/gengar-ex.ts
+    if (
+      effect instanceof KnockOutEffect &&
+      effect.target.cards.includes(this) &&
+      effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)
+    ) {
+      const abilityOwner = effect.player;
+      const attackerOwner = StateUtils.getOpponent(state, abilityOwner);
 
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      CONFIRMATION_PROMPT(store, state, player, wantToUse => {
-        if (wantToUse) {
-          COIN_FLIP_PROMPT(store, state, player, flipResult => {
-            if (flipResult) {
-              opponent.active.damage += 999;
-            }
-          });
+      CONFIRMATION_PROMPT(store, state, abilityOwner, wantToUse => {
+        if (!wantToUse) {
+          return;
         }
+        COIN_FLIP_PROMPT(store, state, abilityOwner, flipResult => {
+          if (!flipResult) {
+            return;
+          }
+          if (!CAN_APPLY_ABILITY_TO_TARGET(
+            store,
+            state,
+            abilityOwner,
+            this.powers[0],
+            this,
+            attackerOwner.active,
+          )) {
+            return;
+          }
+          attackerOwner.active.damage += 999;
+        });
       });
     }
 

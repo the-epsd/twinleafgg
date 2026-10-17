@@ -82,16 +82,16 @@ export class EnergyStadium extends TrainerCard {
                 return state;
               }
 
-              if (cards.length > 0) {
-                SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-              }
-
               cards.forEach((card, index) => {
                 MOVE_CARDS(store, state, player.discard, player.hand, {
                   cards: [card],
                   sourceCard: this,
                 });
               });
+
+              if (cards.length > 0) {
+                SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+              }
             },
           );
         }

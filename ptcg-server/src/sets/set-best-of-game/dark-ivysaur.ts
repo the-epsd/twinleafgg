@@ -1,55 +1,43 @@
-import { CardType, PokemonCard,
-  Stage,
-  StoreLike,
-  State,
-  StateUtils,
-  GameMessage,
-  DamageMap,
-  PlayerType,
-  PutDamagePrompt,
-  SlotType,
-  CardTag, } from '../../game';
-import { PowerType } from '../../game';
-import { RetreatEffect } from '../../game/store/effects/game-effects';
-import { Attack } from '../../game/store/card/pokemon-types';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
+import { Attack, PowerType } from '../../game/store/card/pokemon-types';
+import { DamageMap, GameMessage, PlayerType, PutDamagePrompt, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { RetreatEffect } from '../../game/store/effects/game-effects';
 import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY } from '../../game/store/prefabs/effect-of-ability-prefabs';
 
 export class DarkIvysaur extends PokemonCard {
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Bulbasaur';
   protected _tags = [CardTag.DARK];
-  public cardType: CardType[] = [G];
   public hp = 50;
+  public cardType: CardType[] = [G];
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public powers = [
-    {
-      name: 'Vine Pull',
-      powerType: PowerType.POKEBODY,
-      text: "Once during your turn when Dark Ivysaur retreats, choose 1 of your opponent's Benched Pokémon and switch it with his or her Active Pokémon.",
-    },
-  ];
+  public powers = [{
+    name: 'Vine Pull',
+    powerType: PowerType.POKEBODY,
+    text: "Once during your turn when Dark Ivysaur retreats, choose 1 of your opponent's Benched Pokémon and switch it with his or her Active Pokémon.",
+  }];
 
-  public attacks: Attack[] = [
-    {
-      name: 'Fury Strikes',
-      cost: [G, G],
-      damage: 0,
-      text: "Your opponent puts 3 markers onto his or her Pokémon (divided as he or she chooses). (More than 1 marker can be put on the same Pokémon.) Then, this attack does 10 damage to each Pokémon for each marker on it. Don't apply Weakness and Resistance. Remove the markers at the end of the turn.",
-    },
-  ];
+  public attacks: Attack[] = [{
+    name: 'Fury Strikes',
+    cost: [G, G],
+    damage: 0,
+    text: "Your opponent puts 3 markers onto his or her Pokémon (divided as he or she chooses). (More than 1 marker can be put on the same Pokémon.) Then, this attack does 10 damage to each Pokémon for each marker on it. Don't apply Weakness and Resistance. Remove the markers at the end of the turn.",
+  }];
 
   public set = 'BP';
-  public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '6';
   public name = 'Dark Ivysaur';
   public fullName = 'Dark Ivysaur BP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Vine Pull
     if (
       effect instanceof RetreatEffect &&
       effect.player.active.cards.includes(this) &&
@@ -63,25 +51,17 @@ export class DarkIvysaur extends PokemonCard {
         return state;
       }
 
-      return store.prompt(
+      return GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY(
+        store,
         state,
-        new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-          PlayerType.TOP_PLAYER,
-          [SlotType.BENCH],
-          { allowCancel: false },
-        ),
-        (result) => {
-          const cardList = result[0];
-
-          if (cardList) {
-            opponent.switchPokemon(cardList);
-          }
-        },
+        player,
+        this.powers[0],
+        this,
+        { allowCancel: false },
       );
     }
 
+    // Fury Strikes
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -117,6 +97,7 @@ export class DarkIvysaur extends PokemonCard {
         },
       );
     }
+
     return state;
   }
 }

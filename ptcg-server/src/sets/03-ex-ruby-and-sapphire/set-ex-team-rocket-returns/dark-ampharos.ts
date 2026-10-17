@@ -11,7 +11,7 @@ import {
   GameLog,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { EvolveEffect } from '../../../game/store/effects/game-effects';
+import { EvolveEffect, PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class DarkAmpharos extends PokemonCard {
@@ -77,11 +77,14 @@ export class DarkAmpharos extends PokemonCard {
       }
 
       store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, {
-        name: player.name,
+        name: opponent.name,
         ability: this.powers[0].name,
       });
 
-      effect.target.damage += 20; // 2 damage counters = 20 damage
+      store.reduceEffect(
+        state,
+        new PlaceDamageCountersEffect(opponent, effect.target, 20, this, this.powers[0]),
+      );
       effect.darkestImpulseSV = true;
     }
 

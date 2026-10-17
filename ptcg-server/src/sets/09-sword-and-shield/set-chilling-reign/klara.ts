@@ -1,13 +1,13 @@
-import { GameError, PokemonCard } from '../../../game';
+import { GameError, Player, PokemonCard } from '../../../game';
 import { GameMessage } from '../../../game/game-message';
 import { Card } from '../../../game/store/card/card';
 import { EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { DiscardToHandEffect, TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER } from '../../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
@@ -39,7 +39,10 @@ function* playCard(
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
-  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: self });
+  MOVE_CARDS(store, state, player.hand, player.supporter, {
+    cards: [effect.trainerCard],
+    sourceCard: self,
+  });
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
@@ -78,13 +81,10 @@ function* playCard(
   MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: self });
 
   if (cards.length > 0) {
-    yield store.prompt(
-      state,
-      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
-      () => next(),
-    );
+    SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
   }
 
+  CLEAN_UP_SUPPORTER(store, effect, player);
   return state;
 }
 
@@ -92,18 +92,34 @@ export class Klara extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark = 'E';
   public set: string = 'CRE';
-  public setNumber: string = '145';
   public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '145';
   public name: string = 'Klara';
   public fullName: string = 'Klara CRE';
-
   public text: string = `Choose 1 or both:
 
 • Put up to 2 Pokémon from your discard pile into your hand.
 • Put up to 2 basic Energy cards from your discard pile into your hand.`;
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+
+    const pokemonAndEnergyInDiscardPile = player.discard.cards.filter(
+      (c) =>
+        c instanceof PokemonCard ||
+        (c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC),
+    ).length;
+
+    if (pokemonAndEnergyInDiscardPile === 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
       // Check if DiscardToHandEffect is prevented
@@ -112,7 +128,6 @@ export class Klara extends TrainerCard {
 
       if (discardEffect.preventDefault) {
         // If prevented, just discard the card and return
-
         return state;
       }
 

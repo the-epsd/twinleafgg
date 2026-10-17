@@ -1,36 +1,29 @@
-import {
-  CardList,
-  GameError,
-  GameMessage,
-  OrderCardsPrompt,
-  SelectOptionPrompt,
-} from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
-import {
-  MOVE_CARDS,
-  SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND,
-} from '../../../game/store/prefabs/prefabs';
+import { State, StoreLike, TrainerCard, GameError, GameMessage, Player, CardList, OrderCardsPrompt, SelectOptionPrompt } from '../../../game';
+import { MOVE_CARDS, SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class PuzzleOfTime extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'BKP';
-  public name: string = 'Puzzle of Time';
-  public fullName: string = 'Puzzle of Time BKP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '109';
-
+  public name: string = 'Puzzle of Time';
+  public fullName: string = 'Puzzle of Time BKP';
   public text: string =
     'You may play 2 Puzzle of Time cards at once.\n\n' +
     '• If you played 1 card, look at the top 3 cards of your deck and put them back in any order.\n' +
     '• If you played 2 cards, put 2 cards from your discard pile into your hand.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    // This card is still in hand here, so 2 copies in hand means this one plus a second
+    const puzzlesInHand = player.hand.cards.filter((c) => c.name === 'Puzzle of Time').length;
+    return player.deck.cards.length > 0 || puzzlesInHand >= 2;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
       if (
@@ -82,11 +75,11 @@ export class PuzzleOfTime extends TrainerCard {
               throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
             }
 
-            if (player.hand.cards.filter((c) => c.name === 'Puzzle of Time').length === 0) {
+            const secondPuzzle = player.hand.cards.find((c) => c.name === 'Puzzle of Time');
+            if (secondPuzzle === undefined) {
               throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
             }
 
-            const secondPuzzle = player.hand.cards.find((c) => c.name === 'Puzzle of Time');
             const mincards = Math.min(player.discard.cards.length, 2);
 
             SEARCH_DISCARD_PILE_FOR_CARDS_TO_HAND(
@@ -99,16 +92,15 @@ export class PuzzleOfTime extends TrainerCard {
               effect,
             );
 
-            if (secondPuzzle) {
-              MOVE_CARDS(store, state, player.hand, player.discard, {
-                cards: [secondPuzzle],
-                sourceCard: this,
-              });
-            }
+            MOVE_CARDS(store, state, player.hand, player.discard, {
+              cards: [secondPuzzle],
+              sourceCard: this,
+            });
           }
         },
       );
     }
+
     return state;
   }
 }

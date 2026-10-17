@@ -1,9 +1,10 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, ChooseCardsPrompt, CardList } from '../../../game';
+import { StoreLike, State, GameMessage, ChooseCardsPrompt, CardList, Player } from '../../../game';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -12,10 +13,6 @@ function* playCard(
   effect: TrainerEffect,
 ): IterableIterator<State> {
   const player = effect.player;
-
-  // if (player.deck.cards.length === 0) {
-  //   throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  // }
 
   const max = player.hand.cards.length;
 
@@ -47,25 +44,29 @@ function* playCard(
 }
 
 export class Caitlin extends TrainerCard {
-  public regulationMark = 'E';
-
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
+  public regulationMark = 'E';
   public set: string = 'CRE';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '132';
-
   public name: string = 'Caitlin';
-
   public fullName: string = 'Caitlin CRE';
-
   public text: string =
     'Put as many cards from your hand as you like on the bottom of your deck in any order. Then, draw a card for each card you put on the bottom of your deck.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    // Need at least one other card in hand to put on the bottom of the deck
+    if (player.hand.cards.length <= 1) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

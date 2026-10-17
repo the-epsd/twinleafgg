@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { ConfirmPrompt, GameMessage, PowerType, StoreLike, State, StateUtils } from '../../../game';
-import { PutCountersEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import {
   WAS_ATTACK_USED,
   IS_ABILITY_BLOCKED,
@@ -40,19 +40,20 @@ export class Slaking extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Counterattack
     if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      if (IS_ABILITY_BLOCKED(store, state, targetPlayer, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      if (targetPlayer.active.getPokemonCard() !== this) {
-        return state;
-      }
-
-      const damageEffect = new PutCountersEffect(effect, 40);
-      damageEffect.target = effect.source;
-      store.reduceEffect(state, damageEffect);
+      const placeCounters = new PlaceDamageCountersEffect(
+        abilityOwner,
+        effect.source,
+        40,
+        this,
+        this.powers[0],
+      );
+      store.reduceEffect(state, placeCounters);
     }
 
     // Dynamic Swing — optional self vulnerability via negative damageReductionNextTurn

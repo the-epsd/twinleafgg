@@ -4,12 +4,13 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
-import { Card, ChoosePokemonPrompt, PlayerType, ShuffleDeckPrompt, SlotType } from '../../../game';
+import { Card, ChoosePokemonPrompt, Player, PlayerType, SlotType } from '../../../game';
 import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -61,9 +62,7 @@ function* playCard(
     );
   }
 
-  store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-    player.deck.applyOrder(order);
-  });
+  SHUFFLE_DECK(store, state, player);
 
   const endTurnEffect = new EndTurnEffect(player);
   return store.reduceEffect(state, endTurnEffect);
@@ -71,22 +70,26 @@ function* playCard(
 
 export class Kiawe extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'BUS';
-
-  public name: string = 'Kiawe';
-
-  public fullName: string = 'Kiawe BUS';
-
-  public setNumber: string = '116';
-
   public cardImage: string = 'assets/cardback.png';
-
+  public setNumber: string = '116';
+  public name: string = 'Kiawe';
+  public fullName: string = 'Kiawe BUS';
   public text: string =
     'Search your deck for up to 4 [R] Energy cards and attach them to 1 of your Pokémon. Then, shuffle your deck. Your turn ends.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, effect, this);
       return generator.next().value;
     }

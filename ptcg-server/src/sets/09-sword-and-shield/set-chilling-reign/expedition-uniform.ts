@@ -9,6 +9,8 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+import { Player } from '../../../game';
 
 function* playCard(
   next: Function,
@@ -48,24 +50,24 @@ function* playCard(
 
 export class ExpeditionUniform extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
-  public set: string = 'CRE';
-
-  public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '137';
-
   public regulationMark = 'E';
-
+  public set: string = 'CRE';
+  public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '137';
   public name: string = 'Expedition Uniform';
-
   public fullName: string = 'Expedition Uniform CRE';
-
   public text: string =
     'Look at the bottom 3 cards of your deck and put them on top of your deck in any order.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.deck.cards.length < 3) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

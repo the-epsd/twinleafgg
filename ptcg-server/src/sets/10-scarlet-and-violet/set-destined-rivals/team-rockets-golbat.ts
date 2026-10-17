@@ -13,6 +13,7 @@ import {
   SlotType,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import {
   ADD_CONFUSION_TO_PLAYER_ACTIVE,
@@ -56,7 +57,7 @@ export class TeamRocketsGolbat extends PokemonCard {
   public fullName: string = "Team Rocket's Golbat DRI";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Sneaky Bite
+    // Sneaky Bite — Ref: set-phantom-forces/golbat.ts
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = StateUtils.findOwner(state, effect.target);
 
@@ -64,28 +65,31 @@ export class TeamRocketsGolbat extends PokemonCard {
         return state;
       }
 
-      CONFIRMATION_PROMPT(store, state, player, (result) => {
+      return CONFIRMATION_PROMPT(store, state, player, (result) => {
         if (!result) {
-          return state;
+          return;
         }
-      });
 
-      return store.prompt(
-        state,
-        new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          { min: 1, max: 1, allowCancel: false },
-        ),
-        (selected) => {
-          const targets = selected || [];
-          targets.forEach((target) => {
-            target.damage += 20;
-          });
-        },
-      );
+        store.prompt(
+          state,
+          new ChoosePokemonPrompt(
+            player.id,
+            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+            PlayerType.TOP_PLAYER,
+            [SlotType.ACTIVE, SlotType.BENCH],
+            { min: 1, max: 1, allowCancel: false },
+          ),
+          (selected) => {
+            const targets = selected || [];
+            if (targets.length > 0) {
+              store.reduceEffect(
+                state,
+                new PlaceDamageCountersEffect(player, targets[0], 20, this, this.powers[0]),
+              );
+            }
+          },
+        );
+      });
     }
 
     // Confuse Ray

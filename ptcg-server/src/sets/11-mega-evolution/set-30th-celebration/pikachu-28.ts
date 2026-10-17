@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, PowerType } from "../../../game";
 import { DealDamageEffect } from "../../../game/store/effects/attack-effects";
 import { Effect } from "../../../game/store/effects/effect";
+import { CAN_APPLY_ABILITY_TO_TARGET } from "../../../game/store/prefabs/effect-of-ability-prefabs";
 import { IS_ABILITY_BLOCKED } from "../../../game/store/prefabs/prefabs";
 
 /** #28 — Lonely Gaze + Pika Ball */
@@ -29,22 +30,33 @@ export class Pikachu28 extends PokemonCard {
   public fullName: string = 'Pikachu 30C 28';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Lonely Gaze
+    // Lonely Gaze — Ref: set-chaos-rising/garbodor.ts (damage reduction on opponent Active)
     if (effect instanceof DealDamageEffect) {
-      const owner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
-      if (!StateUtils.isPokemonInPlay(owner, this)) {
+      const abilityOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
         return state;
       }
-      if (owner.active.getPokemonCard() !== this) {
+      if (abilityOwner.active.getPokemonCard() !== this) {
         return state;
       }
 
-      const opponent = StateUtils.getOpponent(state, owner);
+      const opponent = StateUtils.getOpponent(state, abilityOwner);
       if (effect.player !== opponent || effect.source !== opponent.active) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, owner, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        effect.source,
+      )) {
         return state;
       }
 

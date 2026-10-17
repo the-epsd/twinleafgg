@@ -1,15 +1,16 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../../game/store/card/card-types';
+import { GameError, GameMessage, State, StateUtils, StoreLike } from '../../../game';
+import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PowerType } from '../../../game/store/card/pokemon-types';
-import { StoreLike, State, GameError, GameMessage, StateUtils, PlayerType, ChoosePokemonPrompt, SlotType } from '../../../game';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { ABILITY_USED, ADD_MARKER, COIN_FLIP_PROMPT, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { ABILITY_USED, BLOCK_IF_HAS_SPECIAL_CONDITION, COIN_FLIP_PROMPT, IS_POKEPOWER_BLOCKED, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, USE_ABILITY_ONCE_PER_TURN, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Nosepass extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType[] = [F];
   public hp: number = 60;
+  public cardType: CardType[] = [F];
   public weakness = [{ type: W }];
   public retreat = [C];
 
@@ -17,47 +18,44 @@ export class Nosepass extends PokemonCard {
     name: 'Magnetic Reversal',
     useWhenInPlay: true,
     powerType: PowerType.POKEPOWER,
-    text: 'Once during your turn (before your attack), if Nosepass is your Active Pokémon, you may flip a coin. If heads, switch 1 of your opponent\'s Benched Pokémon with 1 of the Defending Pokémon. Your opponent chooses the Defending Pokémon to switch. This power can\'t be used if Nosepass is affected by a Special Condition.'
+    text: 'Once during your turn (before your attack), if Nosepass is your Active Pokémon, you may flip a coin. If heads, switch 1 of your opponent\'s Benched Pokémon with 1 of the Defending Pokémon. Your opponent chooses the Defending Pokémon to switch. This power can\'t be used if Nosepass is affected by a Special Condition.',
   }];
 
   public attacks = [{
     name: 'Sharpen',
     cost: [C],
     damage: 10,
-    text: ''
+    text: '',
   }];
 
   public set: string = 'DX';
-  public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '42';
   public name: string = 'Nosepass';
   public fullName: string = 'Nosepass DX';
 
   public readonly MAGNETIC_REVERSAL_MARKER = 'MAGNETIC_REVERSAL_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      REMOVE_MARKER(this.MAGNETIC_REVERSAL_MARKER, player, this);
+      REMOVE_MARKER(this.MAGNETIC_REVERSAL_MARKER, effect.player, this);
       return state;
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.MAGNETIC_REVERSAL_MARKER, this);
 
+    // Magnetic Reversal
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (HAS_MARKER(this.MAGNETIC_REVERSAL_MARKER, player, this)) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      if (IS_POKEPOWER_BLOCKED(store, state, player, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
 
-      if (player.active.cards[0] !== this) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
+      BLOCK_IF_HAS_SPECIAL_CONDITION(player, this);
 
-      if (player.active.specialConditions.length > 0) {
+      if (player.active.getPokemonCard() !== this) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
@@ -67,27 +65,23 @@ export class Nosepass extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
-        if (result) {
-          return store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-            PlayerType.TOP_PLAYER,
-            [SlotType.BENCH],
-            { allowCancel: false }
-          ), result => {
-            const cardList = result[0];
+      USE_ABILITY_ONCE_PER_TURN(player, this.MAGNETIC_REVERSAL_MARKER, this);
+      ABILITY_USED(player, this);
 
-            if (cardList) {
-              opponent.switchPokemon(cardList);
-            }
-          }
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
+        if (result) {
+          GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY(
+            store,
+            state,
+            player,
+            this.powers[0],
+            this,
+            { allowCancel: false },
           );
         }
       });
-      ADD_MARKER(this.MAGNETIC_REVERSAL_MARKER, player, this);
-      ABILITY_USED(player, this);
     }
+
     return state;
   }
 }

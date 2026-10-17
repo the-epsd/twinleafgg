@@ -49,13 +49,13 @@ export class Excadrill extends PokemonCard {
           { min: minCards, max: 4, allowCancel: false }
         ), selected => {
           const cards = selected || [];
+          MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: this });
           store.prompt(state, [new ShowCardsPrompt(
             opponent.id,
             GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
             cards
           )], () => {
-            MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: this });
-          });
+});
 
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);

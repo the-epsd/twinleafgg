@@ -1,17 +1,15 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import {
-  ChoosePokemonPrompt,
   GameError,
   GameMessage,
-  PlayerType,
   PowerType,
-  SlotType,
   State,
   StateUtils,
   StoreLike,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
+import { GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class LeafeonVSTAR extends PokemonCard {
@@ -61,20 +59,14 @@ export class LeafeonVSTAR extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      return store.prompt(
+      player.usedVSTAR = true;
+
+      return GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY(
+        store,
         state,
-        new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-          PlayerType.TOP_PLAYER,
-          [SlotType.BENCH],
-          { allowCancel: false },
-        ),
-        (result) => {
-          const cardList = result[0];
-          opponent.switchPokemon(cardList);
-          player.usedVSTAR = true;
-        },
+        player,
+        this.powers[0],
+        this,
       );
     }
 

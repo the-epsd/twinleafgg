@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { BoardEffect, CardType, Stage, SuperType } from '../../../game/store/card/card-types';
+import { BoardEffect, CardType, SpecialCondition, Stage, SuperType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
@@ -8,7 +8,8 @@ import { EnergyCard, GameError, GameMessage, ChooseCardsPrompt, PlayerType, Stat
 
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { ADD_BURN_TO_PLAYER_ACTIVE, MOVE_CARDS, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { APPLY_SPECIAL_CONDITIONS_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { MOVE_CARDS, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 // Energy type constants (R, C, W) are assumed to be globally available as in Larvesta
 
 export class Volcarona extends PokemonCard {
@@ -89,7 +90,15 @@ export class Volcarona extends PokemonCard {
         });
 
         MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this, sourceEffect: this.powers[0] });
-        ADD_BURN_TO_PLAYER_ACTIVE(store, state, opponent, this);
+        APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+          store,
+          state,
+          player,
+          this.powers[0],
+          this,
+          opponent.active,
+          [SpecialCondition.BURNED],
+        );
       });
       return state;
     }

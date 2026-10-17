@@ -10,11 +10,7 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import {
-  DRAW_CARDS,
-  MOVE_CARDS,
-  MULTIPLE_COIN_FLIPS_PROMPT,
-} from '../../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS, MULTIPLE_COIN_FLIPS_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(
   next: Function,

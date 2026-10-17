@@ -15,6 +15,7 @@ import {
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import {
+  CAN_APPLY_LOCK_TO_TARGET,
   HANDLE_ABILITY_LOCK,
   IS_ABILITY_LOCKER_ACTIVE,
   LOCKER_ABILITY_APPLIES,
@@ -87,7 +88,10 @@ export class GlaceonGX extends PokemonCard {
         }
 
         // Check + PowerEffect: Freezing Gaze must itself be usable (e.g. Path to the Peak).
-        return LOCKER_ABILITY_APPLIES(store, state, lockerOwner, this, this.powers[0], card);
+        if (!LOCKER_ABILITY_APPLIES(store, state, lockerOwner, this, this.powers[0], card)) {
+          return false;
+        }
+        return CAN_APPLY_LOCK_TO_TARGET(store, state, lockerOwner, this, this.powers[0], card);
       },
       {
         exemptPowerNames: ['Freezing Gaze'],

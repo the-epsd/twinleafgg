@@ -6,6 +6,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { Player, PlayerType, PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { CheckPokemonStatsEffect } from '../../../game/store/effects/check-effects';
 
@@ -73,9 +74,22 @@ export class Solrock extends PokemonCard {
         }
       });
 
-      if (hasLunatone) {
-        effect.resistance = [];
+      if (!hasLunatone) {
+        return state;
       }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        solrockOwner,
+        this.powers[0],
+        this,
+        effect.target,
+      )) {
+        return state;
+      }
+
+      effect.resistance = [];
     }
 
     return state;

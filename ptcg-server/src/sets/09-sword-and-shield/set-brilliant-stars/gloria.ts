@@ -5,33 +5,47 @@ import {
   GameMessage,
   PokemonCard,
   PokemonCardList,
-  ShuffleDeckPrompt,
   State,
   StoreLike,
+  Player,
 } from '../../../game';
 import { Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { PlayPokemonFromDeckEffect } from '../../../game/store/effects/play-card-effects';
+import { MOVE_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
-import {
-  PlayPokemonFromDeckEffect,
-  TrainerEffect,
-} from '../../../game/store/effects/play-card-effects';
 export class Gloria extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
+  public regulationMark = 'E';
   public set: string = 'BRS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '141';
-  public regulationMark = 'E';
   public name: string = 'Gloria';
   public fullName: string = 'Gloria BRS';
-
   public text: string =
     "Search your deck for up to 3 Basic Pokémon that don't have a Rule Box and put them onto your Bench. Then, shuffle your deck. (Pokémon V, Pokémon-GX, etc. have Rule Boxes.)";
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+
+    const openSlots = player.bench.filter((b) => b.cards.length === 0);
+    if (openSlots.length === 0) {
+      return false;
+    }
+
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
       if (player.supporterTurn > 0) {
@@ -59,7 +73,10 @@ export class Gloria extends TrainerCard {
           }
         });
 
-        MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
+        MOVE_CARDS(store, state, player.hand, player.supporter, {
+          cards: [effect.trainerCard],
+          sourceCard: this,
+        });
         // We will discard this card after prompt confirmation
         effect.preventDefault = true;
 
@@ -86,9 +103,9 @@ export class Gloria extends TrainerCard {
               );
             });
 
-            return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-              player.deck.applyOrder(order);
-            });
+            SHUFFLE_DECK(store, state, player);
+            CLEAN_UP_SUPPORTER(store, effect, player);
+            return state;
           },
         );
       }

@@ -9,6 +9,8 @@ import { GameMessage } from '../../../game/game-message';
 import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects';
 import {
+  CAN_APPLY_LOCKER_ABILITY,
+  CAN_APPLY_LOCK_TO_TARGET,
   HANDLE_ABILITY_BLOCK,
   IS_ABILITY_LOCKER_IN_PLAY,
   POKEPOWER_TYPES,
@@ -67,7 +69,14 @@ export class Sceptileex extends PokemonCard {
           return false;
         }
 
-        return card.hasTag(CardTag.POKEMON_ex);
+        if (!card.hasTag(CardTag.POKEMON_ex)) {
+          return false;
+        }
+
+        if (!CAN_APPLY_LOCKER_ABILITY(store, state, lockerOwner, this, this.powers[0])) {
+          return false;
+        }
+        return CAN_APPLY_LOCK_TO_TARGET(store, state, lockerOwner, this, this.powers[0], card);
       },
       {
         powerTypes: POKEPOWER_TYPES,
@@ -93,7 +102,16 @@ export class Sceptileex extends PokemonCard {
         return state;
       }
 
-      if (player.active.getPokemonCard()?.hasTag(CardTag.POKEMON_ex)) {
+      if (!CAN_APPLY_LOCKER_ABILITY(store, state, lockerOwner, this, this.powers[0])) {
+        return state;
+      }
+
+      const activeCard = player.active.getPokemonCard();
+      if (activeCard?.hasTag(CardTag.POKEMON_ex)) {
+        if (!CAN_APPLY_LOCK_TO_TARGET(store, state, lockerOwner, this, this.powers[0], activeCard)) {
+          return state;
+        }
+
         const index = effect.cost.indexOf(CardType.COLORLESS);
         if (index > -1) {
           effect.cost.splice(index, 0, CardType.COLORLESS);

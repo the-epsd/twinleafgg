@@ -2,6 +2,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
 import { StoreLike, State, PowerType, StateUtils, PlayerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { BetweenTurnsEffect } from '../../../game/store/effects/game-phase-effects';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
@@ -46,14 +47,17 @@ export class Flygonex extends PokemonCard {
         return state;
       }
 
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
         if (cardList === opponent.active) {
           return;
         }
 
         // ex era ruling is that this should mean unevolved
         if (cardList.getPokemons().length === 1 || card.hasTag(CardTag.LEGEND)) {
-          cardList.damage += 10;
+          store.reduceEffect(
+            state,
+            new PlaceDamageCountersEffect(player, cardList, 10, this, this.powers[0]),
+          );
         }
       });
     }

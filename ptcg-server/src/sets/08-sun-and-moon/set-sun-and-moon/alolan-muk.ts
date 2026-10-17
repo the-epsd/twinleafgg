@@ -69,7 +69,7 @@ export class AlolanMuk extends PokemonCard {
       });
     }
 
-    HANDLE_ABILITY_LOCK(effect, ({ player, card, powerEffect }) => {
+    HANDLE_ABILITY_LOCK(effect, ({ player, card }) => {
       if (!IS_ABILITY_LOCKER_IN_PLAY(state, player, this)) {
         return false;
       }
@@ -102,10 +102,7 @@ export class AlolanMuk extends PokemonCard {
       if (!CAN_APPLY_LOCKER_ABILITY(store, state, lockerOwner, this, this.powers[0])) {
         return false;
       }
-      if (powerEffect) {
-        return CAN_APPLY_LOCK_TO_TARGET(store, state, lockerOwner, this, this.powers[0], card);
-      }
-      return true;
+      return CAN_APPLY_LOCK_TO_TARGET(store, state, lockerOwner, this, this.powers[0], card);
     }, {
       exemptPowerNames: ['Power of Alchemy'],
       error: GameMessage.BLOCKED_BY_ABILITY,

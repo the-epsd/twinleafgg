@@ -11,6 +11,8 @@ import { CardList } from '../../../game/store/state/card-list';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+import { Player } from '../../../game';
 
 function* playCard(
   next: Function,
@@ -56,25 +58,25 @@ function* playCard(
 }
 
 export class RotomPhone extends TrainerCard {
-  public regulationMark = 'D';
-
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
+  public regulationMark = 'D';
   public set: string = 'CPA';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '64';
-
   public name: string = 'Rotom Phone';
-
   public fullName: string = 'Rotom Phone CPA';
-
   public text: string =
     'Look at the top 5 cards of your deck, choose 1 of them, and shuffle the other cards back into your deck. Then, put the card you chose on top of your deck.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }

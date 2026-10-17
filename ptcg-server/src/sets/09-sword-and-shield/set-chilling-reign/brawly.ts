@@ -1,10 +1,10 @@
-import { Card, PokemonCardList, ShuffleDeckPrompt } from '../../../game';
+import { Card, Player, PokemonCardList } from '../../../game';
 import { GameMessage } from '../../../game/game-message';
 import { CardTag, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { State } from '../../../game/store/state/state';
@@ -60,22 +60,27 @@ function* useKeepCalling(
 
   MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [self], sourceCard: self });
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-    player.deck.applyOrder(order);
-  });
+  return SHUFFLE_DECK(store, state, player);
 }
 
 export class Brawly extends TrainerCard {
-  public regulationMark = 'E';
-  protected _tags = [CardTag.RAPID_STRIKE];
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
+  public regulationMark = 'E';
   public set: string = 'CRE';
-  public setNumber: string = '131';
   public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '131';
   public name: string = 'Brawly';
   public fullName: string = 'Brawly CRE';
   public text: string =
     'Search your deck for up to 3 Basic Rapid Strike Pokémon and put them onto your Bench. Then, shuffle your deck.';
+  protected _tags = [CardTag.RAPID_STRIKE];
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_TRAINER_USED(effect, this)) {

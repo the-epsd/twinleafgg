@@ -1,12 +1,9 @@
-import { Effect } from '../../../game/store/effects/effect';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { GameError, GameMessage, CardList, ChooseCardsPrompt } from '../../../game';
+import { Effect } from '../../../game/store/effects/effect';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
+import { CardList, ChooseCardsPrompt, GameError, GameMessage, Player, State, StoreLike, TrainerCard } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class SagesTraining extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -15,39 +12,45 @@ export class SagesTraining extends TrainerCard {
   public setNumber: string = '85';
   public name: string = "Sage's Training";
   public fullName: string = "Sage's Training CL";
-
   public text: string =
     'Look at the top 5 cards of your deck. Choose any 2 cards you find there and put them into your hand. Discard the other cards.';
+
+  public canPlay(_store: StoreLike, _state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof EndTurnEffect && effect.player.ancientSupporter) {
       effect.player.ancientSupporter = false;
     }
 
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
-      const supporterTurn = player.supporterTurn;
-
-      if (supporterTurn > 0) {
+      if (player.supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
       MOVE_CARDS(store, state, player.hand, player.supporter, {
         cards: [effect.trainerCard],
         sourceCard: this,
       });
-      // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-
-      if (player.deck.cards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      }
 
       const deckTop = new CardList();
       MOVE_CARDS(store, state, player.deck, deckTop, { count: 5, sourceCard: this });
 
-      const min = player.deck.cards.length > 1 ? Math.min(2, deckTop.cards.length) : 1;
+      const min = Math.min(2, deckTop.cards.length);
 
       return store.prompt(
         state,
@@ -65,6 +68,7 @@ export class SagesTraining extends TrainerCard {
         },
       );
     }
+
     return state;
   }
 }

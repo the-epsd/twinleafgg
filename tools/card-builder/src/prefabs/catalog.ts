@@ -2,6 +2,7 @@ import type { PrefabDefinition } from '../types';
 
 const PREFABS = '../../game/store/prefabs/prefabs';
 const ATTACK_EFFECTS = '../../game/store/prefabs/attack-effects';
+const EFFECT_OF_ATTACK = '../../game/store/prefabs/effect-of-attack-prefabs';
 const COSTS = '../../game/store/prefabs/costs';
 
 function num(params: Record<string, string>, key: string, fallback = '0'): string {
@@ -10,8 +11,43 @@ function num(params: Record<string, string>, key: string, fallback = '0'): strin
   return String(Number(raw));
 }
 
-/** Catalog of reusable effect prefabs that the builder is allowed to emit. */
-export const PREFAB_CATALOG: PrefabDefinition[] = [
+/** Map common energy type words / letters to CardType expressions used in generated code. */
+function energyTypeExpr(raw: string | undefined): string {
+  const key = (raw || 'colorless').toLowerCase().trim();
+  const map: Record<string, string> = {
+    grass: 'G',
+    g: 'G',
+    fire: 'R',
+    r: 'R',
+    water: 'W',
+    w: 'W',
+    lightning: 'L',
+    electric: 'L',
+    l: 'L',
+    psychic: 'P',
+    p: 'P',
+    fighting: 'F',
+    f: 'F',
+    darkness: 'D',
+    dark: 'D',
+    d: 'D',
+    metal: 'M',
+    m: 'M',
+    fairy: 'Y',
+    y: 'Y',
+    dragon: 'N',
+    n: 'N',
+    colorless: 'C',
+    c: 'C',
+  };
+  return map[key] || 'C';
+}
+
+/**
+ * Hand-tuned prefabs with high-quality patterns (match priority over auto-indexed engine prefabs).
+ * The live catalog is `PREFAB_CATALOG`, which merges these with `/engine-prefabs.json`.
+ */
+export const CURATED_PREFAB_CATALOG: PrefabDefinition[] = [
   // ── Drawing ──────────────────────────────────────────────────────────────
   {
     id: 'DRAW_CARDS',
@@ -166,17 +202,25 @@ export const PREFAB_CATALOG: PrefabDefinition[] = [
     }),
   },
 
-  // ── Self special conditions (ability-sourced) ────────────────────────────
+  // ── Self special conditions ──────────────────────────────────────────────
   {
     id: 'ADD_SLEEP_TO_PLAYER_ACTIVE',
     name: 'ADD_SLEEP_TO_PLAYER_ACTIVE',
-    description: 'This Pokemon is now Asleep. (ability-sourced)',
-    exampleTexts: ['This Pokemon is now Asleep.'],
-    scope: 'power',
+    description: 'This Pokemon (or a named Pokemon) is now Asleep.',
+    exampleTexts: [
+      'This Pokemon is now Asleep.',
+      'Snorlax is now Asleep.',
+      'Bibarel is now Asleep.',
+    ],
+    scope: 'both',
     importFrom: PREFABS,
     importNames: ['ADD_SLEEP_TO_PLAYER_ACTIVE'],
     params: [],
-    patterns: [/^this pokemon is now asleep\.?$/i],
+    patterns: [
+      /^this pokemon is now asleep\.?$/i,
+      // Named self-sleep (Snorlax/Bibarel/etc.) — exclude Defending / opponent wording
+      /^(?!the defending)(?!your opponent)[A-Za-z][A-Za-z0-9.' -]* is now asleep\.?$/i,
+    ],
     generateCall: () => ({
       lines: ['ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, player, this);'],
     }),
@@ -565,7 +609,12 @@ export const PREFAB_CATALOG: PrefabDefinition[] = [
       `import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';`,
     ],
     params: [],
-    patterns: [/^switch this pokemon with 1 of your benched pokemon\.?$/i],
+    patterns: [
+      /^switch this pokemon with 1 of your benched pokemon\.?$/i,
+      /^switch [A-Za-z][A-Za-z0-9.' -]* with 1 of your benched pokemon\.?$/i,
+      /^you may switch this pokemon with 1 of your benched pokemon\.?$/i,
+      /^you may switch [A-Za-z][A-Za-z0-9.' -]* with 1 of your benched pokemon\.?$/i,
+    ],
     generateCall: (_params, ctx) => ({
       lines: [`this.usedSwitchAttack${ctx.index} = true;`],
     }),
@@ -584,6 +633,7 @@ export const PREFAB_CATALOG: PrefabDefinition[] = [
     description: "Switch 1 of opponent's Benched with their Active (you choose).",
     exampleTexts: [
       "Switch 1 of your opponent's Benched Pokemon with their Active Pokemon.",
+      "Switch 1 of your opponent's Benched Pokemon with 1 of the Defending Pokemon.",
     ],
     scope: 'attack',
     importFrom: PREFABS,
@@ -591,10 +641,138 @@ export const PREFAB_CATALOG: PrefabDefinition[] = [
     params: [],
     patterns: [
       /^switch 1 of your opponent'?s benched pokemon with their active pokemon\.?$/i,
+      /^switch 1 of your opponent'?s benched pokemon with 1 of the defending pokemon\.?$/i,
+      /^switch 1 of your opponent'?s benched pokemon with the defending pokemon\.?$/i,
     ],
     generateCall: () => ({
       lines: ['GUST_OPPONENT_BENCHED_POKEMON(store, state, player);'],
     }),
+  },
+  {
+    id: 'IF_EVOLVED_FROM_BONUS_DAMAGE',
+    name: 'IF_EVOLVED_FROM_BONUS_DAMAGE',
+    description: 'Bonus damage if this Pokemon is evolved from a named Baby/prior stage.',
+    exampleTexts: [
+      'If Marill is evolved from Azurill, this attack does 10 damage plus 20 more damage.',
+      'If Clefairy is evolved from Cleffa, this attack does 20 damage plus 20 more damage.',
+    ],
+    scope: 'attack',
+    importFrom: PREFABS,
+    importNames: [],
+    params: [
+      { key: 'underName', label: 'Under Pokemon name', type: 'string' },
+      { key: 'bonus', label: 'Bonus damage', type: 'number', defaultValue: 20 },
+    ],
+    patterns: [
+      /^if [A-Za-z][A-Za-z0-9.' -]* is evolved from ([A-Za-z][A-Za-z0-9.' -]*), this attack does \d+ damage plus (\d+) more damage\.?$/i,
+    ],
+    paramCaptures: { 1: 'underName', 2: 'bonus' },
+    generateCall: (params) => {
+      const under = (params.underName || 'Basic').replace(/'/g, "\\'");
+      return {
+        lines: [
+          `if (effect.player.active.getPokemons().some(p => p.name === '${under}')) {`,
+          `  effect.damage += ${num(params, 'bonus', '20')};`,
+          '}',
+        ],
+      };
+    },
+  },
+  {
+    id: 'IF_ANYWHERE_UNDER_COIN_PARALYZE',
+    name: 'IF_ANYWHERE_UNDER_COIN_PARALYZE',
+    description: 'If named Pokemon is under this one, flip coin; heads = Paralyze.',
+    exampleTexts: [
+      'If Azurill is anywhere under Azumarill, flip a coin. If heads, the Defending Pokemon is now Paralyzed.',
+    ],
+    scope: 'attack',
+    importFrom: PREFABS,
+    importNames: ['COIN_FLIP_PROMPT'],
+    extraImports: [
+      `import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../game/store/prefabs/attack-effects';`,
+    ],
+    params: [{ key: 'underName', label: 'Under Pokemon name', type: 'string' }],
+    patterns: [
+      /^if ([A-Za-z][A-Za-z0-9.' -]*) is anywhere under [A-Za-z][A-Za-z0-9.' -]*, flip a coin\. if heads, the defending pokemon is now paralyzed\.?$/i,
+    ],
+    paramCaptures: { 1: 'underName' },
+    generateCall: (params) => {
+      const under = (params.underName || 'Basic').replace(/'/g, "\\'");
+      return {
+        lines: [
+          `if (effect.player.active.getPokemons().some(p => p.name === '${under}')) {`,
+          '  COIN_FLIP_PROMPT(store, state, player, result => {',
+          '    if (result) {',
+          '      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);',
+          '    }',
+          '  });',
+          '}',
+        ],
+      };
+    },
+  },
+  {
+    id: 'BABY_EVOLUTION',
+    name: 'BABY_EVOLUTION',
+    description: 'Poké-Power: put named evolution from hand onto this Baby Pokemon and heal all damage.',
+    exampleTexts: [
+      'Once during your turn (before your attack), you may put Marill from your hand onto Azurill (this counts as evolving Azurill) and remove all damage counters from Azurill.',
+    ],
+    scope: 'power',
+    importFrom: PREFABS,
+    importNames: ['MOVE_CARDS', 'WAS_POWER_USED'],
+    extraImports: [
+      `import { Card, ChooseCardsPrompt, GameError, GameMessage, PokemonCardList, StateUtils } from '../../game';`,
+      `import { SuperType } from '../../game/store/card/card-types';`,
+      `import { HealEffect } from '../../game/store/effects/game-effects';`,
+      `import { PokemonCard } from '../../game/store/card/pokemon-card';`,
+    ],
+    params: [
+      { key: 'evolutionName', label: 'Evolution name', type: 'string' },
+    ],
+    patterns: [
+      /^(?:\(before your attack\),?\s*)?you may put ([A-Za-z][A-Za-z0-9.' -]*) from your hand onto [A-Za-z][A-Za-z0-9.' -]* \(this counts a[s]? evolving [A-Za-z][A-Za-z0-9.' -]*\) and remove all damage counters from [A-Za-z][A-Za-z0-9.' -]*\.?$/i,
+      /^once during your turn \(before your attack\), you may put ([A-Za-z][A-Za-z0-9.' -]*) from your hand onto [A-Za-z][A-Za-z0-9.' -]* \(this counts a[s]? evolving [A-Za-z][A-Za-z0-9.' -]*\) and remove all damage counters from [A-Za-z][A-Za-z0-9.' -]*\.?$/i,
+    ],
+    paramCaptures: { 1: 'evolutionName' },
+    generateCall: (params) => {
+      const evo = (params.evolutionName || 'Evolution').replace(/'/g, "\\'");
+      return {
+        lines: [
+          `const hasEvolution = player.hand.cards.some(card => card instanceof PokemonCard && card.name === '${evo}');`,
+          'if (!hasEvolution) {',
+          '  throw new GameError(GameMessage.CANNOT_USE_POWER);',
+          '}',
+          'const blocked: number[] = [];',
+          'player.hand.cards.forEach((card, index) => {',
+          `  if (card instanceof PokemonCard && card.name !== '${evo}') {`,
+          '    blocked.push(index);',
+          '  }',
+          '});',
+          'store.prompt(state, new ChooseCardsPrompt(',
+          '  player,',
+          '  GameMessage.CHOOSE_CARD_TO_EVOLVE,',
+          '  player.hand,',
+          '  { superType: SuperType.POKEMON },',
+          '  { min: 1, max: 1, allowCancel: true, blocked }',
+          '), selected => {',
+          '  const selectedCards = selected || [];',
+          '  if (selectedCards.length === 0) {',
+          '    return;',
+          '  }',
+          '  const evolution = selectedCards[0] as PokemonCard;',
+          '  const target = StateUtils.findCardList(state, this);',
+          '  MOVE_CARDS(store, state, player.hand, target, { cards: [evolution], sourceCard: this });',
+          '  const pokemonTarget = target as PokemonCardList;',
+          '  pokemonTarget.clearEffects();',
+          '  pokemonTarget.pokemonPlayedTurn = state.turn;',
+          '  const healEffect = new HealEffect(player, pokemonTarget, pokemonTarget.damage);',
+          '  store.reduceEffect(state, healEffect);',
+          '});',
+        ],
+        returns: true,
+      };
+    },
   },
 
   // ── Energy ───────────────────────────────────────────────────────────────
@@ -605,18 +783,36 @@ export const PREFAB_CATALOG: PrefabDefinition[] = [
     exampleTexts: [
       'Discard an Energy attached to this Pokemon.',
       'Discard 2 Energy attached to this Pokemon.',
+      'Discard a Fire Energy attached to this Pokemon.',
     ],
     scope: 'attack',
     importFrom: COSTS,
     importNames: ['DISCARD_X_ENERGY_FROM_THIS_POKEMON'],
-    params: [{ key: 'count', label: 'Energy count', type: 'number', defaultValue: 1 }],
+    params: [
+      { key: 'count', label: 'Energy count', type: 'number', defaultValue: 1 },
+      { key: 'energyType', label: 'Energy type (optional)', type: 'energy', defaultValue: '' },
+    ],
     patterns: [
       /^discard an energy attached to this pokemon\.?$/i,
       /^discard (\d+) energy attached to this pokemon\.?$/i,
+      /^discard an? (grass|fire|water|lightning|psychic|fighting|darkness|dark|metal|fairy|dragon|colorless) energy attached to this pokemon\.?$/i,
+      /^discard (\d+) (grass|fire|water|lightning|psychic|fighting|darkness|dark|metal|fairy|dragon|colorless) energy attached to this pokemon\.?$/i,
     ],
-    paramCaptures: { 1: 'count' },
+    paramCaptures: { 1: 'count', 2: 'energyType' },
     generateCall: (params) => {
-      const count = params.count ? num(params, 'count', '1') : '1';
+      // Typed single-energy pattern puts the type in capture group 1
+      const typedOnly = params.count && /^(grass|fire|water|lightning|psychic|fighting|darkness|dark|metal|fairy|dragon|colorless)$/i.test(params.count)
+        ? params.count
+        : undefined;
+      const energyType = typedOnly || params.energyType;
+      const count = typedOnly ? '1' : (params.count ? num(params, 'count', '1') : '1');
+      if (energyType && energyType.trim()) {
+        return {
+          lines: [
+            `DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, ${count}, ${energyTypeExpr(energyType)});`,
+          ],
+        };
+      }
       return {
         lines: [`DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, ${count});`],
       };
@@ -732,7 +928,7 @@ export const PREFAB_CATALOG: PrefabDefinition[] = [
       "The Defending Pokemon can't retreat during your opponent's next turn.",
     ],
     scope: 'attack',
-    importFrom: PREFABS,
+    importFrom: EFFECT_OF_ATTACK,
     importNames: ['BLOCK_RETREAT'],
     params: [],
     patterns: [
@@ -751,7 +947,7 @@ export const PREFAB_CATALOG: PrefabDefinition[] = [
       "The Defending Pokemon can't attack during your opponent's next turn.",
     ],
     scope: 'attack',
-    importFrom: PREFABS,
+    importFrom: EFFECT_OF_ATTACK,
     importNames: ['DEFENDING_POKEMON_CANNOT_ATTACK'],
     params: [],
     patterns: [
@@ -770,7 +966,7 @@ export const PREFAB_CATALOG: PrefabDefinition[] = [
       "If the Defending Pokemon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack does nothing.",
     ],
     scope: 'attack',
-    importFrom: PREFABS,
+    importFrom: EFFECT_OF_ATTACK,
     importNames: ['DEFENDING_POKEMON_FLIPS_COIN_TO_ATTACK'],
     params: [{ key: 'coins', label: 'Coins to flip', type: 'number', defaultValue: 1 }],
     patterns: [
@@ -800,7 +996,7 @@ export const PREFAB_CATALOG: PrefabDefinition[] = [
       "During your opponent's next turn, the Defending Pokemon's attacks do 20 less damage (before applying Weakness and Resistance).",
     ],
     scope: 'attack',
-    importFrom: PREFABS,
+    importFrom: EFFECT_OF_ATTACK,
     importNames: ['DEFENDING_POKEMON_DOES_LESS_DAMAGE'],
     params: [{ key: 'damage', label: 'Reduction', type: 'number', defaultValue: 20 }],
     patterns: [
@@ -874,6 +1070,112 @@ export const PREFAB_CATALOG: PrefabDefinition[] = [
     }),
   },
 
+  // ── Protect / Detect style ───────────────────────────────────────────────
+  {
+    id: 'FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN',
+    name: 'FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN',
+    description: 'Flip coin; if heads, prevent damage and effects next turn.',
+    exampleTexts: [
+      "Flip a coin. If heads, during your opponent's next turn, prevent all damage from and effects of attacks done to this Pokemon.",
+    ],
+    scope: 'attack',
+    importFrom: EFFECT_OF_ATTACK,
+    importNames: ['FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN'],
+    params: [],
+    patterns: [
+      /^flip a coin\.?\s*if heads,? during your opponent'?s next turn,? prevent all damage from and effects of attacks done to this pokemon\.?$/i,
+      /^flip a coin\.?\s*if heads,? prevent all effects of attacks,? including damage,? done to this pokemon during your opponent'?s next turn\.?$/i,
+    ],
+    generateCall: () => ({
+      lines: [
+        'FLIP_COIN_TO_PREVENT_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN(store, state, effect, this);',
+      ],
+    }),
+  },
+  {
+    id: 'FLIP_COIN_TO_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN',
+    name: 'FLIP_COIN_TO_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN',
+    description: 'Flip coin; if heads, prevent damage next turn (Stiffen).',
+    exampleTexts: [
+      "Flip a coin. If heads, during your opponent's next turn, prevent all damage done to this Pokemon by attacks.",
+    ],
+    scope: 'attack',
+    importFrom: EFFECT_OF_ATTACK,
+    importNames: ['FLIP_COIN_TO_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN'],
+    params: [],
+    patterns: [
+      /^flip a coin\.?\s*if heads,? during your opponent'?s next turn,? prevent all damage done to this pokemon(?: by attacks)?\.?$/i,
+    ],
+    generateCall: () => ({
+      lines: [
+        'FLIP_COIN_TO_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN(store, state, effect, this);',
+      ],
+    }),
+  },
+
+  // ── Damage bonuses ───────────────────────────────────────────────────────
+  {
+    id: 'THIS_ATTACK_DOES_X_MORE_DAMAGE',
+    name: 'THIS_ATTACK_DOES_X_MORE_DAMAGE',
+    description: 'This attack does X more damage (flat bonus).',
+    exampleTexts: ['This attack does 30 more damage.'],
+    scope: 'attack',
+    importFrom: PREFABS,
+    importNames: ['THIS_ATTACK_DOES_X_MORE_DAMAGE'],
+    params: [{ key: 'damage', label: 'Bonus damage', type: 'number', defaultValue: 30 }],
+    patterns: [/^this attack does (\d+) more damage\.?$/i],
+    paramCaptures: { 1: 'damage' },
+    generateCall: (params) => ({
+      lines: [
+        `THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, ${num(params, 'damage', '30')});`,
+      ],
+    }),
+  },
+
+  // ── Trainer draw / shuffle ───────────────────────────────────────────────
+  {
+    id: 'SHUFFLE_HAND_INTO_DECK_THEN_DRAW',
+    name: 'SHUFFLE_HAND_INTO_DECK_THEN_DRAW',
+    description: 'Shuffle hand into deck, then draw X cards.',
+    exampleTexts: [
+      'Shuffle your hand into your deck. Then, draw 7 cards.',
+      'Shuffle your hand into your deck, then draw 6 cards.',
+    ],
+    scope: 'both',
+    importFrom: PREFABS,
+    importNames: ['SHUFFLE_HAND_INTO_DECK_THEN_DRAW'],
+    params: [{ key: 'count', label: 'Draw count', type: 'number', defaultValue: 7 }],
+    patterns: [
+      /^shuffle your hand into your deck\.?\s*then,? draw (\d+) cards?\.?$/i,
+      /^shuffle your hand into your deck,? then draw (\d+) cards?\.?$/i,
+    ],
+    paramCaptures: { 1: 'count' },
+    generateCall: (params) => ({
+      lines: [
+        `return SHUFFLE_HAND_INTO_DECK_THEN_DRAW(store, state, player, { drawCount: ${num(params, 'count', '7')}, excludeCard: this, sourceCard: this });`,
+      ],
+      returns: true,
+    }),
+  },
+  {
+    id: 'DISCARD_HAND_THEN_DRAW',
+    name: 'SHUFFLE_HAND_INTO_DECK_THEN_DRAW (discard wording)',
+    description: 'Discard your hand and draw X (emits shuffle-then-draw prefab).',
+    exampleTexts: ['Discard your hand and draw 7 cards.'],
+    scope: 'both',
+    importFrom: PREFABS,
+    importNames: ['SHUFFLE_HAND_INTO_DECK_THEN_DRAW'],
+    params: [{ key: 'count', label: 'Draw count', type: 'number', defaultValue: 7 }],
+    patterns: [/^discard your hand and draw (\d+) cards?\.?$/i],
+    paramCaptures: { 1: 'count' },
+    generateCall: (params) => ({
+      lines: [
+        `return SHUFFLE_HAND_INTO_DECK_THEN_DRAW(store, state, player, { drawCount: ${num(params, 'count', '7')}, excludeCard: this, sourceCard: this });`,
+      ],
+      returns: true,
+    }),
+  },
+
   // ── Ability helpers ──────────────────────────────────────────────────────
   {
     id: 'USE_ABILITY_ONCE_PER_TURN',
@@ -931,10 +1233,27 @@ export const PREFAB_CATALOG: PrefabDefinition[] = [
   },
 ];
 
+/** Live catalog: curated first, then auto-indexed engine prefabs (filled by mergeEnginePrefabs). */
+export let PREFAB_CATALOG: PrefabDefinition[] = [...CURATED_PREFAB_CATALOG];
+
+export function mergeEnginePrefabs(enginePrefabs: PrefabDefinition[]): void {
+  const curatedIds = new Set(CURATED_PREFAB_CATALOG.map(p => p.id));
+  const extras = enginePrefabs.filter(p => !curatedIds.has(p.id));
+  PREFAB_CATALOG = [...CURATED_PREFAB_CATALOG, ...extras];
+}
+
 export function getPrefabById(id: string): PrefabDefinition | undefined {
   return PREFAB_CATALOG.find(p => p.id === id);
 }
 
 export function prefabsForScope(scope: 'attack' | 'power' | 'trainer' | 'energy'): PrefabDefinition[] {
   return PREFAB_CATALOG.filter(p => p.scope === scope || p.scope === 'both');
+}
+
+export function catalogStats(): { curated: number; total: number; withPatterns: number } {
+  return {
+    curated: CURATED_PREFAB_CATALOG.length,
+    total: PREFAB_CATALOG.length,
+    withPatterns: PREFAB_CATALOG.filter(p => p.patterns.length > 0).length,
+  };
 }

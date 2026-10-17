@@ -639,18 +639,28 @@ export class Board3dController {
   }
 
   /**
-   * Silent server WaitPrompts ("Hand to deck animation", "Draw animation") arrive in the same
-   * state as the change they gate. Publish a pending promise now and settle it once that state
-   * has played on the board.
+   * Silent server WaitPrompts ("Hand to deck animation", "Draw animation") and ShowCards
+   * arrive in the same state as the change they gate. Publish a pending promise now and
+   * settle it once that state has played on the board.
    */
   private openGatesForState(props: Board3dControllerProps): (() => void)[] {
     const gates: (() => void)[] = [];
+    const selfPlay = props.gameState?.state?.gameSettings?.selfPlay === true;
     for (const prompt of props.gameState?.state?.prompts ?? []) {
-      if (
-        prompt.type !== 'WaitPrompt' ||
-        prompt.result !== undefined ||
-        this.gatedPromptIds.has(prompt.id)
-      ) {
+      if (prompt.result !== undefined || this.gatedPromptIds.has(prompt.id)) {
+        continue;
+      }
+      if (prompt.type === 'Show cards') {
+        if (prompt.playerId !== props.clientId && !selfPlay) {
+          continue;
+        }
+        this.gatedPromptIds.add(prompt.id);
+        const { promise, settle } = this.openAnimationGate();
+        this.boardInteractionService.setPendingShowCardsAnimationPromise(promise);
+        gates.push(settle);
+        continue;
+      }
+      if (prompt.type !== 'WaitPrompt') {
         continue;
       }
       const message = String((prompt as { message?: string }).message ?? '').toLowerCase();
@@ -695,12 +705,62 @@ export class Board3dController {
     });
   }
 
+  /** Unresolved ShowCardsPrompt cards this client must reveal (incl. self-play opponent). */
+  private collectShowCardsReveals(props: Board3dControllerProps): {
+    ids: number[];
+    byId: Map<number, Card>;
+    destinationHint?: 'deck' | 'hand';
+  } {
+    const ids: number[] = [];
+    const byId = new Map<number, Card>();
+    const selfPlay = props.gameState?.state?.gameSettings?.selfPlay === true;
+    for (const prompt of props.gameState?.state?.prompts ?? []) {
+      if (prompt.type !== 'Show cards' || prompt.result !== undefined) {
+        continue;
+      }
+      if (prompt.playerId !== props.clientId && !selfPlay) {
+        continue;
+      }
+      const cards = (prompt as { cards?: Card[] }).cards ?? [];
+      for (const card of cards) {
+        if (card?.id == null || byId.has(card.id)) {
+          continue;
+        }
+        ids.push(card.id);
+        byId.set(card.id, card);
+      }
+    }
+    return {
+      ids,
+      byId,
+      destinationHint: ids.length > 0 ? this.inferShowCardsDestinationHint(props) : undefined,
+    };
+  }
+
+  /**
+   * Resolve ChooseCardsPrompt messages still on the state (including already-resolved ones)
+   * to learn whether a discard reveal is heading to deck or hand.
+   */
+  private inferShowCardsDestinationHint(
+    props: Board3dControllerProps,
+  ): 'deck' | 'hand' | undefined {
+    let hint: 'deck' | 'hand' | undefined;
+    for (const prompt of props.gameState?.state?.prompts ?? []) {
+      if (prompt.type !== 'Choose cards') {
+        continue;
+      }
+      const msg = String((prompt as { message?: string | number }).message ?? '');
+      if (msg.includes('CHOOSE_CARD_TO_DECK')) {
+        hint = 'deck';
+      } else if (msg.includes('CHOOSE_CARD_TO_HAND')) {
+        hint = 'hand';
+      }
+    }
+    return hint;
+  }
+
   private async processFrame(frame: Board3dFrame, options: ProcessStateOptions): Promise<void> {
     try {
-      await this.waitForHandInteractionIdle(options.isStale);
-      if (options.isStale()) {
-        return;
-      }
       const { props } = frame;
       const prevProps = this.displayedProps;
       const prevSnapshot = this.displayedSnapshot;
@@ -711,20 +771,45 @@ export class Board3dController {
         prevProps.clientId !== props.clientId;
       const seatChanged = !!prevProps && prevProps.bottomPlayer?.id !== props.bottomPlayer?.id;
 
+      // Plan KO before any await so Choose prize can stay suppressed during hand-idle wait.
+      let koGhostPlan: ReturnType<typeof planTransition> | null = null;
+      let koGhostSteps: TransitionStep[] = [];
+      const upcomingSnapshot = this.captureBoardSnapshot(props);
+      if (prevSnapshot && upcomingSnapshot) {
+        const showCards = this.collectShowCardsReveals(props);
+        koGhostPlan = planTransition(prevSnapshot, upcomingSnapshot, {
+          preFlownCardIds: new Set(this.localTrainerFlights.keys()),
+          deckLimboByPlayer: this.deckLimboByPlayer,
+          showCardsRevealIds: showCards.ids,
+          showCardsDestinationHint: showCards.destinationHint,
+        });
+        koGhostPlan.showCardsById = showCards.byId;
+        koGhostSteps = seatChanged
+          ? this.stepsWithoutHandOrigins(koGhostPlan.steps)
+          : koGhostPlan.steps;
+        if (koGhostSteps.some((s) => s.kind === 'boardGhostToPile')) {
+          this.onKoSequenceActiveChange?.(true);
+        }
+      }
+
+      await this.waitForHandInteractionIdle(options.isStale);
+      if (options.isStale()) {
+        if (koGhostSteps.some((s) => s.kind === 'boardGhostToPile')) {
+          this.onKoSequenceActiveChange?.(false);
+        }
+        return;
+      }
+
       this.setProps(props);
       this.displayedProps = props;
       if (this.camera && perspectiveChanged) {
         this.updatePerspective();
       }
-      const snapshot = this.captureBoardSnapshot(props);
+      const snapshot = upcomingSnapshot ?? this.captureBoardSnapshot(props);
       this.displayedSnapshot = snapshot;
 
-      if (options.animate && prevSnapshot && snapshot) {
-        const plan = planTransition(prevSnapshot, snapshot, {
-          preFlownCardIds: new Set(this.localTrainerFlights.keys()),
-          deckLimboByPlayer: this.deckLimboByPlayer,
-        });
-        let steps = seatChanged ? this.stepsWithoutHandOrigins(plan.steps) : plan.steps;
+      if (options.animate && prevSnapshot && snapshot && koGhostPlan) {
+        let steps = koGhostSteps;
         if (this.outstandingDeckEntrances > 0) {
           const held = steps.filter(
             (step): step is Extract<TransitionStep, { kind: 'trainerToDiscard' }> =>
@@ -747,7 +832,7 @@ export class Board3dController {
             this.transitionHost(),
             prevSnapshot,
             snapshot,
-            plan,
+            koGhostPlan,
             steps,
             seatChanged,
             options.isStale,
@@ -758,7 +843,12 @@ export class Board3dController {
           if (result.topHandTouched) {
             this.lastTopHandSignature = '';
           }
+        } else if (koGhostPlan.steps.some((s) => s.kind === 'boardGhostToPile')) {
+          this.onKoSequenceActiveChange?.(false);
         }
+      } else if (koGhostSteps.some((s) => s.kind === 'boardGhostToPile')) {
+        // Fast-forward / no animation: release any early suppress from TablePage / above.
+        this.onKoSequenceActiveChange?.(false);
       }
       if (options.isStale()) {
         return;
@@ -968,6 +1058,8 @@ export class Board3dController {
       render: () => this.renderDisplay(),
       setKoActive: (active) => this.onKoSequenceActiveChange?.(active),
       markDirty: () => this.markDirty(),
+      consumePendingAttackDamage: (defenderId) =>
+        this.boardInteractionService.consumePendingAttackDamageForDefender(defenderId),
     };
   }
 
@@ -1923,16 +2015,139 @@ export class Board3dController {
   private playBoardAttackAnimation(ev: BasicEntranceAnimationEvent): void {
     const meshId = this.boardMeshIdFromAnimationEvent(ev);
     if (!meshId) {
-      this.boardInteractionService.setPendingAttackAnimationPromise(Promise.resolve());
+      this.boardInteractionService.setPendingAttackAnimationPromise(
+        Promise.resolve().then(() => this.applyPendingAttackDamageVisual()),
+      );
       return;
     }
     const boardCard = this.stateSync.getCardById(meshId);
     if (!boardCard) {
-      this.boardInteractionService.setPendingAttackAnimationPromise(Promise.resolve());
+      this.boardInteractionService.setPendingAttackAnimationPromise(
+        Promise.resolve().then(() => this.applyPendingAttackDamageVisual()),
+      );
       return;
     }
-    const p = this.animationService.playAttackAnimation(boardCard.getGroup());
+
+    // When the Active attacks, defender get-hit starts on slam impact (75% of clip).
+    // Resolve the defender at impact time — `game:attack` sets pending damage after
+    // `triggerAttackAnimation`, so it is not available synchronously at start.
+    const attackerIsActive = meshId.endsWith('_active');
+    const attackerWorld = boardCard.getGroup().position.clone();
+    const attackerPlayerId = ev.playerId;
+
+    const p = (async () => {
+      let hitPromise: Promise<void> = Promise.resolve();
+      let damageApplied = false;
+      this.stateSync.lockBoardCardPose(meshId);
+      try {
+        await this.animationService.playAttackAnimation(boardCard.getGroup(), {
+          onImpact: () => {
+            if (!attackerIsActive) {
+              if (!damageApplied) {
+                damageApplied = true;
+                this.applyPendingAttackDamageVisual();
+              }
+              return;
+            }
+            // Resolve before painting damage — applyPending clears pendingAttackDamage.
+            const defender = this.resolveAttackDefender(attackerPlayerId);
+            if (!damageApplied) {
+              damageApplied = true;
+              this.applyPendingAttackDamageVisual();
+            }
+            if (!defender) {
+              return;
+            }
+            const defenderMeshId = defender.getGroup().userData.cardId as string | undefined;
+            if (defenderMeshId) {
+              this.stateSync.lockBoardCardPose(defenderMeshId);
+            }
+            hitPromise = this.animationService
+              .playGetHitReaction(defender.getGroup(), { awayFromWorld: attackerWorld })
+              .finally(() => {
+                if (defenderMeshId) {
+                  this.stateSync.unlockBoardCardPose(defenderMeshId);
+                }
+              });
+          },
+        });
+      } finally {
+        this.stateSync.unlockBoardCardPose(meshId);
+      }
+      if (!damageApplied) {
+        this.applyPendingAttackDamageVisual();
+      }
+      await hitPromise;
+    })();
     this.boardInteractionService.setPendingAttackAnimationPromise(p);
+  }
+
+  /** Opponent Active for an attack — prefers pending damage, else the other seat's Active. */
+  private resolveAttackDefender(attackerPlayerId: number): Board3dCard | undefined {
+    const pending = this.boardInteractionService.peekPendingAttackDamage();
+    if (pending != null) {
+      return this.resolveActiveBoardCard(pending.opponentId);
+    }
+    const opponent =
+      this.bottomPlayer?.id === attackerPlayerId
+        ? this.topPlayer
+        : this.topPlayer?.id === attackerPlayerId
+          ? this.bottomPlayer
+          : undefined;
+    if (opponent?.id == null) {
+      return undefined;
+    }
+    return this.resolveActiveBoardCard(opponent.id);
+  }
+
+  private resolveActiveBoardCard(playerId: number): Board3dCard | undefined {
+    const seat =
+      this.bottomPlayer?.id === playerId
+        ? 'bottomPlayer'
+        : this.topPlayer?.id === playerId
+          ? 'topPlayer'
+          : null;
+    if (!seat) {
+      return undefined;
+    }
+    return this.stateSync.getCardById(`${seat}_${playerId}_active`);
+  }
+
+  /** Apply {@link BoardInteractionService} pending attack damage onto the defender's Active. */
+  private applyPendingAttackDamageVisual(): void {
+    const pending = this.boardInteractionService.peekPendingAttackDamage();
+    if (!pending || pending.damage <= 0) {
+      return;
+    }
+    const defenderId = pending.opponentId;
+    const seat =
+      this.bottomPlayer?.id === defenderId
+        ? 'bottomPlayer'
+        : this.topPlayer?.id === defenderId
+          ? 'topPlayer'
+          : null;
+    if (!seat) {
+      return;
+    }
+    const meshId = `${seat}_${defenderId}_active`;
+    const boardCard = this.stateSync.getCardById(meshId);
+    if (!boardCard) {
+      return;
+    }
+    const cardList = boardCard.getGroup().userData.cardList as { damage?: number } | undefined;
+    const prevDamage = Math.max(
+      0,
+      cardList?.damage ?? 0,
+      this.stateSync.getDamageCounterValue(meshId),
+    );
+    const nextDamage = prevDamage + pending.damage;
+    this.stateSync.applyDamageCounterVisual(meshId, nextDamage);
+    if (cardList) {
+      cardList.damage = nextDamage;
+    }
+    // Keep pending until KO ghost can reuse it if the Active mesh was already detached.
+    // Non-KO attacks: next sync overwrites with the authoritative total; clear here.
+    this.boardInteractionService.setPendingAttackDamage(null);
   }
 
   private playBoardAbilityAnimation(ev: AbilityAnimationEvent): void {
@@ -2011,7 +2226,8 @@ export class Board3dController {
     }
 
     const canvasRect = this.canvasEl.getBoundingClientRect();
-    return projectCardFaceToScreenAnchor(cardMesh, this.camera, canvasRect, 6);
+    // Exact card silhouette (Active 1.5 / Bench 1.0 via mesh world scale); no screen pad.
+    return projectCardFaceToScreenAnchor(cardMesh, this.camera, canvasRect, 0);
   }
 
   private startAbilityFocusTracking(group: Object3D, abilityName: string): void {
@@ -3934,8 +4150,9 @@ export class Board3dController {
         return;
       }
 
-      // Owner can activate stadium effect
-      const options = { enableTrainer: true };
+      // Owner can activate stadium effect (Pokemon-as-Stadium has no Use Stadium action)
+      const canUseStadium = cardData?.superType === SuperType.TRAINER;
+      const options = canUseStadium ? { enableTrainer: true } : undefined;
       void this.openCardInfo(cardObject, {
         card: cardData,
         cardList: cardList,
@@ -3947,7 +4164,7 @@ export class Board3dController {
         }
 
           // Use stadium card effect
-          if (result.trainer) {
+          if (result.trainer && canUseStadium) {
             this.gameActions.stadium(this.gameState.gameId);
           }
         });

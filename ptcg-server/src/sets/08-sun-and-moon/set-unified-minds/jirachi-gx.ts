@@ -3,6 +3,7 @@ import { Stage, CardType, CardTag, SuperType } from '../../../game/store/card/ca
 import { AttachEnergyPrompt, GameMessage, PlayerType, PowerType, SlotType, StoreLike, State, StateUtils } from '../../../game';
 import { CheckPokemonStatsEffect, CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import {WAS_ATTACK_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
@@ -56,6 +57,17 @@ export class JirachiGx extends PokemonCard {
       }
 
       if (IS_ABILITY_BLOCKED(store, state, jirachiOwner, this)) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        jirachiOwner,
+        this.powers[0],
+        this,
+        effect.target,
+      )) {
         return state;
       }
 

@@ -93,25 +93,24 @@ function* playCard(
         (choice) => {
           const option = options[choice];
 
+          const revealed = [...selectedPokemon.cards];
+          if (option.value === pokemonHP) {
+            MOVE_CARDS(store, state, opponent.deck, opponent.hand, {
+              count: 4,
+              sourceCard: self,
+            });
+          } else {
+            MOVE_CARDS(store, state, player.deck, player.hand, { count: 4, sourceCard: self });
+          }
+          MOVE_CARDS(store, state, selectedPokemon, player.hand, { sourceCard: self });
           store.prompt(
             state,
             new ShowCardsPrompt(
               opponent.id,
               GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-              selectedPokemon.cards,
+              revealed,
             ),
-            () => {
-              if (option.value === pokemonHP) {
-                MOVE_CARDS(store, state, opponent.deck, opponent.hand, {
-                  count: 4,
-                  sourceCard: self,
-                });
-                MOVE_CARDS(store, state, selectedPokemon, player.hand, { sourceCard: self });
-              } else {
-                MOVE_CARDS(store, state, player.deck, player.hand, { count: 4, sourceCard: self });
-                MOVE_CARDS(store, state, selectedPokemon, player.hand, { sourceCard: self });
-              }
-            },
+            () => {},
           );
 
           MOVE_CARDS(store, state, player.supporter, player.discard, { sourceCard: self });

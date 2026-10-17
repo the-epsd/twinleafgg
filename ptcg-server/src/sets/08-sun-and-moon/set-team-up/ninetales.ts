@@ -1,10 +1,9 @@
-import { CardType, PokemonCard, Stage, StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, EnergyCard, GameError, ChooseCardsPrompt, SuperType } from '../../../game';
+import { CardType, PokemonCard, Stage, StoreLike, State, StateUtils, GameMessage, EnergyCard, GameError, ChooseCardsPrompt, SuperType } from '../../../game';
 import { PowerType } from '../../../game';
-import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
 import { Attack } from '../../../game/store/card/pokemon-types';
 import { Effect } from '../../../game/store/effects/effect';
-import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
-import {ABILITY_USED, ADD_MARKER, HAS_MARKER, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { ABILITY_USED, ADD_MARKER, HAS_MARKER, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Ninetales extends PokemonCard {
 
@@ -74,21 +73,13 @@ export class Ninetales extends PokemonCard {
           return state;
         }
 
-        store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-          PlayerType.TOP_PLAYER,
-          [SlotType.BENCH],
-          { allowCancel: false }
-        ), result => {
-          const cardList = result[0];
-          const gustEffect = new EffectOfAbilityEffect(player, this.powers[0], this, cardList);
-          store.reduceEffect(state, gustEffect);
-
-          if (gustEffect.target) {
-            opponent.switchPokemon(gustEffect.target);
-          }
-        });
+        GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY(
+          store,
+          state,
+          player,
+          this.powers[0],
+          this,
+        );
 
         ADD_MARKER(this.NINE_TEMPTATIONS_MARKER, player, this);
         ABILITY_USED(player, this);

@@ -1,10 +1,10 @@
-import { PowerType, State, StateUtils, StoreLike } from '../../../game';
-import { CardType, Stage } from '../../../game/store/card/card-types';
+import { PowerType, State, StateUtils, StoreLike, CardType, Stage } from '../../../game';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CheckAttackCostEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { NEXT_TURN_ATTACK_BONUS } from '../../../game/store/prefabs/attack-effects';
+import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Seismitoad extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -35,32 +35,41 @@ export class Seismitoad extends PokemonCard {
   public fullName: string = 'Seismitoad OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Quaking Zone — Ref: set-paldean-fates/espathra-ex.ts (Dazzling Gaze)
+    if (effect instanceof CheckAttackCostEffect) {
+      const attackingPlayer = effect.player;
+      const cardList = StateUtils.findCardList(state, this);
+      const abilityOwner = StateUtils.findOwner(state, cardList);
 
-    if (effect instanceof CheckAttackCostEffect &&
-      StateUtils.getOpponent(state, effect.player).active.cards.includes(this)) {
-
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      try {
-        const stub = new PowerEffect(opponent, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (abilityOwner.active.getPokemonCard() !== this) {
         return state;
       }
 
-      const pokemonCard = player.active.getPokemonCard();
+      if (attackingPlayer === abilityOwner) {
+        return state;
+      }
 
-      if (pokemonCard) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        attackingPlayer.active,
+      )) {
+        return state;
+      }
+
+      const index = effect.cost.indexOf(CardType.COLORLESS);
+      if (index > -1) {
+        effect.cost.splice(index, 0, CardType.COLORLESS);
+      } else {
         effect.cost.push(CardType.COLORLESS);
-        return state;
       }
-
-      return state;
     }
 
     // Refs: set-boundaries-crossed/meloetta.ts (Echoed Voice), prefabs/prefabs.ts (NEXT_TURN_ATTACK_BONUS)

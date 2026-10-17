@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../../game/store/card/card-types';
-import { GameError, GameMessage, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../../game';
+import { GameError, GameMessage, PowerType, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
 
@@ -37,22 +38,31 @@ export class Vanilluxe extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Frigid Room
     if (effect instanceof AttackEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      // checking if this is in play on the opponent's side
-      let isVanilluxeInPlay = false;
-      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.getPokemonCard() === this) {
-          isVanilluxeInPlay = true;
-        }
-      });
-      if (!isVanilluxeInPlay) { return state; }
-      // checking for ability lock (way cleaner than before :) )
-      if (IS_ABILITY_BLOCKED(store, state, opponent, this)) { return state; }
-      // checking for any hp boosters/removers
-      const checkHpEffect = new CheckHpEffect(effect.player, effect.source);
+      const attackingPlayer = effect.player;
+      const abilityOwner = StateUtils.getOpponent(state, attackingPlayer);
+
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
+        return state;
+      }
+
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        effect.source,
+      )) {
+        return state;
+      }
+
+      const checkHpEffect = new CheckHpEffect(attackingPlayer, effect.source);
       store.reduceEffect(state, checkHpEffect);
-      // actually doing the attack blocking
+
       if (checkHpEffect.hp - effect.source.damage <= 40) {
         throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
       }

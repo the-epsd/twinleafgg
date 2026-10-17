@@ -18,6 +18,7 @@ import {
   SuperType,
   Stage,
   TrainerType,
+  CardTag,
   Card,
   PokemonCard,
   PokemonCardList,
@@ -461,6 +462,30 @@ export class Board3dInteractionService {
     return data ?? null;
   }
 
+  /** LV.X Level-Up may only target the Active Pokémon. */
+  private isLvXCard(card: Card | undefined | null): boolean {
+    if (!card || card.superType !== SuperType.POKEMON) {
+      return false;
+    }
+    const pokemon = card as PokemonCard;
+    return (
+      pokemon.stage === Stage.LV_X ||
+      pokemon.tags?.includes(CardTag.POKEMON_LV_X) === true
+    );
+  }
+
+  private isEvolutionStageFromHand(stage: Stage | undefined): boolean {
+    return (
+      stage === Stage.STAGE_1 ||
+      stage === Stage.STAGE_2 ||
+      stage === Stage.VMAX ||
+      stage === Stage.VSTAR ||
+      stage === Stage.MEGA ||
+      stage === Stage.BREAK ||
+      stage === Stage.LV_X
+    );
+  }
+
   private isDraggedCardOrChild(object: Object3D): boolean {
     if (!this.draggedCard) {
       return false;
@@ -500,6 +525,9 @@ export class Board3dInteractionService {
     }
     if (options.isEvolutionCard) {
       const evolutionCard = ctx.card as PokemonCard;
+      if (this.isLvXCard(evolutionCard) && target.slot !== SlotType.ACTIVE) {
+        return false;
+      }
       const targetPokemonCard = this.getPokemonCardFromBoardObject(boardPokemon);
       if (!targetPokemonCard || !this.isValidEvolutionTarget(evolutionCard, targetPokemonCard)) {
         return false;
@@ -1085,9 +1113,12 @@ export class Board3dInteractionService {
 
     switch (superType) {
       case SuperType.POKEMON:
-        // Evolution Pokemon need to target a matching base Pokemon
-        if (stage === Stage.STAGE_1 || stage === Stage.STAGE_2 ||
-          stage === Stage.VMAX || stage === Stage.VSTAR || stage === Stage.MEGA) {
+        // Evolution / Level-Up need to target a matching base Pokemon
+        if (this.isEvolutionStageFromHand(stage)) {
+          // LV.X may only Level Up the Active Pokémon
+          if (this.isLvXCard(card)) {
+            return config.type === DropZoneType.ACTIVE && isOccupied;
+          }
           if (config.type === DropZoneType.BENCH || config.type === DropZoneType.ACTIVE) {
             return isOccupied; // Must have a Pokemon to evolve
           }
@@ -1676,8 +1707,11 @@ export class Board3dInteractionService {
         : this.currentBenchSizes.top;
 
     const candidates: Array<{ slot: SlotType; index: number }> = [{ slot: SlotType.ACTIVE, index: 0 }];
-    for (let i = 0; i < benchSize; i++) {
-      candidates.push({ slot: SlotType.BENCH, index: i });
+    // LV.X Level-Up is Active-only — never offer Bench hosts.
+    if (!this.isLvXCard(ctx.card)) {
+      for (let i = 0; i < benchSize; i++) {
+        candidates.push({ slot: SlotType.BENCH, index: i });
+      }
     }
 
     const targets: CardTarget[] = [];

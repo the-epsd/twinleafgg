@@ -5,6 +5,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { CoinFlipEffect } from '../../../game/store/effects/play-card-effects';
 import { PUT_X_DAMAGE_COUNTERS_ON_ALL_YOUR_OPPONENTS_POKEMON } from '../../../game/store/prefabs/attack-effects';
+import { PREVENT_EFFECTS_OF_OPPONENTS_ABILITIES } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { IS_ABILITY_BLOCKED, MOVE_POKEMON_OFF_BOARD, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Celebi extends PokemonCard {
@@ -41,10 +42,16 @@ export class Celebi extends PokemonCard {
   public fullName: string = 'Celebi XYP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // θ Stop — Ancient Trait (not an Ability; no IS_ABILITY_BLOCKED)
+    PREVENT_EFFECTS_OF_OPPONENTS_ABILITIES(state, effect, (target) => {
+      return target.getPokemonCard() === this;
+    });
+
+    // Leap Through Time
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
 
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, player, this, this.powers[1])) {
         return state;
       }
 
@@ -63,7 +70,11 @@ export class Celebi extends PokemonCard {
         sourceCard: this,
       });
 
-      store.log(state, GameLog.LOG_SHUFFLE_POKEMON_INTO_DECK, { name: player.name, card: this.name, effect: this.powers[0].name });
+      store.log(state, GameLog.LOG_SHUFFLE_POKEMON_INTO_DECK, {
+        name: player.name,
+        card: this.name,
+        effect: this.powers[1].name,
+      });
 
       return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);

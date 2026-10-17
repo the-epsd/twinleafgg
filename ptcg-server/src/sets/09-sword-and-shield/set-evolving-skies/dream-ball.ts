@@ -1,38 +1,38 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardTag, TrainerType } from '../../../game/store/card/card-types';
 import { DrawPrizesEffect } from '../../../game/store/effects/game-effects';
-import { StoreLike, State, PokemonCard, GameError } from '../../../game';
+import { StoreLike, State, PokemonCard, GameError, Player } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import {SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH,
+import {
+  SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH,
   CONFIRMATION_PROMPT,
   GET_PLAYER_BENCH_SLOTS,
-  TAKE_SPECIFIC_PRIZES, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+  TAKE_SPECIFIC_PRIZES,
+  MOVE_CARDS,
+} from '../../../game/store/prefabs/prefabs';
 import { GameMessage } from '../../../game/game-message';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class DreamBall extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
   public regulationMark = 'E';
-
   public set: string = 'EVS';
-
-  public setNumber: string = '146';
-
   public cardImage: string = 'assets/cardback.png';
-
+  public setNumber: string = '146';
   public name: string = 'Dream Ball';
-
   public fullName: string = 'Dream Ball EVS';
-
   public text: string =
     'You can play this card only if you took it as a face-down Prize card, before you put it into your hand. ' +
     `
     ` +
     'Search your deck for a Pokémon and put it onto your Bench. Then, shuffle your deck.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    return false;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
     }
 

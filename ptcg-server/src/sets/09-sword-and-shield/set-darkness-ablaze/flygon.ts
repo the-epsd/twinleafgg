@@ -2,7 +2,8 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { RetreatEffect, EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
+import { RetreatEffect } from '../../../game/store/effects/game-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../../game/store/prefabs/prefabs';
 import { PREVENT_DAMAGE, PREVENT_EFFECTS_OF_ATTACKS } from '../../../game/store/prefabs/effect-of-attack-prefabs';
 
@@ -37,20 +38,25 @@ export class Flygon extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Labyrinth of Sand
     if (effect instanceof RetreatEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      const retreatingPlayer = effect.player;
+      const abilityOwner = StateUtils.getOpponent(state, retreatingPlayer);
 
-      if (opponent.active.getPokemonCard() !== this) {
+      if (abilityOwner.active.getPokemonCard() !== this) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, opponent, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      const canApplyAbility = new EffectOfAbilityEffect(opponent, this.powers[0], this, player.active);
-      store.reduceEffect(state, canApplyAbility);
-      if (!canApplyAbility.target) {
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        retreatingPlayer.active,
+      )) {
         return state;
       }
 

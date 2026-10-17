@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
-import { StoreLike, State, PowerType, GameError, GameMessage, PlayerType, StateUtils } from '../../../game';
-import { EffectOfAbilityEffect, RetreatEffect } from '../../../game/store/effects/game-effects';
+import { Stage, CardType } from '../../../game/store/card/card-types';
+import { StoreLike, State, PowerType, GameError, GameMessage, StateUtils } from '../../../game';
+import { RetreatEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { ADD_SLEEP_TO_PLAYER_ACTIVE, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Snorlax extends PokemonCard {
 
@@ -47,38 +47,36 @@ export class Snorlax extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    // Block
+    // Block — Ref: set-chaos-rising/goodra.ts (Slimy Sliding)
     if (effect instanceof RetreatEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      const retreatingPlayer = effect.player;
+      const abilityOwner = StateUtils.getOpponent(state, retreatingPlayer);
 
-      let isSnorlaxInPlay = false;
-      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (opponent.active.cards[0] == this) {
-          isSnorlaxInPlay = true;
-        }
-      });
-
-      if (isSnorlaxInPlay) {
-        // Try to reduce PowerEffect, to check if something is blocking our ability
-        if (IS_ABILITY_BLOCKED(store, state, player, this)) return state;
-
-        // Check if Block can target the retreating Pokemon
-        const canApplyAbility = new EffectOfAbilityEffect(opponent, this.powers[0], this, player.active);
-        store.reduceEffect(state, canApplyAbility);
-        if (!canApplyAbility.target) {
-          return state;
-        }
-
-        // Block the retreat action
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      if (abilityOwner.active.getPokemonCard() !== this) {
+        return state;
       }
+
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        retreatingPlayer.active,
+      )) {
+        return state;
+      }
+
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
     // Collapse
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      effect.player.active.addSpecialCondition(SpecialCondition.ASLEEP);
-      return state;
+      ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, effect.player, this);
     }
 
     return state;

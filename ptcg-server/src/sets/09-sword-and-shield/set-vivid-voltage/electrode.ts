@@ -7,8 +7,7 @@ import { Stage, CardType, SuperType, EnergyType } from '../../../game/store/card
 import { AttachEnergyPrompt, GameError, GameMessage, PlayerType, PowerType, SlotType, StoreLike, State, StateUtils, pokemonHasCardType } from '../../../game';
 import { CardTarget } from '../../../game/store/actions/play-card-action';
 import { Effect } from '../../../game/store/effects/effect';
-import {WAS_POWER_USED, SHUFFLE_DECK, IS_ABILITY_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
-import { KnockOutEffect } from '../../../game/store/effects/game-effects';
+import { WAS_POWER_USED, SHUFFLE_DECK, IS_ABILITY_BLOCKED, KNOCK_OUT_THIS_POKEMON, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Electrode extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -87,12 +86,7 @@ export class Electrode extends PokemonCard {
 
         // KO this Electrode - the ability text says "If you searched your deck in this way,
         // this Pokemon is Knocked Out", which applies whenever the ability is used
-        const electrodeList = player.bench.find(b => b.getPokemonCard() === this);
-        if (electrodeList) {
-          const opponent = StateUtils.getOpponent(state, player);
-          const knockOutEffect = new KnockOutEffect(opponent, electrodeList);
-          store.reduceEffect(state, knockOutEffect);
-        }
+        state = KNOCK_OUT_THIS_POKEMON(store, state, player, this);
       });
     }
 

@@ -1,44 +1,38 @@
-import { Card, ChooseCardsPrompt, GameError, GameMessage } from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { State, StoreLike, TrainerCard, GameError, GameMessage, Player, Card, ChooseCardsPrompt, StateUtils } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
-import { StateUtils } from '../../../game/store/state-utils';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Delinquent extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'BKP';
-
-  public name: string = 'Delinquent';
-
-  public fullName: string = 'Delinquent BKP';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '98';
-
+  public name: string = 'Delinquent';
+  public fullName: string = 'Delinquent BKP';
   public text: string =
     'Discard any Stadium card in play. If you do, your opponent discards 3 cards from his or her hand.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return StateUtils.getStadiumCard(state) !== undefined;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      // const opponentCards = opponent.hand.cards;
 
-      const supporterTurn = player.supporterTurn;
-
-      if (supporterTurn > 0) {
+      if (player.supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
       const stadiumCard = StateUtils.getStadiumCard(state);
 
-      if (stadiumCard == undefined) {
+      if (stadiumCard === undefined) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
@@ -46,16 +40,13 @@ export class Delinquent extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      if (stadiumCard !== undefined) {
-        // Discard Stadium
-        const cardList = StateUtils.findCardList(state, stadiumCard);
-        const player = StateUtils.findOwner(state, cardList);
-        MOVE_CARDS(store, state, cardList, player.discard, { sourceCard: this });
-      }
+      // Discard Stadium
+      const stadiumList = StateUtils.findCardList(state, stadiumCard);
+      const stadiumOwner = StateUtils.findOwner(state, stadiumList);
+      MOVE_CARDS(store, state, stadiumList, stadiumOwner.discard, { sourceCard: this });
 
       // Discard 3 cards from opponent's hand
-
-      const opponentCards = opponent.hand.cards.filter((c) => c !== this);
+      const opponentCards = opponent.hand.cards;
       if (opponentCards.length <= 3) {
         MOVE_CARDS(store, state, opponent.hand, opponent.discard, { sourceCard: this });
       }
@@ -79,6 +70,7 @@ export class Delinquent extends TrainerCard {
         );
       }
     }
+
     return state;
   }
 }

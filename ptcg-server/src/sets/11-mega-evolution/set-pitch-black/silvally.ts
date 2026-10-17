@@ -110,8 +110,9 @@ export class Silvally extends PokemonCard {
         (picked) => {
           const sel = picked || [];
           if (sel.length > 0) {
-            SHOW_CARDS_TO_PLAYER(store, state, opponent, sel);
             MOVE_CARDS(store, state, player.deck, player.hand, { cards: sel, sourceCard: this });
+            SHOW_CARDS_TO_PLAYER(store, state, opponent, sel);
+            
           }
           SHUFFLE_DECK(store, state, player);
         },

@@ -7,6 +7,7 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PlayerType, PowerType, StoreLike, State } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckPokemonStatsEffect } from '../../../game/store/effects/check-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Aegislash extends PokemonCard {
@@ -70,9 +71,22 @@ export class Aegislash extends PokemonCard {
         }
       });
 
-      if (targetOwner === aegislashOwner) {
-        effect.weakness = [];
+      if (targetOwner !== aegislashOwner) {
+        return state;
       }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        aegislashOwner,
+        this.powers[0],
+        this,
+        effect.target,
+      )) {
+        return state;
+      }
+
+      effect.weakness = [];
     }
 
     // Attack 1: Protect Charge

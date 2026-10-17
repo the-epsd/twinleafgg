@@ -275,6 +275,67 @@ function getMainPokemonCard(card: Card, cardList: CardList): Card {
   return pokemons[pokemons.length - 1] ?? card;
 }
 
+function isLvXOrBreakCard(card: Card): card is PokemonCard {
+  if (card.superType !== SuperType.POKEMON) {
+    return false;
+  }
+  const pokemon = card as PokemonCard;
+  return (
+    pokemon.stage === Stage.LV_X ||
+    pokemon.tags?.includes(CardTag.POKEMON_LV_X) === true ||
+    pokemon.stage === Stage.BREAK ||
+    pokemon.tags?.includes(CardTag.BREAK) === true
+  );
+}
+
+/**
+ * Whether the card info pane should list prior-stage attacks/powers (LV.X, BREAK,
+ * Shrine of Memories, or an explicit slot/owner flag from CheckTableStateEffect).
+ */
+function shouldShowAllStageAbilities(
+  mainCard: Card,
+  cardList: CardList,
+  players?: Player[],
+): boolean {
+  if (cardList instanceof PokemonCardList && cardList.showAllStageAbilities) {
+    return true;
+  }
+  // Owner flag set by LV.X / BREAK / Shrine of Memories CheckTableStateEffect
+  if (players?.length) {
+    const owner = players.find(
+      (p) => p.active === cardList || p.bench?.some((b) => b === cardList),
+    );
+    if (owner?.showAllStageAbilities) {
+      return true;
+    }
+  }
+  return isLvXOrBreakCard(mainCard);
+}
+
+/**
+ * Prior-stage cards to merge into the pane.
+ * LV.X / BREAK only inherit the previous level (`evolvesFrom`), matching
+ * CheckPokemonAttacksEffect / CheckPokemonPowersEffect / BREAK_RULE.
+ * Shrine of Memories (flag only) shows every stage under the main card.
+ */
+function getPriorStageCardsForDisplay(
+  mainCard: Card,
+  cardList: CardList,
+  tools: Card[],
+): Card[] {
+  const stack = cardList.cards.filter(
+    (c) => c.superType === SuperType.POKEMON && c !== mainCard && !tools.includes(c),
+  );
+  if (isLvXOrBreakCard(mainCard)) {
+    const previousName = mainCard.evolvesFrom;
+    if (!previousName) {
+      return [];
+    }
+    return stack.filter((c) => c.name === previousName);
+  }
+  return stack;
+}
+
 function isFossilDittoTransformCard(card: Card): card is PokemonCard {
   if (card.superType !== SuperType.POKEMON) {
     return false;
@@ -501,20 +562,19 @@ export function getDisplayPowers(card: Card, cardList?: CardList, players?: Play
 
     if (cardList?.cards?.length) {
       const tools = pokemonCardListTools(cardList);
-      const viewingSpecificCard = cardList.cards.includes(card);
+      const mainCard = getMainPokemonCard(card, cardList);
+      // Lower stage from the stack list — show that card only (not the merged LV.X view).
+      const viewingSpecificCard = cardList.cards.includes(card) && card !== mainCard;
 
       if (viewingSpecificCard) {
         return addToolPowers(cardPowers(card), tools);
       }
 
-      const mainCard = getMainPokemonCard(card, cardList);
       let powers = cardPowers(mainCard);
 
-      if (cardList instanceof PokemonCardList && cardList.showAllStageAbilities) {
-        for (const c of cardList.cards) {
-          if (c.superType === SuperType.POKEMON && c !== mainCard && !tools.includes(c)) {
-            powers = [...powers, ...cardPowers(c)];
-          }
+      if (shouldShowAllStageAbilities(mainCard, cardList, players)) {
+        for (const c of getPriorStageCardsForDisplay(mainCard, cardList, tools)) {
+          powers = [...powers, ...cardPowers(c)];
         }
       }
 
@@ -560,20 +620,19 @@ export function getDisplayAttacks(card: Card, cardList?: CardList, players?: Pla
 
     if (cardList?.cards?.length) {
       const tools = pokemonCardListTools(cardList);
-      const viewingSpecificCard = cardList.cards.includes(card);
+      const mainCard = getMainPokemonCard(card, cardList);
+      // Lower stage from the stack list — show that card only (not the merged LV.X view).
+      const viewingSpecificCard = cardList.cards.includes(card) && card !== mainCard;
 
       if (viewingSpecificCard) {
         return addToolAttacks(cardAttacks(card), tools);
       }
 
-      const mainCard = getMainPokemonCard(card, cardList);
       let attacks = cardAttacks(mainCard);
 
-      if (cardList instanceof PokemonCardList && cardList.showAllStageAbilities) {
-        for (const c of cardList.cards) {
-          if (c.superType === SuperType.POKEMON && c !== mainCard && !tools.includes(c)) {
-            attacks = [...attacks, ...cardAttacks(c)];
-          }
+      if (shouldShowAllStageAbilities(mainCard, cardList, players)) {
+        for (const c of getPriorStageCardsForDisplay(mainCard, cardList, tools)) {
+          attacks = [...attacks, ...cardAttacks(c)];
         }
       }
 

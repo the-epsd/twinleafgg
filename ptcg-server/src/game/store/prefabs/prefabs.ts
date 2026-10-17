@@ -48,6 +48,7 @@ import {
   MoveDamageCountersEffect,
   DrawPrizesEffect,
   MoveCardsEffect,
+  SelfKnockOutEffect,
   SpecialEnergyEffect,
 } from '../effects/game-effects';
 import {
@@ -76,6 +77,7 @@ import { ShowCardsPrompt } from '../prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../prompts/shuffle-prompt';
 import { WaitPrompt } from '../prompts/wait-prompt';
 import { StateUtils } from '../state-utils';
+import { REMOVE_STADIUM_CARD_LIST } from '../stadium-utils';
 import { CardList } from '../state/card-list';
 import { Player } from '../state/player';
 import { PokemonCardList } from '../state/pokemon-card-list';
@@ -1088,6 +1090,19 @@ export function ATTACH_UP_TO_X_ENERGY_FROM_DECK_TO_Y_OF_YOUR_POKEMON(
 // Prizes & KO prize bonuses
 // =============================================================================
 
+/**
+ * Self-KO via SelfKnockOutEffect (lethal damage → checkState handles KnockOutEffect + prizes).
+ * LV.X-safe: finds the slot containing `source`, not getPokemonCard() === source.
+ */
+export function KNOCK_OUT_THIS_POKEMON(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  source: PokemonCard,
+): State {
+  return store.reduceEffect(state, new SelfKnockOutEffect(player, source));
+}
+
 export function YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK(
   effect: Effect,
   state: State,
@@ -1373,7 +1388,7 @@ export function DISCARD_A_STADIUM_CARD_IN_PLAY(state: State) {
   if (stadiumCard !== undefined) {
     const cardList = StateUtils.findCardList(state, stadiumCard);
     const player = StateUtils.findOwner(state, cardList);
-    cardList.moveTo(player.discard);
+    REMOVE_STADIUM_CARD_LIST(cardList, player);
   }
 }
 
@@ -3612,6 +3627,10 @@ export function CAN_PLAY_POKEMON_CARD(
 
     // For evolution cards, check if base Pokemon is in play AND can be evolved
     if (pokemonCard.stage !== Stage.BASIC) {
+      // LV.X may only be put on the Active Pokemon (Level-Up Rule).
+      const isLvX =
+        pokemonCard.stage === Stage.LV_X || pokemonCard.hasTag(CardTag.POKEMON_LV_X);
+
       // Check active Pokemon
       const activePokemon = player.active.getPokemonCard();
       let canEvolveActive = false;
@@ -3632,24 +3651,26 @@ export function CAN_PLAY_POKEMON_CARD(
         }
       }
 
-      // Check bench Pokemon
+      // Check bench Pokemon (not for LV.X — Active only)
       let canEvolveBench = false;
-      for (const bench of player.bench) {
-        const benchPokemon = bench.getPokemonCard();
-        if (benchPokemon) {
-          const matchesEvolution =
-            benchPokemon.name === pokemonCard.evolvesFrom ||
-            benchPokemon.evolvesTo.includes(pokemonCard.name) ||
-            benchPokemon.evolvesToStage.includes(pokemonCard.stage) ||
-            (Array.isArray(benchPokemon.evolvesFromBase) &&
-              benchPokemon.evolvesFromBase.length > 0 &&
-              benchPokemon.evolvesFromBase.includes(pokemonCard.evolvesFrom));
-          if (matchesEvolution) {
-            // Check if Pokemon was played this turn (can't evolve if played this turn)
-            // unless an effect (e.g. Evolutionary Advantage) granted canEvolveThisTurn
-            if (bench.pokemonPlayedTurn < state.turn || bench.canEvolveThisTurn) {
-              canEvolveBench = true;
-              break;
+      if (!isLvX) {
+        for (const bench of player.bench) {
+          const benchPokemon = bench.getPokemonCard();
+          if (benchPokemon) {
+            const matchesEvolution =
+              benchPokemon.name === pokemonCard.evolvesFrom ||
+              benchPokemon.evolvesTo.includes(pokemonCard.name) ||
+              benchPokemon.evolvesToStage.includes(pokemonCard.stage) ||
+              (Array.isArray(benchPokemon.evolvesFromBase) &&
+                benchPokemon.evolvesFromBase.length > 0 &&
+                benchPokemon.evolvesFromBase.includes(pokemonCard.evolvesFrom));
+            if (matchesEvolution) {
+              // Check if Pokemon was played this turn (can't evolve if played this turn)
+              // unless an effect (e.g. Evolutionary Advantage) granted canEvolveThisTurn
+              if (bench.pokemonPlayedTurn < state.turn || bench.canEvolveThisTurn) {
+                canEvolveBench = true;
+                break;
+              }
             }
           }
         }

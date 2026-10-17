@@ -5,10 +5,14 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
 import { PowerType, StateUtils, StoreLike, State } from '../../../game';
-import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { GamePhase } from '../../../game/store/state/state';
-import { ADD_POISON_TO_PLAYER_ACTIVE, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { AddSpecialConditionsPowerEffect } from '../../../game/store/effects/check-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import {
+  IS_ABILITY_BLOCKED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Scolipede extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -43,23 +47,36 @@ export class Scolipede extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Poison Point
-    // Ref: set-pokemon-151/hitmonchan.ts (Counterattack timing)
-    if (effect instanceof AfterDamageEffect && effect.target.getPokemonCard() === this && state.phase === GamePhase.ATTACK) {
-      const player = StateUtils.findOwner(state, effect.target);
-      const opponent = effect.player;
+    if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      if (player === opponent || player.active !== effect.target) {
-        return state;
-      }
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        effect.source,
+      )) {
+        return state;
+      }
+
+      store.reduceEffect(
+        state,
+        new AddSpecialConditionsPowerEffect(
+          abilityOwner,
+          this,
+          effect.source,
+          [SpecialCondition.POISONED],
+        ),
+      );
     }
 
     // Attack 1: Venoshock
-    // Refs: set-black-and-white/scolipede.ts (Venoshock), set-emerging-powers/whirlipede.ts (Poisoned check)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       if (effect.opponent.active.specialConditions.includes(SpecialCondition.POISONED)) {
         effect.damage += 40;

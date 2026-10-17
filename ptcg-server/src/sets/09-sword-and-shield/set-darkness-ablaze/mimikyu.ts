@@ -4,10 +4,12 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
-import { PlayerType, PowerType, StoreLike, State, StateUtils } from '../../../game';
+import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { HealTargetEffect } from '../../../game/store/effects/attack-effects';
 import { HealEffect } from '../../../game/store/effects/game-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Mimikyu extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -40,33 +42,35 @@ export class Mimikyu extends PokemonCard {
   public fullName: string = 'Mimikyu DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Heal Jamming (passive - prevent healing to opponent's benched Pokemon)
-    // Ref: AGENTS.md (passive abilities intercept effect types directly, no useWhenInPlay)
-    if (effect instanceof HealEffect) {
-      // Find who owns this Mimikyu
-      let mimikyuPlayer = null;
-      for (const player of state.players) {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-          if (cardList.getPokemonCard() === this) {
-            mimikyuPlayer = player;
-          }
-        });
-      }
+    // Heal Jamming — Ref: set-30th-celebration/yveltal.ts
+    if (effect instanceof HealEffect || effect instanceof HealTargetEffect) {
+      for (const abilityOwner of state.players) {
+        if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
+          continue;
+        }
 
-      if (mimikyuPlayer === null) {
+        if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+          continue;
+        }
+
+        const opponent = StateUtils.getOpponent(state, abilityOwner);
+        if (!opponent.bench.includes(effect.target)) {
+          continue;
+        }
+
+        if (!CAN_APPLY_ABILITY_TO_TARGET(
+          store,
+          state,
+          abilityOwner,
+          this.powers[0],
+          this,
+          effect.target,
+        )) {
+          continue;
+        }
+
+        effect.preventDefault = true;
         return state;
-      }
-
-      if (IS_ABILITY_BLOCKED(store, state, mimikyuPlayer, this)) {
-        return state;
-      }
-
-      const opponent = StateUtils.getOpponent(state, mimikyuPlayer);
-
-      // Check if heal target is opponent's bench
-      const isBenchedOpponent = opponent.bench.includes(effect.target);
-      if (isBenchedOpponent) {
-        effect.damage = 0;
       }
     }
 

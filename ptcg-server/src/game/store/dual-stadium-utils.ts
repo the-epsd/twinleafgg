@@ -3,6 +3,7 @@ import { GameLog, GameMessage } from '../game-message';
 import { Card } from './card/card';
 import { CardTag } from './card/card-types';
 import { TrainerCard } from './card/trainer-card';
+import { REMOVE_STADIUM_CARD_LIST } from './stadium-utils';
 import { Player } from './state/player';
 import { GamePhase, State } from './state/state';
 import { StateUtils } from './state-utils';
@@ -78,10 +79,10 @@ export function assembleDualStadiumFromHand(
   const opponent = StateUtils.getOpponent(state, player);
 
   if (player.stadium.cards.length > 0) {
-    player.stadium.moveTo(player.discard);
+    REMOVE_STADIUM_CARD_LIST(player.stadium, player);
   }
   if (opponent.stadium.cards.length > 0) {
-    opponent.stadium.moveTo(opponent.discard);
+    REMOVE_STADIUM_CARD_LIST(opponent.stadium, opponent);
   }
 
   player.stadiumPlayedTurn = state.turn;

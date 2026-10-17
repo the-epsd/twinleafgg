@@ -12,7 +12,7 @@ import {
   StoreLike,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 import {
   CONFIRMATION_PROMPT,
@@ -70,17 +70,14 @@ export class Jolteonex extends PokemonCard {
         if (result) {
           const opponent = StateUtils.getOpponent(state, effect.player);
           opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-            const effectOfAbility = new EffectOfAbilityEffect(
+            const placeCounters = new PlaceDamageCountersEffect(
               effect.player,
-              this.powers[0],
-              this,
               cardList,
+              10,
+              this,
+              this.powers[0],
             );
-            effectOfAbility.target = cardList;
-            store.reduceEffect(state, effectOfAbility);
-            if (effectOfAbility.target) {
-              cardList.damage += 10;
-            }
+            store.reduceEffect(state, placeCounters);
           });
         }
       });

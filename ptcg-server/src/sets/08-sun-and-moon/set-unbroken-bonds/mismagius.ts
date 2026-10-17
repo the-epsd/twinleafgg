@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
-import { GameError, GameMessage, PlayerType, PowerType, State, StoreLike } from '../../../game';
+import { GameError, GameMessage, PowerType, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
-import {WAS_ATTACK_USED, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { KNOCK_OUT_THIS_POKEMON, WAS_ATTACK_USED, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Mismagius extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -55,11 +55,7 @@ export class Mismagius extends PokemonCard {
         MOVE_CARDS(store, state, player.deck, player.hand, { count: 1, sourceCard: this });
       }
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.getPokemonCard() === this) {
-          cardList.damage += 999;
-        }
-      });
+      state = KNOCK_OUT_THIS_POKEMON(store, state, player, this);
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

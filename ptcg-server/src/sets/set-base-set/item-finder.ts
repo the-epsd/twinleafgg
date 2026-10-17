@@ -84,6 +84,8 @@ function* playCard(
     },
   );
 
+  MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: self });
+
   if (cards.length > 0) {
     yield store.prompt(
       state,
@@ -91,8 +93,6 @@ function* playCard(
       () => next(),
     );
   }
-
-  MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: self });
 }
 
 export class ItemFinder extends TrainerCard {

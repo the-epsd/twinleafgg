@@ -1,19 +1,22 @@
-import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
-import { Effect } from '../../../game/store/effects/effect';
-import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import {
-  PlayerType,
-  SlotType,
   CardTarget,
+  ChoosePokemonPrompt,
   GameError,
   GameMessage,
+  Player,
+  PlayerType,
   PokemonCardList,
+  SlotType,
+  State,
+  StoreLike,
+  TrainerCard,
+  TrainerType,
 } from '../../../game';
+import { Effect } from '../../../game/store/effects/effect';
 import { HealEffect } from '../../../game/store/effects/game-effects';
+import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+
 function* playCard(
   next: Function,
   store: StoreLike,
@@ -21,9 +24,9 @@ function* playCard(
   effect: TrainerEffect,
 ): IterableIterator<State> {
   const player = effect.player;
-
   const blocked: CardTarget[] = [];
-  let hasPokemonWithDamage: boolean = false;
+  let hasPokemonWithDamage = false;
+
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
     if (cardList.damage === 0) {
       blocked.push(target);
@@ -32,11 +35,10 @@ function* playCard(
     }
   });
 
-  if (hasPokemonWithDamage === false) {
+  if (!hasPokemonWithDamage) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  // Do not discard the card yet
   effect.preventDefault = true;
 
   let targets: PokemonCardList[] = [];
@@ -47,7 +49,7 @@ function* playCard(
       GameMessage.CHOOSE_POKEMON_TO_HEAL,
       PlayerType.BOTTOM_PLAYER,
       [SlotType.ACTIVE, SlotType.BENCH],
-      { allowCancel: true, blocked },
+      { allowCancel: false, blocked },
     ),
     (results) => {
       targets = results || [];
@@ -59,10 +61,7 @@ function* playCard(
     return state;
   }
 
-  // Discard trainer only when user selected a Pokemon
-
   targets.forEach((target) => {
-    // Heal Pokemon
     const healEffect = new HealEffect(player, target, 30);
     store.reduceEffect(state, healEffect);
   });
@@ -72,21 +71,25 @@ function* playCard(
 
 export class Potion extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'BCR';
-
-  public name: string = 'Potion';
-
-  public fullName: string = 'Potion BCR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '132';
-
+  public name: string = 'Potion';
+  public fullName: string = 'Potion BCR';
   public text: string = 'Heal 30 damage from 1 of your Pokemon.';
 
+  public canPlay(_store: StoreLike, _state: State, player: Player): boolean {
+    let hasPokemonWithDamage = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+      if (cardList.damage !== 0) {
+        hasPokemonWithDamage = true;
+      }
+    });
+    return hasPokemonWithDamage;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

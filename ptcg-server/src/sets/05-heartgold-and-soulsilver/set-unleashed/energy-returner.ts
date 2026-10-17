@@ -1,16 +1,15 @@
-import { Card } from '../../../game/store/card/card';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { TrainerType, EnergyType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
+import { Card, EnergyType, GameError, GameMessage, Player, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER } from '../../../game/store/prefabs/prefabs';
-import { StateUtils } from '../../../game/store/state-utils';
+import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+
+function hasBasicEnergyInDiscard(player: Player): boolean {
+  return player.discard.cards.some(
+    (c) => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC,
+  );
+}
 
 function* playCard(
   next: Function,
@@ -22,7 +21,7 @@ function* playCard(
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
-  let energyInDiscard: number = 0;
+  let energyInDiscard = 0;
   const blocked: number[] = [];
   player.discard.cards.forEach((c, index) => {
     const isBasicEnergy = c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC;
@@ -33,12 +32,10 @@ function* playCard(
     }
   });
 
-  // Player does not have correct cards in discard
   if (energyInDiscard === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
   const min = Math.min(energyInDiscard, 4);
@@ -59,12 +56,11 @@ function* playCard(
     },
   );
 
-  SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
   MOVE_CARDS(store, state, player.discard, player.deck, { cards, sourceCard: self });
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-    player.deck.applyOrder(order);
-  });
+  SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+
+  return SHUFFLE_DECK(store, state, player);
 }
 
 export class EnergyReturner extends TrainerCard {
@@ -74,12 +70,19 @@ export class EnergyReturner extends TrainerCard {
   public setNumber: string = '74';
   public name: string = 'Energy Returner';
   public fullName: string = 'Energy Returner UL';
-
   public text: string =
     'Search your discard pile for 4 basic Energy cards, show them to your opponent, and shuffle them into your deck.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    return hasBasicEnergyInDiscard(player);
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
+      if (!hasBasicEnergyInDiscard(effect.player)) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }

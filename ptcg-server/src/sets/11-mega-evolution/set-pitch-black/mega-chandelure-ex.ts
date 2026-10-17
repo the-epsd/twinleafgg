@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardTag, CardType, Stage } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, PlayerType, StateUtils } from '../../../game';
+import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class MegaChandelureex extends PokemonCard {
@@ -41,23 +42,27 @@ export class MegaChandelureex extends PokemonCard {
   public fullName: string = 'Mega Chandelure ex M5';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Cursed Flame — Ref: set-roaring-skies/hydreigon-ex.ts (CheckRetreatCostEffect); inverted for opponent Active cost increase
+    // Binding Flame — Ref: set-roaring-skies/hydreigon-ex.ts (CheckRetreatCostEffect)
     if (effect instanceof CheckRetreatCostEffect) {
       const retreatingPlayer = effect.player;
-      const abilityOwnerSide = StateUtils.getOpponent(state, retreatingPlayer);
+      const abilityOwner = StateUtils.getOpponent(state, retreatingPlayer);
 
-      let chandelureInPlay = false;
-      abilityOwnerSide.forEachPokemon(PlayerType.BOTTOM_PLAYER, (_cardList, card) => {
-        if (card === this) {
-          chandelureInPlay = true;
-        }
-      });
-
-      if (!chandelureInPlay) {
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, abilityOwnerSide, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        retreatingPlayer.active,
+      )) {
         return state;
       }
 
@@ -65,10 +70,9 @@ export class MegaChandelureex extends PokemonCard {
       return state;
     }
 
-    // Phantom Maze — Ref: set-brilliant-stars/flygon.ts (Desert Pillar — Colorless in opponent Active Retreat Cost)
+    // Phantom Maze — Ref: set-brilliant-stars/flygon.ts
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      const opponent = StateUtils.getOpponent(state, effect.player);
 
       const checkRetreat = new CheckRetreatCostEffect(opponent);
       store.reduceEffect(state, checkRetreat);

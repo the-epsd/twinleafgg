@@ -1,18 +1,22 @@
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
-import { Card } from '../../../game/store/card/card';
-import { Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
+import { Stage, TrainerType } from '../../../game/store/card/card-types';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
-import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import { StateUtils } from '../../../game/store/state-utils';
-import { CardList } from '../../../game/store/state/card-list';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import {
+  GameError,
+  GameMessage,
+  Card,
+  TrainerCard,
+  ChooseCardsPrompt,
+  CardList,
+  Player,
+  State,
+  StoreLike,
+} from '../../../game';
+import {
+  MOVE_CARDS,
+  SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND,
+} from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -22,7 +26,6 @@ function* playCard(
   effect: TrainerEffect,
 ): IterableIterator<State> {
   const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
 
   cards = player.hand.cards.filter((c) => c !== self);
@@ -72,58 +75,43 @@ function* playCard(
 
   MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: self });
 
-  yield store.prompt(
+  SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(
+    store,
     state,
-    new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_HAND,
-      player.deck,
-      { superType: SuperType.POKEMON, stage: Stage.BASIC },
-      { min: 0, max: 1, allowCancel: false },
-    ),
-    (selected) => {
-      cards = selected || [];
-      next();
-    },
+    player,
+    { stage: Stage.BASIC },
+    { min: 0, max: 1, allowCancel: false },
   );
 
-  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
-
-  if (cards.length > 0) {
-    yield store.prompt(
-      state,
-      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
-      () => next(),
-    );
-  }
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-    player.deck.applyOrder(order);
-  });
+  return state;
 }
 
 export class QuickBall extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
-  public set: string = 'SSH';
-
-  public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '179';
-
   public regulationMark = 'D';
-
+  public set: string = 'SSH';
+  public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '179';
   public name: string = 'Quick Ball';
-
   public fullName: string = 'Quick Ball SSH';
-
   public text: string =
     'You can play this card only if you discard another card from your hand. ' +
     'Search your deck for a Basic Pokemon, reveal it, and put it into your ' +
     'hand. Then, shuffle your deck.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const otherCards = player.hand.cards.filter((c) => c !== this);
+    if (otherCards.length < 1) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }

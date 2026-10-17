@@ -57,7 +57,11 @@ function* playCard(
         sourceCard: effect.trainerCard,
       });
       if (cards.length > 0) {
-        state = store.prompt(
+        MOVE_CARDS(store, state, player.deck, player.hand, {
+      cards: cards,
+      sourceCard: effect.trainerCard,
+    });
+    state = store.prompt(
           state,
           new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
           () => state,
@@ -65,10 +69,7 @@ function* playCard(
       }
     }
 
-    MOVE_CARDS(store, state, player.deck, player.hand, {
-      cards: cards,
-      sourceCard: effect.trainerCard,
-    });
+    
   }
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {

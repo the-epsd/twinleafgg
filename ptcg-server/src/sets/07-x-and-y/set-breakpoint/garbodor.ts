@@ -43,7 +43,7 @@ export class Garbodor extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    HANDLE_ABILITY_LOCK(effect, ({ player, card, powerEffect }) => {
+    HANDLE_ABILITY_LOCK(effect, ({ player, card }) => {
       const opponent = StateUtils.getOpponent(state, player);
 
       let playerHasGarbotoxin = false;
@@ -68,10 +68,7 @@ export class Garbodor extends PokemonCard {
       if (!CAN_APPLY_LOCKER_ABILITY(store, state, lockerOwner, this, this.powers[0])) {
         return false;
       }
-      if (powerEffect) {
-        return CAN_APPLY_LOCK_TO_TARGET(store, state, lockerOwner, this, this.powers[0], card);
-      }
-      return true;
+      return CAN_APPLY_LOCK_TO_TARGET(store, state, lockerOwner, this, this.powers[0], card);
     }, {
       exemptPowerNames: ['Garbotoxin'],
       error: GameMessage.BLOCKED_BY_ABILITY,

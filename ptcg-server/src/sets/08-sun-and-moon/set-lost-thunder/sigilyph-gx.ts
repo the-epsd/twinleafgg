@@ -4,14 +4,15 @@
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GamePhase } from '../../../game';
+import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import {
   WAS_ATTACK_USED,
   BLOCK_IF_GX_ATTACK_USED,
   IS_ABILITY_BLOCKED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
 } from '../../../game/store/prefabs/prefabs';
 
 export class SigilyphGx extends PokemonCard {
@@ -54,30 +55,14 @@ export class SigilyphGx extends PokemonCard {
   public fullName: string = 'Sigilyph-GX LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Mirror Counter (passive - reflect damage from GX/EX)
-    // Ref: set-steam-siege/bastiodon.ts (Counter Head - AfterDamageEffect reflection)
-    if (effect instanceof AfterDamageEffect && effect.target.cards.includes(this)) {
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
+    // Ability: Mirror Counter
+    if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      if (IS_ABILITY_BLOCKED(store, state, targetPlayer, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      if (effect.target.getPokemonCard() !== this) {
-        return state;
-      }
-
-      // Must be active
-      if (targetPlayer.active !== effect.target) {
-        return state;
-      }
-
-      // Must be from opponent
-      if (effect.player === targetPlayer) {
-        return state;
-      }
-
-      // Must be from GX or EX
       const sourceCard = effect.source.getPokemonCard();
       if (
         !sourceCard ||
@@ -86,19 +71,22 @@ export class SigilyphGx extends PokemonCard {
         return state;
       }
 
-      if (effect.damage > 0 && state.phase === GamePhase.ATTACK) {
-        effect.source.damage += effect.damage;
-      }
+      const placeCounters = new PlaceDamageCountersEffect(
+        abilityOwner,
+        effect.source,
+        effect.damage,
+        this,
+        this.powers[0],
+      );
+      store.reduceEffect(state, placeCounters);
     }
 
     // Attack 1: Sonic Wing
-    // Ref: set-forbidden-light/zygarde.ts (Earthen Aura - ignore resistance)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       effect.ignoreResistance = true;
     }
 
     // Attack 2: Intercept-GX
-    // Ref: set-dragons-majesty/altaria-gx.ts (GX attack pattern)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

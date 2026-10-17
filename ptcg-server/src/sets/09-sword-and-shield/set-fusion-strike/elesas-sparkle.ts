@@ -5,32 +5,43 @@ import { CardTag, SuperType, TrainerType } from '../../../game/store/card/card-t
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { AttachEnergyPrompt, ChoosePokemonPrompt, GameError, StateUtils } from '../../../game';
-import {SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { AttachEnergyPrompt, ChoosePokemonPrompt, GameError, StateUtils, Player } from '../../../game';
+import { SHUFFLE_DECK, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class ElesasSparkle extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public regulationMark = 'E';
-
-  protected _tags = [CardTag.FUSION_STRIKE];
-
   public set: string = 'FST';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '233';
-
   public name: string = "Elesa's Sparkle";
-
   public fullName: string = "Elesa's Sparkle FST";
-
   public text: string =
     'Choose up to 2 of your Fusion Strike Pokémon. For each of those Pokémon, search your deck for a Fusion Strike Energy card and attach it to that Pokémon. Then, shuffle your deck.';
+  protected _tags = [CardTag.FUSION_STRIKE];
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+
+    let hasFusionStrike = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
+      if (card.hasTag(CardTag.FUSION_STRIKE)) {
+        hasFusionStrike = true;
+      }
+    });
+
+    if (!hasFusionStrike) {
+      return false;
+    }
+
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
       // Check if player has any Fusion Strike Pokemon in play
@@ -108,7 +119,10 @@ export class ElesasSparkle extends TrainerCard {
 
               for (const transfer of transfers) {
                 const target = StateUtils.getTarget(state, player, transfer.to);
-                MOVE_CARDS(store, state, player.deck, target, { cards: [transfer.card], sourceCard: this });
+                MOVE_CARDS(store, state, player.deck, target, {
+                  cards: [transfer.card],
+                  sourceCard: this,
+                });
               }
               SHUFFLE_DECK(store, state, player);
             },

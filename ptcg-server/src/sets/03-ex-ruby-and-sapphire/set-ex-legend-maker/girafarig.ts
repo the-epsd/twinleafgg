@@ -24,6 +24,8 @@ import {ADD_CONFUSION_TO_PLAYER_ACTIVE,
   IS_POKEBODY_BLOCKED,
   WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import {
+  CAN_APPLY_LOCKER_ABILITY,
+  CAN_APPLY_LOCK_TO_TARGET,
   HANDLE_ABILITY_BLOCK,
   IS_ABILITY_LOCKER_IN_PLAY,
   POKEPOWER_TYPES,
@@ -91,18 +93,25 @@ export class Girafarig extends PokemonCard {
           return false;
         }
 
+        let isTargetBasic = false;
         try {
           const cardList = StateUtils.findCardList(state, card);
           if (cardList instanceof PokemonCardList) {
-            return (
+            isTargetBasic =
               cardList.getPokemons().length === 1 ||
-              (card.hasTag(CardTag.LEGEND) && !card.hasTag(CardTag.POKEMON_ex))
-            );
+              (card.hasTag(CardTag.LEGEND) && !card.hasTag(CardTag.POKEMON_ex));
           }
         } catch {
           return false;
         }
-        return false;
+        if (!isTargetBasic) {
+          return false;
+        }
+
+        if (!CAN_APPLY_LOCKER_ABILITY(store, state, lockerOwner, this, this.powers[0])) {
+          return false;
+        }
+        return CAN_APPLY_LOCK_TO_TARGET(store, state, lockerOwner, this, this.powers[0], card);
       },
       {
         powerTypes: POKEPOWER_TYPES,

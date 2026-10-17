@@ -1,9 +1,14 @@
-import { CardType, PokemonCard, Stage, StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType } from '../../../game';
+import { CardType, PokemonCard, Stage, StoreLike, State, StateUtils } from '../../../game';
 import { PowerType } from '../../../game';
-import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
-import { CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, JUST_EVOLVED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
+import { GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import {
+  CONFIRMATION_PROMPT,
+  IS_ABILITY_BLOCKED,
+  JUST_EVOLVED,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+  WAS_ATTACK_USED,
+} from '../../../game/store/prefabs/prefabs';
 
 export class Hariyama extends PokemonCard {
   public stage = Stage.STAGE_1;
@@ -34,41 +39,33 @@ export class Hariyama extends PokemonCard {
   public regulationMark = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Sumo Catcher
     if (JUST_EVOLVED(effect, this) && !IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const hasBench = opponent.bench.some(b => b.cards.length > 0);
 
-      if (!hasBench) {
+      if (!opponent.bench.some(b => b.cards.length > 0)) {
         return state;
       }
 
       CONFIRMATION_PROMPT(store, state, player, (result) => {
         if (result) {
-          return store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-            PlayerType.TOP_PLAYER,
-            [SlotType.BENCH],
-            { allowCancel: false }
-          ), result => {
-            const cardList = result[0];
-
-            const switchEffect = new EffectOfAbilityEffect(player, this.powers[0], this, cardList);
-            store.reduceEffect(state, switchEffect);
-            if (switchEffect.target) {
-              opponent.switchPokemon(cardList);
-            }
-          });
+          GUST_OPPONENT_BENCHED_POKEMON_FROM_ABILITY(
+            store,
+            state,
+            player,
+            this.powers[0],
+            this,
+          );
         }
       });
     }
 
+    // Wild Press
     if (WAS_ATTACK_USED(effect, 0, this)) {
       THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 70);
     }
+
     return state;
   }
-
 }

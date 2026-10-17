@@ -69,14 +69,15 @@ export class Oricorio3 extends PokemonCard {
             cards = selected || [];
             if (cards.length > 0) {
               // Reveal to opponent
-              store.prompt(state, new ShowCardsPrompt(
+              cards.forEach(card => {
+                  MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this });
+                });
+                store.prompt(state, new ShowCardsPrompt(
                 opponent.id,
                 GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
                 cards
               ), () => {
-                cards.forEach(card => {
-                  MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this });
-                });
+                
                 SHUFFLE_DECK(store, state, player);
               });
             } else {

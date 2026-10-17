@@ -52,7 +52,11 @@ function* playCard(
           sourceCard: effect.trainerCard,
         });
         if (cards.length > 0) {
-          state = store.prompt(
+          MOVE_CARDS(store, state, player.discard, player.hand, {
+          cards: cards,
+          sourceCard: effect.trainerCard,
+        });
+        state = store.prompt(
             state,
             new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
             () => state,
@@ -62,10 +66,7 @@ function* playCard(
 
       if (cards.length > 0) {
         // Recover discarded Energy
-        MOVE_CARDS(store, state, player.discard, player.hand, {
-          cards: cards,
-          sourceCard: effect.trainerCard,
-        });
+        
         // Discard item card
       }
     },

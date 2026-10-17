@@ -5,6 +5,7 @@ import type {
   PowerDraft,
   PowerTypeName,
   ReprintCandidate,
+  ServerEffect,
   StageName,
   WeaknessValue,
 } from './types';
@@ -14,14 +15,21 @@ import {
   POWER_TYPES,
   STAGES,
 } from './types';
-import { getPrefabById, prefabsForScope } from './prefabs/catalog';
 import {
-  MissingPrefabError,
-  createManualSelected,
-  matchEffectText,
-  matchedToSelected,
-} from './prefabs/matcher';
-import { generateCardSource, parseEnergyCost } from './generator/generateCard';
+  classNameForVariant,
+  fullNameForVariant,
+  toPascalClassName,
+} from './cardIdentity';
+import { catalogStats, getPrefabById, mergeEnginePrefabs, prefabsForScope } from './prefabs/catalog';
+import { createManualSelected } from './prefabs/matcher';
+import { engineRecordToPrefab, loadEnginePrefabIndex } from './prefabs/enginePrefabs';
+import { clearServerEffectsCache } from './serverEffects';
+import {
+  describeHybridResolution,
+  generateCardSource,
+  parseEnergyCost,
+  resolveEffectHybrid,
+} from './generator/generateCard';
 import {
   createBrowseState,
   ensureImplementedLoaded,
@@ -31,6 +39,7 @@ import {
   pickCardToDraft,
   renderBrowse,
   runSearch,
+  visibleBrowseCards,
 } from './tcgdex/browse';
 import type { BrowseSourceMeta } from './tcgdex/mapCardToDraft';
 import {
@@ -40,7 +49,7 @@ import {
   TcgDexApiError,
   resetDataSource,
 } from './tcgdex/client';
-import { clearImplementedCache } from './data/implemented';
+import { clearImplementedCache, isImplemented } from './data/implemented';
 import {
   applyRemovedDuplicate,
   createDuplicatesState,
@@ -138,6 +147,10 @@ let saveAsReprint = false;
 let reprintLoading = false;
 let reprintError = '';
 let reprintLookupVersion = 0;
+let reprintNextOccurrence = 1;
+let reprintSuggestedClassName = '';
+let reprintSuggestedFullName = '';
+let reprintRefreshTimer: ReturnType<typeof setTimeout> | undefined;
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
@@ -164,6 +177,32 @@ function clearReprintState(): void {
   saveAsReprint = false;
   reprintLoading = false;
   reprintError = '';
+  reprintNextOccurrence = 1;
+  reprintSuggestedClassName = '';
+  reprintSuggestedFullName = '';
+  if (reprintRefreshTimer) {
+    clearTimeout(reprintRefreshTimer);
+    reprintRefreshTimer = undefined;
+  }
+}
+
+function scheduleReprintRefresh(): void {
+  if (reprintRefreshTimer) clearTimeout(reprintRefreshTimer);
+  reprintRefreshTimer = setTimeout(() => {
+    reprintRefreshTimer = undefined;
+    void refreshReprintCandidates();
+  }, 300);
+}
+
+function hasIdenticalReprint(): boolean {
+  return reprintCandidates.some(candidate => candidate.identical);
+}
+
+/** Occurrence for a new distinct file — 1 when saving a true reprint or no name collision. */
+function effectiveVariantOccurrence(): number {
+  if (saveAsReprint && selectedReprintCandidate()?.identical) return 1;
+  if (hasIdenticalReprint()) return 1;
+  return reprintNextOccurrence;
 }
 
 async function refreshReprintCandidates(): Promise<void> {
@@ -174,6 +213,9 @@ async function refreshReprintCandidates(): Promise<void> {
   selectedReprintKey = '';
   saveAsReprint = false;
   reprintError = '';
+  reprintNextOccurrence = 1;
+  reprintSuggestedClassName = '';
+  reprintSuggestedFullName = '';
   if (!name || !set) {
     reprintLoading = false;
     render();
@@ -183,23 +225,32 @@ async function refreshReprintCandidates(): Promise<void> {
   reprintLoading = true;
   render();
   try {
-    const candidates = await findReprintCandidates(set, name, draft.setNumber);
+    const result = await findReprintCandidates(draft);
     const cardsBySet = new Map<string, Awaited<ReturnType<typeof findCardsByNameAndSet>>>();
     await Promise.all(
-      [...new Set(candidates.map(candidate => candidate.set))].map(async candidateSet => {
+      [...new Set(result.candidates.map(candidate => candidate.set))].map(async candidateSet => {
         cardsBySet.set(candidateSet, await findCardsByNameAndSet(name, candidateSet));
       })
     );
     if (lookupVersion !== reprintLookupVersion) return;
-    reprintCandidates = candidates.map(candidate => ({
+    reprintCandidates = result.candidates.map(candidate => ({
       ...candidate,
       imageUrl: cardImageUrl(
         cardsBySet.get(candidate.set)?.find(card => card.localId === candidate.setNumber)?.image,
         'high'
       ),
     }));
-    selectedReprintKey = reprintCandidates.length > 0 ? reprintKey(reprintCandidates[0]) : '';
-    saveAsReprint = reprintCandidates.length === 1;
+    reprintNextOccurrence = result.nextOccurrence;
+    reprintSuggestedClassName = result.suggestedClassName;
+    reprintSuggestedFullName = result.suggestedFullName;
+    const identical = reprintCandidates.filter(candidate => candidate.identical);
+    if (identical.length > 0) {
+      selectedReprintKey = reprintKey(identical[0]);
+      saveAsReprint = true;
+    } else {
+      selectedReprintKey = '';
+      saveAsReprint = false;
+    }
   } catch (error) {
     if (lookupVersion !== reprintLookupVersion) return;
     reprintError = error instanceof Error ? error.message : String(error);
@@ -216,6 +267,109 @@ async function ensureSeriesLoaded() {
   await ensureImplementedLoaded(browse);
   await loadSeries(browse);
   render();
+}
+
+function browseCardNav(): {
+  cards: ReturnType<typeof visibleBrowseCards>;
+  index: number;
+  canPrev: boolean;
+  canNext: boolean;
+  label: string;
+} | null {
+  if (!sourceMeta || browse.cards.length === 0) return null;
+  const visible = visibleBrowseCards(browse);
+  let cards = visible;
+  let index = cards.findIndex(c => c.id === sourceMeta!.tcgDexId);
+  // Current card may be hidden by the implemented filter — fall back to full list.
+  if (index < 0) {
+    cards = browse.cards;
+    index = cards.findIndex(c => c.id === sourceMeta!.tcgDexId);
+  }
+  if (index < 0) return null;
+  const canPrev =
+    index > 0 || (browse.level === 'search' && browse.searchOffset > 0);
+  const canNext =
+    index < cards.length - 1 || (browse.level === 'search' && browse.searchHasMore);
+  return {
+    cards,
+    index,
+    canPrev,
+    canNext,
+    label: `${index + 1 + (browse.level === 'search' ? browse.searchOffset : 0)} / ${
+      browse.level === 'search' && browse.searchHasMore
+        ? `${cards.length + browse.searchOffset}+`
+        : String(cards.length + (browse.level === 'search' ? browse.searchOffset : 0))
+    }`,
+  };
+}
+
+async function openCardInEditor(id: string): Promise<void> {
+  clearReprintState();
+  imageModalOpen = false;
+  imageModalUrl = '';
+  browse.loading = true;
+  statusMessage = `Loading ${id}…`;
+  outputError = '';
+  render();
+  try {
+    const { draft: next, meta } = await pickCardToDraft(id);
+    draft = next;
+    sourceMeta = meta;
+    outputCode = '';
+    view = 'editor';
+    statusMessage = `Pre-filled from ${id}. Match prefabs, then Generate.`;
+    browse.loading = false;
+  } catch (err) {
+    browse.loading = false;
+    statusMessage = '';
+    outputError =
+      err instanceof TcgDexApiError
+        ? err.message
+        : err instanceof Error
+          ? err.message
+          : String(err);
+  }
+  render(view === 'editor' ? 'top' : 'preserve');
+  if (view === 'editor') void refreshReprintCandidates();
+}
+
+async function navigateBrowseCard(direction: -1 | 1): Promise<void> {
+  const nav = browseCardNav();
+  if (!nav) return;
+  const nextIndex = nav.index + direction;
+  if (nextIndex >= 0 && nextIndex < nav.cards.length) {
+    await openCardInEditor(nav.cards[nextIndex].id);
+    return;
+  }
+  if (browse.level !== 'search') return;
+
+  if (direction === 1 && browse.searchHasMore) {
+    browse.loading = true;
+    statusMessage = `Searching ${browse.searchQuery}…`;
+    outputError = '';
+    browse.searchOffset += browse.searchPageSize;
+    render();
+    await runSearch(browse, browse.searchQuery);
+    const nextCards = visibleBrowseCards(browse);
+    const target = nextCards[0] || browse.cards[0];
+    if (target) await openCardInEditor(target.id);
+    else render();
+    return;
+  }
+
+  if (direction === -1 && browse.searchOffset > 0) {
+    browse.loading = true;
+    statusMessage = `Searching ${browse.searchQuery}…`;
+    outputError = '';
+    browse.searchOffset = Math.max(0, browse.searchOffset - browse.searchPageSize);
+    render();
+    await runSearch(browse, browse.searchQuery);
+    const prevCards = visibleBrowseCards(browse);
+    const list = prevCards.length > 0 ? prevCards : browse.cards;
+    const target = list[list.length - 1];
+    if (target) await openCardInEditor(target.id);
+    else render();
+  }
 }
 
 async function ensureDuplicatesLoaded(force = false) {
@@ -242,10 +396,54 @@ function energyOptions(selected: string, includeEmpty = false): string {
   return opts.join('');
 }
 
+function renderHybridSources(options: {
+  serverEffect?: ServerEffect;
+  serverSnippets?: ServerEffect[];
+  unmatchedClauses?: string[];
+}): string {
+  const parts: string[] = [];
+  if (options.serverEffect) {
+    parts.push(
+      `<div class="hybrid-source">
+        <strong>Full server match</strong>
+        <span class="badge">${Math.round(options.serverEffect.similarity * 100)}%</span>
+        <p class="muted">${escapeHtml(options.serverEffect.source)}</p>
+        <p class="muted">${escapeHtml(options.serverEffect.effectText || options.serverEffect.attackText || '')}</p>
+      </div>`
+    );
+  }
+  for (const snippet of options.serverSnippets ?? []) {
+    const clause = snippet.matchedClause || snippet.effectText;
+    parts.push(
+      `<div class="hybrid-source">
+        <strong>Server snippet</strong>
+        <span class="badge">${Math.round(snippet.similarity * 100)}%</span>
+        <p class="muted">${escapeHtml(snippet.source)}</p>
+        <p class="muted">Clause: ${escapeHtml(clause)}</p>
+      </div>`
+    );
+  }
+  for (const clause of options.unmatchedClauses ?? []) {
+    parts.push(
+      `<div class="hybrid-unmatched">
+        <strong>Unmatched</strong>
+        <p class="muted">${escapeHtml(clause)}</p>
+      </div>`
+    );
+  }
+  if (parts.length === 0) return '';
+  return `<div class="hybrid-panel">${parts.join('')}</div>`;
+}
+
 function renderPrefabPicker(
   kind: 'attack' | 'power' | 'trainer',
   itemId: string,
-  selected: AttackDraft['selectedPrefabs']
+  selected: AttackDraft['selectedPrefabs'],
+  hybrid?: {
+    serverEffect?: ServerEffect;
+    serverSnippets?: ServerEffect[];
+    unmatchedClauses?: string[];
+  }
 ): string {
   const catalog = prefabsForScope(kind);
   const options = catalog
@@ -277,8 +475,9 @@ function renderPrefabPicker(
     .join('');
 
   return `<div class="prefab-panel">
-    <h4>reduceEffect prefabs</h4>
+    <h4>reduceEffect (prefabs + snippets)</h4>
     ${rows || '<p class="muted">No prefabs selected yet. Match from text or add manually.</p>'}
+    ${hybrid ? renderHybridSources(hybrid) : ''}
     <div class="row">
       <select data-role="prefab-select" data-kind="${kind}" data-item="${itemId}">
         <option value="">Add prefab…</option>
@@ -318,7 +517,11 @@ function renderAttack(attack: AttackDraft, index: number): string {
       <textarea data-field="attack" data-id="${attack.id}" data-key="text" rows="3" placeholder="Flip a coin. If heads, the Defending Pokemon is now Paralyzed.">${escapeHtml(attack.text)}</textarea>
     </label>
     ${attack.matchError ? `<div class="error-box">${escapeHtml(attack.matchError)}</div>` : ''}
-    ${renderPrefabPicker('attack', attack.id, attack.selectedPrefabs)}
+    ${renderPrefabPicker('attack', attack.id, attack.selectedPrefabs, {
+      serverEffect: attack.serverEffect,
+      serverSnippets: attack.serverSnippets,
+      unmatchedClauses: attack.unmatchedClauses,
+    })}
   </section>`;
 }
 
@@ -361,7 +564,11 @@ function renderPower(power: PowerDraft, index: number): string {
       <textarea data-field="power" data-id="${power.id}" data-key="text" rows="3">${escapeHtml(power.text)}</textarea>
     </label>
     ${power.matchError ? `<div class="error-box">${escapeHtml(power.matchError)}</div>` : ''}
-    ${renderPrefabPicker('power', power.id, power.selectedPrefabs)}
+    ${renderPrefabPicker('power', power.id, power.selectedPrefabs, {
+      serverEffect: power.serverEffect,
+      serverSnippets: power.serverSnippets,
+      unmatchedClauses: power.unmatchedClauses,
+    })}
   </section>`;
 }
 
@@ -373,7 +580,7 @@ function renderPokemonFields(): string {
   return `
     <div class="grid-3">
       <label>Stage<select data-root="stage">${stageOpts}</select></label>
-      <label>Card type<select data-root="cardType">${energyOptions(draft.cardType)}</select></label>
+      <label>Card type (e.g. R or FM)<input data-root="cardType" value="${escapeAttr(draft.cardType)}" placeholder="R" /></label>
       <label>HP<input type="number" data-root="hp" value="${escapeAttr(draft.hp)}" /></label>
     </div>
     <div class="grid-2">
@@ -385,8 +592,10 @@ function renderPokemonFields(): string {
       <label>Weakness value
         <select data-root="weaknessValue">
           <option value="x2" ${draft.weaknessValue === 'x2' ? 'selected' : ''}>2x</option>
+          <option value="+10" ${draft.weaknessValue === '+10' ? 'selected' : ''}>+10</option>
           <option value="+20" ${draft.weaknessValue === '+20' ? 'selected' : ''}>+20</option>
           <option value="+30" ${draft.weaknessValue === '+30' ? 'selected' : ''}>+30</option>
+          <option value="+40" ${draft.weaknessValue === '+40' ? 'selected' : ''}>+40</option>
         </select>
       </label>
       <label>Retreat (C per cost)<input data-root="retreat" value="${escapeAttr(draft.retreat)}" placeholder="CCC" /></label>
@@ -443,9 +652,12 @@ function renderTrainerFields(): string {
       <label>Tags (comma CardTag names)<input data-root="tags" value="${escapeAttr(draft.tags)}" placeholder="ACE_SPEC" /></label>
     </div>
     <label>Text<textarea data-root="trainerText" rows="4">${escapeHtml(draft.trainerText)}</textarea></label>
-    ${renderPrefabPicker('trainer', 'trainer-effect', draft.trainerPrefabs)}
-    ${draft.trainerServerEffect ? `<p class="muted">Fallback matched ${escapeHtml(draft.trainerServerEffect.source)} (${Math.round(draft.trainerServerEffect.similarity * 100)}% text similarity).</p>` : ''}
-    <p class="muted">Trainer effects try shared prefabs first, then reuse a similar Trainer reducer from the server codebase.</p>
+    ${renderPrefabPicker('trainer', 'trainer-effect', draft.trainerPrefabs, {
+      serverEffect: draft.trainerServerEffect,
+      serverSnippets: draft.trainerServerSnippets,
+      unmatchedClauses: draft.trainerUnmatchedClauses,
+    })}
+    <p class="muted">Trainer effects match prefabs clause-by-clause, then fill gaps from similar Trainer reducers.</p>
   `;
 }
 
@@ -472,25 +684,31 @@ function computedFullName(): string {
   const name = draft.name.trim();
   const set = draft.set.trim();
   if (!name) return '(name + set)';
-  return set ? `${name} ${set}` : name;
+  if (saveAsReprint && selectedReprintCandidate()?.identical) {
+    return set ? `${name} ${set}` : name;
+  }
+  return fullNameForVariant(name, set, effectiveVariantOccurrence()) || '(name + set)';
 }
 
 function computedClassName(): string {
   if (draft.className.trim()) return draft.className.trim();
-  return (
-    draft.name
-      .replace(/[^a-zA-Z0-9 ]/g, ' ')
-      .split(/\s+/)
-      .filter(Boolean)
-      .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-      .join('') || '(from name)'
-  );
+  const base = toPascalClassName(draft.name) || 'NewCard';
+  if (saveAsReprint && selectedReprintCandidate()?.identical) {
+    return base;
+  }
+  const occurrence = effectiveVariantOccurrence();
+  if (occurrence > 1 && reprintSuggestedClassName) {
+    return reprintSuggestedClassName;
+  }
+  return classNameForVariant(base, occurrence);
 }
 
 function renderReprintSection(): string {
   const selected = selectedReprintCandidate();
   const name = draft.name.trim();
   const set = draft.set.trim();
+  const identicalCount = reprintCandidates.filter(c => c.identical).length;
+  const distinctCount = reprintCandidates.length - identicalCount;
   let content = '';
   if (!name || !set) {
     content = '<p class="muted">Enter a card name and set to check for existing reprint sources.</p>';
@@ -499,26 +717,39 @@ function renderReprintSection(): string {
   } else if (reprintError) {
     content = `<p class="muted">${escapeHtml(reprintError)}</p>`;
   } else if (reprintCandidates.length === 0) {
-    content = '<p class="muted">No same-set reprint candidate found.</p>';
+    content = '<p class="muted">No same-set card with this name found.</p>';
   } else {
+    const variantNote =
+      identicalCount === 0 && distinctCount > 0
+        ? `<p class="muted">Same name, different attacks/abilities — will save as <code>${escapeHtml(
+            reprintSuggestedClassName || computedClassName()
+          )}</code> with fullName <code>${escapeHtml(
+            reprintSuggestedFullName || computedFullName()
+          )}</code> (not a reprint).</p>`
+        : identicalCount > 0
+          ? `<p class="muted">Found ${identicalCount} matching reprint source${identicalCount === 1 ? '' : 's'} (same attacks/abilities). Confirm before saving.</p>`
+          : '';
     content = `
-      <p class="muted">Found ${reprintCandidates.length} existing card${reprintCandidates.length === 1 ? '' : 's'} with this name. Confirm the source before saving.</p>
+      ${variantNote}
+      ${distinctCount > 0 && identicalCount > 0 ? `<p class="muted">Also found ${distinctCount} same-name card${distinctCount === 1 ? '' : 's'} with different attacks (not reprints).</p>` : ''}
       <div class="reprint-options">
         ${reprintCandidates
           .map(candidate => {
             const key = reprintKey(candidate);
-            return `<div class="reprint-option${key === selectedReprintKey ? ' is-selected' : ''}">
-              <input type="radio" name="reprint-source" data-reprint-candidate="${escapeAttr(key)}" value="${escapeAttr(key)}" ${key === selectedReprintKey ? 'checked' : ''} aria-label="Use ${escapeAttr(candidate.fullName || candidate.name)} as reprint source" />
+            const label = candidate.identical ? 'identical' : 'different attacks';
+            const disabled = candidate.identical ? '' : 'disabled';
+            return `<div class="reprint-option${key === selectedReprintKey ? ' is-selected' : ''}${candidate.identical ? '' : ' is-distinct'}">
+              <input type="radio" name="reprint-source" data-reprint-candidate="${escapeAttr(key)}" value="${escapeAttr(key)}" ${key === selectedReprintKey ? 'checked' : ''} ${disabled} aria-label="Use ${escapeAttr(candidate.fullName || candidate.name)} as reprint source" />
               ${candidate.imageUrl
                 ? `<button type="button" class="reprint-image-button" data-action="open-reprint-image" data-image-url="${escapeAttr(candidate.imageUrl)}" data-image-alt="${escapeAttr(candidate.fullName || candidate.name)}" aria-label="Enlarge ${escapeAttr(candidate.fullName || candidate.name)} image"><img src="${escapeAttr(candidate.imageUrl)}" alt="${escapeAttr(candidate.fullName || candidate.name)}" /></button>`
                 : '<div class="reprint-image-missing">No art</div>'}
-              <div><strong>${escapeHtml(candidate.fullName || candidate.name)}</strong><small>${escapeHtml(candidate.set)} · #${escapeHtml(candidate.setNumber)} · ${escapeHtml(candidate.sourcePath)}</small></div>
+              <div><strong>${escapeHtml(candidate.fullName || candidate.name)}</strong><small>${escapeHtml(candidate.set)} · #${escapeHtml(candidate.setNumber)} · ${escapeHtml(label)} · ${escapeHtml(candidate.sourcePath)}</small></div>
             </div>`;
           })
           .join('')}
       </div>
-      <label class="reprint-toggle"><input type="checkbox" data-reprint-enabled ${saveAsReprint ? 'checked' : ''} /> Save as a reprint in <code>other-prints.ts</code></label>
-      ${selected ? `<p class="muted">The saved class will inherit <code>${escapeHtml(selected.className)}</code> and override this print’s set metadata.</p>` : ''}
+      <label class="reprint-toggle"><input type="checkbox" data-reprint-enabled ${saveAsReprint ? 'checked' : ''} ${identicalCount === 0 ? 'disabled' : ''} /> Save as a reprint in <code>other-prints.ts</code></label>
+      ${selected?.identical ? `<p class="muted">The saved class will inherit <code>${escapeHtml(selected.className)}</code> and override this print’s set metadata.</p>` : ''}
     `;
   }
   return `<section class="reprint-section">
@@ -549,7 +780,11 @@ function render(scrollMode: RenderScrollMode = 'preserve') {
       ? active.selectionEnd
       : null;
   const selectedReprint = selectedReprintCandidate();
-  const canSave = Boolean(outputCode || (saveAsReprint && selectedReprint));
+  const canSave = Boolean(
+    (saveAsReprint && selectedReprint?.identical) ||
+      (draft.name.trim() && draft.set.trim() && (outputCode || !saveAsReprint))
+  );
+  const cardNav = view === 'editor' ? browseCardNav() : null;
 
   const heroActions =
     view === 'browse'
@@ -561,19 +796,39 @@ function render(scrollMode: RenderScrollMode = 'preserve') {
            <button type="button" data-action="reload-duplicates">Rescan</button>
            <button type="button" data-action="show-editor">Blank card form</button>`
         : `<button type="button" data-action="show-browse">← Browse cards</button>
+         ${
+           cardNav
+             ? `<button type="button" data-action="prev-card" ${cardNav.canPrev ? '' : 'disabled'} title="Previous card in browse list">← Prev</button>
+                <button type="button" data-action="next-card" ${cardNav.canNext ? '' : 'disabled'} title="Next card in browse list">Next →</button>`
+             : ''
+         }
          <button type="button" class="primary" data-action="generate">Generate card</button>
          <button type="button" data-action="save" ${canSave ? '' : 'disabled'}>${saveAsReprint && selectedReprint ? 'Save reprint to other-prints.ts' : 'Save to ptcg-server'}</button>
          <button type="button" data-action="copy" ${outputCode ? '' : 'disabled'}>Copy output</button>
          <button type="button" data-action="reset">Reset form</button>`;
 
+  const cardIsImplemented =
+    Boolean(sourceMeta) && isImplemented(browse.implementedIds, sourceMeta!.tcgDexId);
   const sourceBanner =
     view === 'editor' && sourceMeta
-      ? `<div class="source-banner">
+      ? `<div class="source-banner${cardIsImplemented ? ' is-implemented' : ''}">
           ${sourceMeta.imageUrl ? `<button type="button" class="source-image-button" data-action="open-image-modal" aria-label="Enlarge card image"><img src="${escapeAttr(sourceMeta.imageUrl)}" alt="Reference card" /></button>` : ''}
           <div>
-            <strong>Loaded from local catalog</strong>
+            <div class="source-banner-head">
+              <strong>Loaded from local catalog</strong>
+              ${cardIsImplemented ? '<span class="impl-status" title="This card ID is already present in ptcg-server">Implemented</span>' : ''}
+            </div>
             <p class="muted">${escapeHtml(sourceMeta.tcgDexId)}${sourceMeta.setName ? ` · ${escapeHtml(sourceMeta.setName)}` : ''}${sourceMeta.rarity ? ` · ${escapeHtml(sourceMeta.rarity)}` : ''}</p>
             <p class="muted">Art is reference only — generated <code>cardImage</code> stays <code>assets/cardback.png</code>. Match prefabs from attack/power text before generating.</p>
+            ${
+              cardNav
+                ? `<div class="card-nav">
+                    <button type="button" data-action="prev-card" ${cardNav.canPrev ? '' : 'disabled'} aria-label="Previous card">← Previous</button>
+                    <span class="card-nav-label muted">${escapeHtml(cardNav.label)}</span>
+                    <button type="button" data-action="next-card" ${cardNav.canNext ? '' : 'disabled'} aria-label="Next card">Next →</button>
+                  </div>`
+                : ''
+            }
           </div>
         </div>`
       : '';
@@ -606,7 +861,7 @@ function render(scrollMode: RenderScrollMode = 'preserve') {
           </div>
           <div class="grid-2">
             <label>cardImage<input readonly value="assets/cardback.png" /></label>
-            <label>fullName (name + set)<input readonly value="${escapeAttr(computedFullName())}" /></label>
+            <label>fullName (name + set[+N])<input readonly value="${escapeAttr(computedFullName())}" /></label>
           </div>
           ${
             draft.extends === 'PokemonCard'
@@ -637,16 +892,21 @@ function render(scrollMode: RenderScrollMode = 'preserve') {
         >${escapeHtml(outputCode)}</textarea>
         ${renderReprintSection()}
         <details class="catalog-help">
-          <summary>Available attack/ability prefab patterns</summary>
+          <summary>Available prefabs (${catalogStats().total}: ${catalogStats().curated} curated + ${catalogStats().total - catalogStats().curated} engine; ${catalogStats().withPatterns} with text patterns)</summary>
           <ul>
             ${prefabsForScope('attack')
-              .concat(prefabsForScope('power').filter((p) => p.scope === 'power'))
+              .concat(prefabsForScope('power'))
+              .concat(prefabsForScope('trainer'))
+              .filter((p, i, arr) => arr.findIndex(x => x.id === p.id) === i)
+              .filter(p => p.patterns.length > 0 || !p.description.startsWith('[helper]'))
+              .slice(0, 200)
               .map(
                 (p) =>
                   `<li><strong>${escapeHtml(p.name)}</strong> — ${escapeHtml(p.exampleTexts[0] || p.description)}</li>`
               )
               .join('')}
           </ul>
+          <p class="muted">Full engine catalog is in the Add prefab dropdown (includes helpers). Match from text uses curated patterns first, then JSDoc examples, then similar card reducers from every implemented set card.</p>
         </details>
       </aside>
     </main>`;
@@ -838,30 +1098,7 @@ async function handleBrowse(action: string | null, btn: HTMLButtonElement) {
     case 'pick-card': {
       const id = btn.getAttribute('data-id')!;
       browseScrollY = window.scrollY;
-      browse.loading = true;
-      statusMessage = `Loading ${id}…`;
-      outputError = '';
-      render();
-      try {
-        const { draft: next, meta } = await pickCardToDraft(id);
-        draft = next;
-        sourceMeta = meta;
-        outputCode = '';
-        view = 'editor';
-        statusMessage = `Pre-filled from ${id}. Match prefabs, then Generate.`;
-        browse.loading = false;
-      } catch (err) {
-        browse.loading = false;
-        statusMessage = '';
-        outputError =
-          err instanceof TcgDexApiError
-            ? err.message
-            : err instanceof Error
-              ? err.message
-              : String(err);
-      }
-      render(view === 'editor' ? 'top' : 'preserve');
-      if (view === 'editor') void refreshReprintCandidates();
+      await openCardInEditor(id);
       break;
     }
   }
@@ -893,14 +1130,15 @@ function bindEvents() {
   app.querySelectorAll<HTMLInputElement>('[data-reprint-candidate]').forEach(input => {
     input.addEventListener('change', () => {
       selectedReprintKey = input.value;
-      saveAsReprint = true;
+      const selected = selectedReprintCandidate();
+      saveAsReprint = Boolean(selected?.identical);
       render();
     });
   });
 
   const reprintToggle = app.querySelector<HTMLInputElement>('[data-reprint-enabled]');
   reprintToggle?.addEventListener('change', () => {
-    saveAsReprint = reprintToggle.checked;
+    saveAsReprint = reprintToggle.checked && Boolean(selectedReprintCandidate()?.identical);
     render();
   });
 
@@ -919,15 +1157,22 @@ function bindEvents() {
       }
       if (key === 'extends' || key === 'hasPowers' || key === 'hasAttacks') {
         render();
+        scheduleReprintRefresh();
       }
       if (key === 'name' || key === 'set' || key === 'setNumber') {
         void refreshReprintCandidates();
+      }
+      if (key === 'trainerText' || key === 'energyText') {
+        scheduleReprintRefresh();
       }
     };
     el.addEventListener('change', handler);
     if (!(el instanceof HTMLSelectElement) && !(el instanceof HTMLInputElement && el.type === 'checkbox')) {
       el.addEventListener('input', () => {
         (draft as any)[key] = el.value;
+        if (key === 'trainerText' || key === 'energyText') {
+          scheduleReprintRefresh();
+        }
       });
     }
   });
@@ -940,12 +1185,14 @@ function bindEvents() {
       if (!attack) return;
       (attack as any)[key] = (el as HTMLInputElement).value;
       if (key === 'cost') render();
+      if (key === 'name' || key === 'text') scheduleReprintRefresh();
     };
     el.addEventListener('change', apply);
     el.addEventListener('input', () => {
       const attack = findAttack(id);
       if (!attack) return;
       (attack as any)[key] = (el as HTMLInputElement).value;
+      if (key === 'name' || key === 'text') scheduleReprintRefresh();
     });
   });
 
@@ -956,11 +1203,13 @@ function bindEvents() {
       const power = findPower(id);
       if (!power) return;
       (power as any)[key] = (el as HTMLInputElement).value;
+      if (key === 'name' || key === 'text') scheduleReprintRefresh();
     });
     el.addEventListener('input', () => {
       const power = findPower(id);
       if (!power) return;
       (power as any)[key] = (el as HTMLInputElement).value;
+      if (key === 'name' || key === 'text') scheduleReprintRefresh();
     });
   });
 
@@ -995,6 +1244,12 @@ function bindEvents() {
 
 async function handleAction(action: string | null, btn: HTMLButtonElement) {
   switch (action) {
+    case 'prev-card':
+      void navigateBrowseCard(-1);
+      break;
+    case 'next-card':
+      void navigateBrowseCard(1);
+      break;
     case 'show-browse':
       imageModalOpen = false;
       imageModalUrl = '';
@@ -1101,32 +1356,45 @@ async function handleAction(action: string | null, btn: HTMLButtonElement) {
       break;
     }
     case 'match-prefabs': {
+      syncAllInputs();
       const kind = btn.getAttribute('data-kind') as 'attack' | 'power' | 'trainer';
       const itemId = btn.getAttribute('data-item')!;
       const item = kind === 'attack' ? findAttack(itemId) : kind === 'power' ? findPower(itemId) : undefined;
       const text = kind === 'trainer' ? draft.trainerText : item?.text;
-      if (!text) return;
+      if (!text?.trim()) return;
       try {
-        const matched = matchEffectText(text, kind);
+        const result = await resolveEffectHybrid(text, kind);
         if (kind === 'trainer') {
-          draft.trainerPrefabs = matchedToSelected(matched);
-          draft.trainerServerEffect = undefined;
+          draft.trainerPrefabs = result.selectedPrefabs;
+          draft.trainerServerEffect = result.serverEffect;
+          draft.trainerServerSnippets =
+            result.serverSnippets.length > 0 ? result.serverSnippets : undefined;
+          draft.trainerUnmatchedClauses =
+            result.unmatchedClauses.length > 0 ? result.unmatchedClauses : undefined;
         } else if (item) {
-          item.selectedPrefabs = matchedToSelected(matched);
+          item.selectedPrefabs = result.selectedPrefabs;
+          item.serverEffect = result.serverEffect;
+          item.serverSnippets =
+            result.serverSnippets.length > 0 ? result.serverSnippets : undefined;
+          item.unmatchedClauses =
+            result.unmatchedClauses.length > 0 ? result.unmatchedClauses : undefined;
           item.matchError = undefined;
-          item.serverEffect = undefined;
         }
-        statusMessage = matched.length
-          ? `Matched ${matched.length} prefab(s).`
-          : 'No effect text — nothing to match (plain damage attack is OK).';
+        statusMessage = describeHybridResolution(result);
         outputError = '';
       } catch (err) {
         const msg = err instanceof Error ? err.message : String(err);
         if (kind === 'trainer') {
           draft.trainerPrefabs = [];
+          draft.trainerServerEffect = undefined;
+          draft.trainerServerSnippets = undefined;
+          draft.trainerUnmatchedClauses = undefined;
         } else if (item) {
           item.matchError = msg;
           item.selectedPrefabs = [];
+          item.serverEffect = undefined;
+          item.serverSnippets = undefined;
+          item.unmatchedClauses = undefined;
         }
         statusMessage = '';
         outputError = msg;
@@ -1138,16 +1406,14 @@ async function handleAction(action: string | null, btn: HTMLButtonElement) {
       // Sync latest input values that may not have blurred
       syncAllInputs();
       try {
-        outputCode = await generateCardSource(draft);
+        outputCode = await generateCardSource(draft, {
+          occurrence: effectiveVariantOccurrence(),
+        });
         outputError = '';
         statusMessage = 'Generated successfully.';
       } catch (err) {
         outputCode = '';
-        outputError = err instanceof MissingPrefabError
-          ? err.message
-          : err instanceof Error
-            ? err.message
-            : String(err);
+        outputError = err instanceof Error ? err.message : String(err);
         statusMessage = '';
       }
       render();
@@ -1207,27 +1473,47 @@ async function handleAction(action: string | null, btn: HTMLButtonElement) {
     case 'save': {
       syncAllInputs();
       const selected = selectedReprintCandidate();
-      const reprint = saveAsReprint && selected
-        ? {
-            className: draft.className || computedClassName().replace(/[^A-Za-z0-9]/g, ''),
-            sourceClassName: selected.className,
-            sourcePath: selected.sourcePath,
-            name: draft.name,
-            set: draft.set,
-            setNumber: draft.setNumber,
-            fullName: computedFullName(),
-            regulationMark: draft.regulationMark,
-          }
-        : undefined;
-      if (!outputCode && !reprint) return;
+      const reprint =
+        saveAsReprint && selected?.identical
+          ? {
+              className: draft.className || computedClassName().replace(/[^A-Za-z0-9]/g, ''),
+              sourceClassName: selected.className,
+              sourcePath: selected.sourcePath,
+              name: draft.name,
+              set: draft.set,
+              setNumber: draft.setNumber,
+              fullName: computedFullName(),
+              regulationMark: draft.regulationMark,
+            }
+          : undefined;
+      const resolvedClassName =
+        draft.className.trim() || computedClassName().replace(/[^A-Za-z0-9]/g, '');
       const save = async (overwrite: boolean) => {
+        let source = outputCode;
+        if (!reprint) {
+          const occurrence = effectiveVariantOccurrence();
+          const classMatches = Boolean(
+            source && new RegExp(`export class\\s+${resolvedClassName}\\b`).test(source)
+          );
+          const fullName = computedFullName();
+          const fullNameMatches = Boolean(
+            source &&
+              (source.includes(`fullName: string = '${fullName}'`) ||
+                source.includes(`fullName = '${fullName}'`))
+          );
+          if (!source || !classMatches || !fullNameMatches) {
+            source = await generateCardSource(draft, { occurrence });
+            outputCode = source;
+          }
+        }
+        if (!source && !reprint) return;
         const response = await fetch('/save-card', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             set: draft.set,
-            className: draft.className || draft.name.replace(/[^a-zA-Z0-9 ]/g, ' ').split(/\s+/).filter(Boolean).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(''),
-            source: outputCode,
+            className: resolvedClassName,
+            source,
             overwrite,
             ...(reprint ? { reprint } : {}),
           }),
@@ -1312,5 +1598,20 @@ function escapeAttr(s: string): string {
 // Silence unused type imports used only for casts in comments
 void (0 as unknown as EnergyShort | PowerTypeName | StageName | WeaknessValue);
 
+async function ensureEngineKnowledgeLoaded(): Promise<void> {
+  try {
+    const index = await loadEnginePrefabIndex();
+    mergeEnginePrefabs(index.prefabs.map(engineRecordToPrefab));
+    clearServerEffectsCache();
+    const stats = catalogStats();
+    console.info(
+      `[card-builder] Engine knowledge: ${index.count} prefabs indexed, catalog ${stats.total} (${stats.curated} curated, ${stats.withPatterns} with patterns)`
+    );
+  } catch (error) {
+    console.warn('[card-builder] Failed to load engine prefabs; using curated catalog only.', error);
+  }
+}
+
 render();
+void ensureEngineKnowledgeLoaded().then(() => render());
 void ensureSeriesLoaded();

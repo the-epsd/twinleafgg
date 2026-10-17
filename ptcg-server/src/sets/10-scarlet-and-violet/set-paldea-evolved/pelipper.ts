@@ -73,13 +73,13 @@ export class Pelipper extends PokemonCard {
             ), selected => {
               cards = selected || [];
               if (cards.length > 0) {
+                MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
                 store.prompt(state, [new ShowCardsPrompt(
                   opponent.id,
                   GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
                   cards
                 )], () => {
-                  MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
-                });
+});
               }
 
               return state;
@@ -99,13 +99,13 @@ export class Pelipper extends PokemonCard {
             ), selected => {
               const cards = selected || [];
 
+              MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
               store.prompt(state, [new ShowCardsPrompt(
                 opponent.id,
                 GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
                 cards
               )], () => {
-                MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
-              });
+});
               return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
                 player.deck.applyOrder(order);
               });

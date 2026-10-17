@@ -60,6 +60,7 @@ export class Slowpoke extends PokemonCard {
       const maxEnergies = Math.min(energies, 1);
 
       let cards: Card[] = [];
+      MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards });
       return store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
@@ -72,7 +73,6 @@ export class Slowpoke extends PokemonCard {
         if (cards.length > 0) {
 
           SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-          MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards });
         }
       });
       return state;

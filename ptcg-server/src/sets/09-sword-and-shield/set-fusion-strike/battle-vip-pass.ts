@@ -1,36 +1,43 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import {
-  StoreLike,
-  State,
-  ChooseCardsPrompt,
-  GameMessage,
-  GameError,
-  ShuffleDeckPrompt,
-  PokemonCard,
-} from '../../../game';
+import { Stage, TrainerType } from '../../../game/store/card/card-types';
+import { StoreLike, State, GameMessage, GameError, Player } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import {
-  PlayPokemonFromDeckEffect,
-  TrainerEffect,
-} from '../../../game/store/effects/play-card-effects';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+  MOVE_CARDS,
+  SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH,
+} from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class BattleVIPPass extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
+  public regulationMark = 'E';
   public set: string = 'FST';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '225';
-  public regulationMark = 'E';
   public name: string = 'Battle VIP Pass';
   public fullName: string = 'Battle VIP Pass FST';
-
   public text: string = `You can use this card only during your first turn.
 
 Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck.`;
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const turn = state.turn;
+
+    if (turn > 2) {
+      return false;
+    }
+
+    const openSlots = player.bench.filter((b) => b.cards.length === 0);
+
+    if (player.deck.cards.length === 0 || openSlots.length === 0) {
+      return false;
+    }
+
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const turn = state.turn;
 
       if (turn > 2) {
@@ -52,37 +59,12 @@ Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, 
 
       const maxCards = Math.min(2, openSlots.length);
 
-      return store.prompt(
+      return SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(
+        store,
         state,
-        new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-          player.deck,
-          { superType: SuperType.POKEMON, stage: Stage.BASIC },
-          { min: 0, max: maxCards, allowCancel: false },
-        ),
-        (selectedCards) => {
-          const cards = selectedCards || [];
-
-          cards.forEach((card, index) => {
-            const playPokemonFromDeckEffect = new PlayPokemonFromDeckEffect(
-              player,
-              card as PokemonCard,
-              openSlots[index],
-            );
-            store.reduceEffect(state, playPokemonFromDeckEffect);
-          });
-
-          MOVE_CARDS(store, state, player.supporter, player.discard, {
-            cards: [this],
-            sourceCard: this,
-          });
-
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-            player.deck.applyOrder(order);
-            return state;
-          });
-        },
+        player,
+        { stage: Stage.BASIC },
+        { min: 0, max: maxCards, allowCancel: false },
       );
     }
     return state;

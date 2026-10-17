@@ -8,9 +8,12 @@ import {
   StateUtils,
   StoreLike,
 } from '../../../game';
-import { DealDamageEffect, PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
+import {
+  IS_ABILITY_BLOCKED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+} from '../../../game/store/prefabs/prefabs';
 
 export class IronJugulis extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -57,21 +60,24 @@ export class IronJugulis extends PokemonCard {
   public fullName: string = 'Iron Jugulis TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PutDamageEffect || effect instanceof DealDamageEffect) {
-      const player = effect.player;
+    // Automated Combat — Ref: set-evolutions/machamp.ts (Counterattack)
+    if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      const cardList = StateUtils.findCardList(state, this);
-
-      if (effect.target !== cardList) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
-        return state;
-      }
-
-      const oppActive = effect.source;
-      oppActive.damage += 30;
+      store.reduceEffect(
+        state,
+        new PlaceDamageCountersEffect(
+          abilityOwner,
+          effect.source,
+          30,
+          this,
+          this.powers[0],
+        ),
+      );
     }
 
     return state;

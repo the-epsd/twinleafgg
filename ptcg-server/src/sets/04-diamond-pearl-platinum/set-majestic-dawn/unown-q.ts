@@ -89,7 +89,7 @@ export class UnownQ extends PokemonCard {
 
   public hp: number = 30;
 
-  public weakness = [{ type: CardType.PSYCHIC, value: 10 }];
+  public weakness = [{ type: CardType.PSYCHIC, value: +10 }];
 
   public retreat = [];
 

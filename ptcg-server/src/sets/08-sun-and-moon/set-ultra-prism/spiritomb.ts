@@ -58,6 +58,7 @@ export class Spiritomb extends PokemonCard {
       }
 
       let cards: Card[] = [];
+      MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
       store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
@@ -68,8 +69,8 @@ export class Spiritomb extends PokemonCard {
         cards = selected || [];
 
         if (cards.length > 0) {
+
           SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-          MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
         }
       });
     }

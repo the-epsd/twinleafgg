@@ -8,7 +8,7 @@ export class Kingdra extends PokemonCard {
   public evolvesFrom: string = 'Seadra';
   public hp: number = 130;
   public cardType: CardType[] = [W];
-  public weakness = [{ type: L, value: 30 }];
+  public weakness = [{ type: L, value: +30 }];
   public retreat = [C];
 
   public attacks = [{
@@ -60,8 +60,9 @@ export class Kingdra extends PokemonCard {
           if (cards.length === 0) {
             return;
           }
-          SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
           MOVE_CARDS(store, state, player.discard, player.deck, { cards, sourceCard: this, sourceEffect: this.attacks[0] });
+          SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+          
           SHUFFLE_DECK(store, state, player);
         },
       );

@@ -3,7 +3,6 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import {
@@ -14,6 +13,7 @@ import {
   GameError,
   GameMessage,
   PowerType,
+  Player,
 } from '../../../game';
 import { TrainerPowerEffect } from '../../../game/store/effects/game-effects';
 import {
@@ -21,22 +21,16 @@ import {
   CheckPokemonTypeEffect,
 } from '../../../game/store/effects/check-effects';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Grant extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public regulationMark = 'F';
-
   public set: string = 'ASR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '144';
-
   public name: string = 'Grant';
-
   public fullName: string = 'Grant ASR';
-
   public text: string =
     "During this turn, your [F] Pokémon's attacks do 30 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).";
 
@@ -48,8 +42,14 @@ export class Grant extends TrainerCard {
       text: "During your turn, if this Grant is in your discard pile, you may discard 2 cards, except any Grant, from your hand. If you do, put this Grant into your hand. (This effect doesn't use up your Supporter card for the turn.)",
     },
   ];
-
   private readonly GRANT_MARKER = 'GRANT_MARKER';
+
+  public canPlay(_store: StoreLike, _state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (
@@ -59,7 +59,7 @@ export class Grant extends TrainerCard {
       effect.powers.push(this.powers[0]);
     }
 
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const supporterTurn = player.supporterTurn;
 

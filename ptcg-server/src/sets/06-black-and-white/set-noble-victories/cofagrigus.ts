@@ -2,6 +2,7 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
 import { StoreLike, State, PlayerType, SlotType, GameMessage } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
+import { MoveDamageCountersEffect, PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
@@ -88,8 +89,24 @@ export class Cofagrigus extends PokemonCard {
 
           // Move up to 3 damage counters
           const damageToMove = maxCounters * 10;
-          source.damage -= damageToMove;
-          target.damage += damageToMove;
+          if (damageToMove > 0) {
+            const moveEffect = new MoveDamageCountersEffect(player);
+            state = store.reduceEffect(state, moveEffect);
+            if (moveEffect.preventDefault) {
+              return;
+            }
+            const placeCountersEffect = new PlaceDamageCountersEffect(
+              player,
+              target,
+              damageToMove,
+              this,
+            );
+            state = store.reduceEffect(state, placeCountersEffect);
+            if (placeCountersEffect.preventDefault) {
+              return;
+            }
+            source.damage -= damageToMove;
+          }
         });
       });
     }

@@ -5,6 +5,7 @@ import { Effect } from '../../../game/store/effects/effect';
 
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
+import { APPLY_SPECIAL_CONDITIONS_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Mareep extends PokemonCard {
@@ -65,7 +66,15 @@ export class Mareep extends PokemonCard {
       player.marker.addMarker(this.FLUFFY_PILLOW_MARKER, this);
       const opponent = StateUtils.getOpponent(state, player);
 
-      opponent.active.addSpecialCondition(SpecialCondition.ASLEEP);
+      APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+        store,
+        state,
+        player,
+        this.powers[0],
+        this,
+        opponent.active,
+        [SpecialCondition.ASLEEP],
+      );
       return state;
     }
 

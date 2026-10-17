@@ -1,77 +1,62 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../../game/store/card/card-types';
 import {
-  Stage,
-  CardType,
-  EnergyType,
-  SuperType,
-  CardTag,
-} from '../../../game/store/card/card-types';
-import { PowerType,
+  PowerType,
   StoreLike,
   State,
   StateUtils,
   GameMessage,
   PlayerType,
   SlotType,
-  GameError, pokemonHasCardType } from '../../../game';
+  GameError,
+  pokemonHasCardType,
+} from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-
 import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-prompt';
 import { RemoveSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
-import {WAS_ATTACK_USED, WAS_POWER_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
+import { IS_ABILITY_BLOCKED, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Gardevoirex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Kirlia';
   protected _tags = [CardTag.POKEMON_ex];
-  public cardType: CardType[] = [P];
   public hp: number = 310;
+  public cardType: CardType[] = [P];
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public powers = [
-    {
-      name: 'Psychic Embrace',
-      useWhenInPlay: true,
-      powerType: PowerType.ABILITY,
-      text: "As often as you like during your turn, you may attach a Basic [P] Energy card from your discard pile to 1 of your [P] Pokémon. If you attached Energy to a Pokémon in this way, put 2 damage counters on that Pokémon. You can't use this Ability on a Pokémon that would be Knocked Out.",
-    },
-  ];
+  public powers = [{
+    name: 'Psychic Embrace',
+    useWhenInPlay: true,
+    powerType: PowerType.ABILITY,
+    text: "As often as you like during your turn, you may attach a Basic [P] Energy card from your discard pile to 1 of your [P] Pokémon. If you attached Energy to a Pokémon in this way, put 2 damage counters on that Pokémon. You can't use this Ability on a Pokémon that would be Knocked Out.",
+  }];
 
-  public attacks = [
-    {
-      name: 'Miracle Force',
-      cost: [P, P, C],
-      damage: 190,
-      text: 'This Pokémon recovers from all Special Conditions.',
-    },
-  ];
+  public attacks = [{
+    name: 'Miracle Force',
+    cost: [P, P, C],
+    damage: 190,
+    text: 'This Pokémon recovers from all Special Conditions.',
+  }];
 
   public regulationMark = 'G';
   public set: string = 'SVI';
-  public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '86';
   public name: string = 'Gardevoir ex';
   public fullName: string = 'Gardevoir ex SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Psychic Embrace
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
-      // const blocked: CardTarget[] = [];
-      // player.bench.forEach((card, index) => {
-      //   if (card instanceof PokemonCard && !pokemonHasCardType(card, CardType.PSYCHIC)) {
-      //     blocked.push();
-      //   }
-      // });
-
-      // player.active.cards.forEach((card, index) => {
-      //   if (card instanceof PokemonCard && !pokemonHasCardType(card, CardType.PSYCHIC)) {
-      //     blocked.push();
-      //   }
-      // });
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
 
       state = store.prompt(
         state,
@@ -86,7 +71,6 @@ export class Gardevoirex extends PokemonCard {
         ),
         (transfers) => {
           transfers = transfers || [];
-          // cancelled by user
           if (transfers.length === 0) {
             return state;
           }
@@ -107,12 +91,16 @@ export class Gardevoirex extends PokemonCard {
               throw new GameError(GameMessage.CANNOT_USE_POWER);
             }
             MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
-            target.damage += 20;
+            store.reduceEffect(
+              state,
+              new PlaceDamageCountersEffect(player, target, 20, this, this.powers[0]),
+            );
           }
         },
       );
     }
 
+    // Miracle Force
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -121,6 +109,7 @@ export class Gardevoirex extends PokemonCard {
       state = store.reduceEffect(state, removeSpecialCondition);
       return state;
     }
+
     return state;
   }
 }

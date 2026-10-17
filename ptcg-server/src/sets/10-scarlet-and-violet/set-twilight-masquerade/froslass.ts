@@ -68,7 +68,8 @@ export class Froslass extends PokemonCard {
                 player,
                 cardList,
                 10 * numberOfFroslass,
-                this
+                this,
+                this.powers[0],
               );
               state = store.reduceEffect(state, placeCountersEffect);
             }
@@ -84,7 +85,8 @@ export class Froslass extends PokemonCard {
                 player,
                 cardList,
                 10 * numberOfFroslass,
-                this
+                this,
+                this.powers[0],
               );
               state = store.reduceEffect(state, placeCountersEffect);
             }

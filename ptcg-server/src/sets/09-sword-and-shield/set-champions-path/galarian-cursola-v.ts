@@ -8,6 +8,7 @@ import { PowerType, SlotType, StoreLike, State, StateUtils } from '../../../game
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../../game/store/prefabs/attack-effects';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
 
 export class GalarianCursolaV extends PokemonCard {
@@ -47,31 +48,36 @@ export class GalarianCursolaV extends PokemonCard {
     // Ability: Gnawing Aura (passive - put 3 damage counters when opponent attaches energy from hand)
     // Ref: set-dragons-exalted/ampharos.ts (Electromagnetic Wall - AttachEnergyEffect from hand -> damage)
     if (effect instanceof AttachEnergyEffect) {
-      // Only trigger on energy from hand
-      if (!effect.player.hand.cards.includes(effect.energyCard)) {
-        return state;
-      }
-
+      const attachingPlayer = effect.player;
       const cardList = StateUtils.findCardList(state, this);
-      const owner = StateUtils.findOwner(state, cardList);
+      const abilityOwner = StateUtils.findOwner(state, cardList);
 
-      // Must be in play and active
-      if (!StateUtils.isPokemonInPlay(owner, this) || !owner.active.cards.includes(this)) {
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this) || !abilityOwner.active.cards.includes(this)) {
         return state;
       }
 
-      // Check if ability is blocked
-      if (IS_ABILITY_BLOCKED(store, state, owner, this)) {
+      if (!attachingPlayer.hand.cards.includes(effect.energyCard)) {
         return state;
       }
 
-      // Only trigger on opponent's energy attachments
-      if (effect.player === owner) {
+      if (attachingPlayer === abilityOwner) {
         return state;
       }
 
-      // Put 3 damage counters (= 30 damage) on the Pokemon that energy is being attached to
-      effect.target.damage += 30;
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      store.reduceEffect(
+        state,
+        new PlaceDamageCountersEffect(
+          abilityOwner,
+          effect.target,
+          30,
+          this,
+          this.powers[0],
+        ),
+      );
     }
 
     // Attack 1: Hollow Missile

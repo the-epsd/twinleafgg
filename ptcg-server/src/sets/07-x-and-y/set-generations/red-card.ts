@@ -1,50 +1,45 @@
-import { GameError, GameMessage, ShuffleDeckPrompt } from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { StateUtils } from '../../../game/store/state-utils';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { State, StoreLike, TrainerCard, GameError, GameMessage, Player, StateUtils } from '../../../game';
+import { MOVE_CARDS, SHUFFLE_HAND_INTO_DECK_THEN_DRAW } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class RedCard extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'GEN';
-
-  public name: string = 'Red Card';
-
-  public fullName: string = 'Red Card GEN';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '71';
-
+  public name: string = 'Red Card';
+  public fullName: string = 'Red Card GEN';
   public text: string =
     'Your opponent shuffles his or her hand into his or her deck and draws 4 cards.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const opponent = StateUtils.getOpponent(state, player);
+    if (opponent.hand.cards.length === 0 && opponent.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const opponentCards = opponent.hand.cards.filter((c) => c !== this);
-
-      if (opponentCards.length === 0 && opponent.deck.cards.length === 0) {
+      if (!this.canPlay(store, state, player)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      MOVE_CARDS(store, state, opponent.hand, opponent.deck, {
-        cards: opponentCards,
+      MOVE_CARDS(store, state, player.hand, player.supporter, {
+        cards: [effect.trainerCard],
         sourceCard: this,
       });
 
-      store.prompt(state, new ShuffleDeckPrompt(opponent.id), (order) => {
-        opponent.deck.applyOrder(order);
+      return SHUFFLE_HAND_INTO_DECK_THEN_DRAW(store, state, opponent, {
+        sourceCard: this,
+        drawCount: 4,
       });
-
-      MOVE_CARDS(store, state, opponent.deck, opponent.hand, { count: 4, sourceCard: this });
     }
 
     return state;

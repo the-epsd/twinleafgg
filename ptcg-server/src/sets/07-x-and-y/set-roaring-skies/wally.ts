@@ -1,50 +1,18 @@
-import { ShuffleDeckPrompt } from '../../../game';
-import { CardManager } from '../../../game/cards/card-manager';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
-import { CardTarget, PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
-import { Card } from '../../../game/store/card/card';
 import { CardTag, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
+import { CardManager } from '../../../game/cards/card-manager';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
-import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { State, StoreLike, TrainerCard, GameError, GameMessage, Player, Card, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, PlayerType, PokemonCard, PokemonCardList, SlotType } from '../../../game';
+import { MOVE_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
-function* playCard(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  effect: TrainerEffect,
-): IterableIterator<State> {
-  const player = effect.player;
-
-  if (player.deck.cards.length === 0) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
-  const supporterTurn = player.supporterTurn;
-
-  if (supporterTurn > 0) {
-    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
-  }
-
-  MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: effect.trainerCard });
-  // We will discard this card after prompt confirmation
-  effect.preventDefault = true;
-
-  // Look through all known cards to find out if Pokemon can evolve
+// Names of non-EX evolution cards that evolve from any of the player's Pokemon
+function getEvolutionNames(player: Player): string[] {
   const cm = CardManager.getInstance();
   const evolutions = cm.getAllCards().filter((c) => {
     return c instanceof PokemonCard && c.stage !== Stage.BASIC && !c.hasTag(CardTag.POKEMON_EX);
   }) as PokemonCard[];
 
-  // Build possible evolution card names
   const evolutionNames: string[] = [];
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
     const valid = evolutions.filter((e) => e.evolvesFrom === card.name);
@@ -54,11 +22,17 @@ function* playCard(
       }
     });
   });
+  return evolutionNames;
+}
 
-  // There is nothing that can evolve
-  if (evolutionNames.length === 0) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
+  const player = effect.player;
+  const evolutionNames = getEvolutionNames(player);
 
   // Blocking pokemon cards, that cannot be valid evolutions
   const blocked: number[] = [];
@@ -123,33 +97,57 @@ function* playCard(
   }
 
   // Evolve Pokemon
-  MOVE_CARDS(store, state, player.deck, targets[0], { cards: [evolution], sourceCard: effect.trainerCard });
+  MOVE_CARDS(store, state, player.deck, targets[0], {
+    cards: [evolution],
+    sourceCard: effect.trainerCard,
+  });
   targets[0].clearEffects();
   targets[0].pokemonPlayedTurn = state.turn;
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-    player.deck.applyOrder(order);
-  });
+  return SHUFFLE_DECK(store, state, player);
 }
 
 export class Wally extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'ROS';
-
-  public name: string = 'Wally';
-
-  public fullName: string = 'Wally ROS';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '94';
-
+  public name: string = 'Wally';
+  public fullName: string = 'Wally ROS';
   public text: string =
     'Search your deck for a card that evolves from 1 of your Pokémon (excluding Pokémon-EX) and put it onto that Pokémon. (This counts as evolving that Pokémon.) Shuffle your deck afterward. You can use this card during your first turn or on a Pokémon that was put into play this turn.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    // There is nothing that can evolve
+    if (getEvolutionNames(player).length === 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
+      const player = effect.player;
+
+      if (player.supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      if (!this.canPlay(store, state, player)) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      MOVE_CARDS(store, state, player.hand, player.supporter, {
+        cards: [effect.trainerCard],
+        sourceCard: this,
+      });
+
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

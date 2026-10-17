@@ -1,13 +1,8 @@
-import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { State } from '../../../game/store/state/state';
-import { StateUtils } from '../../../game/store/state-utils';
-import { StoreLike } from '../../../game/store/store-like';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
+import { GameError, GameMessage, Player, State, StateUtils, StoreLike, TrainerCard } from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { GameError, GameMessage } from '../../../game';
-import { DRAW_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
-import { MoveCardsEffect } from '../../../game/store/effects/game-effects';
+import { Effect } from '../../../game/store/effects/effect';
+import { SHUFFLE_HAND_INTO_DECK_THEN_DRAW } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class AceTrainer extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -19,41 +14,54 @@ export class AceTrainer extends TrainerCard {
   public text: string =
     'You can play this card only if you have more Prize cards left than your opponent.\n\nEach player shuffles his or her hand into his or her deck. Then, draw 6 cards. Your opponent draws 3 cards.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    const opponent = StateUtils.getOpponent(state, player);
+    if (player.getPrizeLeft() <= opponent.getPrizeLeft()) {
+      return false;
+    }
+    if (
+      player.hand.cards.filter((c) => c !== this).length === 0 &&
+      player.deck.cards.length === 0
+    ) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (player.deck.cards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      if (player.supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
       if (player.getPrizeLeft() <= opponent.getPrizeLeft()) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      const cards = player.hand.cards.filter((c) => c !== this);
-
-      const playerMoveEffect = new MoveCardsEffect(player.hand, player.deck, {
-        cards,
-        sourceCard: this,
-      });
-      state = store.reduceEffect(state, playerMoveEffect);
-
-      const opponentMoveEffect = new MoveCardsEffect(opponent.hand, opponent.deck, {
-        sourceCard: this,
-      });
-      state = store.reduceEffect(state, opponentMoveEffect);
-
-      // opponent shuffle and draw
-      if (!opponentMoveEffect.preventDefault) {
-        SHUFFLE_DECK(store, state, opponent);
-        DRAW_CARDS(store, state, opponent, 3);
+      if (
+        player.hand.cards.filter((c) => c !== this).length === 0 &&
+        player.deck.cards.length === 0
+      ) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      // player shuffle and draw
-      SHUFFLE_DECK(store, state, player);
-      DRAW_CARDS(store, state, player, 6);
+      return SHUFFLE_HAND_INTO_DECK_THEN_DRAW(store, state, player, {
+        excludeCard: this,
+        sourceCard: this,
+        drawCount: 6,
+        afterDraw: () => {
+          SHUFFLE_HAND_INTO_DECK_THEN_DRAW(store, state, opponent, {
+            sourceCard: this,
+            drawCount: 3,
+          });
+        },
+      });
     }
 
     return state;

@@ -7,6 +7,7 @@ import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/ga
 import { CheckRetreatCostEffect } from '../../../game/store/effects/check-effects';
 import {
   CAN_APPLY_LOCKER_ABILITY,
+  CAN_APPLY_LOCK_TO_TARGET,
   HANDLE_ABILITY_BLOCK,
   IS_ABILITY_LOCKER_ACTIVE,
   POKEPOWER_AND_BODY_TYPES,
@@ -57,11 +58,15 @@ export class Mukex extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     HANDLE_ABILITY_BLOCK(
       effect,
-      ({ player }) => {
+      ({ player, card }) => {
         if (!IS_ABILITY_LOCKER_ACTIVE(state, player, this)) {
           return false;
         }
-        return CAN_APPLY_LOCKER_ABILITY(store, state, player, this, this.powers[0]);
+        const lockerOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
+        if (!CAN_APPLY_LOCKER_ABILITY(store, state, lockerOwner, this, this.powers[0])) {
+          return false;
+        }
+        return CAN_APPLY_LOCK_TO_TARGET(store, state, lockerOwner, this, this.powers[0], card);
       },
       {
         powerTypes: POKEPOWER_AND_BODY_TYPES,

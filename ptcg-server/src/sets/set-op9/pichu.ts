@@ -68,6 +68,8 @@ function* useFindAFriend(next: Function, store: StoreLike, state: State,
     next();
   });
 
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: effect.source.getPokemonCard()! });
+
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
       opponent.id,
@@ -75,8 +77,6 @@ function* useFindAFriend(next: Function, store: StoreLike, state: State,
       cards
     ), () => next());
   }
-
-  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: effect.source.getPokemonCard()! });
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

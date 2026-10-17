@@ -13,6 +13,7 @@ import {
   SlotType,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { AfterAttackEffect } from '../../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import {
@@ -59,7 +60,7 @@ export class TeamRocketsCrobatex extends PokemonCard {
   public usedAssassinsReturn = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Bite About
+    // Bite About — Ref: set-phantom-forces/golbat.ts (Sneaky Bite)
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = StateUtils.findOwner(state, effect.target);
 
@@ -67,28 +68,31 @@ export class TeamRocketsCrobatex extends PokemonCard {
         return state;
       }
 
-      CONFIRMATION_PROMPT(store, state, player, (result) => {
+      return CONFIRMATION_PROMPT(store, state, player, (result) => {
         if (!result) {
-          return state;
+          return;
         }
-      });
 
-      return store.prompt(
-        state,
-        new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          { min: 1, max: 2, allowCancel: false },
-        ),
-        (selected) => {
-          const targets = selected || [];
-          targets.forEach((target) => {
-            target.damage += 20;
-          });
-        },
-      );
+        store.prompt(
+          state,
+          new ChoosePokemonPrompt(
+            player.id,
+            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+            PlayerType.TOP_PLAYER,
+            [SlotType.ACTIVE, SlotType.BENCH],
+            { min: 1, max: 2, allowCancel: false },
+          ),
+          (selected) => {
+            const targets = selected || [];
+            targets.forEach((target) => {
+              store.reduceEffect(
+                state,
+                new PlaceDamageCountersEffect(player, target, 20, this, this.powers[0]),
+              );
+            });
+          },
+        );
+      });
     }
 
     // Assassin's Return

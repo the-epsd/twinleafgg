@@ -4,7 +4,8 @@ import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { Effect } from '../../../game/store/effects/effect';
-import {WAS_ATTACK_USED, IS_ABILITY_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../../game/store/prefabs/attack-effects';
 
 export class Luxray extends PokemonCard {
@@ -38,28 +39,33 @@ export class Luxray extends PokemonCard {
   public fullName: string = 'Luxray UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Intimidating Fang (passive - reduce opponent's attack damage by 30)
-    // Ref: AGENTS-patterns.md (Damage Prevention/Reduction)
-    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this)) {
-      const pokemonCard = effect.target.getPokemonCard();
-      if (pokemonCard !== this) {
+    // Intimidating Fang — Ref: set-30th-celebration/pikachu-28.ts / set-chaos-rising/garbodor.ts
+    if (effect instanceof DealDamageEffect) {
+      const abilityOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
+        return state;
+      }
+      if (abilityOwner.active.getPokemonCard() !== this) {
         return state;
       }
 
-      const player = StateUtils.findOwner(state, effect.target);
-      const opponent = StateUtils.findOwner(state, effect.source);
-
-      // Only reduce damage from opponent's attacks
-      if (player === opponent) {
+      const opponent = StateUtils.getOpponent(state, abilityOwner);
+      if (effect.player !== opponent || effect.source !== opponent.active) {
         return state;
       }
 
-      // Only works when this Pokemon is active
-      if (player.active !== effect.target) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (!CAN_APPLY_ABILITY_TO_TARGET(
+        store,
+        state,
+        abilityOwner,
+        this.powers[0],
+        this,
+        effect.source,
+      )) {
         return state;
       }
 

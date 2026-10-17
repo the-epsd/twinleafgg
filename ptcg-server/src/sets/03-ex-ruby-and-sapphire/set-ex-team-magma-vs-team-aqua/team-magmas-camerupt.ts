@@ -1,63 +1,33 @@
-import {
-  AttachEnergyPrompt,
-  ChooseCardsPrompt,
-  EnergyCard,
-  GameError,
-  GameMessage,
-  PlayerType,
-  PowerType,
-  SlotType,
-  State,
-  StateUtils,
-  StoreLike,
-} from '../../../game';
-import {
-  CardTag,
-  CardType,
-  EnergyType,
-  Stage,
-  SuperType,
-} from '../../../game/store/card/card-types';
+import { AttachEnergyPrompt, ChooseCardsPrompt, EnergyCard, GameError, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../../game';
+import { CardTag, CardType, EnergyType, Stage, SuperType } from '../../../game/store/card/card-types';
+import { PowerType } from '../../../game/store/card/pokemon-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
-import {
-  ABILITY_USED,
-  ADD_MARKER,
-  BLOCK_IF_HAS_SPECIAL_CONDITION,
-  HAS_MARKER,
-  MOVE_CARD_TO,
-  MOVE_CARDS,
-  REMOVE_MARKER_AT_END_OF_TURN,
-  WAS_ATTACK_USED,
-  WAS_POWER_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
+import { ABILITY_USED, BLOCK_IF_HAS_SPECIAL_CONDITION, IS_POKEPOWER_BLOCKED, MOVE_CARD_TO, MOVE_CARDS, REMOVE_MARKER_AT_END_OF_TURN, USE_ABILITY_ONCE_PER_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class TeamMagmasCamerupt extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = "Team Magma's Numel";
   protected _tags = [CardTag.TEAM_MAGMA];
-  public cardType: CardType[] = [R];
   public hp: number = 80;
+  public cardType: CardType[] = [R];
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public powers = [
-    {
-      name: 'Overheat',
-      useWhenInPlay: true,
-      powerType: PowerType.POKEPOWER,
-      text: "Once during your turn (before your attack), you may search your discard pile for a basic Energy card and attach it to Team Magma's Camerupt. Put 2 damage counters on Team Mamga's Camerupt. This power can't be used if Team Magma's Camerupt is affected by a Special Condition.",
-    },
-  ];
+  public powers = [{
+    name: 'Overheat',
+    useWhenInPlay: true,
+    powerType: PowerType.POKEPOWER,
+    text: "Once during your turn (before your attack), you may search your discard pile for a basic Energy card and attach it to Team Magma's Camerupt. Put 2 damage counters on Team Mamga's Camerupt. This power can't be used if Team Magma's Camerupt is affected by a Special Condition.",
+  }];
 
-  public attacks = [
-    {
-      name: 'Flame Ball',
-      cost: [R, C, C],
-      damage: 50,
-      text: "You may move a [R] Energy card attached to Team Magma's Camerupt to 1 of your Benched Pokémon.",
-    },
-  ];
+  public attacks = [{
+    name: 'Flame Ball',
+    cost: [R, C, C],
+    damage: 50,
+    text: "You may move a [R] Energy card attached to Team Magma's Camerupt to 1 of your Benched Pokémon.",
+  }];
 
   public set: string = 'MA';
   public cardImage: string = 'assets/cardback.png';
@@ -70,17 +40,16 @@ export class TeamMagmasCamerupt extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.OVERHEAT_MARKER, this);
 
+    // Overheat
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
-      //Once per turn
-      if (HAS_MARKER(this.OVERHEAT_MARKER, player, this)) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      if (IS_POKEPOWER_BLOCKED(store, state, player, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
 
       BLOCK_IF_HAS_SPECIAL_CONDITION(player, this);
 
-      //Must have basic energy in discard
       if (
         !player.discard.cards.some(
           (c) => c instanceof EnergyCard && c.energyType === EnergyType.BASIC,
@@ -88,6 +57,8 @@ export class TeamMagmasCamerupt extends PokemonCard {
       ) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
+
+      USE_ABILITY_ONCE_PER_TURN(player, this.OVERHEAT_MARKER, this);
 
       store.prompt(
         state,
@@ -102,21 +73,24 @@ export class TeamMagmasCamerupt extends PokemonCard {
           player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
             if (cardList.getPokemonCard() === this) {
               MOVE_CARDS(store, state, player.discard, cardList, { cards: selected });
-              cardList.damage += 20;
+              store.reduceEffect(
+                state,
+                new PlaceDamageCountersEffect(player, cardList, 20, this, this.powers[0]),
+              );
             }
           });
 
-          ADD_MARKER(this.OVERHEAT_MARKER, player, this);
           ABILITY_USED(player, this);
         },
       );
     }
 
+    // Flame Ball
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const hasBench = player.bench.some((b) => b.cards.length > 0);
 
-      if (hasBench === false) {
+      if (!hasBench) {
         return state;
       }
 

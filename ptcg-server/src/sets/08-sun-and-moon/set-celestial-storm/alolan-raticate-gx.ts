@@ -113,14 +113,15 @@ export class AlolanRaticateGx extends PokemonCard {
         (selected) => {
           const cards = selected || [];
           if (cards.length > 0) {
+            cards.forEach((card) => {
+              MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this });
+            });
             store.prompt(
               state,
               new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
               () => {},
             );
-            cards.forEach((card) => {
-              MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this });
-            });
+            
           }
           SHUFFLE_DECK(store, state, player);
         },

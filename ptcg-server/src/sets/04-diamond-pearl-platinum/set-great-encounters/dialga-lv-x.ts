@@ -75,7 +75,7 @@ export class DialgaLVX extends PokemonCard {
       return store.reduceEffect(state, endTurnEffect);
     }
 
-    if (WAS_POWER_USED(effect, 1, this)) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

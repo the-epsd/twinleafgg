@@ -1,34 +1,37 @@
-import { ChooseCardsPrompt, ShuffleDeckPrompt } from '../../../game';
+import { ChooseCardsPrompt, Player } from '../../../game';
 import { GameError } from '../../../game/game-error';
 import { GameLog, GameMessage } from '../../../game/game-message';
 import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class Peony extends TrainerCard {
-  public regulationMark = 'E';
-
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
+  public regulationMark = 'E';
   public set: string = 'CRE';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '150';
-
   public name: string = 'Peony';
-
   public fullName: string = 'Peony CRE';
-
   public text: string =
     'Discard your hand and search your deck for up to 2 Trainer cards, reveal them, and put them into your hand. Then, shuffle your deck.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const supporterTurn = player.supporterTurn;
 
@@ -36,7 +39,10 @@ export class Peony extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      MOVE_CARDS(store, state, player.hand, player.supporter, { cards: [effect.trainerCard], sourceCard: this });
+      MOVE_CARDS(store, state, player.hand, player.supporter, {
+        cards: [effect.trainerCard],
+        sourceCard: this,
+      });
 
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -68,9 +74,7 @@ export class Peony extends TrainerCard {
             });
           }
 
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-            player.deck.applyOrder(order);
-          });
+          return SHUFFLE_DECK(store, state, player);
         },
       );
     }

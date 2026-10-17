@@ -72,6 +72,7 @@ export class Raticate extends PokemonCard {
       const count = maxPokemons + maxEnergies + maxTrainers;
 
       let cards: Card[] = [];
+      MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: this, sourceEffect: this.attacks[0] });
       store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
@@ -80,8 +81,8 @@ export class Raticate extends PokemonCard {
         { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxEnergies, maxTrainers }
       ), selected => {
         cards = selected || [];
+
         SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-        MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: this, sourceEffect: this.attacks[0] });
       });
     }
 

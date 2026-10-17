@@ -1,11 +1,19 @@
+import { GameError, GameMessage, StateUtils, StoreLike } from '../../../game';
+import { CardType, Stage } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, BoardEffect } from '../../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType, GameMessage, GameError } from '../../../game';
 import { PowerType } from '../../../game/store/card/pokemon-types';
 import { Effect } from '../../../game/store/effects/effect';
-
-import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, SWITCH_ACTIVE_WITH_BENCHED, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { SWITCH_OUT_OPPONENT_ACTIVE_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import {
+  ABILITY_USED,
+  IS_ABILITY_BLOCKED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  SWITCH_ACTIVE_WITH_BENCHED,
+  USE_ABILITY_ONCE_PER_TURN,
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+} from '../../../game/store/prefabs/prefabs';
+import { State } from '../../../game/store/state/state';
 
 export class Vanilluxe extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -30,55 +38,52 @@ export class Vanilluxe extends PokemonCard {
   }];
 
   public set: string = 'NXD';
-  public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '33';
   public name: string = 'Vanilluxe';
   public fullName: string = 'Vanilluxe NXD';
 
   public readonly SLIPPERY_SOLES_MARKER = 'SLIPPERY_SOLES_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Slippery Soles - switch both actives
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.SLIPPERY_SOLES_MARKER, this);
+
+    // Slippery Soles
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
 
-      if (player.marker.hasMarker(this.SLIPPERY_SOLES_MARKER, this)) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
-      }
+      USE_ABILITY_ONCE_PER_TURN(player, this.SLIPPERY_SOLES_MARKER, this);
 
-      // Check if player has benched Pokémon
       const playerHasBench = player.bench.some(b => b.cards.length > 0);
       if (!playerHasBench) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      // Check if opponent has benched Pokémon
       const opponentHasBench = opponent.bench.some(b => b.cards.length > 0);
       if (!opponentHasBench) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      player.marker.addMarker(this.SLIPPERY_SOLES_MARKER, this);
+      ABILITY_USED(player, this);
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.getPokemonCard() === this) {
-          cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-        }
-      });
-
-      // First, switch player's active
       SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
 
-      // Then, switch opponent's active
-      SWITCH_ACTIVE_WITH_BENCHED(store, state, opponent);
+      return SWITCH_OUT_OPPONENT_ACTIVE_FROM_ABILITY(
+        store,
+        state,
+        player,
+        this.powers[0],
+        this,
+        { allowCancel: false },
+      );
     }
 
-    // Crushing Ice - bonus damage for retreat cost
+    // Crushing Ice
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
       const defending = opponent.active.getPokemonCard();
@@ -87,11 +92,6 @@ export class Vanilluxe extends PokemonCard {
         const retreatCost = defending.retreat.length;
         effect.damage += retreatCost * 10;
       }
-    }
-
-    // Clean up marker at end of turn
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.SLIPPERY_SOLES_MARKER, this);
     }
 
     return state;

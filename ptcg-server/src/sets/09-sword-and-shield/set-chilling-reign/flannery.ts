@@ -15,8 +15,10 @@ import {
   PokemonCardList,
   ChooseCardsPrompt,
   Card,
+  Player,
 } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -58,6 +60,10 @@ function* playCard(
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
+  MOVE_CARDS(store, state, player.hand, player.supporter, {
+    cards: [effect.trainerCard],
+    sourceCard: trainerCard,
+  });
 
   let targets: PokemonCardList[] = [];
   yield store.prompt(
@@ -121,26 +127,45 @@ function* playCard(
     return state;
   }
 }
+
 export class Flannery extends TrainerCard {
-  public regulationMark = 'E';
-
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
+  public regulationMark = 'E';
   public set: string = 'CRE';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '139';
-
   public name: string = 'Flannery';
-
   public fullName: string = 'Flannery CRE';
-
   public text: string =
     "Discard a Special Energy attached to 1 of your opponent's Pokémon, and discard a Stadium in play.";
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+
+    const opponent = StateUtils.getOpponent(state, player);
+    let hasPokemonWithEnergy = false;
+    opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
+      if (
+        cardList.energies.cards.some(
+          (c) => c.superType === SuperType.ENERGY && c.energyType === EnergyType.SPECIAL,
+        )
+      ) {
+        hasPokemonWithEnergy = true;
+      }
+    });
+
+    const stadiumCard = StateUtils.getStadiumCard(state);
+
+    if (!hasPokemonWithEnergy || stadiumCard === undefined) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, effect, this);
       return generator.next().value;
     }

@@ -1,13 +1,11 @@
-import { Effect } from '../../../game/store/effects/effect';
-import { GameMessage } from '../../../game/game-message';
-import { SupporterEffect, TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardTag, Stage, TrainerType } from '../../../game/store/card/card-types';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
-
+import { Effect } from '../../../game/store/effects/effect';
+import { SupporterEffect } from '../../../game/store/effects/play-card-effects';
 import {
+  GameMessage,
+  State,
+  StoreLike,
+  TrainerCard,
   Card,
   CardTarget,
   ChooseCardsPrompt,
@@ -15,33 +13,51 @@ import {
   GameError,
   PlayerType,
   PokemonCard,
+  Player,
   SelectPrompt,
   SlotType,
   StateUtils,
 } from '../../../game';
+import { MOVE_CARDS, DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Serena extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
-  public set: string = 'SIT';
-
-  public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '164';
-
   public regulationMark = 'F';
-
+  public set: string = 'SIT';
+  public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '164';
   public name: string = 'Serena';
-
   public fullName: string = 'Serena SIT';
-
   public text: string =
     'Choose 1:\n\n' +
     '• Discard up to 3 cards from your hand. (You must discard at least 1 card.) If you do, draw cards until you have 5 cards in your hand.\n' +
     "• Switch 1 of your opponent's Benched Pokémon V with their Active Pokémon. Shuffle the other cards back into your deck.";
 
+  public canPlay(_store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+
+    const opponent = StateUtils.getOpponent(state, player);
+
+    const hasDiscardDraw =
+      player.hand.cards.length >= 1 && player.deck.cards.length > 0;
+
+    const hasBench = opponent.bench.some((b) => b.cards.length > 0);
+    const hasVPokeBench = opponent.bench.some(
+      (b) =>
+        b.getPokemonCard()?.hasTag(CardTag.POKEMON_V) ||
+        b.getPokemonCard()?.hasTag(CardTag.POKEMON_VMAX) ||
+        b.getPokemonCard()?.hasTag(CardTag.POKEMON_VSTAR),
+    );
+    const hasSwitch = hasBench && hasVPokeBench;
+
+    return hasDiscardDraw || hasSwitch;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -74,12 +90,7 @@ export class Serena extends TrainerCard {
                 cards = selected || [];
                 MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
 
-                while (player.hand.cards.length < 5) {
-                  if (player.deck.cards.length === 0) {
-                    break;
-                  }
-                  MOVE_CARDS(store, state, player.deck, player.hand, { count: 1, sourceCard: this });
-                }
+                DRAW_CARDS(store, state, player, Math.max(5 - player.hand.cards.length, 0));
                 return state;
               },
             );

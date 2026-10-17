@@ -10,9 +10,9 @@ import {
   PowerType,
   AttachEnergyPrompt,
 } from '../../../game';
-import { Effect } from '../../../game/store/effects/game-effects';
+import { Effect, PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
-import {IS_ABILITY_BLOCKED, WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class Gengarex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
@@ -78,26 +78,33 @@ export class Gengarex extends PokemonCard {
       );
     }
 
+    // Gnawing Curse — Ref: set-darkness-ablaze/arctozolt.ts
     if (effect instanceof AttachEnergyEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      // Find the owner of this Gengar-EX
-      let isGengarInPlay = false;
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isGengarInPlay = true;
-        }
-      });
+      const attachingPlayer = effect.player;
+      const abilityOwner = StateUtils.getOpponent(state, attachingPlayer);
 
-      if (!isGengarInPlay) {
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
         return state;
       }
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (!attachingPlayer.hand.cards.includes(effect.energyCard)) {
         return state;
       }
-      effect.target.damage += 20;
+
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
+        return state;
+      }
+
+      store.reduceEffect(
+        state,
+        new PlaceDamageCountersEffect(
+          abilityOwner,
+          effect.target,
+          20,
+          this,
+          this.powers[0],
+        ),
+      );
     }
     return state;
   }

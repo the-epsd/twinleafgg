@@ -20,7 +20,12 @@ import {
   WAS_ATTACK_USED,
 } from '../../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../../game/store/prefabs/attack-effects';
-import { HANDLE_ABILITY_BLOCK, POKEPOWER_TYPES } from '../../../game/store/prefabs/ability-lock';
+import {
+  CAN_APPLY_LOCKER_ABILITY,
+  CAN_APPLY_LOCK_TO_TARGET,
+  HANDLE_ABILITY_BLOCK,
+  POKEPOWER_TYPES,
+} from '../../../game/store/prefabs/ability-lock';
 
 export class Ursaring extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -91,15 +96,26 @@ export class Ursaring extends PokemonCard {
           return false;
         }
 
+        let passesTargetGate = false;
         try {
           const cardList = StateUtils.findCardList(state, card);
           if (cardList instanceof PokemonCardList) {
-            return cardList.getPokemons().length === 1 || card.hasTag(CardTag.LEGEND);
+            passesTargetGate =
+              cardList.getPokemons().length === 1 || card.hasTag(CardTag.LEGEND);
+          } else {
+            passesTargetGate = card.stage === Stage.BASIC;
           }
         } catch {
           return false;
         }
-        return card.stage === Stage.BASIC;
+        if (!passesTargetGate) {
+          return false;
+        }
+
+        if (!CAN_APPLY_LOCKER_ABILITY(store, state, opponent, this, this.powers[0])) {
+          return false;
+        }
+        return CAN_APPLY_LOCK_TO_TARGET(store, state, opponent, this, this.powers[0], card);
       },
       {
         powerTypes: POKEPOWER_TYPES,

@@ -18,6 +18,7 @@ export enum GameEffects {
   POWER_EFFECT = 'POWER_EFFECT',
   ATTACK_EFFECT = 'ATTACK_EFFECT',
   KNOCK_OUT_EFFECT = 'KNOCK_OUT_EFFECT',
+  SELF_KNOCK_OUT_EFFECT = 'SELF_KNOCK_OUT_EFFECT',
   HEAL_EFFECT = 'HEAL_EFFECT',
   EVOLVE_EFFECT = 'EVOLVE_EFFECT',
   DRAW_PRIZES_EFFECT = 'DRAW_PRIZES_EFFECT',
@@ -74,6 +75,7 @@ export class RetreatStartEffect implements Effect {
   readonly type: string = GameEffects.RETREAT_START_EFFECT;
   public preventDefault = false;
   public player: Player;
+  public ignoreStatusConditions = false;
 
   constructor(player: Player) {
     this.player = player;
@@ -244,6 +246,23 @@ export class KnockOutAttackEffect extends KnockOutEffect {
   }
 }
 
+/**
+ * Marks this Pokémon for Knock Out via lethal damage.
+ * checkState then fires KnockOutEffect and awards prizes (including simultaneous KOs).
+ * Uses source card identity so LV.X stacks resolve correctly.
+ */
+export class SelfKnockOutEffect implements Effect {
+  readonly type: string = GameEffects.SELF_KNOCK_OUT_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public source: PokemonCard;
+
+  constructor(player: Player, source: PokemonCard) {
+    this.player = player;
+    this.source = source;
+  }
+}
+
 export class HealEffect implements Effect {
   readonly type: string = GameEffects.HEAL_EFFECT;
   public preventDefault = false;
@@ -390,12 +409,21 @@ export class PlaceDamageCountersEffect implements Effect {
   public target: PokemonCardList;
   public damage: number;
   public source?: PokemonCard;
+  /** When set (or inferred from `source`), gameReducer probes EffectOfAbilityEffect before applying. */
+  public sourcePower?: Power;
 
-  constructor(player: Player, target: PokemonCardList, damage: number, source?: PokemonCard) {
+  constructor(
+    player: Player,
+    target: PokemonCardList,
+    damage: number,
+    source?: PokemonCard,
+    sourcePower?: Power,
+  ) {
     this.player = player;
     this.target = target;
     this.damage = damage;
     this.source = source;
+    this.sourcePower = sourcePower;
   }
 }
 

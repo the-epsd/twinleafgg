@@ -1,10 +1,9 @@
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import {
+  TrainerCard,
+  StoreLike,
+  State,
   Card,
   CardList,
   CardTarget,
@@ -17,30 +16,52 @@ import {
   SelectOptionPrompt,
   SlotType,
   StateUtils,
+  Player,
 } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class LostVacuum extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
-  public set: string = 'LOR';
-
-  public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '162';
-
   public regulationMark = 'F';
-
+  public set: string = 'LOR';
+  public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '162';
   public name: string = 'Lost Vacuum';
-
   public fullName: string = 'Lost Vacuum LOR';
-
   public text: string = `You can use this card only if you put another card from your hand in the Lost Zone.
 
 Choose a Pokémon Tool attached to any Pokémon, or any Stadium in play, and put it in the Lost Zone.`;
 
+  public canPlay(_store: StoreLike, state: State, player: Player): boolean {
+    const opponent = StateUtils.getOpponent(state, player);
+
+    let pokemonsWithTool = 0;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+      if (cardList.tools.length > 0) {
+        pokemonsWithTool += 1;
+      }
+    });
+    opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+      if (cardList.tools.length > 0) {
+        pokemonsWithTool += 1;
+      }
+    });
+
+    const stadiumCard = StateUtils.getStadiumCard(state);
+
+    if (pokemonsWithTool === 0 && stadiumCard === undefined) {
+      return false;
+    }
+
+    if (player.hand.cards.length < 2) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

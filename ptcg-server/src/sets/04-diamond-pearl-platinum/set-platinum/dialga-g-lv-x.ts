@@ -2,7 +2,13 @@ import { CardTag, CardType, ChooseCardsPrompt, GameError, GameMessage, PlayerTyp
 import { CheckTableStateEffect, CheckPokemonAttacksEffect, CheckPokemonPowersEffect } from "../../../game/store/effects/check-effects";
 import { Effect } from "../../../game/store/effects/effect";
 import { PlayPokemonEffect } from "../../../game/store/effects/play-card-effects";
-import { HANDLE_ABILITY_BLOCK, IS_ABILITY_LOCKER_IN_PLAY, POKEBODY_TYPES } from "../../../game/store/prefabs/ability-lock";
+import {
+  CAN_APPLY_LOCKER_ABILITY,
+  CAN_APPLY_LOCK_TO_TARGET,
+  HANDLE_ABILITY_BLOCK,
+  IS_ABILITY_LOCKER_IN_PLAY,
+  POKEBODY_TYPES,
+} from "../../../game/store/prefabs/ability-lock";
 import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED, MOVE_CARDS, COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
 
 export class DialgaGLVX extends PokemonCard {
@@ -46,7 +52,13 @@ export class DialgaGLVX extends PokemonCard {
         if (IS_POKEBODY_BLOCKED(store, state, owner, this)) {
           return false;
         }
-        return IS_ABILITY_LOCKER_IN_PLAY(state, player, this);
+        if (!IS_ABILITY_LOCKER_IN_PLAY(state, player, this)) {
+          return false;
+        }
+        if (!CAN_APPLY_LOCKER_ABILITY(store, state, owner, this, this.powers[0])) {
+          return false;
+        }
+        return CAN_APPLY_LOCK_TO_TARGET(store, state, owner, this, this.powers[0], card);
       },
       {
         powerTypes: POKEBODY_TYPES,

@@ -1,16 +1,10 @@
-import { Effect } from '../../../game/store/effects/effect';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
+import { GameError, GameMessage, Player, State, StateUtils, StoreLike, TrainerCard, TrainerType } from '../../../game';
 import { PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
-import { Player } from '../../../game/store/state/player';
-import { StateUtils } from '../../../game/store/state-utils';
+import { Effect } from '../../../game/store/effects/effect';
+import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { MOVE_POKEMON_OFF_BOARD } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
+import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 
 function pickUpBenchedPokemon(
   next: Function,
@@ -65,25 +59,44 @@ function* playCard(
   return state;
 }
 
+function hasBenchedPokemon(store: StoreLike, state: State, player: Player): boolean {
+  const opponent = StateUtils.getOpponent(state, player);
+  return (
+    player.bench.some((b) => b.cards.length > 0) ||
+    opponent.bench.some((b) => b.cards.length > 0)
+  );
+}
+
 export class Seeker extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'TM';
-
-  public name: string = 'Seeker';
-
-  public fullName: string = 'Seeker TRM';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '88';
-
+  public name: string = 'Seeker';
+  public fullName: string = 'Seeker TRM';
   public text: string =
     'Each player returns 1 of his or her Benched Pokemon and all cards ' +
     'attached to it to his or her hand. (You return your Pokemon first.)';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return hasBenchedPokemon(store, state, player);
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
+      const player = effect.player;
+
+      if (player.supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      if (!hasBenchedPokemon(store, state, player)) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

@@ -3,9 +3,9 @@ import { Stage, CardType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { AfterAttackEffect } from '../../../game/store/effects/game-phase-effects';
+import { AfterAttackEffect, EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { IS_POKEBODY_BLOCKED, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
-import { PowerType } from '../../../game';
+import { PowerType, StateUtils } from '../../../game';
 import { PutDamageEffect } from '../../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 
@@ -37,38 +37,49 @@ export class Skiploom extends PokemonCard {
   public name: string = 'Skiploom';
   public fullName: string = 'Skiploom SW';
 
-  private usedSmashTurn = false;
+  private usedUTurn = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    // Cotton Balloon
     if (effect instanceof PutDamageEffect && effect.target.getPokemonCard() === this) {
-      const player = effect.player;
+      const owner = StateUtils.findOwner(state, effect.target);
 
-      if (IS_POKEBODY_BLOCKED(store, state, player, this)) {
+      if (owner === effect.player) {
+        return state;
+      }
+      if (!StateUtils.isPokemonInPlay(owner, this)) {
+        return state;
+      }
+      if (IS_POKEBODY_BLOCKED(store, state, owner, this)) {
         return state;
       }
 
-      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(owner, effect.target);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
-      // Check if there is any Water energy attached
       const hasGrassEnergy = checkProvidedEnergy.energyMap.some(energy =>
         energy.provides.includes(CardType.GRASS) || energy.provides.includes(CardType.ANY)
       );
 
       if (hasGrassEnergy && effect.source.getPokemons().length > 1) {
-        effect.damage -= 20;
+        effect.damage = Math.max(0, effect.damage - 20);
       }
     }
 
+    // U-turn
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      this.usedSmashTurn = true;
+      this.usedUTurn = true;
     }
 
-    if (effect instanceof AfterAttackEffect && this.usedSmashTurn) {
+    if (effect instanceof AfterAttackEffect && this.usedUTurn) {
       const player = effect.player;
       SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
-      this.usedSmashTurn = false;
+      this.usedUTurn = false;
+    }
+
+    if (effect instanceof EndTurnEffect) {
+      this.usedUTurn = false;
     }
 
     return state;

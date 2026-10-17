@@ -3,12 +3,12 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, EnergyType } from '../../../game/store/card/card-types';
+import { Stage, CardType, SuperType, EnergyType, SpecialCondition } from '../../../game/store/card/card-types';
 import { Card, ChooseCardsPrompt, GameError, GameMessage, PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import {WAS_ATTACK_USED, WAS_POWER_USED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, IS_ABILITY_BLOCKED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/attack-effects';
-import { ADD_CONFUSION_TO_PLAYER_ACTIVE, ADD_POISON_TO_PLAYER_ACTIVE } from '../../../game/store/prefabs/prefabs';
+import { APPLY_SPECIAL_CONDITIONS_FROM_ABILITY } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 
 export class Victreebel extends PokemonCard {
@@ -68,9 +68,22 @@ export class Victreebel extends PokemonCard {
       USE_ABILITY_ONCE_PER_TURN(player, this.WAFTING_SCENT_MARKER, this);
       ABILITY_USED(player, this);
 
+      const applyConditions = () => {
+        APPLY_SPECIAL_CONDITIONS_FROM_ABILITY(
+          store,
+          state,
+          player,
+          this.powers[0],
+          this,
+          opponent.active,
+          [SpecialCondition.CONFUSED, SpecialCondition.POISONED],
+        );
+      };
+
       // Discard a Grass Energy
       if (grassEnergy.length === 1) {
         MOVE_CARDS(store, state, cardList, player.discard, { cards: [grassEnergy[0]], sourceCard: this });
+        applyConditions();
       } else {
         const blocked: number[] = [];
         cardList.cards.forEach((card, index) => {
@@ -89,13 +102,10 @@ export class Victreebel extends PokemonCard {
           const cards = selected || [];
           if (cards.length > 0) {
             MOVE_CARDS(store, state, cardList, player.discard, { cards: [cards[0]], sourceCard: this });
+            applyConditions();
           }
         });
       }
-
-      // Apply Confused and Poisoned to opponent's active
-      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, opponent, this);
-      ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.WAFTING_SCENT_MARKER, this);

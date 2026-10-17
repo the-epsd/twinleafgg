@@ -6,10 +6,14 @@ import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
-import { GamePhase } from '../../../game/store/state/state';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT,
+} from '../../../game/store/prefabs/prefabs';
 import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
+
 export class GalarianStunfisk extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType[] = [M];
@@ -41,28 +45,25 @@ export class GalarianStunfisk extends PokemonCard {
   public fullName: string = 'Galarian Stunfisk VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Counterattack (passive - when damaged by opponent's attack, put 3 damage counters on attacker)
-    // Ref: set-darkness-ablaze/talonflame.ts (AfterDamageEffect pattern), set-unified-minds/giant-bomb.ts (effect.source.damage)
-    if (effect instanceof AfterDamageEffect && effect.target.getPokemonCard() === this && state.phase === GamePhase.ATTACK) {
-      const owner = StateUtils.findOwner(state, effect.target);
-      const opponent = effect.player;
+    // Ability: Counterattack
+    if (ON_DAMAGED_BY_OPPONENT_ATTACK_EVEN_IF_KNOCKED_OUT(state, effect, { source: this })) {
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
 
-      if (owner === opponent || owner.active !== effect.target) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, owner, this)) {
-        return state;
-      }
-
-      if (effect.damage > 0) {
-        // Put 3 damage counters (30 damage) on the attacking Pokemon
-        effect.source.damage += 30;
-      }
+      const placeCounters = new PlaceDamageCountersEffect(
+        abilityOwner,
+        effect.source,
+        30,
+        this,
+        this.powers[0],
+      );
+      store.reduceEffect(state, placeCounters);
     }
 
     // Attack 1: Grip and Squeeze
-    // Ref: set-darkness-ablaze/talonflame.ts (BLOCK_RETREAT 3-call pattern)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return BLOCK_RETREAT(store, state, effect, this);
     }

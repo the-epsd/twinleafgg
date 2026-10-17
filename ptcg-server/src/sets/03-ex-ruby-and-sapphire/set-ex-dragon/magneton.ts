@@ -103,13 +103,13 @@ export class Magneton extends PokemonCard {
         ), selected => {
           const cards = selected || [];
 
+          MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this, sourceEffect: this.powers[0] });
           store.prompt(state, [new ShowCardsPrompt(
             opponent.id,
             GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
             cards
           )], () => {
-            MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this, sourceEffect: this.powers[0] });
-          });
+});
 
           // Move the discarded card to the discard pile after energy cards are added to the hand
           MOVE_CARDS(store, state, player.hand, player.discard, { cards: [cardToDiscard], sourceCard: this, sourceEffect: this.powers[0] });

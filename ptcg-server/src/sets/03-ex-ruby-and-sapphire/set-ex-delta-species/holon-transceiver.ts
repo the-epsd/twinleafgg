@@ -55,7 +55,15 @@ export class HolonTransceiver extends TrainerCard {
               .filter((c) => !c.name.includes('Holon'))
               .map((c) => player.deck.cards.indexOf(c));
 
-            store.prompt(
+            MOVE_CARDS(store, state, player.deck, player.hand, {
+                  cards: cards,
+                  sourceCard: this,
+                });
+                MOVE_CARDS(store, state, player.discard, player.hand, {
+                  cards: cards,
+                  sourceCard: this,
+                });
+                store.prompt(
               state,
               new ChooseCardsPrompt(
                 player,
@@ -66,11 +74,8 @@ export class HolonTransceiver extends TrainerCard {
               ),
               (selected) => {
                 cards = selected || [];
+
                 SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-                MOVE_CARDS(store, state, player.deck, player.hand, {
-                  cards: cards,
-                  sourceCard: this,
-                });
                 SHUFFLE_DECK(store, state, player);
               },
             );
@@ -88,7 +93,8 @@ export class HolonTransceiver extends TrainerCard {
               .filter((c) => !c.name.includes('Holon'))
               .map((c) => player.discard.cards.indexOf(c));
 
-            store.prompt(
+            
+              store.prompt(
               state,
               new ChooseCardsPrompt(
                 player,
@@ -99,11 +105,8 @@ export class HolonTransceiver extends TrainerCard {
               ),
               (selected) => {
                 cards = selected || [];
+
                 SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-                MOVE_CARDS(store, state, player.discard, player.hand, {
-                  cards: cards,
-                  sourceCard: this,
-                });
               },
             );
           },

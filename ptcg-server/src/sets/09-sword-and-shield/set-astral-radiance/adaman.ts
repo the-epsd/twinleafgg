@@ -9,10 +9,10 @@ import { GameMessage } from '../../../game/game-message';
 import { Card } from '../../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { CardList } from '../../../game/store/state/card-list';
-import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { StateUtils } from '../../../game/store/state-utils';
-import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { Player } from '../../../game';
+import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -51,7 +51,7 @@ function* playCard(
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
-  // prepare card list without Junk Arm
+  // prepare card list without this supporter
   const handTemp = new CardList();
   handTemp.cards = player.hand.cards.filter((c) => c !== self);
 
@@ -93,41 +93,47 @@ function* playCard(
   );
 
   if (cards.length > 0) {
-    yield store.prompt(
-      state,
-      new ShowCardsPrompt(opponent.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
-      () => next(),
-    );
+    MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: self });
+    SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
   }
 
-  MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: self });
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-    player.deck.applyOrder(order);
-  });
+  return SHUFFLE_DECK(store, state, player);
 }
 
 export class Adaman extends TrainerCard {
-  public regulationMark = 'F';
-
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
+  public regulationMark = 'F';
   public set: string = 'ASR';
-
-  public setNumber: string = '135';
-
   public cardImage: string = 'assets/cardback.png';
-
+  public setNumber: string = '135';
   public name: string = 'Adaman';
-
   public fullName: string = 'Adaman ASR';
-
   public text: string = `You can use this card only if you discard 2 [M] Energy cards from your hand.
 
 Search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck.`;
 
+  public canPlay(_store: StoreLike, _state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+
+    const hasEnergyInHand =
+      player.hand.cards.filter((c) => {
+        return c.superType === SuperType.ENERGY && c.name === 'Metal Energy';
+      }).length >= 2;
+
+    if (!hasEnergyInHand) {
+      return false;
+    }
+
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }

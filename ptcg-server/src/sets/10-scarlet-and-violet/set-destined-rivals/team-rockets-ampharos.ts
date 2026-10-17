@@ -7,10 +7,9 @@ import {
   State,
   PowerType,
   StateUtils,
-  PlayerType,
   GameLog,
 } from '../../../game';
-import { Effect, EvolveEffect } from '../../../game/store/effects/game-effects';
+import { Effect, EvolveEffect, PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class TeamRocketsAmpharos extends PokemonCard {
@@ -49,35 +48,34 @@ export class TeamRocketsAmpharos extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Darkest Impulse
     if (effect instanceof EvolveEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      //const sourcePlayer = StateUtils.findOwner(state, effect.target);
-
-      if (IS_ABILITY_BLOCKED(store, state, opponent, this)) {
-        return state;
-      }
+      const evolvingPlayer = effect.player;
+      const abilityOwner = StateUtils.getOpponent(state, evolvingPlayer);
 
       if (effect.darkestImpulseSV) {
         return state;
       }
 
-      // checking if this is on the opponent's side
-      let isAmphyOnOppsSide = false;
-      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList.getPokemonCard() === this) {
-          isAmphyOnOppsSide = true;
-        }
-      });
-      if (!isAmphyOnOppsSide) {
+      if (!StateUtils.isPokemonInPlay(abilityOwner, this)) {
+        return state;
+      }
+
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
       store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, {
-        name: player.name,
+        name: abilityOwner.name,
         ability: this.powers[0].name,
       });
 
-      effect.target.damage += 40;
+      const placeCounters = new PlaceDamageCountersEffect(
+        abilityOwner,
+        effect.target,
+        40,
+        this,
+        this.powers[0],
+      );
+      store.reduceEffect(state, placeCounters);
       effect.darkestImpulseSV = true;
     }
 

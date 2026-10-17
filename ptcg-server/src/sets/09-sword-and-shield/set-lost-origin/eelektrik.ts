@@ -3,11 +3,13 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, BoardEffect } from '../../../game/store/card/card-types';
+import { Stage, CardType, BoardEffect, SpecialCondition } from '../../../game/store/card/card-types';
+import { AddSpecialConditionsPowerEffect } from '../../../game/store/effects/check-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { PowerType, StoreLike, State, StateUtils, GameMessage, ConfirmPrompt, PlayerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { EvolveEffect } from '../../../game/store/effects/game-effects';
-import { ADD_PARALYZED_TO_PLAYER_ACTIVE, COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Eelektrik extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -64,7 +66,18 @@ export class Eelektrik extends PokemonCard {
           COIN_FLIP_PROMPT(store, state, player, result => {
             if (result) {
               const opponent = StateUtils.getOpponent(state, player);
-              ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, opponent, this);
+              if (!CAN_APPLY_ABILITY_TO_TARGET(store, state, player, this.powers[0], this, opponent.active)) {
+                return;
+              }
+              store.reduceEffect(
+                state,
+                new AddSpecialConditionsPowerEffect(
+                  player,
+                  this,
+                  opponent.active,
+                  [SpecialCondition.PARALYZED],
+                ),
+              );
             }
           });
         }

@@ -335,13 +335,14 @@ export class Board3dHandService {
     }
   }
 
-  /** Snap a draw-sequence card into its hand slot and show its face. */
+  /** Snap a draw-sequence card into its hand slot and show its face (or back if settle face-down). */
   finishDrawSequenceFlight(cardGroup: Object3D): void {
     const bc = cardGroup.userData.drawBoard3dCard as Board3dCard | undefined;
     const front = cardGroup.userData.drawRevealFrontTexture;
     const back = cardGroup.userData.drawRevealBackTexture;
     const mask = cardGroup.userData.drawRevealMaskTexture;
     const slot = cardGroup.userData.drawSlotLocal as Vector3 | undefined;
+    const settleFaceDown = cardGroup.userData.drawSettleFaceDown === true;
     for (const key of [
       'drawingFromDeck',
       'drawRevealFrontTexture',
@@ -349,6 +350,7 @@ export class Board3dHandService {
       'drawRevealMaskTexture',
       'drawBoard3dCard',
       'drawSlotLocal',
+      'drawSettleFaceDown',
     ]) {
       delete cardGroup.userData[key];
     }
@@ -361,10 +363,15 @@ export class Board3dHandService {
     cardGroup.quaternion.identity();
     cardGroup.scale.set(1.1, 1.1, 1.1);
     if (bc && front && back !== undefined && mask !== undefined) {
-      bc.updateTexture(front, back, mask);
-      const data = cardGroup.userData.cardData as Card | undefined;
-      if (data) {
-        void apply3dCardHolo(this.assetLoader, bc, data, false);
+      if (settleFaceDown) {
+        bc.updateTexture(back, back, mask);
+        bc.setHolo(null);
+      } else {
+        bc.updateTexture(front, back, mask);
+        const data = cardGroup.userData.cardData as Card | undefined;
+        if (data) {
+          void apply3dCardHolo(this.assetLoader, bc, data, false);
+        }
       }
     }
   }
@@ -372,6 +379,8 @@ export class Board3dHandService {
   /**
    * Rebuild the far hand row with its final count; the last `flyCount` cards are detached at
    * `origins[i]` for a draw flight. Remaining cards slide from their old slots.
+   * When `revealCards` is set, flights get ShowCards scan textures for a stage-flip reveal
+   * (then typically settle face-down if the hand is not public).
    */
   async prepareOpponentDrawSequence(
     hand: CardList,
@@ -380,6 +389,7 @@ export class Board3dHandService {
     worldAttachRoot: Object3D,
     flyCount: number,
     origins: readonly Vector3[],
+    revealCards?: readonly Card[],
   ): Promise<DrawSequenceFlight[]> {
     while (this.isUpdatingOpponent) {
       await new Promise<void>((r) => setTimeout(r, 16));
@@ -405,9 +415,14 @@ export class Board3dHandService {
 
       const flights: DrawSequenceFlight[] = [];
       const firstFly = Math.max(0, cards.length - flyCount);
+      const [backTexture, maskTexture] = revealCards?.length
+        ? await Promise.all([this.loadHandBackTexture(hand), this.assetLoader.loadCardMaskTexture()])
+        : [undefined, undefined];
+
       for (let i = 0; i < cards.length; i++) {
-        const group = this.opponentHandCards.get(i)?.getGroup();
-        if (!group) {
+        const board3dCard = this.opponentHandCards.get(i);
+        const group = board3dCard?.getGroup();
+        if (!group || !board3dCard) {
           continue;
         }
         const finalLocal = group.position.clone();
@@ -426,13 +441,39 @@ export class Board3dHandService {
           continue;
         }
         const origin = origins[flights.length] ?? origins[origins.length - 1];
+        const revealCard = revealCards?.[flights.length];
+        let revealFront = backTexture;
+        if (revealCard && backTexture && maskTexture) {
+          const scanUrl = this.cardsAdapter.getScanUrlFor3D(revealCard, hand);
+          if (scanUrl?.trim()) {
+            try {
+              revealFront = await this.assetLoader.loadCardTexture(scanUrl);
+            } catch {
+              revealFront = backTexture;
+            }
+          }
+          board3dCard.updateTexture(backTexture, backTexture, maskTexture);
+          group.userData.drawRevealFrontTexture = revealFront;
+          group.userData.drawRevealBackTexture = backTexture;
+          group.userData.drawRevealMaskTexture = maskTexture;
+          group.userData.drawBoard3dCard = board3dCard;
+          group.userData.cardData = revealCard;
+          group.userData.drawSettleFaceDown = !isVisible;
+        }
         group.userData.drawSlotLocal = finalLocal;
         group.userData.drawingFromDeck = true;
         const handSlotWorld = finalLocal.clone();
         this.opponentHandGroup.localToWorld(handSlotWorld);
         worldAttachRoot.attach(group);
         group.position.copy(origin);
-        flights.push({ flyingCard: group, handSlotWorld, cardId: null });
+        group.rotation.set(0, 0, 0);
+        group.quaternion.identity();
+        group.scale.set(1.1, 1.1, 1.1);
+        flights.push({
+          flyingCard: group,
+          handSlotWorld,
+          cardId: revealCard?.id ?? null,
+        });
       }
       return flights;
     } finally {
@@ -448,21 +489,7 @@ export class Board3dHandService {
     count: number,
     preferIds?: readonly number[],
   ): { position: Vector3; rotationY: number }[] {
-    const entries = [...this.opponentHandCards.entries()].sort((a, b) => a[0] - b[0]);
-    const taken: [number, Board3dCard][] = [];
-    for (const id of preferIds ?? []) {
-      const hit = entries.find(
-        (e) => !taken.includes(e) && e[1].getGroup().userData.cardData?.id === id,
-      );
-      if (hit && taken.length < count) {
-        taken.push(hit);
-      }
-    }
-    for (let i = entries.length - 1; i >= 0 && taken.length < count; i--) {
-      if (!taken.includes(entries[i])) {
-        taken.push(entries[i]);
-      }
-    }
+    const taken = this.selectOpponentHandCards(count, preferIds);
     const out: { position: Vector3; rotationY: number }[] = [];
     for (const [index, card] of taken) {
       const group = card.getGroup();
@@ -480,6 +507,55 @@ export class Board3dHandService {
     }
     this.repositionOpponentRow();
     return out;
+  }
+
+  /**
+   * Detach far-hand cards into `attachRoot` for a deck-return flight (revealed opponent hand).
+   * Caller must dispose each Board3dCard after the animation.
+   */
+  detachOpponentHandCardsForDeckFlight(
+    count: number,
+    attachRoot: Object3D,
+    preferIds?: readonly number[],
+  ): Board3dCard[] {
+    const taken = this.selectOpponentHandCards(count, preferIds);
+    const detached: Board3dCard[] = [];
+    for (const [index, board3d] of taken) {
+      const cardGroup = board3d.getGroup();
+      gsap.killTweensOf(cardGroup.position);
+      gsap.killTweensOf(cardGroup.rotation);
+      gsap.killTweensOf(cardGroup.scale);
+      attachRoot.attach(cardGroup);
+      cardGroup.userData.isOpponentHandCard = false;
+      cardGroup.userData.discardingFromHand = true;
+      delete cardGroup.userData.handIndex;
+      this.opponentHandCards.delete(index);
+      detached.push(board3d);
+    }
+    this.repositionOpponentRow();
+    return detached;
+  }
+
+  private selectOpponentHandCards(
+    count: number,
+    preferIds?: readonly number[],
+  ): [number, Board3dCard][] {
+    const entries = [...this.opponentHandCards.entries()].sort((a, b) => a[0] - b[0]);
+    const taken: [number, Board3dCard][] = [];
+    for (const id of preferIds ?? []) {
+      const hit = entries.find(
+        (e) => !taken.includes(e) && e[1].getGroup().userData.cardData?.id === id,
+      );
+      if (hit && taken.length < count) {
+        taken.push(hit);
+      }
+    }
+    for (let i = entries.length - 1; i >= 0 && taken.length < count; i--) {
+      if (!taken.includes(entries[i])) {
+        taken.push(entries[i]);
+      }
+    }
+    return taken;
   }
 
   private repositionOpponentRow(): void {
@@ -559,6 +635,37 @@ export class Board3dHandService {
       bc.updateTexture(cardBack, scan, mask);
       bc.setHolo(null);
     }
+  }
+
+  /**
+   * Inverse of {@link revealDrawFlightFace}: at the midpoint of a face-down flip, show only the card back
+   * (used when a revealed ShowCards flight returns to the deck).
+   */
+  hideDrawFlightFace(cardGroup: Object3D): void {
+    const bc = cardGroup.userData.drawBoard3dCard as Board3dCard | undefined;
+    const cardBack = cardGroup.userData.drawRevealBackTexture;
+    const mask = cardGroup.userData.drawRevealMaskTexture;
+    if (bc && cardBack !== undefined && mask !== undefined) {
+      bc.updateTexture(cardBack, cardBack, mask);
+      bc.setHolo(null);
+      cardGroup.userData.isFaceDown = true;
+    }
+  }
+
+  /**
+   * After a stage reveal (quaternion Z=π + swapped materials), restore conventional face-up
+   * (scan on front, z=0) so a subsequent face-down travel flip can animate.
+   */
+  normalizeDrawFlightFaceUp(cardGroup: Object3D): void {
+    const bc = cardGroup.userData.drawBoard3dCard as Board3dCard | undefined;
+    const scan = cardGroup.userData.drawRevealFrontTexture;
+    const cardBack = cardGroup.userData.drawRevealBackTexture;
+    const mask = cardGroup.userData.drawRevealMaskTexture;
+    if (bc && scan && cardBack !== undefined && mask !== undefined) {
+      bc.updateTexture(scan, cardBack, mask);
+    }
+    cardGroup.rotation.set(0, 0, 0);
+    cardGroup.quaternion.identity();
   }
 
   /**
@@ -677,6 +784,14 @@ export class Board3dHandService {
     const local = this.calculateCardPosition(index, totalCards);
     const w = local.clone();
     this.handGroup.localToWorld(w);
+    return w;
+  }
+
+  /** World position for a far-hand slot (same layout math as {@link getHandSlotWorld}). */
+  getOpponentHandSlotWorld(index: number, totalCards: number): Vector3 {
+    const local = this.calculateCardPosition(index, totalCards);
+    const w = local.clone();
+    this.opponentHandGroup.localToWorld(w);
     return w;
   }
 

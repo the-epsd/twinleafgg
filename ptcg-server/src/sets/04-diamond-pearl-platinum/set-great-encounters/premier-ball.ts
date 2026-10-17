@@ -44,6 +44,7 @@ export class PremierBall extends TrainerCard {
           action: () => {
             let cards: Card[] = [];
 
+            MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
             store.prompt(
               state,
               new ChooseCardsPrompt(
@@ -55,9 +56,8 @@ export class PremierBall extends TrainerCard {
               ),
               (selected) => {
                 cards = selected || [];
-                SHOW_CARDS_TO_PLAYER(store, state, player, cards);
 
-                MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
+                SHOW_CARDS_TO_PLAYER(store, state, player, cards);
 
                 SHUFFLE_DECK(store, state, player);
               },

@@ -71,6 +71,8 @@ export class Malamar extends PokemonCard {
 
           if (chosenCards.length > 0) {
             // Reveal chosen cards to opponent
+            MOVE_CARDS(store, state, player.hand, player.deck, { cards: chosenCards, sourceCard: this });
+
             store.prompt(
               state,
               new ShowCardsPrompt(
@@ -80,9 +82,6 @@ export class Malamar extends PokemonCard {
               ),
               () => {},
             );
-
-            // Shuffle chosen cards into deck
-            MOVE_CARDS(store, state, player.hand, player.deck, { cards: chosenCards, sourceCard: this });
             SHUFFLE_DECK(store, state, player);
           }
         },

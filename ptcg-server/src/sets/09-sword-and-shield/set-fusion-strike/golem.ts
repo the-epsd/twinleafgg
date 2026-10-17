@@ -8,6 +8,7 @@ import { GamePhase, PowerType, StoreLike, State, StateUtils } from '../../../gam
 import { AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../../game/store/prefabs/prefabs';
 
 export class Golem extends PokemonCard {
@@ -42,9 +43,7 @@ export class Golem extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Desperate Blast (passive - when KO'd in active by opponent's attack, deal 100 to attacker)
-    // Ref: set-scarlet-and-violet/rocky-helmet.ts (AfterDamageEffect - damage to attacker when hit)
     if (effect instanceof AfterDamageEffect) {
-      // This card must be the target (being hit)
       if (!effect.target.cards.includes(this) || effect.target.getPokemonCard() !== this) {
         return state;
       }
@@ -53,31 +52,33 @@ export class Golem extends PokemonCard {
         return state;
       }
 
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
+      const abilityOwner = StateUtils.findOwner(state, effect.target);
       const sourcePlayer = effect.player;
 
-      // Must be opponent's attack, and this must be in active spot
-      if (targetPlayer === sourcePlayer || targetPlayer.active !== effect.target) {
+      if (abilityOwner === sourcePlayer || abilityOwner.active !== effect.target) {
         return state;
       }
 
-      // Check ability blocked
-      if (IS_ABILITY_BLOCKED(store, state, targetPlayer, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, abilityOwner, this)) {
         return state;
       }
 
-      // Check if this Pokemon is KO'd (damage >= HP)
-      const checkHp = new CheckHpEffect(targetPlayer, effect.target);
+      const checkHp = new CheckHpEffect(abilityOwner, effect.target);
       store.reduceEffect(state, checkHp);
 
       if (effect.target.damage >= checkHp.hp) {
-        // Put 10 damage counters (100 damage) on the attacking Pokemon
-        effect.source.damage += 100;
+        const placeCounters = new PlaceDamageCountersEffect(
+          abilityOwner,
+          effect.source,
+          100,
+          this,
+          this.powers[0],
+        );
+        store.reduceEffect(state, placeCounters);
       }
     }
 
     // Attack 1: Double-Edge
-    // Ref: set-fusion-strike/arcanine.ts (THIS_POKEMON_DOES_DAMAGE_TO_ITSELF)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 30);
     }

@@ -8,7 +8,6 @@ import {
   PowerType as PowerTypeEnum,
   StoreLike,
   State,
-  StateUtils,
   PokemonCardList,
   PlayerType,
   Player,
@@ -16,7 +15,11 @@ import {
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../../game/store/prefabs/attack-effects';
-import { HANDLE_ABILITY_LOCK } from '../../../game/store/prefabs/ability-lock';
+import {
+  CAN_APPLY_LOCK_TO_TARGET,
+  HANDLE_ABILITY_LOCK,
+  LOCKER_ABILITY_APPLIES,
+} from '../../../game/store/prefabs/ability-lock';
 
 export class Gorebyss extends PokemonCard {
   protected _tags = [CardTag.FUSION_STRIKE];
@@ -88,11 +91,10 @@ export class Gorebyss extends PokemonCard {
           return false;
         }
 
-        try {
-          return StateUtils.findCardList(state, card) instanceof PokemonCardList;
-        } catch {
+        if (!LOCKER_ABILITY_APPLIES(store, state, gorebyssOwner, this, this.powers[0], card)) {
           return false;
         }
+        return CAN_APPLY_LOCK_TO_TARGET(store, state, gorebyssOwner, this, this.powers[0], card);
       },
       {
         allowUseFromHand: true,

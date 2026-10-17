@@ -4,7 +4,7 @@ import { PowerType } from '../../../game/store/card/pokemon-types';
 import { StoreLike, State, StateUtils, ConfirmPrompt, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
-import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { IS_ABILITY_BLOCKED } from '../../../game/store/prefabs/prefabs';
 
 export class Frogadier extends PokemonCard {
@@ -62,12 +62,14 @@ export class Frogadier extends PokemonCard {
             const targets = selected || [];
 
             if (targets.length > 0) {
-              // Check if ability can target selected Pokemon
-              const canApplyAbility = new EffectOfAbilityEffect(player, this.powers[0], this, targets[0]);
-              store.reduceEffect(state, canApplyAbility);
-              if (canApplyAbility.target) {
-                canApplyAbility.target.damage += 20;
-              }
+              const placeCounters = new PlaceDamageCountersEffect(
+                player,
+                targets[0],
+                20,
+                this,
+                this.powers[0],
+              );
+              store.reduceEffect(state, placeCounters);
             }
           });
         }

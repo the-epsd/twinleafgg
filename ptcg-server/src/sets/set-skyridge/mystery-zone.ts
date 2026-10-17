@@ -75,6 +75,11 @@ export class MysteryZone extends TrainerCard {
               const evolutionCards = selectedToDeck || [];
 
               if (evolutionCards.length > 0) {
+                MOVE_CARDS(store, state, player.hand, player.deck, {
+                  cards: evolutionCards,
+                  sourceCard: this,
+                });
+
                 state = store.prompt(
                   state,
                   new ShowCardsPrompt(
@@ -84,10 +89,6 @@ export class MysteryZone extends TrainerCard {
                   ),
                   () => {},
                 );
-                MOVE_CARDS(store, state, player.hand, player.deck, {
-                  cards: evolutionCards,
-                  sourceCard: this,
-                });
               }
 
               state = store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {

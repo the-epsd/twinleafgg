@@ -6,7 +6,13 @@ import { Effect } from '../../game/store/effects/effect';
 import { GameMessage, PokemonCardList, PowerType, StateUtils } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
-import { CAN_APPLY_LOCKER_ABILITY, HANDLE_ABILITY_BLOCK, IS_ABILITY_LOCKER_IN_PLAY, POKEMON_POWER_TYPES } from '../../game/store/prefabs/ability-lock';
+import {
+  CAN_APPLY_LOCKER_ABILITY,
+  CAN_APPLY_LOCK_TO_TARGET,
+  HANDLE_ABILITY_BLOCK,
+  IS_ABILITY_LOCKER_IN_PLAY,
+  POKEMON_POWER_TYPES,
+} from '../../game/store/prefabs/ability-lock';
 
 export class Muk extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -38,7 +44,7 @@ export class Muk extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    HANDLE_ABILITY_BLOCK(effect, ({ player, powerEffect }) => {
+    HANDLE_ABILITY_BLOCK(effect, ({ player, card, powerEffect }) => {
       if (!IS_ABILITY_LOCKER_IN_PLAY(state, player, this)) {
         return false;
       }
@@ -58,7 +64,10 @@ export class Muk extends PokemonCard {
 
       const lockerOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
       // Check + PowerEffect: Toxic Gas must itself be usable.
-      return CAN_APPLY_LOCKER_ABILITY(store, state, lockerOwner, this, this.powers[0]);
+      if (!CAN_APPLY_LOCKER_ABILITY(store, state, lockerOwner, this, this.powers[0])) {
+        return false;
+      }
+      return CAN_APPLY_LOCK_TO_TARGET(store, state, lockerOwner, this, this.powers[0], card);
     }, {
       powerTypes: POKEMON_POWER_TYPES,
       exemptPowerNames: ['Toxic Gas'],

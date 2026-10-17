@@ -43,8 +43,9 @@ export class NidoranFemale extends PokemonCard {
         player, GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER }, { min: 0, max: 1 },
       ), selected => {
         const cards = selected || [];
-        SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
         MOVE_CARDS(store, state, player.deck, player.hand, { cards });
+        SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+        
         SHUFFLE_DECK(store, state, player);
       });
     }

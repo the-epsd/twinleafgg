@@ -118,6 +118,7 @@ export class TapuLeleGX extends PokemonCard {
               (selected) => {
                 const cards = selected || [];
                 if (cards.length > 0) {
+                  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
                   store.prompt(
                     state,
                     [
@@ -134,7 +135,6 @@ export class TapuLeleGX extends PokemonCard {
                         }
                       });
 
-                      MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
                     },
                   );
                   return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {

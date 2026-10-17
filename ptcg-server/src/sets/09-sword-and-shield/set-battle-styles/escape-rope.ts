@@ -12,8 +12,10 @@ import {
   GameMessage,
   PokemonCardList,
   StateUtils,
+  Player,
 } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -85,26 +87,30 @@ function* playCard(
 
 export class EscapeRope extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
-  public set: string = 'BST';
-
-  public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '125';
-
   public regulationMark = 'E';
-
+  public set: string = 'BST';
+  public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '125';
   public name: string = 'Escape Rope';
-
   public fullName: string = 'Escape Rope BST';
-
   public text: string =
     'Each player switches his or her Active Pokemon with 1 of his or her ' +
     'Benched Pokemon. (Your opponent switches first. If a player does not ' +
     "have a Benched Pokemon, he or she doesn't switch Pokemon.)";
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const opponent = StateUtils.getOpponent(state, player);
+    const playerHasBench = player.bench.some((b) => b.cards.length > 0);
+    const opponentHasBench = opponent.bench.some((b) => b.cards.length > 0);
+
+    if (!playerHasBench && !opponentHasBench) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

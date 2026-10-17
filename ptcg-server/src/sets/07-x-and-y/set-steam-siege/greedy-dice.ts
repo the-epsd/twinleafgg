@@ -1,24 +1,16 @@
-import { GameError } from '../../../game';
-import { GameMessage } from '../../../game/game-message';
+import { GameError, GameMessage, Player, State, StoreLike } from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { DrawPrizesEffect } from '../../../game/store/effects/game-effects';
-import { CoinFlipEffect, TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  CONFIRMATION_PROMPT,
-  TAKE_SPECIFIC_PRIZES,
-  TAKE_X_PRIZES,
-  MOVE_CARDS,
-} from '../../../game/store/prefabs/prefabs';
-import { State } from '../../../game/store/state/state';
-import { StoreLike } from '../../../game/store/store-like';
+import { COIN_FLIP_PROMPT, CONFIRMATION_PROMPT, MOVE_CARDS, TAKE_SPECIFIC_PRIZES, TAKE_X_PRIZES } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class GreedyDice extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'STS';
-  public setNumber: string = '102';
   public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '102';
   public name: string = 'Greedy Dice';
   public fullName: string = 'Greedy Dice STS';
   public text: string =
@@ -29,8 +21,13 @@ export class GreedyDice extends TrainerCard {
 
   public cardUsed = false;
 
+  // Can only be played from the Prize cards (see handlePrizeEffect), never from hand
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    return false;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
     }
 
@@ -107,10 +104,13 @@ export class GreedyDice extends TrainerCard {
       }
     }
 
-    const coinFlip = new CoinFlipEffect(player);
-    store.reduceEffect(state, coinFlip);
+    let heads = false;
+    yield COIN_FLIP_PROMPT(store, state, player, (result) => {
+      heads = result;
+      next();
+    });
 
-    if (coinFlip.result === false) {
+    if (!heads) {
       return state;
     }
 

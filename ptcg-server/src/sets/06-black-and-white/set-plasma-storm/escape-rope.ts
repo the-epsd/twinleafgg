@@ -1,19 +1,11 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
+import { StoreLike, State, StateUtils, GameError, GameMessage, Player, PokemonCardList, PlayerType, SlotType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  PlayerType,
-  SlotType,
-  GameError,
-  GameMessage,
-  PokemonCardList,
-  StateUtils,
-} from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -55,7 +47,7 @@ function* playCard(
     );
 
     if (targets.length > 0) {
-      opponent.switchPokemon(targets[0]);
+      opponent.switchPokemon(targets[0], store, state);
     }
   }
 
@@ -76,7 +68,7 @@ function* playCard(
     );
 
     if (targets.length > 0) {
-      player.switchPokemon(targets[0]);
+      player.switchPokemon(targets[0], store, state);
     }
   }
 
@@ -85,24 +77,29 @@ function* playCard(
 
 export class EscapeRope extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'PLS';
-
-  public name: string = 'Escape Rope';
-
-  public fullName: string = 'Escape Rope PLS';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '120';
-
+  public name: string = 'Escape Rope';
+  public fullName: string = 'Escape Rope PLS';
   public text: string =
     'Each player switches his or her Active Pokemon with 1 of his or her ' +
     'Benched Pokemon. (Your opponent switches first. If a player does not ' +
     "have a Benched Pokemon, he or she doesn't switch Pokemon.)";
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const opponent = StateUtils.getOpponent(state, player);
+    const playerHasBench = player.bench.some((b) => b.cards.length > 0);
+    const opponentHasBench = opponent.bench.some((b) => b.cards.length > 0);
+
+    if (!playerHasBench && !opponentHasBench) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

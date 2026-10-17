@@ -107,6 +107,8 @@ export class ChienPaoex extends PokemonCard {
             return state;
           }
 
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
+
           if (cards.length > 0) {
             state = store.prompt(
               state,
@@ -114,8 +116,6 @@ export class ChienPaoex extends PokemonCard {
               () => state,
             );
           }
-
-          MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
 
           player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
             if (cardList.getPokemonCard() === this) {

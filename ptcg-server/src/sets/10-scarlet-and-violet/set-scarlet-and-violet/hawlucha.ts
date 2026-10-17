@@ -97,7 +97,10 @@ export class Hawlucha extends PokemonCard {
             const targets = selected || [];
             // Ref: set-chilling-reign/inteleon.ts (Quick Shooting) — PlaceDamageCountersEffect per target
             targets.forEach(target => {
-              state = store.reduceEffect(state, new PlaceDamageCountersEffect(player, target, 10, this));
+              state = store.reduceEffect(
+                state,
+                new PlaceDamageCountersEffect(player, target, 10, this, this.powers[0]),
+              );
             });
             return state;
           });

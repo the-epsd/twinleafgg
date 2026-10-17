@@ -6,12 +6,11 @@ import {
   GameMessage,
   PowerType,
   ChooseCardsPrompt,
-  PlayerType,
   StateUtils,
   GameError,
 } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { ABILITY_USED, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
+import { ABILITY_USED, KNOCK_OUT_THIS_POKEMON, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 import { Card } from '../../../game';
 
 export class Magneton extends PokemonCard {
@@ -57,7 +56,10 @@ export class Magneton extends PokemonCard {
       ABILITY_USED(player, this);
 
       let cards: Card[] = [];
-      return store.prompt(state, new ChooseCardsPrompt(
+      cards.forEach((card, index) => {
+          MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this, sourceEffect: this.powers[0] });
+        });
+        return store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
@@ -69,26 +71,14 @@ export class Magneton extends PokemonCard {
         // Operation canceled by the user
         if (cards.length === 0) {
           SHUFFLE_DECK(store, state, player);
-          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-            if (cardList.getPokemonCard() === this) {
-              cardList.damage += 999;
-            }
-          });
+          state = KNOCK_OUT_THIS_POKEMON(store, state, player, this);
           return state;
         }
-
-        cards.forEach((card, index) => {
-          MOVE_CARDS(store, state, player.deck, player.hand, { cards: [card], sourceCard: this, sourceEffect: this.powers[0] });
-        });
 
         SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
         SHUFFLE_DECK(store, state, player);
 
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            cardList.damage += 999;
-          }
-        });
+        state = KNOCK_OUT_THIS_POKEMON(store, state, player, this);
       });
     }
     return state;

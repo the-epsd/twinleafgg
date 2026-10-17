@@ -5,6 +5,7 @@ import {
   GameError,
   GameMessage,
   GameStoreMessage,
+  Player,
   PlayerType,
   SlotType,
   TrainerCard,
@@ -18,16 +19,24 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 
 export class DevolutionSprayZ extends TrainerCard {
-  public name = 'Devolution Spray Z';
+  protected _trainerType: TrainerType = TrainerType.ITEM;
+  public set: string = 'UNB';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber = '166';
-  public set = 'UNB';
-  public fullName = 'Devolution Spray Z UB';
-  public superType = SuperType.TRAINER;
-  protected _trainerType = TrainerType.ITEM;
-
-  public text =
+  public setNumber: string = '166';
+  public name: string = 'Devolution Spray Z';
+  public fullName: string = 'Devolution Spray Z UB';
+  public text: string =
     "Devolve 1 of your evolved Pokémon by shuffling any number of Evolution cards on it into your deck. (That Pokémon can't evolve this turn.)";
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    let canDevolve = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list) => {
+      if (list.isEvolved()) {
+        canDevolve = true;
+      }
+    });
+    return canDevolve;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_TRAINER_USED(effect, this)) {
@@ -35,7 +44,7 @@ export class DevolutionSprayZ extends TrainerCard {
       const player = effect.player;
 
       const blocked: CardTarget[] = [];
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
         if (list.isEvolved()) {
           canDevolve = true;
         } else {
@@ -51,7 +60,7 @@ export class DevolutionSprayZ extends TrainerCard {
       return store.prompt(
         state,
         new ChoosePokemonPrompt(
-          effect.player.id,
+          player.id,
           GameMessage.CHOOSE_POKEMON,
           PlayerType.BOTTOM_PLAYER,
           [SlotType.ACTIVE, SlotType.BENCH],
@@ -63,7 +72,7 @@ export class DevolutionSprayZ extends TrainerCard {
             store.prompt(
               state,
               new ChooseCardsPrompt(
-                effect.player,
+                player,
                 GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
                 results[0],
                 { superType: SuperType.POKEMON },
@@ -80,17 +89,15 @@ export class DevolutionSprayZ extends TrainerCard {
                   }
 
                   if (selectedIndex >= 0) {
-                    // Devolve until the selected Pokemon and everything above it is in hand
-                    // We need to devolve (pokemons.length - selectedIndex) times
+                    // Devolve until the selected Pokemon and everything above it is shuffled into the deck
                     const devolvesNeeded = pokemons.length - selectedIndex;
                     for (let i = 0; i < devolvesNeeded; i++) {
-                      DEVOLVE_POKEMON(store, state, results[0], effect.player.deck);
+                      DEVOLVE_POKEMON(store, state, results[0], player.deck);
                     }
                     SHUFFLE_DECK(store, state, player);
                   }
-
-                  return state;
                 }
+                return state;
               },
             );
           }

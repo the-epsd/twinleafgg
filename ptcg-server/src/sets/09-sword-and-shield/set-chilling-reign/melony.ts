@@ -3,7 +3,6 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardTag, EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import {
   AttachEnergyPrompt,
   CardTarget,
@@ -13,29 +12,58 @@ import {
   PlayerType,
   SlotType,
   StateUtils,
+  Player,
 } from '../../../game';
 import { DRAW_CARDS, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Melony extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
-  public set: string = 'CRE';
-
-  public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '146';
-
   public regulationMark = 'E';
-
+  public set: string = 'CRE';
+  public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '146';
   public name: string = 'Melony';
-
   public fullName: string = 'Melony CRE';
-
   public text: string =
     'Attach a [W] Energy card from your discard pile to 1 of your Pokémon V. If you do, draw 3 cards.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+
+    const hasWaterEnergyInDiscard = player.discard.cards.some(
+      (c) =>
+        c.superType === SuperType.ENERGY &&
+        c.energyType === EnergyType.BASIC &&
+        c.name === 'Water Energy',
+    );
+
+    if (!hasWaterEnergyInDiscard) {
+      return false;
+    }
+
+    let hasValidTarget = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
+      if (
+        card.hasTag(CardTag.POKEMON_V) ||
+        card.hasTag(CardTag.POKEMON_VSTAR) ||
+        card.hasTag(CardTag.POKEMON_VMAX) ||
+        card.hasTag(CardTag.POKEMON_VUNION)
+      ) {
+        hasValidTarget = true;
+      }
+    });
+
+    if (!hasValidTarget) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
       // Check if there's Water Energy in discard

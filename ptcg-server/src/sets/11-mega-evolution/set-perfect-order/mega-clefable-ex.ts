@@ -13,8 +13,8 @@ import {
 } from '../../../game';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { PowerEffect } from '../../../game/store/effects/game-effects';
-import {IS_ABILITY_BLOCKED, WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { PREVENT_EFFECTS_OF_OPPONENTS_ABILITIES } from '../../../game/store/prefabs/effect-of-ability-prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class MegaClefableex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -51,25 +51,19 @@ export class MegaClefableex extends PokemonCard {
   public fullName: string = 'Mega Clefable ex M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Wings of Light - Prevent opponent ability effects on this Pokemon
-    if (effect instanceof PowerEffect && effect.target && effect.target.cards.includes(this)) {
-      const pokemonCard = effect.target.getPokemonCard();
-      if (pokemonCard === this) {
-        const targetOwner = StateUtils.findOwner(state, effect.target);
-        const opponent = StateUtils.getOpponent(state, targetOwner);
-
-        // Only prevent effects from opponent's abilities
-        if (targetOwner === opponent) {
-          // Check if ability is blocked (to allow our own abilities)
-          if (!IS_ABILITY_BLOCKED(store, state, targetOwner, this)) {
-            effect.preventDefault = true;
-            return state;
-          }
-        }
+    // Luminous Wing — Ref: set-unbroken-bonds/stealthy-hood.ts
+    PREVENT_EFFECTS_OF_OPPONENTS_ABILITIES(state, effect, (target) => {
+      if (target.getPokemonCard() !== this) {
+        return false;
       }
-    }
+      const owner = StateUtils.findOwner(state, target);
+      if (IS_ABILITY_BLOCKED(store, state, owner, this, this.powers[0])) {
+        return false;
+      }
+      return true;
+    });
 
-    // Shooting Moon - discard energy from hand for damage
+    // Shooting Moons
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const energiesInHand = player.hand.cards.filter(

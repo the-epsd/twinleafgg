@@ -8,6 +8,7 @@ import { PokemonCardList, StateUtils } from '../../../game';
 import { BEFORE_DAMAGE } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_CARDS_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../../game/store/prefabs/attack-effects';
 import {
+  CAN_APPLY_LOCK_TO_TARGET,
   HANDLE_ABILITY_LOCK,
   IS_ABILITY_LOCKER_ACTIVE,
   LOCKER_ABILITY_APPLIES,
@@ -72,7 +73,10 @@ export class Klefki extends PokemonCard {
 
       const lockerOwner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
       // Check + PowerEffect: Mischievous Lock must itself be usable (e.g. Path to the Peak).
-      return LOCKER_ABILITY_APPLIES(store, state, lockerOwner, this, this.powers[0], card);
+      if (!LOCKER_ABILITY_APPLIES(store, state, lockerOwner, this, this.powers[0], card)) {
+        return false;
+      }
+      return CAN_APPLY_LOCK_TO_TARGET(store, state, lockerOwner, this, this.powers[0], card);
     }, {
       exemptPowerNames: ['Mischievous Lock'],
       allowUseFromHand: true,

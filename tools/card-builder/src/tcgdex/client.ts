@@ -30,19 +30,47 @@ export {
   setLogoUrl,
 } from '../data/localData';
 
-import type { ReprintCandidate } from '../types';
+import type { CardDraft, ReprintLookupResult } from '../types';
 
 export async function findReprintCandidates(
-  set: string,
-  name: string,
-  excludeSetNumber = ''
-): Promise<ReprintCandidate[]> {
-  const params = new URLSearchParams({ set, name });
-  if (excludeSetNumber) params.set('excludeSetNumber', excludeSetNumber);
-  const response = await fetch(`/reprint-candidates?${params.toString()}`);
-  const payload = (await response.json()) as { candidates?: ReprintCandidate[]; error?: string };
+  draft: Pick<
+    CardDraft,
+    | 'set'
+    | 'name'
+    | 'setNumber'
+    | 'extends'
+    | 'hasAttacks'
+    | 'hasPowers'
+    | 'attacks'
+    | 'powers'
+    | 'trainerText'
+    | 'energyText'
+  >
+): Promise<ReprintLookupResult> {
+  const response = await fetch('/reprint-candidates', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      set: draft.set,
+      name: draft.name,
+      excludeSetNumber: draft.setNumber,
+      extends: draft.extends,
+      hasAttacks: draft.hasAttacks,
+      hasPowers: draft.hasPowers,
+      attacks: draft.attacks.map(a => ({ name: a.name, text: a.text })),
+      powers: draft.powers.map(p => ({ name: p.name, text: p.text })),
+      trainerText: draft.trainerText,
+      energyText: draft.energyText,
+    }),
+  });
+  const payload = (await response.json()) as ReprintLookupResult & { error?: string };
   if (!response.ok) throw new Error(payload.error || `Reprint lookup failed (${response.status})`);
-  return payload.candidates || [];
+  return {
+    candidates: payload.candidates || [],
+    nextOccurrence: payload.nextOccurrence ?? 1,
+    suggestedClassName: payload.suggestedClassName || '',
+    suggestedFullName: payload.suggestedFullName || '',
+  };
 }
 
 export {

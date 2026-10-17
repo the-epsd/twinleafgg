@@ -3,12 +3,13 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SpecialCondition } from '../../../game/store/card/card-types';
+import { AddSpecialConditionsPowerEffect } from '../../../game/store/effects/check-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
 import { BLOCK_RETREAT } from '../../../game/store/prefabs/effect-of-attack-prefabs';
-import { ADD_POISON_TO_PLAYER_ACTIVE } from '../../../game/store/prefabs/prefabs';
 export class GalarianSlowbroV extends PokemonCard {
   protected _tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
@@ -63,7 +64,18 @@ export class GalarianSlowbroV extends PokemonCard {
       ABILITY_USED(player, this);
 
       const opponent = StateUtils.getOpponent(state, player);
-      ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
+      if (!CAN_APPLY_ABILITY_TO_TARGET(store, state, player, this.powers[0], this, opponent.active)) {
+        return state;
+      }
+      store.reduceEffect(
+        state,
+        new AddSpecialConditionsPowerEffect(
+          player,
+          this,
+          opponent.active,
+          [SpecialCondition.POISONED],
+        ),
+      );
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.RAPID_FIRE_POISON_MARKER, this);

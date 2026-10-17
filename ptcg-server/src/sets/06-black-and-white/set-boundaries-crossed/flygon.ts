@@ -4,7 +4,7 @@ import { StoreLike, State, PowerType, PlayerType, StateUtils, ChooseEnergyPrompt
 import { Effect } from '../../../game/store/effects/effect';
 import { CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 import { BetweenTurnsEffect } from '../../../game/store/effects/game-phase-effects';
-import { EffectOfAbilityEffect } from '../../../game/store/effects/game-effects';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../../game/store/prefabs/attack-effects';
@@ -47,12 +47,15 @@ export class Flygon extends PokemonCard {
         return state;
       }
 
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        const damageEffect = new EffectOfAbilityEffect(player, this.powers[0], this, cardList);
-        store.reduceEffect(state, damageEffect);
-        if (damageEffect.target) {
-          damageEffect.target.damage += 10;
-        }
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+        const placeCounters = new PlaceDamageCountersEffect(
+          player,
+          cardList,
+          10,
+          this,
+          this.powers[0],
+        );
+        store.reduceEffect(state, placeCounters);
       });
     }
 

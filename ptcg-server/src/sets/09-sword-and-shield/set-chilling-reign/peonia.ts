@@ -1,34 +1,40 @@
-import { CardList, ChooseCardsPrompt, ChoosePrizePrompt, OrderCardsPrompt } from '../../../game';
+import {
+  CardList,
+  ChooseCardsPrompt,
+  ChoosePrizePrompt,
+  OrderCardsPrompt,
+  Player,
+} from '../../../game';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 export class Peonia extends TrainerCard {
-  public regulationMark = 'E';
-
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
+  public regulationMark = 'E';
   public set: string = 'CRE';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '149';
-
   public name: string = 'Peonia';
-
   public fullName: string = 'Peonia CRE';
-
   public text: string =
     'Put up to 3 Prize cards into your hand. Then, for each Prize card you put into your hand in this way, put a card from your hand face down as a Prize card.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
       if (player.supporterTurn > 0) {
@@ -89,9 +95,9 @@ export class Peonia extends TrainerCard {
                       p.cards = newPrizeCards.cards.splice(0, 1);
                       p.isSecret = true; // Only set the new cards to secret
                     }
-                    // Remove this line: newPrizeCards.isSecret = true;
                   });
 
+                  CLEAN_UP_SUPPORTER(store, effect, player);
                   return state;
                 },
               );

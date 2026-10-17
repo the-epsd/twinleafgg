@@ -56,6 +56,7 @@ export class Durant extends PokemonCard {
       }
 
       let cards: Card[] = [];
+      MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
       store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
@@ -66,8 +67,6 @@ export class Durant extends PokemonCard {
         cards = selected || [];
 
         SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-
-        MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
       });
 
       return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

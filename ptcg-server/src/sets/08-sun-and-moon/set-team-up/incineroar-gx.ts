@@ -24,6 +24,7 @@ import {
 } from '../../../game';
 import { DiscardCardsEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
+import { PlaceDamageCountersEffect } from '../../../game/store/effects/game-effects';
 import {WAS_ATTACK_USED,
   WAS_POWER_USED,
   IS_ABILITY_BLOCKED,
@@ -89,9 +90,18 @@ export class IncineroarGx extends PokemonCard {
       USE_ABILITY_ONCE_PER_TURN(player, this.SCAR_CHARGE_MARKER, this);
       ABILITY_USED(player, this);
 
-      // Put 3 damage counters on this Pokemon
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
-      cardList.damage += 30;
+      const placeCounters = new PlaceDamageCountersEffect(
+        player,
+        cardList,
+        30,
+        this,
+        this.powers[0],
+      );
+      store.reduceEffect(state, placeCounters);
+      if (placeCounters.preventDefault) {
+        return state;
+      }
 
       // Search deck for up to 3 [D] Energy and attach to this Pokemon
       const hasEnergy = player.deck.cards.some(

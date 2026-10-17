@@ -3,11 +3,13 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition } from '../../../game/store/card/card-types';
+import { AddSpecialConditionsPowerEffect } from '../../../game/store/effects/check-effects';
+import { CAN_APPLY_ABILITY_TO_TARGET } from '../../../game/store/prefabs/effect-of-ability-prefabs';
 import { PowerType, StoreLike, State, StateUtils } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { AttachEnergyEffect } from '../../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, CONFIRMATION_PROMPT, ADD_CONFUSION_TO_PLAYER_ACTIVE } from '../../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, CONFIRMATION_PROMPT } from '../../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../../game/store/prefabs/costs';
 
 export class PorygonZ extends PokemonCard {
@@ -59,7 +61,18 @@ export class PorygonZ extends PokemonCard {
 
       CONFIRMATION_PROMPT(store, state, player, result => {
         if (result) {
-          ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, opponent, this);
+          if (!CAN_APPLY_ABILITY_TO_TARGET(store, state, player, this.powers[0], this, opponent.active)) {
+            return;
+          }
+          store.reduceEffect(
+            state,
+            new AddSpecialConditionsPowerEffect(
+              player,
+              this,
+              opponent.active,
+              [SpecialCondition.CONFUSED],
+            ),
+          );
         }
       });
     }

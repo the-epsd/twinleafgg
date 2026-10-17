@@ -5,7 +5,12 @@ import { StoreLike, State, GameMessage, StateUtils, PlayerType, Player } from '.
 import { Effect } from '../../../game/store/effects/effect';
 import { AFTER_ATTACK, DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
 import { PokemonCardList } from '../../../game/store/state/pokemon-card-list';
-import { HANDLE_ABILITY_BLOCK, POKEBODY_TYPES } from '../../../game/store/prefabs/ability-lock';
+import {
+  CAN_APPLY_LOCKER_ABILITY,
+  CAN_APPLY_LOCK_TO_TARGET,
+  HANDLE_ABILITY_BLOCK,
+  POKEBODY_TYPES,
+} from '../../../game/store/prefabs/ability-lock';
 
 export class Latias extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -73,15 +78,24 @@ export class Latias extends PokemonCard {
         if (card.hasTag(CardTag.POKEMON_ex)) {
           return false;
         }
+        let isEvolved = false;
         try {
           const cardList = StateUtils.findCardList(state, card);
           if (cardList instanceof PokemonCardList) {
-            return cardList.getPokemons().length > 1;
+            isEvolved = cardList.getPokemons().length > 1;
           }
         } catch {
           return false;
         }
-        return false;
+        if (!isEvolved) {
+          return false;
+        }
+
+        const lockerOwner = this.hasLatiasLatiosCombo(player) ? player : opponent;
+        if (!CAN_APPLY_LOCKER_ABILITY(store, state, lockerOwner, this, this.powers[0])) {
+          return false;
+        }
+        return CAN_APPLY_LOCK_TO_TARGET(store, state, lockerOwner, this, this.powers[0], card);
       },
       {
         powerTypes: POKEBODY_TYPES,

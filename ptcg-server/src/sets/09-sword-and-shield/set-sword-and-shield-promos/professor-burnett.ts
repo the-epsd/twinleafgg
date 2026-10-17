@@ -1,15 +1,18 @@
-import { Card } from '../../../game/store/card/card';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
-import { Effect } from '../../../game/store/effects/effect';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
+import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import {
+  Card,
+  GameError,
+  GameMessage,
+  TrainerCard,
+  StoreLike,
+  State,
+  ChooseCardsPrompt,
+  Player,
+} from '../../../game';
+import { MOVE_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(
   next: Function,
@@ -57,31 +60,32 @@ function* playCard(
     sourceCard: effect.trainerCard,
   });
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-    player.deck.applyOrder(order);
-  });
+  return SHUFFLE_DECK(store, state, player);
 }
 
 export class ProfessorBurnet extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.SUPPORTER;
-
-  public set: string = 'SWSH';
-
   public regulationMark = 'E';
-
+  public set: string = 'SWSH';
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '167';
-
   public name: string = 'Professor Burnet';
-
   public fullName: string = 'Professor Burnet SWSH';
-
   public text: string =
     'Search your deck for up to 2 cards and discard them. ' + 'Then, shuffle your deck.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
