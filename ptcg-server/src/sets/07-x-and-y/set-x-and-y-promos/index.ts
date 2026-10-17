@@ -1,11 +1,13 @@
 import { Card } from '../../../game/store/card/card';
 import { Azelf } from './azelf';
 import { Celebi } from './celebi';
+import { Giratina } from './giratina';
 import { Greninja } from './greninja';
 import { Jirachi } from './jirachi';
 import { Karen } from './karen';
 import { Latias } from './latias';
 import { Latios } from './latios';
+import { Malamar } from './malamar';
 import { Meloetta } from './meloetta';
 import { PikachuLibre } from './pikachu-libre';
 import { Regirock } from './regirock';
@@ -43,11 +45,13 @@ import { SalamenceEX } from './salamence-ex';
 export const setXYPromos: Card[] = [
   new Azelf(),
   new Celebi(),
+  new Giratina(),
   new Greninja(),
   new Jirachi(),
   new Karen(),
   new Latias(),
   new Latios(),
+  new Malamar(),
   new Meloetta(),
   new PikachuLibre(),
   new Regirock(),

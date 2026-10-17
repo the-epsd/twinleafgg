@@ -19,6 +19,7 @@ import { Cetitan } from './cetitan';
 import { Cetoddle } from './cetoddle';
 import { Charcadet } from './charcadet';
 import { Charcadet2 } from './charcadet-2';
+import { Passimian } from './passimian';
 import { PreciousTrolley } from './precious-trolley';
 import { ChienPao } from './chien-pao';
 import { ChillTeaserToy } from './chill-teaser-toy';
@@ -126,6 +127,7 @@ import { Turtonator } from './turtonator';
 
 export const setSurgingSparks: Card[] = [
   new Dialga(),
+  new Passimian(),
   new Pikachuex(),
   new Terapagos(),
   new BlackKyuremex(),

@@ -5,6 +5,7 @@ import { AntiquePlumeFossil } from './antique-plume-fossil';
 import { Archen } from './archen';
 import { Archeops } from './archeops';
 import { Axew } from './axew';
+import { Heatmor } from './heatmor';
 import { Karrablast } from './karrablast';
 import { BraveBangle } from './brave-bangle';
 import { Carracosta } from './carracosta';
@@ -168,6 +169,7 @@ import { Deino } from './deino';
 
 export const setSV11: Card[] = [
   new Harlequin(),
+  new Heatmor(),
   new Purrloin(),
   new Gothita(),
   new Gothorita(),

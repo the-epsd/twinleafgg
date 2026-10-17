@@ -74,6 +74,7 @@ import { SurfingBeach } from './surfing-beach';
 import { Tinkatink } from './tinkatink';
 import { Tinkaton } from './tinkaton';
 import { Tinkatuff } from './tinkatuff';
+import { Tyrogue } from './tyrogue';
 import { WallysCompassion } from './wallys-compassion';
 import { Xerneas } from './xerneas';
 import { Yungoos } from './yungoos';
@@ -162,6 +163,7 @@ export const setMegaEvolution: Card[] = [
   new Tinkatink(),
   new Tinkaton(),
   new Tinkatuff(),
+  new Tyrogue(),
   new WallysCompassion(),
   new Xerneas(),
   new Yungoos(),

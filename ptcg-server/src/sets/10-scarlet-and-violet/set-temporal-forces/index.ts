@@ -17,6 +17,8 @@ import { DrumsOfAwakening } from './drums-of-awakening';
 import { Dudunsparce } from './dudunsparce';
 import { Dunsparce } from './dunsparce';
 import { Duosion } from './duosion';
+import { Electabuzz } from './electabuzz';
+import { Electivire } from './electivire';
 import { EmergencyBoard } from './emergency-board';
 import { Eri } from './eri';
 import { ExplorersGuidance } from './explorers-guidance';
@@ -39,6 +41,7 @@ import { HeavyBaton } from './heavy-baton';
 import { HerosCape } from './heros-cape';
 import { Hoothoot } from './hoothoot';
 import { Incineroarex } from './incineroar-ex';
+import { IronBoulderex } from './iron-boulder-ex';
 import { IronCrownex } from './iron-crown-ex';
 import { IronHands } from './iron-hands';
 import { IronJugulis } from './iron-jugulis';
@@ -117,6 +120,8 @@ export const setTemporalForces: Card[] = [
   new Dudunsparce(),
   new Dunsparce(),
   new Duosion(),
+  new Electabuzz(),
+  new Electivire(),
   new EmergencyBoard(),
   new Eri(),
   new ExplorersGuidance(),
@@ -136,6 +141,7 @@ export const setTemporalForces: Card[] = [
   new HerosCape(),
   new Hoothoot(),
   new Incineroarex(),
+  new IronBoulderex(),
   new IronCrownex(),
   new IronHands(),
   new IronJugulis(),

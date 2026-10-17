@@ -194,6 +194,8 @@ export class CoinFlipEffect implements Effect {
   public player: Player;
   public callback?: (result: boolean) => void;
   public result?: boolean;
+  /** When set (e.g. by Malamar Contrary), overrides the random flip. */
+  public forcedResult?: boolean;
   public skipReflipStadium?: boolean;
   public skipReflipTool?: boolean;
 
