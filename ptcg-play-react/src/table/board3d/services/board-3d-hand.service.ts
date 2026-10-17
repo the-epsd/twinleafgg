@@ -268,7 +268,8 @@ export class Board3dHandService {
             isOwner && playableCardIds?.includes(card.id),
             hand,
             flySet.has(card.id),
-            true,
+            // Keep fly cards off the hand row until deck→hand flight starts.
+            !flySet.has(card.id),
             visualIndex,
           ),
         ),
@@ -407,14 +408,26 @@ export class Board3dHandService {
       this.clearOpponentHand();
 
       const cards = hand.cards;
+      const firstFly = Math.max(0, cards.length - flyCount);
       await Promise.all(
         cards.map((card, index) =>
-          this.createHandCard(card, index, cards.length, isVisible, false, hand, false, true, index, true),
+          this.createHandCard(
+            card,
+            index,
+            cards.length,
+            isVisible,
+            false,
+            hand,
+            false,
+            // Keep fly cards off the far hand until deck→hand flight starts.
+            index < firstFly,
+            index,
+            true,
+          ),
         ),
       );
 
       const flights: DrawSequenceFlight[] = [];
-      const firstFly = Math.max(0, cards.length - flyCount);
       const [backTexture, maskTexture] = revealCards?.length
         ? await Promise.all([this.loadHandBackTexture(hand), this.assetLoader.loadCardMaskTexture()])
         : [undefined, undefined];
@@ -466,8 +479,8 @@ export class Board3dHandService {
         this.opponentHandGroup.localToWorld(handSlotWorld);
         worldAttachRoot.attach(group);
         group.position.copy(origin);
-        group.rotation.set(0, 0, 0);
-        group.quaternion.identity();
+        // Match opponentHandGroup yaw so sleeves stay upside-down while detached.
+        group.rotation.set(0, Math.PI, 0);
         group.scale.set(1.1, 1.1, 1.1);
         flights.push({
           flyingCard: group,
