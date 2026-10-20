@@ -64,6 +64,9 @@ ptcg-server/dist
 tools/ptcgo-extract/.venv/
 tools/ptcgo-extract/out/
 
+# artofpkm/TCGdex scrape cache (derived data; do not ship)
+scripts/jp-card-images/
+
 # Specific Sets
 ptcg-server/src/sets/set-test/
 /.kiro

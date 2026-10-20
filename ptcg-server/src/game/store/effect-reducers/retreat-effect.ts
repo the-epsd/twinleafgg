@@ -56,7 +56,7 @@ function promptBenchAndRetreat(store: StoreLike, state: State, player: Player): 
     GameMessage.CHOOSE_POKEMON_TO_SWITCH,
     PlayerType.BOTTOM_PLAYER,
     [SlotType.BENCH],
-    { min: 1, max: 1, allowCancel: true, blocked: [] }
+    { min: 1, max: 1, allowCancel: false, blocked: [] }
   );
   prompt.skipSwitchLog = true;
   return store.prompt(state, prompt, (benchResult: PokemonCardList[] | null) => {
