@@ -106,14 +106,14 @@ export class Delphox extends PokemonCard {
         const checkEnergy = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkEnergy);
         checkEnergy.energyMap.forEach((em) => {
-          totalEnergy += em.provides.length;
+          totalEnergy += StateUtils.getProvidesUnitCount(em.provides);
         });
       });
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         const checkEnergy = new CheckProvidedEnergyEffect(opponent, cardList);
         store.reduceEffect(state, checkEnergy);
         checkEnergy.energyMap.forEach((em) => {
-          totalEnergy += em.provides.length;
+          totalEnergy += StateUtils.getProvidesUnitCount(em.provides);
         });
       });
       effect.damage = 30 * totalEnergy;
