@@ -166,6 +166,27 @@ interface PlayerPlanResult {
   transition: PlayerTransition;
 }
 
+/**
+ * Multiset diff of play-log trainer names. Snapshots may carry the full untrimmed
+ * log history; only names that appear more often in `next` than `prev` are new plays.
+ */
+function newPlayedTrainerNames(prev: string[], next: string[]): string[] {
+  const left = new Map<string, number>();
+  for (const n of prev) {
+    left.set(n, (left.get(n) ?? 0) + 1);
+  }
+  const out: string[] = [];
+  for (const n of next) {
+    const c = left.get(n) ?? 0;
+    if (c > 0) {
+      left.set(n, c - 1);
+    } else {
+      out.push(n);
+    }
+  }
+  return out;
+}
+
 function planPlayer(
   prevSnap: BoardSnapshot,
   nextSnap: BoardSnapshot,
@@ -225,7 +246,7 @@ function planPlayer(
     }
   }
 
-  const names = [...N.playedTrainerNames];
+  const names = newPlayedTrainerNames(P.playedTrainerNames, N.playedTrainerNames);
   const consumeName = (id: number): boolean => {
     const name = nextSnap.cardNames.get(id);
     const i = name != null ? names.indexOf(name) : -1;

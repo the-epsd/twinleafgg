@@ -94,6 +94,7 @@ export function CardFace({
             loading={loading}
             decoding="async"
             draggable={draggable}
+            referrerPolicy="no-referrer"
             className={styles.img}
             onError={() => {
               if (displaySrc !== CARDBACK_ASSET_URL) {

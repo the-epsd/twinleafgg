@@ -241,7 +241,7 @@ export class BoardInteractionService {
       GameMessage.CHOOSE_POKEMON_TO_SWITCH,
       PlayerType.BOTTOM_PLAYER,
       [SlotType.BENCH],
-      { min: 1, max: 1, allowCancel: true, blocked: [] }
+      { min: 1, max: 1, allowCancel: false, blocked: [] }
     );
 
     this.startBoardSelection(syntheticPrompt, (targets: CardTarget[] | null) => {

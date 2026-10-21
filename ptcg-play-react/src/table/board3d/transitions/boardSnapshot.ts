@@ -24,7 +24,11 @@ export interface PlayerSnapshot {
   /** Real prize ids per grid slot; null when the slot is empty or secret. */
   prizeIds: (number | null)[];
   boardCards: Map<number, BoardCardLocation>;
-  /** Trainer names this player logged as played in this state (new logs only). */
+  /**
+   * Trainer names this player has logged as played in `state.logs`.
+   * When broadcasts keep untrimmed logs this is cumulative; consumers must
+   * diff consecutive snapshots to find plays new to a transition.
+   */
   playedTrainerNames: string[];
 }
 

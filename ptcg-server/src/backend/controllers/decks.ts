@@ -63,13 +63,13 @@ export class Decks extends Controller {
           const cards = JSON.parse(deck.cards);
           format = getValidFormatsForCardList(cards);
           // Persist so future list requests skip this work (fire-and-forget)
-          Deck.update({ id: deck.id }, { formats: JSON.stringify(format) }).catch(() => {});
+          Deck.update({ id: deck.id }, { formats: JSON.stringify(format) }).catch(() => { });
         }
       } else {
         const cards = JSON.parse(deck.cards);
         format = getValidFormatsForCardList(cards);
         // Persist so future list requests skip this work (fire-and-forget)
-        Deck.update({ id: deck.id }, { formats: JSON.stringify(format) }).catch(() => {});
+        Deck.update({ id: deck.id }, { formats: JSON.stringify(format) }).catch(() => { });
       }
 
       const base: Record<string, any> = {
@@ -197,10 +197,10 @@ export class Decks extends Controller {
       body.id !== undefined
         ? await Deck.findOne(body.id, { relations: ['user'] })
         : (() => {
-            const d = new Deck();
-            d.user = user;
-            return d;
-          })();
+          const d = new Deck();
+          d.user = user;
+          return d;
+        })();
 
     if (deck === undefined || deck.user.id !== user.id) {
       res.status(400);
@@ -1111,7 +1111,7 @@ const SetReleaseDates: { [key: string]: Date } = {
   CRI: new Date('2026-05-22'),
   M5: new Date('2026-05-23'),
   PBL: new Date('2026-07-16'),
-  M6: new Date('2026-07-31'),
+  M6: new Date('2026-11-06'),
   M6a: new Date('2026-09-16'),
   '30C': new Date('2026-09-16'),
   M7: new Date('2099-12-31'),

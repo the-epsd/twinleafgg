@@ -1,32 +1,12 @@
-import {
-  Attack,
-  Card,
-  ChooseCardsPrompt,
-  ChoosePokemonPrompt,
-  GameMessage,
-  PlayerType,
-  SlotType,
-} from '../../game';
-import { CardTag, CardType, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { Attack, CardTag, ChooseCardsPrompt, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, State, StoreLike, SuperType, TrainerCard, TrainerType } from '../../game';
 import { ColorlessCostReducer } from '../../game/store/card/pokemon-interface';
-import { TrainerCard } from '../../game/store/card/trainer-card';
-import {
-  CheckAttackCostEffect,
-  CheckPokemonAttacksEffect,
-} from '../../game/store/effects/check-effects';
+import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import {
-  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED,
-  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED,
-  YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED,
-} from '../../game/store/prefabs/attack-effects';
-import {SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../game/store/prefabs/attack-effects';
+import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
-import { State } from '../../game/store/state/state';
-import { StoreLike } from '../../game/store/store-like';
 
 export class MysteryPlateAlpha extends TrainerCard {
   protected _trainerType: TrainerType = TrainerType.ITEM;
@@ -37,17 +17,14 @@ export class MysteryPlateAlpha extends TrainerCard {
   public name: string = 'Mystery Plate α';
   public fullName: string = 'Mystery Plate α SK';
 
-  public attacks: Attack[] = [
-    {
-      name: 'Desert Burn',
-      cost: [C],
-      damage: 0,
-      text: 'If your opponent has 5 or more Prizes, search your deck for a Trainer card, show it to your opponent, and put it into your hand. If your opponent has only 1 Prize, the Defending Pokémon is now Burned, Paralyzed, and Poisoned.',
-    },
-  ];
+  public attacks: Attack[] = [{
+    name: 'Desert Burn',
+    cost: [C],
+    damage: 0,
+    text: 'If your opponent has 5 or more Prizes, search your deck for a Trainer card, show it to your opponent, and put it into your hand. If your opponent has only 1 Prize, the Defending Pokémon is now Burned, Paralyzed, and Poisoned.',
+  }];
 
-  public text: string =
-    "Attach this card to 1 of your Pokémon in play. That Pokémon may use this card's attack instead of its own. At the end of your turn, discard Mystery Plate α.";
+  public text: string = 'Attach this card to 1 of your Pokémon in play. That Pokémon may use this card\'s attack instead of its own. At the end of your turn, discard Mystery Plate α.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_TRAINER_USED(effect, this)) {
@@ -70,8 +47,7 @@ export class MysteryPlateAlpha extends TrainerCard {
 
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
-
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList.cards.includes(this)) {
           MOVE_CARDS(store, state, cardList, player.discard, { cards: [this], sourceCard: this });
         }
@@ -82,8 +58,8 @@ export class MysteryPlateAlpha extends TrainerCard {
       const pokemonCard = effect.player.active.getPokemonCard();
       if (pokemonCard && 'getColorlessReduction' in pokemonCard) {
         const reduction = (pokemonCard as ColorlessCostReducer).getColorlessReduction(state);
-        for (let i = 0; i < reduction && effect.cost.includes(CardType.COLORLESS); i++) {
-          const index = effect.cost.indexOf(CardType.COLORLESS);
+        for (let i = 0; i < reduction && effect.cost.includes(C); i++) {
+          const index = effect.cost.indexOf(C);
           if (index !== -1) {
             effect.cost.splice(index, 1);
           }
@@ -99,13 +75,12 @@ export class MysteryPlateAlpha extends TrainerCard {
       effect.attacks.push(this.attacks[0]);
     }
 
+    // Desert Burn
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = effect.opponent;
 
       if (opponent.getPrizeLeft() >= 5) {
-        let cards: Card[] = [];
-        MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
         store.prompt(
           state,
           new ChooseCardsPrompt(
@@ -116,8 +91,8 @@ export class MysteryPlateAlpha extends TrainerCard {
             { min: 0, max: 1, allowCancel: false },
           ),
           (selected) => {
-            cards = selected || [];
-            
+            const cards = selected || [];
+            MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: this });
             SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
             SHUFFLE_DECK(store, state, player);
           },

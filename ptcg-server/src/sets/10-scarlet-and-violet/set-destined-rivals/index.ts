@@ -1,3 +1,4 @@
+import { EthansSudowoodo } from './ethans-sudowoodo';
 import { RellorDRI, JudgeULDRI, Yanma2DRI, CynthiasRoserade2DRI, Shaymin2DRI, Crustle2DRI, TeamRocketsSpidops2DRI, Hydrapple2DRI, Rapidash2DRI, EthansTyphlosion2DRI, Blaziken2DRI, MistysPsyduck2DRI, MistysLapras2DRI, Clamperl2DRI, Rotom2DRI, TeamRocketsWeezing2DRI, TeamRocketsMurkrow2DRI, TeamRocketsMeowth2DRI, ArvensGreedent2DRI, Yanmegaex2DRI, Arbolivaex2DRI, TeamRocketsMoltresex2DRI, EthansHoOhex2DRI, Cetitanex2DRI, Dondozoex2DRI, Electivireex2DRI, TeamRocketsMewtwoex2DRI, Regirockex2DRI, CynthiasGarchompex2DRI, TeamRocketsNidokingex2DRI, TeamRocketsCrobatex2DRI, ArvensMabosstiffex2DRI, TeamRocketsPersianex2DRI, EmceesHype2DRI, EthansAdventure2DRI, JudgeUL2DRI, TeamRocketsArcher2DRI, TeamRocketsAriana2DRI, TeamRocketsGiovanni2DRI, TeamRocketsPetrel2DRI, TeamRocketsProton2DRI, Yanmegaex3DRI, TeamRocketsMoltresex3DRI, EthansHoOhex3DRI, TeamRocketsMewtwoex3DRI, CynthiasGarchompex3DRI, TeamRocketsNidokingex3DRI, TeamRocketsCrobatex3DRI, ArvensMabosstiffex3DRI, EthansAdventure3DRI, TeamRocketsAriana3DRI, TeamRocketsGiovanni3DRI, EthansHoOhex4DRI, TeamRocketsMewtwoex4DRI, CynthiasGarchompex4DRI, TeamRocketsCrobatex4DRI, JammingTowerDRI, LevinciaDRI } from './other-prints';
 import { Card } from '../../../game/store/card/card';
 import { EthansAdventure } from './ethans-adventure';
@@ -141,6 +142,7 @@ import { Torchic } from './torchic';
 import { TMMachine } from './tm-machine';
 
 export const setDestinedRivals: Card[] = [
+  new EthansSudowoodo(),
   new Taillow(),
   new TealMaskOgerpon(),
   new HearthflameMaskOgerpon(),

@@ -938,7 +938,11 @@ export class Board3dTransitionRunner {
     );
   }
 
-  private async flyDrawsToHand(flights: DrawSequenceFlight[], preset: DrawFlightVisualPreset): Promise<void> {
+  private async flyDrawsToHand(
+    flights: DrawSequenceFlight[],
+    preset: DrawFlightVisualPreset,
+    endRotationY = 0,
+  ): Promise<void> {
     const anim = this.host.animationService;
     const hs = this.host.handService;
     const aspect = this.host.aspect();
@@ -949,6 +953,7 @@ export class Board3dTransitionRunner {
       await anim.playDrawFromDeckToHand(f.flyingCard, stage, f.handSlotWorld, {
         onRevealFace: () => hs.revealDrawFlightFace(f.flyingCard),
         visualPreset: preset,
+        endRotationY,
       });
       hs.finishDrawSequenceFlight(f.flyingCard);
       this.host.markDirty();
@@ -969,6 +974,7 @@ export class Board3dTransitionRunner {
         omitPhasePad: true,
         targetStageScale: stageScale,
         visualPreset: preset,
+        endRotationY,
       });
     }
     await sleep(getMultiDrawSharedHoldSec(preset) * 1000);
@@ -1011,13 +1017,15 @@ export class Board3dTransitionRunner {
     if (flights.length === 0) {
       return;
     }
+    // Opponent hand group is yawed π; keep that while cards are world-detached.
+    const opponentYaw = Math.PI;
     if (useReveal) {
       const preset: DrawFlightVisualPreset = step.setupDeal
         ? 'setupMulligan'
         : step.turnBegin
           ? 'turnBegin'
           : 'default';
-      await this.flyDrawsToHand(flights, preset);
+      await this.flyDrawsToHand(flights, preset, opponentYaw);
       return;
     }
     await Promise.all(

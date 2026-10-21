@@ -166,6 +166,48 @@ describe('planTransition', () => {
     expect((plan.steps[1] as { cards: { cardId: number }[] }).cards.map((c) => c.cardId)).toEqual([1, 2]);
   });
 
+  it('discarding a second Ultra Ball (e.g. Dedenne) does not replay the historical name', () => {
+    const playedBall = 7;
+    const handBall = 20;
+    const prev = snap(
+      player(ME, {
+        handIds: [1, 2, handBall],
+        discardIds: [playedBall],
+        deckCount: 30,
+        playedTrainerNames: ['Ultra Ball'],
+      }),
+      hiddenOpp(),
+      {
+        trainerIds: new Set([playedBall, handBall]),
+        cardNames: new Map([
+          [playedBall, 'Ultra Ball'],
+          [handBall, 'Ultra Ball'],
+        ]),
+      },
+    );
+    const next = snap(
+      player(ME, {
+        handIds: [],
+        discardIds: [playedBall, 1, 2, handBall],
+        deckCount: 30,
+        playedTrainerNames: ['Ultra Ball'],
+      }),
+      hiddenOpp(),
+      {
+        trainerIds: new Set([playedBall, handBall]),
+        cardNames: new Map([
+          [playedBall, 'Ultra Ball'],
+          [handBall, 'Ultra Ball'],
+        ]),
+      },
+    );
+    const plan = planTransition(prev, next);
+    expect(kinds(plan.steps)).toEqual(['toPile:1']);
+    const pile = plan.steps[0] as Extract<TransitionStep, { kind: 'toPile' }>;
+    expect(pile.cards.map((c) => c.cardId)).toEqual([1, 2, handBall]);
+    expect(pile.cards.every((c) => c.origin.kind === 'hand')).toBe(true);
+  });
+
   it('turn-start draw after the opponent turn is exactly one turnBegin draw', () => {
     const prev = snap(player(ME, { handIds: [1, 2, 3], deckCount: 20 }), hiddenOpp(), {
       activePlayerId: OPP,

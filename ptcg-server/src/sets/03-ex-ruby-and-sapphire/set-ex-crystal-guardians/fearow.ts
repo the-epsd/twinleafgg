@@ -1,59 +1,40 @@
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
+import { CardTag, CardType, ChooseCardsPrompt, GameError, GameMessage, PokemonCard, PowerType, Stage, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { StateUtils } from '../../../game/store/state-utils';
-import { Card, ChooseCardsPrompt, GameError, GameMessage, PowerType } from '../../../game';
-import {
-  ABILITY_USED,
-  ADD_MARKER,
-  BLOCK_IF_HAS_SPECIAL_CONDITION,
-  HAS_MARKER,
-  MOVE_CARDS,
-  REMOVE_MARKER_AT_END_OF_TURN,
-  SHOW_CARDS_TO_PLAYER,
-  SHUFFLE_DECK,
-  WAS_POWER_USED,
-} from '../../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, HAS_MARKER, MOVE_CARDS, REMOVE_MARKER_AT_END_OF_TURN, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Fearow extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public evolvesFrom: string = 'Spearow';
   protected _tags = [CardTag.DELTA_SPECIES];
-  public cardType: CardType[] = [L];
+  public evolvesFrom: string = 'Spearow';
   public hp: number = 60;
+  public cardType: CardType[] = [L];
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public powers = [
-    {
-      name: 'Delta Sign',
-      powerType: PowerType.POKEPOWER,
-      useWhenInPlay: true,
-      text: "Once during your turn (before your attack), you may search your deck for a Pokémon that has Delta on its card, show it to your opponent, and put it into your hand. Shuffle your deck afterward. You can't use more than 1 Delta Sign Poké- Power each turn.This power can't be used if Fearow is affected by a Special Condition.",
-    },
-  ];
+  public powers = [{
+    name: 'Delta Sign',
+    powerType: PowerType.POKEPOWER,
+    useWhenInPlay: true,
+    text: 'Once during your turn (before your attack), you may search your deck for a Pokémon that has Delta on its card, show it to your opponent, and put it into your hand. Shuffle your deck afterward. You can\'t use more than 1 Delta Sign Poké- Power each turn.This power can\'t be used if Fearow is affected by a Special Condition.',
+  }];
 
-  public attacks = [
-    {
-      name: 'Pierce',
-      cost: [L, C],
-      damage: 30,
-      text: '',
-    },
-  ];
+  public attacks = [{
+    name: 'Pierce',
+    cost: [L, C],
+    damage: 30,
+    text: '',
+  }];
 
   public set: string = 'CG';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '18';
   public name: string = 'Fearow';
   public fullName: string = 'Fearow CG';
-
   public readonly DELTA_SIGN_MARKER = 'DELTA_SIGN_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Delta Sign
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -73,20 +54,12 @@ export class Fearow extends PokemonCard {
 
       const blocked: number[] = [];
       player.deck.cards.forEach((c, index) => {
-        if (c instanceof PokemonCard && c.hasTag(CardTag.DELTA_SPECIES)) {
-          return;
-        } else {
+        if (!(c instanceof PokemonCard && c.hasTag(CardTag.DELTA_SPECIES))) {
           blocked.push(index);
         }
       });
 
-      let cards: Card[] = [];
-      MOVE_CARDS(store, state, player.deck, player.hand, {
-            cards: cards,
-            sourceCard: this,
-            sourceEffect: this.powers[0],
-          });
-          store.prompt(
+      return store.prompt(
         state,
         new ChooseCardsPrompt(
           player,
@@ -96,10 +69,13 @@ export class Fearow extends PokemonCard {
           { min: 0, max: 1, allowCancel: false, blocked },
         ),
         (selected) => {
-          cards = selected || [];
-
+          const cards = selected || [];
+          MOVE_CARDS(store, state, player.deck, player.hand, {
+            cards,
+            sourceCard: this,
+            sourceEffect: this.powers[0],
+          });
           SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-
           SHUFFLE_DECK(store, state, player);
         },
       );

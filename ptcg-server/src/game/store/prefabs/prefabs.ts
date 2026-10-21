@@ -1912,7 +1912,20 @@ export function MOVE_POKEMON_OFF_BOARD(
       !tools.includes(card),
   );
 
-  // Attachments first so vacating via Pokémon move does not orphan them.
+  // Move Pokémon first when destinations differ. If the Pokémon move is prevented
+  // (e.g. Mentally Calm / Scoop-Up Block), leave attachments on the slot.
+  if (pokemons.length > 0) {
+    const pokemonMove = new MoveCardsEffect(slot, pokemonDestination, {
+      cards: pokemons,
+      sourceCard,
+      sourceEffect,
+    });
+    state = store.reduceEffect(state, pokemonMove);
+    if (pokemonMove.preventDefault) {
+      return state;
+    }
+  }
+
   if (otherCards.length > 0) {
     state = MOVE_CARDS(store, state, slot, attachedDestination, {
       cards: otherCards,
@@ -1923,13 +1936,6 @@ export function MOVE_POKEMON_OFF_BOARD(
   for (const tool of tools) {
     state = MOVE_CARDS(store, state, slot, attachedDestination, {
       cards: [tool],
-      sourceCard,
-      sourceEffect,
-    });
-  }
-  if (pokemons.length > 0) {
-    state = MOVE_CARDS(store, state, slot, pokemonDestination, {
-      cards: pokemons,
       sourceCard,
       sourceEffect,
     });

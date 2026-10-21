@@ -42,6 +42,7 @@ import { Murkrow } from './murkrow';
 import { Nacli } from './nacli';
 import { Noibat } from './noibat';
 import { Noivernex } from './noivern-ex';
+import { Oricorio } from './oricorio';
 import { Orthworm } from './orthworm';
 import { PaldeanTauros } from './paldean-tauros';
 import { Pelipper } from './pelipper';
@@ -49,6 +50,7 @@ import { Pineco } from './pineco';
 import { PracticeStudio } from './practice-studio';
 import { ReversalEnergy } from './reversal-energy';
 import { Shinx } from './shinx';
+import { Slowpoke } from './slowpoke';
 import { Spiritomb } from './spiritomb';
 import { Sprigatito } from './sprigatito';
 import { Squawkabillyex } from './squawkabilly-ex';
@@ -135,6 +137,7 @@ export const setPaldeaEvolved: Card[] = [
   new Murkrow(),
   new Noibat(),
   new Noivernex(),
+  new Oricorio(),
   new Orthworm(),
   new PaldeanTauros(),
   new Pelipper(),
@@ -142,6 +145,7 @@ export const setPaldeaEvolved: Card[] = [
   new PracticeStudio(),
   new ReversalEnergy(),
   new Shinx(),
+  new Slowpoke(),
   new Spiritomb(),
   new Sprigatito(),
   new Squawkabillyex(),

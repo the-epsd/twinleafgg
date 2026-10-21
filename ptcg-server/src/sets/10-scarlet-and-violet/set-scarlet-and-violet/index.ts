@@ -7,6 +7,7 @@ import { Arven } from './arven';
 import { Banetteex } from './banette-ex';
 import { BeachCourt } from './beach-court';
 import { Bisharp } from './bisharp';
+import { Blissey } from './blissey';
 import { Capsakid } from './capsakid';
 import { Charcadet } from './charcadet';
 import { CrushingHammer } from './crushing-hammer';
@@ -103,6 +104,7 @@ export const setScarletAndViolet: Card[] = [
   new Arven(),
   new BeachCourt(),
   new Bisharp(),
+  new Blissey(),
   new Capsakid(),
   new Charcadet(),
   new CrushingHammer(),

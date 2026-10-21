@@ -1,16 +1,7 @@
-import { Card } from '../../../game/store/card/card';
-import { GameError } from '../../../game/game-error';
-import { GameMessage } from '../../../game/game-message';
+import { Card, CardTag, ChooseCardsPrompt, EnergyCard, EnergyType, GameError, GameMessage, Player, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { TrainerType, SuperType, CardTag, EnergyType } from '../../../game/store/card/card-types';
-import { StoreLike } from '../../../game/store/store-like';
-import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import { EnergyCard, Player, StateUtils } from '../../../game';
-import {SHOW_CARDS_TO_PLAYER, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(
   next: Function,
@@ -31,7 +22,6 @@ function* playCard(
     .filter((value, index, self) => self.indexOf(value) === index).length;
 
   let cards: Card[] = [];
-  MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: effect.trainerCard });
   yield store.prompt(
     state,
     new ChooseCardsPrompt(
@@ -44,40 +34,29 @@ function* playCard(
     (selected) => {
       cards = selected || [];
 
-      if (selected.length > 1) {
-        if (selected[0].name === selected[1].name) {
-          throw new GameError(GameMessage.CAN_ONLY_SELECT_TWO_DIFFERENT_ENERGY_TYPES);
-        }
+      if (cards.length > 1 && cards[0].name === cards[1].name) {
+        throw new GameError(GameMessage.CAN_ONLY_SELECT_TWO_DIFFERENT_ENERGY_TYPES);
       }
 
-      SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+      next();
     },
   );
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
-    player.deck.applyOrder(order);
-  });
+  MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: effect.trainerCard });
+  SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+  return SHUFFLE_DECK(store, state, player);
 }
 
 export class EnergySearchPro extends TrainerCard {
-  protected _tags = [CardTag.ACE_SPEC];
-
   protected _trainerType: TrainerType = TrainerType.ITEM;
-
+  protected _tags = [CardTag.ACE_SPEC];
   public regulationMark = 'H';
-
-  public setNumber = '176';
-
   public set: string = 'SSP';
-
-  public name: string = 'Energy Search Pro';
-
-  public fullName: string = 'Energy Search Pro SSP';
-
   public cardImage: string = 'assets/cardback.png';
-
-  public text: string =
-    'Search your deck for any number of Basic Energy cards of different types, reveal them, and put them into your hand. Then, shuffle your deck.';
+  public setNumber = '176';
+  public name: string = 'Energy Search Pro';
+  public fullName: string = 'Energy Search Pro SSP';
+  public text: string = 'Search your deck for any number of Basic Energy cards of different types, reveal them, and put them into your hand. Then, shuffle your deck.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     if (player.deck.cards.length === 0) {

@@ -134,16 +134,40 @@ function toFileName(className: string): string {
     .toLowerCase();
 }
 
+function isEnergySetDirectory(dir: string): boolean {
+  return /(?:^|[/\\])set-[^/\\]*-energy$/i.test(dir);
+}
+
+/**
+ * Resolve the ptcg-server set folder for a set code (e.g. TEF → set-temporal-forces).
+ * When a code appears in multiple folders (misplaced cards / energy reprints), prefer the
+ * directory with the most declaring files. Ties prefer the dedicated *-energy folder for
+ * energy set codes (MEE, SVE, …), otherwise the non-energy folder.
+ */
 function findSetDirectory(set: string): string | undefined {
-  const candidates = new Set<string>();
+  const counts = new Map<string, number>();
   for (const file of collectTsFiles(serverSetsRoot)) {
     const source = readFileSync(file, 'utf8');
     if (new RegExp(`public set(?:\\s*:\\s*string)?\\s*=\\s*['"]${set}['"]`).test(source)) {
-      candidates.add(dirname(file));
+      const dir = dirname(file);
+      counts.set(dir, (counts.get(dir) || 0) + 1);
     }
   }
-  if (candidates.size !== 1) return undefined;
-  return [...candidates][0];
+  if (counts.size === 0) return undefined;
+  if (counts.size === 1) return [...counts.keys()][0];
+
+  const preferEnergyFolder = /E$/i.test(set) && set.length === 3 && set.toUpperCase() !== 'BS';
+  const ranked = [...counts.entries()].sort((a, b) => {
+    if (b[1] !== a[1]) return b[1] - a[1];
+    const aEnergy = isEnergySetDirectory(a[0]);
+    const bEnergy = isEnergySetDirectory(b[0]);
+    if (aEnergy !== bEnergy) {
+      if (preferEnergyFolder) return aEnergy ? -1 : 1;
+      return aEnergy ? 1 : -1;
+    }
+    return a[0].localeCompare(b[0]);
+  });
+  return ranked[0][0];
 }
 
 interface ReprintCandidateRecord {
@@ -748,7 +772,9 @@ async function serveSaveCard(req: IncomingMessage, res: ServerResponse, next: ()
     }
     const directory = findSetDirectory(set);
     if (!directory) {
-      jsonResponse(res, 404, { error: `Could not find a unique ptcg-server set folder for ${set}.` });
+      jsonResponse(res, 404, {
+        error: `Could not find a ptcg-server set folder for ${set}.`,
+      });
       return;
     }
     if (payload.reprint) {

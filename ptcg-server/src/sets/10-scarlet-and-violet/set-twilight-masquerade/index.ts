@@ -14,6 +14,7 @@ import { BruteBonnet } from './brute-bonnet';
 import { BugCatchingSet } from './bug-catching-set';
 import { Caretaker } from './caretaker';
 import { Carmine } from './carmine';
+import { Chandelure } from './chandelure';
 import { Chansey } from './chansey';
 import { Chimchar } from './chimchar';
 import { Clefable } from './clefable';
@@ -21,6 +22,7 @@ import { Clefairy } from './clefairy';
 import { CommunityCenter } from './community-center';
 import { Conkeldurr } from './conkeldurr';
 import { CornerstoneMaskOgerponex } from './cornerstone-mask-ogerpon-ex';
+import { Cramorant } from './cramorant';
 import { Dipplin } from './dipplin';
 import { Dragapultex } from './dragapult-ex';
 import { Drakloak } from './drakloak';
@@ -58,14 +60,18 @@ import { JammingTower } from './jamming-tower';
 import { Kadabra } from './kadabra';
 import { Kieran } from './kieran';
 import { Lairon } from './lairon';
+import { Lampent } from './lampent';
 import { LanasAssistance } from './lanas-assistance';
 import { LegacyEnergy } from './legacy-energy';
+import { Litwick } from './litwick';
 import { LoveBall } from './love-ball';
+import { Lucian } from './lucian';
 import { LuckyHelmet } from './lucky-helmet';
 import { Luxio } from './luxio';
 import { Luxrayex } from './luxray-ex';
 import { Magcargoex } from './magcargo-ex';
 import { Mightyena } from './mightyena';
+import { Milotic } from './milotic';
 import { Monferno } from './monferno';
 import { Morpeko } from './morpeko';
 import { Munkidori } from './munkidori';
@@ -112,11 +118,13 @@ export const setTwilightMasquerade: Card[] = [
   new Blisseyex(),
   new BruteBonnet(),
   new Carmine(),
+  new Chandelure(),
   new Chimchar(),
   new Clefable(),
   new Conkeldurr(),
   new CookTWM(),
   new CornerstoneMaskOgerponex(),
+  new Cramorant(),
   new Dreepy(),
   new Drakloak(),
   new Dragapultex(),
@@ -136,11 +144,15 @@ export const setTwilightMasquerade: Card[] = [
   new HisuianArcanine(),
   new HisuianGrowlithe(),
   new Lairon(),
+  new Lampent(),
   new LanasAssistance(),
   new LegacyEnergy(),
+  new Litwick(),
+  new Lucian(),
   new Luxio(),
   new Luxrayex(),
   new Mightyena(),
+  new Milotic(),
   new Munkidori(),
   new Morpeko(),
   new PerformanceFlute(),

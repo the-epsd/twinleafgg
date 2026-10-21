@@ -22,6 +22,7 @@ import { Elekid } from './elekid';
 import { Flamigo } from './flamigo';
 import { Flittle } from './flittle';
 import { Froslassex } from './froslass-ex';
+import { Tatsugiri } from './tatsugiri';
 import { ToedscruelIR, SnoruntIR, GimmighoulIR, GroudonIR, MiniorIR, GarganacIR, SlitherWingIR, MorpekoIR, BruteBonnetIR, CyclizarIR, IronJugulisIR, PlusleIR, FroslassexFA, GarchompexFA, TsareenaexFA, TapuKokoexFA, IronHandsexFA, IronValiantexFA, HoopaexFA, SandyShocksexFA, RoaringMoonexFA, GholdengoexFA, MelaFA, ProfessorSadasVitalityFA, ProfessorTurosScenarioFA, TulipFA, GarchompexSIR, TapuKokoexSIR, IronHandsexSIR, IronValiantexSIR, SandyShocksexSIR, RoaringMoonexSIR, GholdengoexSIR, MelaSIR, ProfessorSadasVitalitySIR, ProfessorTurosScenarioSIR, TulipSIR, GarchompexHR, IronValiantexHR, RoaringMoonexHR, BeachCourtHR, CounterCatcherHR, LuxuriousCapeHR, ReversalEnergyHR, GarbodorIR, MantykeIR, MagbyIR } from './full-art';
 import { FutureBoosterEnergyCapsule } from './future-booster-energy-capsule';
 import { Gabite } from './gabite';
@@ -100,6 +101,9 @@ import { Wimpod } from './wimpod';
 import { Xatu } from './xatu';
 import { Yamask } from './yamask';
 import { Zacian } from './zacian';
+import { Pansage } from './pansage';
+import { Simisage } from './simisage';
+
 export const setParadoxRift: Card[] = [
   new Aegislash(),
   new Aegislashex(),
@@ -173,6 +177,7 @@ export const setParadoxRift: Card[] = [
   new Snorunt(),
   new Steenee(),
   new TapuKokoex(),
+  new Tatsugiri(),
   new TechnicalMachineBlindside(),
   new TechnicalMachineDevolution(),
   new TechnicalMachineEvolution(),
@@ -201,6 +206,8 @@ export const setParadoxRift: Card[] = [
   new Vanillish(),
   new Vanilluxe(),
   new SnorlaxDoll(),
+  new Pansage(),
+  new Simisage(),
 
   //Full s
   new ToedscruelIR(),

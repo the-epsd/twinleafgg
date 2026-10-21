@@ -881,17 +881,23 @@ export class Board3dAnimationService {
       /** Multi-draw: smaller than {@link HAND_DRAW_STAGE_SCALE} so a row fits without overlap. */
       targetStageScale?: number;
       visualPreset?: DrawFlightVisualPreset;
+      /** Seat yaw (π for top/opponent) preserved through the Z flip. */
+      endRotationY?: number;
     }
   ): Promise<void> {
     const onRevealFace = options?.onRevealFace;
     const omitPhasePad = options?.omitPhasePad === true;
     const targetScale = options?.targetStageScale ?? HAND_DRAW_STAGE_SCALE;
     const preset = options?.visualPreset;
+    const endRotationY = options?.endRotationY ?? 0;
     const { travel, scale, phaseTotal } = deckToStageTiming(preset);
     const scaleEase = preset === 'setupMulligan' ? 'power2.out' : 'back.out(1.25)';
+    const qYaw = new Quaternion().setFromAxisAngle(DRAW_FLIP_AXIS_Y, endRotationY);
     const q0 = new Quaternion();
     const q180 = new Quaternion().setFromAxisAngle(DRAW_FLIP_AXIS_Z, Math.PI);
     const qFlipScratch = new Quaternion();
+
+    card.quaternion.copy(qYaw);
 
     return new Promise(resolve => {
       const timeline = gsap.timeline({
@@ -920,7 +926,7 @@ export class Board3dAnimationService {
             ease: 'power3.inOut',
             onUpdate: () => {
               qFlipScratch.slerpQuaternions(q0, q180, flipOnce.t);
-              card.quaternion.copy(qFlipScratch);
+              card.quaternion.multiplyQuaternions(qFlipScratch, qYaw);
               if (!revealApplied && flipOnce.t >= 0.5) {
                 revealApplied = true;
                 playSfx('carddraw');
@@ -1046,6 +1052,8 @@ export class Board3dAnimationService {
       handScale?: number;
       onRevealFace?: () => void;
       visualPreset?: DrawFlightVisualPreset;
+      /** Seat yaw (π for top/opponent) preserved through the stage flip. */
+      endRotationY?: number;
       /** When set, second leg flips face-down (ShowCards → deck). */
       flipFaceDownDuringTravel?: {
         onHideFace?: () => void;
@@ -1057,7 +1065,8 @@ export class Board3dAnimationService {
     const preset = options?.visualPreset;
     await this.playDrawDeckToStage(card, stageWorld, {
       onRevealFace: options?.onRevealFace,
-      visualPreset: preset
+      visualPreset: preset,
+      endRotationY: options?.endRotationY,
     });
     options?.beforeStageToHand?.();
     await this.playDrawStageToHand(card, handWorld, {
