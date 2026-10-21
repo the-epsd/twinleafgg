@@ -1,42 +1,30 @@
-import {
-  Card,
-  CardType,
-  ChooseCardsPrompt,
-  GameMessage,
-  PokemonCard,
-  Stage,
-  State,
-  StoreLike,
-  SuperType,
-  TrainerCard,
-  TrainerType,
-} from '../../../game';
+import { CardType, ChooseCardsPrompt, GameMessage, PokemonCard, Stage, State, StoreLike, SuperType, TrainerCard, TrainerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
-import {SHOW_CARDS_TO_PLAYER, WAS_ATTACK_USED, MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { DEFENDING_POKEMON_CANNOT_ATTACK } from '../../../game/store/prefabs/effect-of-attack-prefabs';
+import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class Spiritomb extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType[] = [P];
   public hp: number = 70;
+  public cardType: CardType[] = [P];
   public retreat = [C];
 
   public attacks = [{
     name: 'Lightless World',
     cost: [C],
     damage: 0,
-    text: 'Put 2 Supporter cards from your discard pile into your hand.'
+    text: 'Put 2 Supporter cards from your discard pile into your hand.',
   },
   {
     name: 'Terrify',
     cost: [C],
     damage: 10,
-    text: 'If the Defending Pokémon is a Basic Pokémon, it can\'t attack during your opponent\'s next turn.'
+    text: 'If the Defending Pokémon is a Basic Pokémon, it can\'t attack during your opponent\'s next turn.',
   }];
 
   public set: string = 'UPR';
-  public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '53';
   public name: string = 'Spiritomb';
   public fullName: string = 'Spiritomb UPR';
 
@@ -45,20 +33,14 @@ export class Spiritomb extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = effect.opponent;
-      let supporterAmount = 0;
+      const hasSupporter = player.discard.cards.some(
+        (c) => c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER,
+      );
 
-      player.discard.cards.forEach(c => {
-        if (c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER) {
-          supporterAmount++;
-        }
-      });
-
-      if (!supporterAmount) {
+      if (!hasSupporter) {
         return state;
       }
 
-      let cards: Card[] = [];
-      MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
       store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
@@ -66,10 +48,9 @@ export class Spiritomb extends PokemonCard {
         { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
         { min: 0, max: 2, allowCancel: true }
       ), selected => {
-        cards = selected || [];
-
+        const cards = selected || [];
         if (cards.length > 0) {
-
+          MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: this });
           SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
         }
       });

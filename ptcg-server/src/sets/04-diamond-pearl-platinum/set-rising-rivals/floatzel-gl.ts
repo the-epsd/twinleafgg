@@ -1,14 +1,12 @@
-import { Card, ChooseCardsPrompt, GameMessage, State, StateUtils, StoreLike, TrainerCard } from '../../../game';
-import { CardTag, CardType, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { CardTag, CardType, ChooseCardsPrompt, GameMessage, PokemonCard, Stage, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER, THIS_POKEMON_CANNOT_USE_THIS_ATTACK_NEXT_TURN, WAS_ATTACK_USED } from '../../../game/store/prefabs/prefabs';
 
 export class FloatzelGL extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType[] = [W];
   protected _tags = [CardTag.POKEMON_SP];
   public hp: number = 80;
+  public cardType: CardType[] = [W];
   public weakness = [{ type: L }];
   public retreat = [C];
 
@@ -16,13 +14,13 @@ export class FloatzelGL extends PokemonCard {
     name: 'Incite',
     cost: [],
     damage: 0,
-    text: 'Search your discard pile for up to 2 Supporter cards, show them to your opponent, and put them into your hand.'
+    text: 'Search your discard pile for up to 2 Supporter cards, show them to your opponent, and put them into your hand.',
   },
   {
     name: 'Giant Wave',
     cost: [W, W],
     damage: 50,
-    text: 'Floatzel GL can\'t use Giant Wave during your next turn.'
+    text: 'Floatzel GL can\'t use Giant Wave during your next turn.',
   }];
 
   public set: string = 'RR';
@@ -36,17 +34,14 @@ export class FloatzelGL extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-
-      const hasSupporter = player.discard.cards.some((c) => {
-        return c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER;
-      });
+      const hasSupporter = player.discard.cards.some(
+        (c) => c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER,
+      );
 
       if (!hasSupporter) {
         return state;
       }
 
-      let cards: Card[] = [];
-      MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards });
       return store.prompt(
         state,
         new ChooseCardsPrompt(
@@ -57,10 +52,9 @@ export class FloatzelGL extends PokemonCard {
           { min: 0, max: 2, allowCancel: true },
         ),
         (selected) => {
-          cards = selected || [];
-
+          const cards = selected || [];
           if (cards.length > 0) {
-
+            MOVE_CARDS(store, state, player.discard, player.hand, { cards });
             SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
           }
         },
