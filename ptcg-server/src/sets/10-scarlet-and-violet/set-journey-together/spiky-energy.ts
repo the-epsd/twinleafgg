@@ -33,7 +33,7 @@ export class SpikyEnergy extends EnergyCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this) && state.phase === GamePhase.ATTACK) {
+    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this) && state.phase === GamePhase.ATTACK && effect.damage > 0) {
       const player = StateUtils.findOwner(state, effect.target);
       const opponent = effect.player;
       if (player === opponent || player.active !== effect.target)
