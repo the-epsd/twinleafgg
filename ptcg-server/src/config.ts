@@ -103,7 +103,8 @@ export const config = {
       'https://limitlesstcg.net',
       'https://r2.limitlesstcg.net',
       'https://www.serebii.net',
-      'https://www.pokemonproxies.com'
+      'https://www.pokemonproxies.com',
+      'https://cdn.artofpkm.com',
     ]
   },
   email: {

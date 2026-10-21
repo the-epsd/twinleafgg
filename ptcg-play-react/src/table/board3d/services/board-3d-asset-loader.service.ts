@@ -21,6 +21,29 @@ function resolveTextureRequestUrl(url: string): string {
   return proxyImageUrlForWebGl(local);
 }
 
+/**
+ * Three's TextureLoader has no referrerPolicy API; load via Image so we can omit Referer
+ * (same as CardFace's referrerPolicy="no-referrer") for CDN/hotlink-sensitive scan hosts.
+ */
+function loadTextureNoReferrer(url: string): Promise<Texture> {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    if (imageUrlNeedsCrossOrigin(url)) {
+      image.crossOrigin = 'anonymous';
+    }
+    image.referrerPolicy = 'no-referrer';
+    image.onload = () => {
+      const texture = new Texture(image);
+      texture.needsUpdate = true;
+      resolve(texture);
+    };
+    image.onerror = () => {
+      reject(new Error(`Failed to load texture: ${url}`));
+    };
+    image.src = url;
+  });
+}
+
 /** Soft cap for scan/sleeve/tool/marker textures kept mid-session. */
 const MAX_TEXTURE_CACHE_SIZE = 256;
 
@@ -166,10 +189,7 @@ export class Board3dAssetLoaderService {
       }
 
       try {
-        const loader = imageUrlNeedsCrossOrigin(resolved)
-          ? new TextureLoader().setCrossOrigin('anonymous')
-          : this.textureLoader;
-        const texture = await loader.loadAsync(resolved);
+        const texture = await loadTextureNoReferrer(resolved);
 
         texture.colorSpace = 'srgb';
         this.applyAnisotropy(texture);
@@ -194,10 +214,7 @@ export class Board3dAssetLoaderService {
       return cached;
     }
     try {
-      const loader = imageUrlNeedsCrossOrigin(resolved)
-        ? new TextureLoader().setCrossOrigin('anonymous')
-        : this.textureLoader;
-      const texture = await loader.loadAsync(resolved);
+      const texture = await loadTextureNoReferrer(resolved);
       texture.colorSpace = 'srgb';
       this.applyAnisotropy(texture);
       texture.flipY = true;
@@ -219,10 +236,7 @@ export class Board3dAssetLoaderService {
       return cached;
     }
     try {
-      const loader = imageUrlNeedsCrossOrigin(resolved)
-        ? new TextureLoader().setCrossOrigin('anonymous')
-        : this.textureLoader;
-      const texture = await loader.loadAsync(resolved);
+      const texture = await loadTextureNoReferrer(resolved);
       texture.colorSpace = 'srgb';
       this.applyAnisotropy(texture);
       texture.flipY = true;
