@@ -117,6 +117,10 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
         throw new GameError(GameMessage.POKEMON_CANT_EVOLVE_THIS_TURN);
       }
 
+      // Preserve same-turn evolve (Forest of Vitality, etc.) across clearEffects so
+      // playableCardIds still includes the next evolution (React gates on that list).
+      const canEvolveThisTurn = effect.target.canEvolveThisTurn;
+
       const evolveEffect = new EvolveEffect(effect.player, effect.target, effect.pokemonCard);
       store.reduceEffect(state, evolveEffect);
       clearUntilLeavesPlay(effect.pokemonCard);
@@ -128,6 +132,7 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
       effect.target._preservedConditionsDuringEvolution = checkRemovalEffect.preservedConditions;
 
       effect.player.removePokemonEffects(effect.target);
+      effect.target.canEvolveThisTurn = canEvolveThisTurn;
 
       // Clear the preserved conditions after evolution is complete
       effect.target._preservedConditionsDuringEvolution = undefined;

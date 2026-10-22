@@ -61,6 +61,7 @@ import {
   resolveTrainerType,
   worldPositionForSupporterMeshId,
 } from './board3dMeshIdForPlayTarget';
+import { extraPlayableEvolutionCardIds } from '../evolutionTarget';
 import { DropZoneType } from './board-3d-drop-zone';
 import { getBenchPositions, ZONE_POSITIONS } from './board-3d-zone-positions';
 import { isSharedStadiumMeshId, SHARED_STADIUM_MESH_IDS } from './dual-stadium.utils';
@@ -293,7 +294,18 @@ export class Board3dController {
     ) {
       return undefined;
     }
-    return this.isReplayOmniscient() ? undefined : this.bottomPlayer?.playableCardIds;
+    if (this.isReplayOmniscient()) {
+      return undefined;
+    }
+    const server = this.bottomPlayer?.playableCardIds;
+    const extra = extraPlayableEvolutionCardIds(this.bottomPlayer);
+    if ((!server || server.length === 0) && extra.length === 0) {
+      return server;
+    }
+    if (extra.length === 0) {
+      return server;
+    }
+    return [...new Set([...(server ?? []), ...extra])];
   }
 
   private getHandPlayableAbilityCardIdsForDisplay(): number[] | undefined {

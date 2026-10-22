@@ -35,6 +35,7 @@ import {
 } from '../board3dMeshIdForPlayTarget';
 import { cardCanAssembleLegendFromHand } from '../dual-legend.utils';
 import { isOpponentAttachTool, isOpponentPokemonExToolTarget } from '../opponent-attach-tool.util';
+import { getInPlayPokemonCard, isValidEvolutionTarget } from '../../evolutionTarget';
 import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
 import { Board3dStateSyncService } from './board-3d-state-sync.service';
 import { Board3dHandService } from './board-3d-hand.service';
@@ -449,17 +450,34 @@ export class Board3dInteractionService {
     });
   }
 
-  /** In-play Pokémon card for evolution / tool checks (prefers cardList over display cardData). */
+  /** In-play Pokémon card for evolution / tool checks (top of the stack, not the Basic). */
   private getPokemonCardFromBoardObject(boardPokemon: Object3D): PokemonCard | null {
     const cardList = boardPokemon.userData?.cardList as PokemonCardList | undefined;
-    if (cardList && typeof cardList.getPokemonCard === 'function') {
-      const fromList = cardList.getPokemonCard();
-      if (fromList) {
-        return fromList as PokemonCard;
-      }
+    const fromList = getInPlayPokemonCard(cardList);
+    if (fromList) {
+      return fromList;
     }
     const data = boardPokemon.userData?.cardData as PokemonCard | undefined;
     return data ?? null;
+  }
+
+  /** Stage 1/2 / VMAX / etc. played onto an occupied host — not a Basic onto an empty slot. */
+  private isEvolutionAttachCard(ctx: DragContext | null | undefined): boolean {
+    if (!ctx || ctx.superType !== SuperType.POKEMON) {
+      return false;
+    }
+    if (ctx.stage === undefined || ctx.stage === Stage.BASIC) {
+      return false;
+    }
+    return !this.actsAsDirectBoardPlayFromHand(ctx.card);
+  }
+
+  /**
+   * Glow (`playableCardIds`) gates most hand plays. Evolution attach still goes to the server
+   * (Angular / 2D drag), so Forest of Vitality chain-evolves are not stuck waiting on that list.
+   */
+  private isHandAttachPlayAllowed(ctx: DragContext): boolean {
+    return this.isHandCardPlayable(ctx.card) || this.isEvolutionAttachCard(ctx);
   }
 
   /** LV.X Level-Up may only target the Active Pokémon. */
@@ -529,7 +547,7 @@ export class Board3dInteractionService {
         return false;
       }
       const targetPokemonCard = this.getPokemonCardFromBoardObject(boardPokemon);
-      if (!targetPokemonCard || !this.isValidEvolutionTarget(evolutionCard, targetPokemonCard)) {
+      if (!targetPokemonCard || !isValidEvolutionTarget(evolutionCard, targetPokemonCard)) {
         return false;
       }
       return true;
@@ -1066,9 +1084,11 @@ export class Board3dInteractionService {
     }
 
     // Hand cards the server marked unplayable (e.g. already attached energy) cannot drop.
+    // Evolutions still can — same-turn chain evolve is legal on the server before the glow list
+    // catches up (Forest of Vitality, Adaptive Evolution, …).
     if (
       this.currentDragContext.source === 'hand' &&
-      !this.isHandCardPlayable(this.currentDragContext.card)
+      !this.isHandAttachPlayAllowed(this.currentDragContext)
     ) {
       return false;
     }
@@ -1396,43 +1416,6 @@ export class Board3dInteractionService {
   }
 
   /**
-   * Check if an evolution card can evolve a specific Pokemon card
-   */
-  private isValidEvolutionTarget(evolutionCard: PokemonCard, targetPokemon: PokemonCard): boolean {
-    if (!evolutionCard || !targetPokemon) {
-      return false;
-    }
-
-    // Check if evolution card's evolvesFrom matches target Pokemon's name
-    if (evolutionCard.evolvesFrom === targetPokemon.name) {
-      return true;
-    }
-
-    // Check if target's name is a variant of evolvesFrom (e.g. "Eevee ex" for evolvesFrom "Eevee")
-    if (evolutionCard.evolvesFrom && targetPokemon.name &&
-      targetPokemon.name.startsWith(evolutionCard.evolvesFrom + ' ')) {
-      return true;
-    }
-
-    // Check if target Pokemon's evolvesTo includes the evolution card name
-    if (targetPokemon.evolvesTo && targetPokemon.evolvesTo.includes(evolutionCard.name)) {
-      return true;
-    }
-
-    // Check if target Pokemon's evolvesToStage includes the evolution card stage
-    if (targetPokemon.evolvesToStage && targetPokemon.evolvesToStage.includes(evolutionCard.stage)) {
-      return true;
-    }
-
-    // Check if target Pokemon's evolvesFromBase includes the evolution card's evolvesFrom (e.g. Eevee ex)
-    if (Array.isArray(targetPokemon.evolvesFromBase) && targetPokemon.evolvesFromBase.length > 0 && targetPokemon.evolvesFromBase.includes(evolutionCard.evolvesFrom)) {
-      return true;
-    }
-
-    return false;
-  }
-
-  /**
    * Handle mouse move during drag
    */
   onMouseMoveDrag(
@@ -1548,15 +1531,8 @@ export class Board3dInteractionService {
           this.currentDragContext.trainerType === TrainerType.TOOL)
       );
 
-      // Check if dragging evolution card over Pokemon
-      const isEvolutionCard = !!(
-        handPlayable &&
-        this.currentDragContext &&
-        this.currentDragContext.superType === SuperType.POKEMON &&
-        this.currentDragContext.stage !== undefined &&
-        this.currentDragContext.stage !== Stage.BASIC &&
-        !this.actsAsDirectBoardPlayFromHand(this.currentDragContext.card)
-      );
+      // Evolution hover is not gated on playableCardIds (chain evolve / Forest of Vitality).
+      const isEvolutionCard = this.isEvolutionAttachCard(this.currentDragContext);
 
       // Check if retreat drag (board card for active/bench swap)
       const isRetreatDrag = this.currentDragContext?.source === 'board';
@@ -1687,19 +1663,14 @@ export class Board3dInteractionService {
   }
 
   private findAllValidPokemonAttachTargets(ctx: DragContext): CardTarget[] {
-    if (!this.isHandCardPlayable(ctx.card)) {
+    const isEvolutionCard = this.isEvolutionAttachCard(ctx);
+    if (!this.isHandAttachPlayAllowed(ctx)) {
       return [];
     }
     const allowedPlayer = this.allowedAttachTargetPlayer(ctx);
     if (allowedPlayer === null) {
       return [];
     }
-
-    const isEvolutionCard =
-      ctx.superType === SuperType.POKEMON &&
-      ctx.stage !== undefined &&
-      ctx.stage !== Stage.BASIC &&
-      !this.actsAsDirectBoardPlayFromHand(ctx.card);
     const checkOpponentEx = ctx.trainerType === TrainerType.TOOL && isOpponentAttachTool(ctx.card);
     const benchSize =
       allowedPlayer === PlayerType.BOTTOM_PLAYER
@@ -1740,7 +1711,7 @@ export class Board3dInteractionService {
         }
         const evolutionCard = ctx.card as PokemonCard;
         const targetPokemonCard = this.getPokemonCardFromBoardObject(pokemon);
-        if (!targetPokemonCard || !this.isValidEvolutionTarget(evolutionCard, targetPokemonCard)) {
+        if (!targetPokemonCard || !isValidEvolutionTarget(evolutionCard, targetPokemonCard)) {
           continue;
         }
         // Evolution hosts are chosen by evo rules + occupancy — do not gate on drop-zone
@@ -2004,8 +1975,9 @@ export class Board3dInteractionService {
       return null;
     }
 
-    // Server playableCardIds gate (no glow = not legal this turn).
-    if (!this.isHandCardPlayable(ctx.card)) {
+    // Server playableCardIds gate (no glow = not legal this turn), except evolution attach —
+    // the next stage can be legal before that list refreshes (Forest of Vitality chain evolve).
+    if (!this.isHandAttachPlayAllowed(ctx)) {
       this.currentDragContext = null;
       this.hideAllDropZones();
       return null;
@@ -2189,13 +2161,11 @@ export class Board3dInteractionService {
     const mayBeEvoOrAttach =
       !!ctx &&
       ctx.source === 'hand' &&
-      this.isHandCardPlayable(ctx.card) &&
+      this.isHandAttachPlayAllowed(ctx) &&
       !this.actsAsDirectBoardPlayFromHand(ctx.card) &&
       (ctx.superType === SuperType.ENERGY ||
         ctx.trainerType === TrainerType.TOOL ||
-        (ctx.superType === SuperType.POKEMON &&
-          ctx.stage !== undefined &&
-          ctx.stage !== Stage.BASIC));
+        this.isEvolutionAttachCard(ctx));
 
     // Attach drops: prefer Pokemon under pointer (opponent board has no drop zones)
     const opponentAttachTool =

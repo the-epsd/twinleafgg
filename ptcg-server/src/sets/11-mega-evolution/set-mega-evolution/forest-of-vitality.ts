@@ -1,7 +1,7 @@
-import { GameError, GameMessage, State, StateUtils, StoreLike, pokemonHasCardType } from '../../../game';
+import { GameError, GameMessage, PlayerType, State, StateUtils, StoreLike, pokemonHasCardType } from '../../../game';
 import { CardType, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
-import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
+import { CheckPokemonTypeEffect, CheckTableStateEffect } from '../../../game/store/effects/check-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
@@ -24,8 +24,33 @@ export class LushForest extends TrainerCard {
       throw new GameError(GameMessage.CANNOT_USE_STADIUM);
     }
 
-    // Grant same-turn evolve when evolving a Grass Pokémon into a Grass Pokémon
-    // (checked when the evolution PlayPokemonEffect is reduced, before the turn check).
+    // Playability (React playableCardIds) is computed from canEvolveThisTurn *before*
+    // an evolution is played. Grant same-turn evolve on CheckTableState so Grass
+    // Pokémon just put into play stay legal to evolve — including chain evolves.
+    if (effect instanceof CheckTableStateEffect && StateUtils.getStadiumCard(state) === this) {
+      if (state.turn <= 2) {
+        return state;
+      }
+
+      const player = state.players[state.activePlayer];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        if (IS_STADIUM_EFFECT_BLOCKED(store, state, player, cardList, this)) {
+          return;
+        }
+
+        const checkPokemonType = new CheckPokemonTypeEffect(cardList);
+        store.reduceEffect(state, checkPokemonType);
+        if (checkPokemonType.cardTypes.includes(CardType.GRASS)) {
+          player.canEvolve = true;
+          cardList.canEvolveThisTurn = true;
+        }
+      });
+
+      return state;
+    }
+
+    // Also grant when the evolution itself is played, so Grass-into-Grass is
+    // allowed even if CheckTableState has not run yet this action.
     if (effect instanceof PlayPokemonEffect && StateUtils.getStadiumCard(state) === this) {
       const player = effect.player;
 
@@ -55,6 +80,7 @@ export class LushForest extends TrainerCard {
         return state;
       }
 
+      player.canEvolve = true;
       effect.target.canEvolveThisTurn = true;
     }
 
