@@ -1047,7 +1047,8 @@ export const SetReleaseDates: { [key: string]: Date } = {
   M6: new Date("2026-11-06"), // Storm Emerald, no equivalent English release date yet
   M6a: new Date("2026-09-16"), // 30th Celebration
   "30C": new Date("2026-09-16"),
-  M7: new Date("2099-12-31"), // Aura Seeker, no equivalent English release date yet
+  FLO: new Date('2026-11-27'),
+  M7: new Date('2026-11-27'),
 };
 
 // ========== Constants ==========

@@ -1020,7 +1020,8 @@ export const SetReleaseDates: { [key: string]: Date } = {
   M6: new Date('2026-11-06'),
   M6a: new Date('2026-09-16'),
   '30C': new Date('2026-09-16'),
-  M7: new Date('2099-12-31'),
+  FLO: new Date('2026-11-27'),
+  M7: new Date('2026-11-27'),
 };
 
 // ========== Constants ==========
