@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { SuperType, TrainerType, type Card } from 'ptcg-server';
+import { PowerType, SuperType, TrainerType, type Card } from 'ptcg-server';
 import {
+  cardHasUseFromHandPower,
   cardIsStadium,
   cardIsSupporter,
   cardIsTrainerBoardHandPlay,
@@ -37,5 +38,35 @@ describe('resolveTrainerType / CardsInfo plain objects', () => {
     expect(cardIsStadium(plainTrainer(TrainerType.ITEM))).toBe(false);
     expect(cardIsSupporter(plainTrainer(TrainerType.SUPPORTER))).toBe(true);
     expect(cardIsSupporter(plainTrainer(TrainerType.STADIUM))).toBe(false);
+  });
+});
+
+describe('cardHasUseFromHandPower', () => {
+  it('detects useFromHand abilities on Pokémon and trainers', () => {
+    expect(
+      cardHasUseFromHandPower({
+        superType: SuperType.POKEMON,
+        powers: [{ name: 'Vibrating Wings', useFromHand: true, powerType: PowerType.ABILITY }],
+      } as unknown as Card),
+    ).toBe(true);
+    expect(
+      cardHasUseFromHandPower({
+        superType: SuperType.TRAINER,
+        powers: [
+          { name: 'Stadium Assembly', useFromHand: true, powerType: PowerType.TRAINER_ABILITY },
+        ],
+      } as unknown as Card),
+    ).toBe(true);
+  });
+
+  it('ignores LEGEND assembly and cards without a hand power', () => {
+    expect(
+      cardHasUseFromHandPower({
+        superType: SuperType.POKEMON,
+        powers: [{ name: 'Assemble', useFromHand: true, powerType: PowerType.LEGEND_ASSEMBLY }],
+      } as unknown as Card),
+    ).toBe(false);
+    expect(cardHasUseFromHandPower(plainTrainer(TrainerType.ITEM))).toBe(false);
+    expect(cardHasUseFromHandPower(null)).toBe(false);
   });
 });

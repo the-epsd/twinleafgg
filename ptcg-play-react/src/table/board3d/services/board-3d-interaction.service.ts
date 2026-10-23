@@ -29,6 +29,7 @@ import { Board3dDropZone, DropZoneType, type DropZoneConfig } from '../board-3d-
 import {
   cardPlaysAsBasicPokemonFromHand,
   cardHasUseFromHandToBenchPower,
+  cardHasUseFromHandPower,
   resolveTrainerType,
   trainerTypeIsSupporter,
   type HandPlayPokemonZoneGameSettings,
@@ -2032,6 +2033,18 @@ export class Board3dInteractionService {
   }
 
   /**
+   * When click-to-play is illegal, open inspect for cards with a useFromHand ability
+   * (Vibrava, Audino, dual stadiums). LEGEND assembly has its own click flow.
+   */
+  private fallbackHandClickToInspect(card: Object3D): DropResult | null {
+    const cardData = card.userData.cardData as Card | undefined;
+    if (cardHasUseFromHandPower(cardData)) {
+      return { action: 'click', clickedCard: card };
+    }
+    return null;
+  }
+
+  /**
    * Left-click on hand cards plays them; left-click on in-play board cards opens the info pane.
    * Right-click on any card opens the info pane via contextmenu.
    */
@@ -2058,7 +2071,7 @@ export class Board3dInteractionService {
       if (cardCanAssembleLegendFromHand(cardData, this.bottomHandCards)) {
         return { action: 'click', clickedCard: card };
       }
-      return this.tryPlayHandCardFromClick(card);
+      return this.tryPlayHandCardFromClick(card) ?? this.fallbackHandClickToInspect(card);
     }
 
     return { action: 'click', clickedCard: card };
@@ -2136,7 +2149,7 @@ export class Board3dInteractionService {
         );
       }
 
-      return null;
+      return this.fallbackHandClickToInspect(clickedCard);
     }
 
     // Get world position for checks

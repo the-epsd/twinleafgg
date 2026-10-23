@@ -355,12 +355,11 @@ export async function handleBoard2dHandClick(
     slot: SlotType.HAND,
     index,
   };
-  const handPlayable = !!ctx.bottomPlayer?.playableCardIds?.includes(card.id);
   const result = await ctx.cardsAdapter.showCardInfo({
     card,
     cardList: list,
     options: {
-      enableAbility: handPlayable ? { useFromHand: true } : undefined,
+      enableAbility: { useFromHand: true },
       enableAttack: false,
     },
     players: players(ctx),

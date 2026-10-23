@@ -83,6 +83,8 @@ export interface TransitionPlan {
   showCardsRevealIds?: ReadonlySet<number>;
   /** Card objects from ShowCardsPrompt(s) for scan textures during reveal flights. */
   showCardsById?: ReadonlyMap<number, Card>;
+  /** Owner of each revealed card (whose deck/hand the 3D flight should use). */
+  showCardsSourcePlayerById?: ReadonlyMap<number, number>;
 }
 
 export interface PlanContext {

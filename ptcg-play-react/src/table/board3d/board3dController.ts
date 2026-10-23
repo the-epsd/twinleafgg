@@ -104,6 +104,7 @@ import { Board3dStackService } from './services/board-3d-stack.service';
 import { BoardTransitionQueue, type ProcessStateOptions } from './transitions/boardTransitionQueue';
 import { captureSnapshot, type BoardSnapshot } from './transitions/boardSnapshot';
 import { planTransition, type TransitionStep } from './transitions/planTransition';
+import { sourcePlayerIdForShowCardsPrompt } from './transitions/showCardsOrigin';
 import {
   Board3dTransitionRunner,
   type Board3dTransitionHost,
@@ -721,11 +722,17 @@ export class Board3dController {
   private collectShowCardsReveals(props: Board3dControllerProps): {
     ids: number[];
     byId: Map<number, Card>;
+    sourcePlayerById: Map<number, number>;
     destinationHint?: 'deck' | 'hand';
   } {
     const ids: number[] = [];
     const byId = new Map<number, Card>();
+    const sourcePlayerById = new Map<number, number>();
     const selfPlay = props.gameState?.state?.gameSettings?.selfPlay === true;
+    const seats = {
+      bottomId: props.bottomPlayer?.id,
+      topId: props.topPlayer?.id,
+    };
     for (const prompt of props.gameState?.state?.prompts ?? []) {
       if (prompt.type !== 'Show cards' || prompt.result !== undefined) {
         continue;
@@ -734,17 +741,25 @@ export class Board3dController {
         continue;
       }
       const cards = (prompt as { cards?: Card[] }).cards ?? [];
+      const sourcePlayerId = sourcePlayerIdForShowCardsPrompt(
+        prompt as { playerId: number; message?: unknown; sourcePlayerId?: number },
+        seats,
+      );
       for (const card of cards) {
         if (card?.id == null || byId.has(card.id)) {
           continue;
         }
         ids.push(card.id);
         byId.set(card.id, card);
+        if (sourcePlayerId != null) {
+          sourcePlayerById.set(card.id, sourcePlayerId);
+        }
       }
     }
     return {
       ids,
       byId,
+      sourcePlayerById,
       destinationHint: ids.length > 0 ? this.inferShowCardsDestinationHint(props) : undefined,
     };
   }
@@ -796,6 +811,7 @@ export class Board3dController {
           showCardsDestinationHint: showCards.destinationHint,
         });
         koGhostPlan.showCardsById = showCards.byId;
+        koGhostPlan.showCardsSourcePlayerById = showCards.sourcePlayerById;
         koGhostSteps = seatChanged
           ? this.stepsWithoutHandOrigins(koGhostPlan.steps)
           : koGhostPlan.steps;
@@ -2353,6 +2369,52 @@ export class Board3dController {
   exitCardInspect(): void {
     this.stopCardInspectFocusTracking();
     void this.cardInspectService.exitInspect();
+  }
+
+  private canUseHandAbilities(): boolean {
+    return this.bottomPlayer?.id === this.clientId && !this.gameState.deleted;
+  }
+
+  private dispatchCardInfoAbility(card: Card, ability: string, target: CardTarget): void {
+    const gameId = this.gameState.gameId;
+    if (card.superType === SuperType.TRAINER) {
+      void this.gameActions.trainerAbility(gameId, ability, target);
+    } else if (card.superType === SuperType.ENERGY) {
+      void this.gameActions.energyAbility(gameId, ability, target);
+    } else {
+      void this.gameActions.ability(gameId, ability, target);
+    }
+  }
+
+  /**
+   * Inspect a hand card. Owner hands enable useFromHand abilities (Angular parity);
+   * the server rejects illegal uses (ability lock, once-per-turn, etc.).
+   */
+  private openHandCardInfo(
+    cardObject: Object3D,
+    cardData: Card,
+    cardList: CardList | undefined,
+  ): void {
+    const enableAbilities = this.canUseHandAbilities();
+    const options: CardInfoPaneOptions | undefined = enableAbilities
+      ? { enableAbility: { useFromHand: true }, enableAttack: false }
+      : undefined;
+    void this.openCardInfo(cardObject, {
+      card: cardData,
+      cardList: cardList ?? this.bottomPlayerHand,
+      options,
+      players: [this.topPlayer, this.bottomPlayer].filter((p) => p),
+    }).then((result) => {
+      if (!result?.ability || !enableAbilities) {
+        return;
+      }
+      const target: CardTarget = {
+        player: PlayerType.BOTTOM_PLAYER,
+        slot: SlotType.HAND,
+        index: (cardObject.userData.handIndex as number | undefined) ?? 0,
+      };
+      this.dispatchCardInfoAbility(result.card ?? cardData, result.ability, target);
+    });
   }
 
   /**
@@ -3913,12 +3975,17 @@ export class Board3dController {
     const isHandCard = cardObject.userData.isHandCard;
     const isSetupPreview = cardObject.userData.isSetupPreview === true;
 
-    if (isHandCard || isSetupPreview) {
+    if (isSetupPreview) {
       void this.openCardInfo(cardObject, {
         card: cardData,
         cardList: cardList ?? this.bottomPlayerHand,
         players: [this.topPlayer, this.bottomPlayer].filter((p) => p),
       });
+      return;
+    }
+
+    if (isHandCard) {
+      this.openHandCardInfo(cardObject, cardData, cardList);
       return;
     }
 
@@ -4240,19 +4307,16 @@ export class Board3dController {
     }
 
     // Normal click behavior - show info pane
+    if (isHandCard) {
+      this.openHandCardInfo(cardObject, cardData, cardList);
+      return;
+    }
+
     // Determine options based on card location
     let options: CardInfoPaneOptions = {};
     let canRetreat = false;
 
-    if (isHandCard) {
-      // Hand cards: enable useFromHand abilities only when still playable (ability lock clears this).
-      const handPlayable =
-        !!cardData?.id && !!this.bottomPlayer?.playableCardIds?.includes(cardData.id);
-      options = {
-        enableAbility: handPlayable ? { useFromHand: true } : undefined,
-        enableAttack: false,
-      };
-    } else if (cardTarget) {
+    if (cardTarget) {
       if (cardTarget.slot === SlotType.ACTIVE) {
         // Active Pokemon: enable abilities (useWhenInPlay), attacks, and retreat (if not already retreated this turn)
         canRetreat = !!(
@@ -4283,19 +4347,14 @@ export class Board3dController {
       if (!result) return;
       const gameId = this.gameState.gameId;
 
-        // For hand cards, use HAND slot with the card's hand index
         const target = cardTarget || {
           player: PlayerType.BOTTOM_PLAYER,
-          slot: isHandCard ? SlotType.HAND : SlotType.ACTIVE,
-          index: isHandCard ? (cardObject.userData.handIndex ?? 0) : 0,
+          slot: SlotType.ACTIVE,
+          index: 0,
         };
 
         if (result.ability) {
-          if (cardData.superType === SuperType.TRAINER) {
-            this.gameActions.trainerAbility(gameId, result.ability, target);
-          } else {
-            this.gameActions.ability(gameId, result.ability, target);
-          }
+          this.dispatchCardInfoAbility(result.card ?? cardData, result.ability, target);
         } else if (result.attack) {
           this.gameActions.attack(gameId, result.attack);
         } else if (result.retreat) {

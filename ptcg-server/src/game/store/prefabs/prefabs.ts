@@ -2714,9 +2714,20 @@ export function SHOW_CARDS_TO_PLAYER(
   cards: Card[],
 ): State {
   if (cards.length === 0) return state;
+  let sourcePlayerId: number | undefined;
+  try {
+    const list = StateUtils.findCardList(state, cards[0]);
+    sourcePlayerId = StateUtils.findOwner(state, list).id;
+  } catch {
+    sourcePlayerId = undefined;
+  }
+  const message =
+    sourcePlayerId === player.id
+      ? GameMessage.CARDS_SHOWED_BY_EFFECT
+      : GameMessage.CARDS_SHOWED_BY_THE_OPPONENT;
   return store.prompt(
     state,
-    new ShowCardsPrompt(player.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards),
+    new ShowCardsPrompt(player.id, message, cards, { sourcePlayerId }),
     () => {},
   );
 }
