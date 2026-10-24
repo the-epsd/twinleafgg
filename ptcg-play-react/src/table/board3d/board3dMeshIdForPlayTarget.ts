@@ -7,6 +7,7 @@ import {
   SuperType,
   TrainerType,
   TrainerCard,
+  PowerType,
   type Card,
   type CardTarget,
   type GameSettings,
@@ -88,6 +89,23 @@ export function cardHasUseFromHandToBenchPower(card: Card | undefined | null): b
   }
   const powers = (card as PokemonCard).powers;
   return Array.isArray(powers) && powers.some(p => p.useFromHandToBench === true);
+}
+
+/**
+ * True when the card has a useFromHand power that is activated from the inspect overlay
+ * (Vibrava, Audino, Holon's Pokémon, dual stadiums). LEGEND assembly has its own click flow.
+ */
+export function cardHasUseFromHandPower(card: Card | undefined | null): boolean {
+  if (!card) {
+    return false;
+  }
+  const powers = (card as PokemonCard).powers;
+  if (!Array.isArray(powers)) {
+    return false;
+  }
+  return powers.some(
+    (p) => p.useFromHand === true && p.powerType !== PowerType.LEGEND_ASSEMBLY,
+  );
 }
 
 /** True when this card should use bench/active drop targets like a Basic Pokémon (includes trainer-printed fossils). */

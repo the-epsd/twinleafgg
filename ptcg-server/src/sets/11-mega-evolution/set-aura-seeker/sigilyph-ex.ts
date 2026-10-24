@@ -2,7 +2,7 @@ import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, Sta
 import { PutDamageEffect } from "../../../game/store/effects/attack-effects";
 import { Effect } from "../../../game/store/effects/effect";
 import { AfterAttackEffect } from "../../../game/store/effects/game-phase-effects";
-import {IS_ABILITY_BLOCKED, MOVE_CARDS } from "../../../game/store/prefabs/prefabs";
+import { IS_ABILITY_BLOCKED, MOVE_CARDS } from "../../../game/store/prefabs/prefabs";
 
 export class Sigilyphex extends PokemonCard {
   protected _tags = [CardTag.POKEMON_ex];
@@ -27,9 +27,9 @@ export class Sigilyphex extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'FLO';
+  public set: string = 'M7';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '32';
+  public setNumber: string = '31';
   public name: string = 'Sigilyph ex';
   public fullName: string = 'Sigilyph ex FLO';
 

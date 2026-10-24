@@ -29,8 +29,8 @@ export class MegaLucarioZex extends PokemonCard {
   }];
 
   public regulationMark: string = 'J';
-  public set: string = 'FLO';
-  public setNumber: string = '58';
+  public set: string = 'M7';
+  public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Lucario Z ex';
   public fullName: string = 'Mega Lucario Z ex FLO';

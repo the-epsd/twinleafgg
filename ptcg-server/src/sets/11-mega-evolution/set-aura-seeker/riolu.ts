@@ -16,8 +16,8 @@ export class Riolu extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'FLO';
-  public setNumber: string = '45';
+  public set: string = 'M7';
+  public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Riolu';
   public fullName: string = 'Riolu FLO';

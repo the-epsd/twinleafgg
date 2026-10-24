@@ -12,10 +12,12 @@ import {
 import {
   PlayerType,
   SlotType,
+  SuperType,
   type Card,
   type CardList,
   type CardTarget,
   type Player,
+  type PokemonCard,
   type PokemonCardList,
 } from 'ptcg-server';
 import { publicAssetUrl } from '../../utils/publicAssetUrl';
@@ -35,6 +37,7 @@ import {
   board2dBoardDropId,
   board2dSlotDropId,
 } from './board2dDropIds';
+import { extraPlayableEvolutionCardIds } from '../evolutionTarget';
 import {
   handleBoard2dActiveClick,
   handleBoard2dBenchClick,
@@ -391,7 +394,11 @@ export function Board2D(props: Board2DProps) {
   const bottomCards = bottomPlayerHand?.cards ?? bottomPlayer?.hand?.cards ?? [];
 
   const playableIds = useMemo(() => {
-    return new Set(bottomPlayer?.playableCardIds ?? []);
+    const ids = new Set(bottomPlayer?.playableCardIds ?? []);
+    for (const id of extraPlayableEvolutionCardIds(bottomPlayer)) {
+      ids.add(id);
+    }
+    return ids;
   }, [bottomPlayer]);
 
   const chooseHandCardsActive = boardInteraction.isChooseHandCardsSelectionActive();
@@ -521,7 +528,9 @@ export function Board2D(props: Board2DProps) {
         return;
       }
 
-      if (canInteract && playableIds.has(card.id)) {
+      const isEvolution =
+        card.superType === SuperType.POKEMON && !!(card as PokemonCard).evolvesFrom;
+      if (canInteract && (playableIds.has(card.id) || isEvolution)) {
         const resolved = resolveClickToPlayTarget(bottomPlayer, card);
         if (Array.isArray(resolved)) {
           boardInteraction.startHandPlayTargetSelection(resolved, (picked) => {

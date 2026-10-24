@@ -10,10 +10,12 @@ import {
   type CardTarget,
   type Player,
   type PokemonCard,
+  type PokemonCardList,
   type TrainerCard,
 } from 'ptcg-server';
 import { cardCanAssembleLegendFromHand, resolveLegendAssemblyBenchTarget } from '../board3d/dual-legend.utils';
 import { cardHasUseFromHandToBenchPower } from '../board3d/board3dMeshIdForPlayTarget';
+import { getInPlayPokemonCard, isValidEvolutionTarget } from '../evolutionTarget';
 import type { LocalGameState } from '../types/localGameState';
 import type { Board3dCardsAdapter } from '../board3d/board3dCardsAdapter';
 import type { Board3dGameActions } from '../board3d/board3dGameActions';
@@ -353,12 +355,11 @@ export async function handleBoard2dHandClick(
     slot: SlotType.HAND,
     index,
   };
-  const handPlayable = !!ctx.bottomPlayer?.playableCardIds?.includes(card.id);
   const result = await ctx.cardsAdapter.showCardInfo({
     card,
     cardList: list,
     options: {
-      enableAbility: handPlayable ? { useFromHand: true } : undefined,
+      enableAbility: { useFromHand: true },
       enableAttack: false,
     },
     players: players(ctx),
@@ -433,18 +434,12 @@ export function findAttachTargets(
     if (isLvX && slot !== SlotType.ACTIVE) {
       return;
     }
-    const pokemon = (list as { getPokemonCard?: () => Card | undefined }).getPokemonCard?.();
+    const pokemon = getInPlayPokemonCard(list as PokemonCardList);
     if (!pokemon && (isEnergy || isTool || isEvo)) {
       return;
     }
     if (isEvo) {
-      const evo = card as PokemonCard;
-      const host = pokemon as PokemonCard;
-      if (
-        evo.evolvesFrom === host.name ||
-        host.evolvesTo?.includes(evo.name) ||
-        (evo.evolvesFrom && host.name?.startsWith(`${evo.evolvesFrom} `))
-      ) {
+      if (isValidEvolutionTarget(card as PokemonCard, pokemon as PokemonCard)) {
         targets.push({ player: PlayerType.BOTTOM_PLAYER, slot, index });
       }
       return;

@@ -88,26 +88,35 @@ const REVEAL_FLIP_DURATION_SEC = 0.3;
 
 const sleep = (ms: number) => new Promise<void>((r) => globalThis.setTimeout(r, ms));
 
+function playerCardLists(player: Player): (CardList | undefined)[] {
+  return [
+    player.deck,
+    player.hand,
+    player.discard,
+    player.lostzone,
+    player.supporter,
+    player.stadium,
+    player.active,
+    ...player.bench,
+    ...(player.prizes ?? []),
+  ];
+}
+
 function findCard(player: Player | undefined, cardId: number): Card | undefined {
   if (!player) {
     return undefined;
   }
-  const lists: (CardList | undefined)[] = [
-    player.supporter,
-    player.discard,
-    player.lostzone,
-    player.hand,
-    player.stadium,
-    player.active,
-    ...player.bench,
-  ];
-  for (const list of lists) {
+  for (const list of playerCardLists(player)) {
     const hit = list?.cards?.find((c) => c.id === cardId);
     if (hit) {
       return hit;
     }
   }
   return undefined;
+}
+
+function playerOwnsLiveCard(player: Player, cardId: number): boolean {
+  return playerCardLists(player).some((list) => list?.cards?.some((c) => c.id === cardId));
 }
 
 function boardSlotMeshId(seat: Seat, playerId: number, loc: BoardCardLocation): string {
@@ -1073,8 +1082,9 @@ export class Board3dTransitionRunner {
       const ownerId =
         nextLoc?.playerId ??
         prevLoc?.playerId ??
+        this.plan.showCardsSourcePlayerById?.get(cardId) ??
         this.inferShowCardsOwner(cardId) ??
-        this.host.topPlayer()?.id;
+        this.host.bottomPlayer()?.id;
       if (ownerId == null) {
         continue;
       }
@@ -1254,15 +1264,17 @@ export class Board3dTransitionRunner {
   }
 
   private inferShowCardsOwner(cardId: number): number | undefined {
-    // Prefer the non-viewer seat when the card isn't indexed (search / limbo).
-    const bottom = this.host.bottomPlayer()?.id;
-    const top = this.host.topPlayer()?.id;
     for (const step of this.steps) {
       if (step.kind === 'draw' && step.revealCardIds?.includes(cardId)) {
         return step.playerId;
       }
     }
-    return top ?? bottom;
+    for (const player of [this.host.bottomPlayer(), this.host.topPlayer()]) {
+      if (player && playerOwnsLiveCard(player, cardId)) {
+        return player.id;
+      }
+    }
+    return undefined;
   }
 
   private zoneWorld(
